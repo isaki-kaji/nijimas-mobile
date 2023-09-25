@@ -21,7 +21,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         child: Column(
           children: [
             const SizedBox(height: 30),
-            Image.asset(Constants.nijimasTitlepath, height: 80),
+            Image.asset(Constants.nijimasTitlePath, height: 80),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Image.asset(Constants.nijimasLogoPath,
