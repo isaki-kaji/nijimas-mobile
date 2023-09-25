@@ -12,7 +12,12 @@
           "package_name": "com.example.nijimas"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "697110520824-mjr0taep0iu0udnpe0do0cng5g23352r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBRN8mlRJzFckQR4PeEIMRga4cYeTRcrCE"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "697110520824-mjr0taep0iu0udnpe0do0cng5g23352r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "697110520824-1hdjhgtg29bgg76jqv3m35o62bm497nr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.nijimas"
+              }
+            }
+          ]
         }
       }
     }

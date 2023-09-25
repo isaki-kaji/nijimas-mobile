@@ -1,7 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nijimas/core/router/router.dart';
+import 'package:nijimas/core/theme/my_colors.dart';
 import 'package:nijimas/firebase_options.dart';
+import 'package:routemaster/routemaster.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
