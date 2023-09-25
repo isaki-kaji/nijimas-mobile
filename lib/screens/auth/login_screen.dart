@@ -20,12 +20,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(
-              height: 50,
-            ),
+            const SizedBox(height: 30),
+            Image.asset(Constants.nijimasTitlepath, height: 80),
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.asset(Constants.nijimasLogoPath, height: 400),
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Image.asset(Constants.nijimasLogoPath,
+                  height: MediaQuery.of(context).size.height * 0.45),
             ),
             SignInButton(
                 labelText: "Continue with Google",
