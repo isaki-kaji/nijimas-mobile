@@ -41,6 +41,8 @@ dependencies:
   flutter_riverpod: ^2.4.0
   routemaster: ^1.0.1
   fpdart: ^1.1.0
+  sign_in_with_apple: ^5.0.0
+  crypto: ^3.0.3
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +70,8 @@ flutter:
     - assets/images/nijimas.png
     - assets/images/title.png
     - assets/images/googleLogo.png
+    - assets/images/avatar.png
+    - assets/images/banner.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

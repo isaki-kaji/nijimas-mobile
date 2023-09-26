@@ -20,7 +20,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 30),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.03),
             Image.asset(Constants.nijimasTitlePath, height: 80),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
