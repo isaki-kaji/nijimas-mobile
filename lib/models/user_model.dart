@@ -24,15 +24,15 @@ class UserModel {
     String? profileImageUrl,
     String? bannerImageUrl,
     int? karma,
-    List<String>? following,
+    List<String>? accompanying,
   }) {
     return UserModel(
       uid: uid ?? this.uid,
       name: name ?? this.name,
-      profileImagePath: profileImageUrl ?? this.profileImagePath,
-      bannerImagePath: bannerImageUrl ?? this.bannerImagePath,
+      profileImagePath: profileImageUrl ?? profileImagePath,
+      bannerImagePath: bannerImageUrl ?? bannerImagePath,
       karma: karma ?? this.karma,
-      following: following ?? this.following,
+      following: accompanying ?? following,
     );
   }
 

@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 class MyColors {
   static const greyColor = Color.fromRGBO(26, 39, 45, 1);
   static const whiteColor = Colors.white;
-  static const blackColor = Color.fromRGBO(1, 1, 1, 1);
-  static var redColor = Colors.red.shade500;
+  static const blackColor = Color(0xFF010101);
+  static const brownColor = Color(0xFF8c3333);
   static const loaderColor = Color(0xFFA2C579);
+  static var redColor = Colors.red;
 
   static var myAppTheme = ThemeData.light().copyWith(
     scaffoldBackgroundColor: whiteColor,
@@ -20,7 +21,7 @@ class MyColors {
     drawerTheme: const DrawerThemeData(
       backgroundColor: whiteColor,
     ),
-    primaryColor: redColor,
+    primaryColor: brownColor,
     backgroundColor: whiteColor,
   );
 }
