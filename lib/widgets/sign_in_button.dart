@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:nijimas/core/router/navigator.dart';
 import 'package:nijimas/core/theme/my_colors.dart';
-import 'package:routemaster/routemaster.dart';
+import 'package:nijimas/cotrollers/auth_controller.dart';
 
 class SignInButton extends ConsumerWidget {
-  String labelText;
-  Widget logo;
-  SignInButton({super.key, required this.labelText, required this.logo});
+  final String labelText;
+  final String type;
+  final Widget logo;
+  const SignInButton(
+      {super.key,
+      required this.labelText,
+      required this.type,
+      required this.logo});
+
+  void signInWithGoogle(BuildContext context, WidgetRef ref) async {
+    ref.read(authControllerProvider.notifier).signInWithGoogle(context);
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -15,7 +23,9 @@ class SignInButton extends ConsumerWidget {
       padding: const EdgeInsets.all(18.0),
       child: ElevatedButton.icon(
         onPressed: () {
-          Navigators.toHome(context);
+          if (type == "google") {
+            signInWithGoogle(context, ref);
+          }
         },
         icon: logo,
         label: Text(
