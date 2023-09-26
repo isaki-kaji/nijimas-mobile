@@ -6,6 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:nijimas/core/constants/constants.dart';
 import 'package:nijimas/core/constants/firebase_constants.dart';
 import 'package:nijimas/core/failure.dart';
+import 'package:nijimas/core/providers/firebase_providers.dart';
 import 'package:nijimas/core/type_defs.dart';
 import 'package:nijimas/models/user_model.dart';
 

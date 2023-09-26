@@ -4,7 +4,7 @@ class MyColors {
   static const greyColor = Color.fromRGBO(26, 39, 45, 1);
   static const whiteColor = Colors.white;
   static const blackColor = Color.fromRGBO(1, 1, 1, 1);
-  static var redColor = Colors.red.shade500;
+  static const loaderColor = Color(0xFFA2C579);
 
   static var myAppTheme = ThemeData.light().copyWith(
     scaffoldBackgroundColor: whiteColor,
