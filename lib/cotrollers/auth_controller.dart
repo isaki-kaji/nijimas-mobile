@@ -1,11 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nijimas/core/providers/user_notifier_provider.dart';
 import 'package:nijimas/core/utils.dart';
 import 'package:nijimas/models/user_model.dart';
 import 'package:nijimas/repositories/auth_repository.dart';
-
-final userProvider = StateProvider<UserModel?>((ref) => null);
 
 final authControllerProvider =
     NotifierProvider<AuthController, bool>(AuthController.new);
@@ -33,7 +32,7 @@ class AuthController extends Notifier<bool> {
     final user = await _authRepository.signInWithGoogle();
     state = false;
     user.fold((l) => showErrorSnackBar(context), (userModel) {
-      _ref.read(userProvider.notifier).update((state) => userModel);
+      _ref.read(userProvider.notifier).update(userModel);
     });
   }
 

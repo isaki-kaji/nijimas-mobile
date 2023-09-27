@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:nijimas/cotrollers/auth_controller.dart';
+import 'package:nijimas/core/providers/user_notifier_provider.dart';
 import 'package:nijimas/widgets/home/profile_drawer.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -17,15 +17,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // print("build");
     final user = ref.watch(userProvider);
     return Scaffold(
       appBar: AppBar(actions: [
         Builder(builder: (context) {
-          return IconButton(
-            icon: CircleAvatar(
-              backgroundImage: NetworkImage(user!.profileImagePath),
+          return Padding(
+            padding: const EdgeInsets.only(right: 6.0),
+            child: IconButton(
+              icon: CircleAvatar(
+                backgroundImage: NetworkImage(user!.profileImagePath),
+              ),
+              onPressed: () => showEndDrawer(context),
             ),
-            onPressed: () => showEndDrawer(context),
           );
         })
       ]),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nijimas/core/providers/user_notifier_provider.dart';
 import 'package:nijimas/core/theme/my_colors.dart';
 import 'package:nijimas/cotrollers/auth_controller.dart';
 
