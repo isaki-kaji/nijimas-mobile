@@ -7,20 +7,23 @@ import 'package:nijimas/cotrollers/auth_controller.dart';
 import 'package:nijimas/widgets/common/loader.dart';
 import 'package:nijimas/widgets/auth/sign_in_button.dart';
 
-class LoginScreen extends ConsumerStatefulWidget {
+class LoginScreen extends ConsumerWidget {
   const LoginScreen({super.key});
 
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _LoginScreenState();
-}
+  void signInAsGuest(WidgetRef ref, BuildContext context) {
+    ref.read(authControllerProvider.notifier).signInAsGuest(context);
+  }
 
-class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final isLoading = ref.watch(authControllerProvider);
     return Scaffold(
       appBar: AppBar(
-        actions: [TextButton(onPressed: () {}, child: const Text("skip"))],
+        actions: [
+          TextButton(
+              onPressed: () => signInAsGuest(ref, context),
+              child: const Text("skip"))
+        ],
       ),
       body: isLoading
           ? const Loader()

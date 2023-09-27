@@ -53,18 +53,42 @@ class AuthRepository {
 
       if (userCredential.additionalUserInfo!.isNewUser) {
         userModel = UserModel(
-          uid: userCredential.user!.uid,
-          name: userCredential.user!.displayName ?? "yamame",
-          profileImagePath:
-              userCredential.user!.photoURL ?? Constants.defaultAvatarPath,
-          bannerImagePath: Constants.defaultBannerPath,
-          karma: 0,
-          following: [],
-        );
+            uid: userCredential.user!.uid,
+            name: userCredential.user!.displayName ?? "yamame",
+            profileImagePath:
+                userCredential.user!.photoURL ?? Constants.defaultAvatarPath,
+            bannerImagePath: Constants.defaultBannerPath,
+            karma: 0,
+            following: [],
+            isAuthenticated: true);
         await _users.doc(userCredential.user!.uid).set(userModel.toMap());
       } else {
         userModel = await getUserData(userCredential.user!.uid).first;
       }
+      return right(userModel);
+    } on FirebaseException catch (e) {
+      throw e.message!;
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
+  FutureEither<UserModel> signInAsGuest() async {
+    try {
+      var userCredential = await _auth.signInAnonymously();
+
+      UserModel userModel = UserModel(
+        name: 'Guest',
+        profileImagePath: Constants.defaultAvatarPath,
+        bannerImagePath: Constants.defaultAvatarPath,
+        uid: userCredential.user!.uid,
+        karma: 0,
+        following: [],
+        isAuthenticated: false,
+      );
+
+      await _users.doc(userCredential.user!.uid).set(userModel.toMap());
+
       return right(userModel);
     } on FirebaseException catch (e) {
       throw e.message!;

@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 
 class UserModel {
@@ -8,31 +9,34 @@ class UserModel {
   final String bannerImagePath;
   final int karma;
   final List<String> following;
+  final bool isAuthenticated;
 
-  UserModel({
-    required this.uid,
-    required this.name,
-    required this.profileImagePath,
-    required this.bannerImagePath,
-    required this.karma,
-    required this.following,
-  });
+  UserModel(
+      {required this.uid,
+      required this.name,
+      required this.profileImagePath,
+      required this.bannerImagePath,
+      required this.karma,
+      required this.following,
+      required this.isAuthenticated});
 
   UserModel copyWith({
     String? uid,
     String? name,
-    String? profileImageUrl,
-    String? bannerImageUrl,
+    String? profileImagePath,
+    String? bannerImagePath,
     int? karma,
-    List<String>? accompanying,
+    List<String>? following,
+    bool? isAuthenticated,
   }) {
     return UserModel(
       uid: uid ?? this.uid,
       name: name ?? this.name,
-      profileImagePath: profileImageUrl ?? profileImagePath,
-      bannerImagePath: bannerImageUrl ?? bannerImagePath,
+      profileImagePath: profileImagePath ?? this.profileImagePath,
+      bannerImagePath: bannerImagePath ?? this.bannerImagePath,
       karma: karma ?? this.karma,
-      following: accompanying ?? following,
+      following: following ?? this.following,
+      isAuthenticated: isAuthenticated ?? this.isAuthenticated,
     );
   }
 
@@ -40,10 +44,11 @@ class UserModel {
     return {
       'uid': uid,
       'name': name,
-      'profileImageUrl': profileImagePath,
-      'bannerImageUrl': bannerImagePath,
+      'profileImagePath': profileImagePath,
+      'bannerImagePath': bannerImagePath,
       'karma': karma,
       'following': following,
+      'isAuthenticated': isAuthenticated,
     };
   }
 
@@ -51,10 +56,11 @@ class UserModel {
     return UserModel(
       uid: map['uid'] ?? '',
       name: map['name'] ?? '',
-      profileImagePath: map['profileImageUrl'] ?? '',
-      bannerImagePath: map['bannerImageUrl'] ?? '',
+      profileImagePath: map['profileImagePath'] ?? '',
+      bannerImagePath: map['bannerImagePath'] ?? '',
       karma: map['karma']?.toInt() ?? 0,
       following: List<String>.from(map['following']),
+      isAuthenticated: map['isAuthenticated'] ?? false,
     );
   }
 
@@ -65,7 +71,7 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(uid: $uid, name: $name, profileImageUrl: $profileImagePath, bannerImageUrl: $bannerImagePath, karma: $karma, following: $following)';
+    return 'UserModel(uid: $uid, name: $name, profileImagePath: $profileImagePath, bannerImagePath: $bannerImagePath, karma: $karma, following: $following, isAuthenticated: $isAuthenticated)';
   }
 
   @override
@@ -78,7 +84,8 @@ class UserModel {
         other.profileImagePath == profileImagePath &&
         other.bannerImagePath == bannerImagePath &&
         other.karma == karma &&
-        listEquals(other.following, following);
+        listEquals(other.following, following) &&
+        other.isAuthenticated == isAuthenticated;
   }
 
   @override
@@ -88,6 +95,7 @@ class UserModel {
         profileImagePath.hashCode ^
         bannerImagePath.hashCode ^
         karma.hashCode ^
-        following.hashCode;
+        following.hashCode ^
+        isAuthenticated.hashCode;
   }
 }
