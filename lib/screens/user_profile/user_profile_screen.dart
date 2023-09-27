@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class UserProfile extends ConsumerWidget {
-  const UserProfile({super.key});
+class UserProfileScreen extends ConsumerWidget {
+  final String uid;
+  const UserProfileScreen({super.key, required this.uid});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      body: Container(),
+    return const Scaffold(
+      body: Center(
+        child: Text("user profile"),
+      ),
     );
   }
 }
