@@ -17,7 +17,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // print("build");
+    print("build");
     final user = ref.watch(userProvider);
     return Scaffold(
       appBar: AppBar(actions: [

@@ -61,7 +61,7 @@ class AuthRepository {
             karma: 0,
             following: [],
             isAuthenticated: true);
-        await _users.doc(userCredential.user!.uid).set(userModel.toMap());
+        await _users.doc(userCredential.user!.uid).set(userModel.toJson());
       } else {
         userModel = await getUserData(userCredential.user!.uid).first;
       }
@@ -87,7 +87,7 @@ class AuthRepository {
         isAuthenticated: false,
       );
 
-      await _users.doc(userCredential.user!.uid).set(userModel.toMap());
+      await _users.doc(userCredential.user!.uid).set(userModel.toJson());
 
       return right(userModel);
     } on FirebaseException catch (e) {
@@ -99,7 +99,7 @@ class AuthRepository {
 
   Stream<UserModel> getUserData(String uid) {
     return _users.doc(uid).snapshots().map(
-        (event) => UserModel.fromMap(event.data() as Map<String, dynamic>));
+        (event) => UserModel.fromJson(event.data() as Map<String, dynamic>));
   }
 
   void logOut() async {
