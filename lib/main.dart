@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/core/providers/user_notifier_provider.dart';
 import 'package:nijimas/core/router/router.dart';
 import 'package:nijimas/core/theme/my_colors.dart';
@@ -24,38 +25,31 @@ void main() async {
   );
 }
 
-class MyApp extends ConsumerStatefulWidget {
+class MyApp extends HookConsumerWidget {
   const MyApp({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _MyAppState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final userModel = useState<UserModel?>(null);
 
-class _MyAppState extends ConsumerState<MyApp> {
-  UserModel? userModel;
+    void getData(WidgetRef ref, User data) async {
+      final fetchedUserModel = await ref
+          .watch(authControllerProvider.notifier)
+          .getUserData(data.uid)
+          .first;
 
-  @override
-  void initState() {
-    super.initState();
-    final authData = ref.read(authStateChangeProvider);
-    if (authData is AsyncValue<User> && authData.value != null) {
-      getData(ref, authData.value!);
+      userModel.value = fetchedUserModel;
+      ref.read(userProvider.notifier).update(fetchedUserModel);
     }
-  }
 
-  void getData(WidgetRef ref, User data) async {
-    final fetchedUserModel = await ref
-        .watch(authControllerProvider.notifier)
-        .getUserData(data.uid)
-        .first;
-    setState(() {
-      userModel = fetchedUserModel;
-    });
-    ref.read(userProvider.notifier).update(fetchedUserModel);
-  }
+    useEffect(() {
+      final authData = ref.read(authStateChangeProvider);
+      if (authData is AsyncValue<User> && authData.value != null) {
+        getData(ref, authData.value!);
+      }
+      return null;
+    }, []);
 
-  @override
-  Widget build(BuildContext context) {
     return ref.watch(authStateChangeProvider).when(
           data: (data) => MaterialApp.router(
             debugShowCheckedModeBanner: false,
@@ -65,7 +59,7 @@ class _MyAppState extends ConsumerState<MyApp> {
               routesBuilder: (context) {
                 if (data != null) {
                   getData(ref, data);
-                  if (userModel != null) {
+                  if (userModel.value != null) {
                     return loggedInRoute;
                   }
                 }

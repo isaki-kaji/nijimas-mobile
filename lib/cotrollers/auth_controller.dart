@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nijimas/core/providers/user_notifier_provider.dart';
 import 'package:nijimas/core/utils.dart';
 import 'package:nijimas/models/user_model.dart';
 import 'package:nijimas/repositories/auth_repository.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final authControllerProvider =
     NotifierProvider<AuthController, bool>(AuthController.new);

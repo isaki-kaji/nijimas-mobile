@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nijimas/core/constants/constants.dart';
 import 'package:nijimas/cotrollers/auth_controller.dart';
 import 'package:nijimas/widgets/common/loader.dart';
 import 'package:nijimas/widgets/auth/sign_in_button.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class LoginScreen extends ConsumerWidget {
   const LoginScreen({super.key});

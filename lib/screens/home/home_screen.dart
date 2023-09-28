@@ -1,22 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nijimas/core/providers/user_notifier_provider.dart';
 import 'package:nijimas/widgets/home/profile_drawer.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class HomeScreen extends ConsumerStatefulWidget {
+class HomeScreen extends HookConsumerWidget {
   const HomeScreen({super.key});
 
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends ConsumerState<HomeScreen> {
   void showEndDrawer(BuildContext context) {
     Scaffold.of(context).openEndDrawer();
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     print("build");
     final user = ref.watch(userProvider);
     return Scaffold(
