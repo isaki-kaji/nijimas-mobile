@@ -53,7 +53,7 @@ class MyApp extends HookConsumerWidget {
     return ref.watch(authStateChangeProvider).when(
           data: (data) => MaterialApp.router(
             debugShowCheckedModeBanner: false,
-            title: 'Reddit Tutorial',
+            title: 'nijimas',
             theme: MyColors.myAppTheme,
             routerDelegate: RoutemasterDelegate(
               routesBuilder: (context) {
