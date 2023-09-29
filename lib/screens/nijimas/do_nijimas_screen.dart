@@ -10,7 +10,7 @@ class DoNijimasScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final animationController = useAnimationController(
-      duration: const Duration(seconds: 2),
+      duration: const Duration(milliseconds: 1500),
     );
 
     final colorAnimation = useAnimation<Color?>(
@@ -24,12 +24,12 @@ class DoNijimasScreen extends HookConsumerWidget {
       appBar: AppBar(),
       body: Container(),
       floatingActionButton: Container(
+        //kToolbarHeightはAppBarの高さ
         padding: const EdgeInsets.only(bottom: kToolbarHeight),
         height: MediaQuery.of(context).size.height * 0.8,
         width: MediaQuery.of(context).size.width * 0.8,
         child: FloatingActionButton(
           onPressed: () {
-            // ボタンが押されたときにアニメーションを開始
             animationController.forward();
           },
           backgroundColor: colorAnimation,
