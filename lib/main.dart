@@ -30,7 +30,7 @@ class MyApp extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userModel = useState<UserModel?>(null);
+    final useUserModel = useState<UserModel?>(null);
 
     void getData(WidgetRef ref, User data) async {
       final fetchedUserModel = await ref
@@ -38,7 +38,7 @@ class MyApp extends HookConsumerWidget {
           .getUserData(data.uid)
           .first;
 
-      userModel.value = fetchedUserModel;
+      useUserModel.value = fetchedUserModel;
       ref.read(userProvider.notifier).update(fetchedUserModel);
     }
 
@@ -59,7 +59,7 @@ class MyApp extends HookConsumerWidget {
               routesBuilder: (context) {
                 if (data != null) {
                   getData(ref, data);
-                  if (userModel.value != null) {
+                  if (useUserModel.value != null) {
                     return loggedInRoute;
                   }
                 }
