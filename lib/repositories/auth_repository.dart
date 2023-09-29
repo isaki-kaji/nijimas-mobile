@@ -80,7 +80,7 @@ class AuthRepository {
       UserModel userModel = UserModel(
         name: 'Guest',
         profileImagePath: Constants.defaultAvatarPath,
-        bannerImagePath: Constants.defaultAvatarPath,
+        bannerImagePath: Constants.defaultBannerPath,
         uid: userCredential.user!.uid,
         karma: 0,
         following: [],
