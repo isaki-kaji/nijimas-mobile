@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/core/theme/my_colors.dart';
-import 'package:nijimas/cotrollers/auth_controller.dart';
+import 'package:nijimas/controllers/auth_controller.dart';
 
 class SignInButton extends ConsumerWidget {
   final String labelText;
