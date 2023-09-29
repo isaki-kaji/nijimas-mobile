@@ -9,4 +9,8 @@ class Navigators {
   static void toUserProfile(BuildContext context, String uid) {
     Routemaster.of(context).push('/user/$uid');
   }
+
+  static void toDoNijimas(BuildContext context) {
+    Routemaster.of(context).push('/do-nijimas');
+  }
 }

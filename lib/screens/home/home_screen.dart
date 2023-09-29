@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:nijimas/core/constants/constants.dart';
 import 'package:nijimas/core/providers/user_notifier_provider.dart';
+import 'package:nijimas/core/router/navigators.dart';
 import 'package:nijimas/core/theme/my_colors.dart';
 import 'package:nijimas/widgets/home/profile_drawer.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -28,7 +29,7 @@ class HomeScreen extends HookConsumerWidget {
     }
 
     return Scaffold(
-        appBar: AppBar(actions: [
+        appBar: AppBar(title: const FaIcon(FontAwesomeIcons.fish), actions: [
           Builder(builder: (context) {
             return Padding(
               padding: const EdgeInsets.only(right: 6.0),
@@ -48,7 +49,7 @@ class HomeScreen extends HookConsumerWidget {
         body: Constants.tabPages[usePage.value],
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.white,
-          onPressed: () {},
+          onPressed: () => Navigators.toDoNijimas(context),
           child: const FaIcon(
             FontAwesomeIcons.droplet,
             color: MyColors.pinkColor,
