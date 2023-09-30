@@ -10,6 +10,8 @@ class DoNijimasScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final mediaQuery = MediaQuery.of(context).size;
+
     final useIsPushed = useState(false);
 
     final animationController = useAnimationController(
@@ -20,9 +22,14 @@ class DoNijimasScreen extends HookConsumerWidget {
         .addAnimatable(
           animatable: Tween<double>(begin: 0, end: 1),
           from: const Duration(seconds: 0),
-          to: const Duration(seconds: 2),
+          to: const Duration(seconds: 4),
           tag: "iconPosition",
         )
+        .addAnimatable(
+            animatable: Tween<double>(begin: 0, end: mediaQuery.height * 0.8),
+            from: const Duration(milliseconds: 1600),
+            to: const Duration(milliseconds: 1900),
+            tag: "waterLevel")
         .animate(animationController);
 
     useEffect(() {
@@ -34,58 +41,97 @@ class DoNijimasScreen extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(),
-      body: Center(
-        child: GestureDetector(
-          onTap: () {
-            if (!useIsPushed.value) {
-              useIsPushed.value = true;
-            }
-          },
-          child: AnimatedSwitcher(
-            duration: const Duration(seconds: 0),
-            child: useIsPushed.value
-                ? AnimatedBuilder(
-                    animation: animationController,
-                    builder: (context, child) {
-                      // アイコンの位置を取得
-                      final iconPosition =
-                          sequenceAnimation['iconPosition'].value;
+      body: Stack(
+        children: [
+          Positioned(
+            bottom: 0,
+            child: AnimatedBuilder(
+              animation: animationController,
+              builder: (context, child) {
+                return Container(
+                  color: MyColors.pinkColor,
+                  height: sequenceAnimation['waterLevel'].value,
+                  width: mediaQuery.width,
+                );
+              },
+            ),
+          ),
+          const Center(
+            child: Padding(
+              padding: EdgeInsets.only(bottom: kToolbarHeight),
+              child: Text(
+                "Nijimas!!",
+                style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                    color: MyColors.whiteColor),
+              ),
+            ),
+          ),
+          Center(
+            child: GestureDetector(
+              onTap: () {
+                if (!useIsPushed.value) {
+                  useIsPushed.value = true;
+                }
+              },
+              child: AnimatedSwitcher(
+                duration: const Duration(seconds: 0),
+                child: useIsPushed.value
+                    ? AnimatedBuilder(
+                        animation: animationController,
+                        builder: (context, child) {
+                          // アイコンの位置を取得
+                          final iconPosition =
+                              sequenceAnimation['iconPosition'].value;
 
-                      // アイコンの位置を計算
-                      final translateY =
-                          MediaQuery.of(context).size.height * iconPosition;
+                          // アイコンの位置を計算
+                          final translateY =
+                              MediaQuery.of(context).size.height * iconPosition;
 
-                      return Transform.translate(
-                        offset: Offset(0, translateY),
-                        child: child,
-                      );
-                    },
-                    child: const FaIcon(
-                      FontAwesomeIcons.droplet,
-                      color: MyColors.pinkColor,
-                      size: 180,
-                    ),
-                  )
-                : Container(
-                    padding: const EdgeInsets.only(bottom: kToolbarHeight),
-                    height: MediaQuery.of(context).size.height * 0.8,
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    child: const Card(
-                      shape: CircleBorder(),
-                      elevation: 6.0,
-                      color: Colors.white,
-                      child: Center(
-                        child: FaIcon(
+                          return Transform.translate(
+                            offset: Offset(0, translateY),
+                            child: child,
+                          );
+                        },
+                        child: const FaIcon(
                           FontAwesomeIcons.droplet,
                           color: MyColors.pinkColor,
                           size: 180,
                         ),
+                      )
+                    : Container(
+                        padding: const EdgeInsets.only(bottom: kToolbarHeight),
+                        height: mediaQuery.height * 0.8,
+                        width: mediaQuery.width * 0.8,
+                        child: const Card(
+                          shape: CircleBorder(),
+                          elevation: 6.0,
+                          color: Colors.white,
+                          child: Center(
+                            child: FaIcon(
+                              FontAwesomeIcons.droplet,
+                              color: MyColors.pinkColor,
+                              size: 180,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
+              ),
+            ),
           ),
-        ),
+        ],
       ),
+      floatingActionButton: useIsPushed.value
+          ? null
+          : FloatingActionButton(
+              onPressed: () {},
+              backgroundColor: Colors.white,
+              child: const Icon(
+                Icons.camera_alt_outlined,
+                color: MyColors.loaderColor,
+              ),
+            ),
     );
   }
 }
