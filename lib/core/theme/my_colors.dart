@@ -5,7 +5,7 @@ class MyColors {
   static const whiteColor = Color(0XFFF8F8F8);
   static const blackColor = Color(0xFF010101);
   static const brownColor = Color(0xFF8c3333);
-  static const loaderColor = Color(0xFFA2C579);
+  static const lightGreen = Color(0xFFA2C579);
   static const pinkColor = Color(0xFFFF6969);
   static const yellowColor = Color(0xFFF2EE9D);
   static var redColor = Colors.red;

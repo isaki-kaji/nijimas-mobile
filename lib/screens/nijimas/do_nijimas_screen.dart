@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/core/constants/constants.dart';
 import 'package:nijimas/core/theme/my_colors.dart';
 import 'package:nijimas/core/theme/text_styles.dart';
+import 'package:nijimas/core/utils.dart';
 
 class DoNijimasScreen extends HookConsumerWidget {
   const DoNijimasScreen({super.key});
@@ -156,11 +157,11 @@ class DoNijimasScreen extends HookConsumerWidget {
       floatingActionButton: useIsPushed.value
           ? null
           : FloatingActionButton(
-              onPressed: () {},
+              onPressed: () => showErrorSnackBar(context),
               backgroundColor: Colors.white,
               child: const Icon(
                 Icons.camera_alt_outlined,
-                color: MyColors.loaderColor,
+                color: MyColors.lightGreen,
               ),
             ),
     );

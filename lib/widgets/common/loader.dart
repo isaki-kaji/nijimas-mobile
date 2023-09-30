@@ -9,6 +9,6 @@ class Loader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
         child: LoadingAnimationWidget.inkDrop(
-            color: MyColors.loaderColor, size: 50));
+            color: MyColors.lightGreen, size: 50));
   }
 }
