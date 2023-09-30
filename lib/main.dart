@@ -8,7 +8,7 @@ import 'package:nijimas/core/router/router.dart';
 import 'package:nijimas/core/theme/my_colors.dart';
 import 'package:nijimas/controllers/auth_controller.dart';
 import 'package:nijimas/firebase_options.dart';
-import 'package:nijimas/models/user_model.dart';
+import 'package:nijimas/models/user_model/user_model.dart';
 import 'package:nijimas/widgets/common/error_text.dart';
 import 'package:nijimas/widgets/common/loader.dart';
 import 'package:routemaster/routemaster.dart';

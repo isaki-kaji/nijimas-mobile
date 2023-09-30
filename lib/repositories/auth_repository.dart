@@ -7,7 +7,7 @@ import 'package:nijimas/core/constants/firebase_constants.dart';
 import 'package:nijimas/core/failure.dart';
 import 'package:nijimas/core/providers/firebase_providers.dart';
 import 'package:nijimas/core/type_defs.dart';
-import 'package:nijimas/models/user_model.dart';
+import 'package:nijimas/models/user_model/user_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final authRepositoryProvider = Provider(
