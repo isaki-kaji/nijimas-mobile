@@ -44,3 +44,7 @@ class DoNijimasScreen extends HookConsumerWidget {
     );
   }
 }
+
+
+//同じアイコンをスタックさせておいてその位置を変える!!
+//ボタンタップと同時にFloatingActionButtonを消す!!
