@@ -1,9 +1,12 @@
+import 'package:blinking_text/blinking_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_sequence_animation/flutter_sequence_animation.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nijimas/core/constants/constants.dart';
 import 'package:nijimas/core/theme/my_colors.dart';
+import 'package:nijimas/core/theme/text_styles.dart';
 
 class DoNijimasScreen extends HookConsumerWidget {
   const DoNijimasScreen({super.key});
@@ -22,13 +25,13 @@ class DoNijimasScreen extends HookConsumerWidget {
         .addAnimatable(
           animatable: Tween<double>(begin: 0, end: 1),
           from: const Duration(seconds: 0),
-          to: const Duration(seconds: 4),
+          to: const Duration(seconds: 2),
           tag: "iconPosition",
         )
         .addAnimatable(
             animatable: Tween<double>(begin: 0, end: mediaQuery.height * 0.8),
-            from: const Duration(milliseconds: 1600),
-            to: const Duration(milliseconds: 1900),
+            from: const Duration(milliseconds: 800),
+            to: const Duration(milliseconds: 1100),
             tag: "waterLevel")
         .animate(animationController);
 
@@ -48,24 +51,52 @@ class DoNijimasScreen extends HookConsumerWidget {
             child: AnimatedBuilder(
               animation: animationController,
               builder: (context, child) {
-                return Container(
-                  color: MyColors.pinkColor,
-                  height: sequenceAnimation['waterLevel'].value,
-                  width: mediaQuery.width,
+                final waterLevel = sequenceAnimation['waterLevel'].value;
+                return GestureDetector(
+                  onTap: () {
+                    if (useIsPushed.value) {
+                      useIsPushed.value = false;
+                      animationController.reset();
+                    }
+                  },
+                  child: Container(
+                    color: MyColors.pinkColor,
+                    height: waterLevel,
+                    width: mediaQuery.width,
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom: mediaQuery.height * 0.1),
+                      child: (waterLevel >= mediaQuery.height * 0.8)
+                          ? Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 40.0, vertical: 30),
+                                  child: Text(
+                                    Constants.doNijimasDescription,
+                                    style: TextStyles.description(15),
+                                  ),
+                                ),
+                                BlinkText(
+                                  "push",
+                                  style: TextStyles.push(),
+                                  beginColor: MyColors.pinkColor,
+                                  endColor: MyColors.whiteColor,
+                                  duration: const Duration(seconds: 1),
+                                ),
+                              ],
+                            )
+                          : null,
+                    ),
+                  ),
                 );
               },
             ),
           ),
-          const Center(
+          Center(
             child: Padding(
-              padding: EdgeInsets.only(bottom: kToolbarHeight),
-              child: Text(
-                "Nijimas!!",
-                style: TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                    color: MyColors.whiteColor),
-              ),
+              padding: const EdgeInsets.only(bottom: kToolbarHeight),
+              child: Text("Nijimas!!", style: TextStyles.title(60)),
             ),
           ),
           Center(
