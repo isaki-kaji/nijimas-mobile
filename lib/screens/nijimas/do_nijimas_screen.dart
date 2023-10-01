@@ -157,7 +157,7 @@ class DoNijimasScreen extends HookConsumerWidget {
       floatingActionButton: useIsPushed.value
           ? null
           : FloatingActionButton(
-              onPressed: () => showErrorSnackBar(context),
+              onPressed: () {},
               backgroundColor: Colors.white,
               child: const Icon(
                 Icons.camera_alt_outlined,
