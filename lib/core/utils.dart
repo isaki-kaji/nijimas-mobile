@@ -1,5 +1,6 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:nijimas/core/theme/my_colors.dart';
 
 void showErrorSnackBar(BuildContext context) {
@@ -30,4 +31,12 @@ void showSuccessSnackBar(BuildContext context, String message) {
         contentType: ContentType.success,
       ),
     ));
+}
+
+Future<void> checkLocationPermission() async {
+  final locationPermission = await Geolocator.checkPermission();
+
+  if (locationPermission == LocationPermission.denied) {
+    await Geolocator.requestPermission();
+  }
 }

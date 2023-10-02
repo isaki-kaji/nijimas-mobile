@@ -9,6 +9,9 @@ import 'package:nijimas/core/theme/my_colors.dart';
 import 'package:nijimas/core/theme/text_styles.dart';
 import 'package:nijimas/core/utils.dart';
 
+//レンダリングしたときに現在地が本日登録済みかを読み取る
+//waterに魚が泳ぐアニメーションをつけたい
+
 class DoNijimasScreen extends HookConsumerWidget {
   const DoNijimasScreen({super.key});
 
@@ -42,6 +45,11 @@ class DoNijimasScreen extends HookConsumerWidget {
       }
       return null;
     }, [useIsPushed.value]);
+
+    useEffect(() {
+      checkLocationPermission();
+      return null;
+    }, []);
 
     return Scaffold(
       appBar: AppBar(),
@@ -95,9 +103,17 @@ class DoNijimasScreen extends HookConsumerWidget {
             ),
           ),
           Center(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: kToolbarHeight),
-              child: Text("Nijimas!!", style: TextStyles.title(60)),
+            child: GestureDetector(
+              onTap: () {
+                if (useIsPushed.value) {
+                  useIsPushed.value = false;
+                  animationController.reset();
+                }
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: kToolbarHeight),
+                child: Text("Nijimas!!", style: TextStyles.title(60)),
+              ),
             ),
           ),
           Center(

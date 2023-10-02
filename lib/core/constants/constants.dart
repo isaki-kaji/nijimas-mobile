@@ -11,5 +11,5 @@ class Constants {
   static const tabPages = [NijimasPostScreen(), NijimasMapScreen()];
 
   static const doNijimasDescription =
-      "新たなニジマスログが登録されました。次はこのアプリのカメラから撮った写真をニジマスログに追加してみましょう。";
+      "新たなニジマスログが登録されました。次にこのアプリのカメラから撮った写真をあなたのニジマスログに追加してみましょう。";
 }
