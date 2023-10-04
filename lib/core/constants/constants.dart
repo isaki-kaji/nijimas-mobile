@@ -10,6 +10,8 @@ class Constants {
 
   static const tabPages = [NijimasPostScreen(), NijimasMapScreen()];
 
+  static const errorMessage = "何らかのエラーが発生しました。時間をおいて再度お試しください…";
+
   static const doNijimasDescription =
       "新たなニジマスログが登録されました。次にこのアプリのカメラから撮った写真をあなたのニジマスログに追加してみましょう。";
 }

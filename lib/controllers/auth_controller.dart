@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:nijimas/core/constants/constants.dart';
 import 'package:nijimas/core/providers/user_notifier_provider.dart';
 import 'package:nijimas/core/utils.dart';
 import 'package:nijimas/models/user_model/user_model.dart';
@@ -31,7 +32,8 @@ class AuthController extends Notifier<bool> {
     state = true;
     final user = await _authRepository.signInWithGoogle();
     state = false;
-    user.fold((l) => showErrorSnackBar(context), (userModel) {
+    user.fold((l) => showErrorSnackBar(context, Constants.errorMessage),
+        (userModel) {
       _ref.read(userProvider.notifier).update(userModel);
     });
   }
@@ -41,7 +43,7 @@ class AuthController extends Notifier<bool> {
     final user = await _authRepository.signInAsGuest();
     state = false;
     user.fold(
-      (l) => showErrorSnackBar(context),
+      (l) => showErrorSnackBar(context, Constants.errorMessage),
       (userModel) => _ref.read(userProvider.notifier).update(userModel),
     );
   }

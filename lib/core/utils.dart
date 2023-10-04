@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:nijimas/core/theme/my_colors.dart';
 
-void showErrorSnackBar(BuildContext context) {
+void showErrorSnackBar(BuildContext context, String message) {
   ScaffoldMessenger.of(context)
     ..hideCurrentSnackBar()
     ..showSnackBar(SnackBar(
@@ -12,7 +12,7 @@ void showErrorSnackBar(BuildContext context) {
       content: AwesomeSnackbarContent(
         title: 'Oh no!',
         color: MyColors.pinkColor,
-        message: '何らかのエラーが発生しました。時間をおいて再度お試しください…',
+        message: message,
         contentType: ContentType.failure,
       ),
     ));
@@ -33,10 +33,10 @@ void showSuccessSnackBar(BuildContext context, String message) {
     ));
 }
 
-Future<void> checkLocationPermission() async {
+Future<LocationPermission> checkLocationPermission() async {
   final locationPermission = await Geolocator.checkPermission();
-
   if (locationPermission == LocationPermission.denied) {
     await Geolocator.requestPermission();
   }
+  return locationPermission;
 }

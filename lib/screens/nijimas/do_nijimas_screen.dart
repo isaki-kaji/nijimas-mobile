@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_sequence_animation/flutter_sequence_animation.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/core/constants/constants.dart';
 import 'package:nijimas/core/theme/my_colors.dart';
 import 'package:nijimas/core/theme/text_styles.dart';
 import 'package:nijimas/core/utils.dart';
+import 'package:routemaster/routemaster.dart';
 
 //レンダリングしたときに現在地が本日登録済みかを読み取る
 //waterに魚が泳ぐアニメーションをつけたい
@@ -47,7 +49,12 @@ class DoNijimasScreen extends HookConsumerWidget {
     }, [useIsPushed.value]);
 
     useEffect(() {
-      checkLocationPermission();
+      checkLocationPermission().then((locationPermission) {
+        if (locationPermission == LocationPermission.denied) {
+          showErrorSnackBar(context, Constants.errorMessage);
+          Routemaster.of(context).pop();
+        }
+      });
       return null;
     }, []);
 
