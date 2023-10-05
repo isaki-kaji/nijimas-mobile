@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
-class Post {
+class NijimasPost {
   String id;
   String uid;
   GeoPoint geoPoint;
@@ -12,7 +12,7 @@ class Post {
   int favoriteCount;
   List<String> tags;
   DateTime createdAt;
-  Post({
+  NijimasPost({
     required this.id,
     required this.uid,
     required this.geoPoint,
@@ -24,7 +24,7 @@ class Post {
     required this.createdAt,
   });
 
-  Post copyWith({
+  NijimasPost copyWith({
     String? id,
     String? uid,
     GeoPoint? geoPoint,
@@ -35,7 +35,7 @@ class Post {
     List<String>? tags,
     DateTime? createdAt,
   }) {
-    return Post(
+    return NijimasPost(
       id: id ?? this.id,
       uid: uid ?? this.uid,
       geoPoint: geoPoint ?? this.geoPoint,
@@ -65,8 +65,8 @@ class Post {
     };
   }
 
-  factory Post.fromMap(Map<String, dynamic> map) {
-    return Post(
+  factory NijimasPost.fromMap(Map<String, dynamic> map) {
+    return NijimasPost(
       id: map['id'] ?? '',
       uid: map['uid'] ?? '',
       geoPoint: GeoPoint(
@@ -84,7 +84,8 @@ class Post {
 
   String toJson() => json.encode(toMap());
 
-  factory Post.fromJson(String source) => Post.fromMap(json.decode(source));
+  factory NijimasPost.fromJson(String source) =>
+      NijimasPost.fromMap(json.decode(source));
 
   @override
   String toString() {
@@ -95,7 +96,7 @@ class Post {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is Post &&
+    return other is NijimasPost &&
         other.id == id &&
         other.uid == uid &&
         other.geoPoint == geoPoint &&
