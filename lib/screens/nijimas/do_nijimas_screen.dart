@@ -124,55 +124,61 @@ class DoNijimasScreen extends HookConsumerWidget {
             ),
           ),
           Center(
-            child: GestureDetector(
-              onTap: () {
-                if (!useIsPushed.value) {
-                  useIsPushed.value = true;
-                }
-              },
-              child: AnimatedSwitcher(
-                duration: const Duration(seconds: 0),
-                child: useIsPushed.value
-                    ? AnimatedBuilder(
-                        animation: animationController,
-                        builder: (context, child) {
-                          // アイコンの位置を取得
-                          final iconPosition =
-                              sequenceAnimation['iconPosition'].value;
+            child: Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    if (!useIsPushed.value) {
+                      useIsPushed.value = true;
+                    }
+                  },
+                  child: AnimatedSwitcher(
+                    duration: const Duration(seconds: 0),
+                    child: useIsPushed.value
+                        ? AnimatedBuilder(
+                            animation: animationController,
+                            builder: (context, child) {
+                              // アイコンの位置を取得
+                              final iconPosition =
+                                  sequenceAnimation['iconPosition'].value;
 
-                          // アイコンの位置を計算
-                          final translateY =
-                              MediaQuery.of(context).size.height * iconPosition;
+                              // アイコンの位置を計算
+                              final translateY =
+                                  MediaQuery.of(context).size.height *
+                                      iconPosition;
 
-                          return Transform.translate(
-                            offset: Offset(0, translateY),
-                            child: child,
-                          );
-                        },
-                        child: const FaIcon(
-                          FontAwesomeIcons.droplet,
-                          color: MyColors.pinkColor,
-                          size: 180,
-                        ),
-                      )
-                    : Container(
-                        padding: const EdgeInsets.only(bottom: kToolbarHeight),
-                        height: mediaQuery.height * 0.8,
-                        width: mediaQuery.width * 0.8,
-                        child: const Card(
-                          shape: CircleBorder(),
-                          elevation: 6.0,
-                          color: Colors.white,
-                          child: Center(
-                            child: FaIcon(
+                              return Transform.translate(
+                                offset: Offset(0, translateY),
+                                child: child,
+                              );
+                            },
+                            child: const FaIcon(
                               FontAwesomeIcons.droplet,
                               color: MyColors.pinkColor,
                               size: 180,
                             ),
+                          )
+                        : Container(
+                            padding:
+                                const EdgeInsets.only(bottom: kToolbarHeight),
+                            height: mediaQuery.height * 0.8,
+                            width: mediaQuery.width * 0.8,
+                            child: const Card(
+                              shape: CircleBorder(),
+                              elevation: 6.0,
+                              color: Colors.white,
+                              child: Center(
+                                child: FaIcon(
+                                  FontAwesomeIcons.droplet,
+                                  color: MyColors.pinkColor,
+                                  size: 180,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-              ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
