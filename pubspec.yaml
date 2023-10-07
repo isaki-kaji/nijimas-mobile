@@ -56,6 +56,7 @@ dependencies:
   flutter_sequence_animation: ^4.0.0
   blinking_text: ^1.0.2
   geolocator: ^10.1.0
+  toggle_switch: ^2.1.0
 
 dev_dependencies:
   flutter_test:

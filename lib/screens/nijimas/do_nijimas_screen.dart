@@ -10,6 +10,7 @@ import 'package:nijimas/core/theme/my_colors.dart';
 import 'package:nijimas/core/theme/text_styles.dart';
 import 'package:nijimas/core/utils.dart';
 import 'package:routemaster/routemaster.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 //レンダリングしたときに現在地が本日登録済みかを読み取る
 //waterに魚が泳ぐアニメーションをつけたい
@@ -20,8 +21,8 @@ class DoNijimasScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final mediaQuery = MediaQuery.of(context).size;
-
     final useIsPushed = useState(false);
+    bool isPublic = true;
 
     final animationController = useAnimationController(
       duration: const Duration(seconds: 5),
@@ -110,23 +111,15 @@ class DoNijimasScreen extends HookConsumerWidget {
             ),
           ),
           Center(
-            child: GestureDetector(
-              onTap: () {
-                if (useIsPushed.value) {
-                  useIsPushed.value = false;
-                  animationController.reset();
-                }
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: kToolbarHeight),
-                child: Text("Nijimas!!", style: TextStyles.title(60)),
-              ),
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: kToolbarHeight),
+              child: Text("Nijimas!!", style: TextStyles.title(60)),
             ),
           ),
-          Center(
-            child: Column(
-              children: [
-                GestureDetector(
+          SizedBox(
+              width: double.infinity,
+              child: Center(
+                child: GestureDetector(
                   onTap: () {
                     if (!useIsPushed.value) {
                       useIsPushed.value = true;
@@ -163,24 +156,58 @@ class DoNijimasScreen extends HookConsumerWidget {
                                 const EdgeInsets.only(bottom: kToolbarHeight),
                             height: mediaQuery.height * 0.8,
                             width: mediaQuery.width * 0.8,
-                            child: const Card(
-                              shape: CircleBorder(),
-                              elevation: 6.0,
-                              color: Colors.white,
-                              child: Center(
-                                child: FaIcon(
-                                  FontAwesomeIcons.droplet,
-                                  color: MyColors.pinkColor,
-                                  size: 180,
+                            //ここを変える、ジェスチャーを付け替える
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    if (!useIsPushed.value) {
+                                      useIsPushed.value = true;
+                                    }
+                                  },
+                                  child: const SizedBox(
+                                    height: 280,
+                                    child: Card(
+                                      shape: CircleBorder(),
+                                      elevation: 6.0,
+                                      color: Colors.white,
+                                      child: Center(
+                                        child: FaIcon(
+                                          FontAwesomeIcons.droplet,
+                                          color: MyColors.pinkColor,
+                                          size: 180,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                const SizedBox(height: 30),
+                                ToggleSwitch(
+                                  minWidth: 90.0,
+                                  initialLabelIndex: 1,
+                                  cornerRadius: 20.0,
+                                  activeFgColor: Colors.white,
+                                  inactiveBgColor: Colors.grey,
+                                  inactiveFgColor: Colors.white,
+                                  totalSwitches: 2,
+                                  labels: const ['Private', 'Public'],
+                                  activeBgColors: const [
+                                    [MyColors.pinkColor],
+                                    [MyColors.pinkColor]
+                                  ],
+                                  onToggle: (index) {
+                                    (index == 1)
+                                        ? isPublic = true
+                                        : isPublic = false;
+                                  },
+                                ),
+                              ],
                             ),
                           ),
                   ),
                 ),
-              ],
-            ),
-          ),
+              )),
         ],
       ),
       floatingActionButton: useIsPushed.value

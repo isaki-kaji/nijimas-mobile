@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 
 class NijimasPost {
   String id;
@@ -10,6 +8,7 @@ class NijimasPost {
   List<String> imageUrls;
   List<String> favoriteUids;
   int favoriteCount;
+  bool isPublic;
   List<String> tags;
   DateTime createdAt;
   NijimasPost({
@@ -20,6 +19,7 @@ class NijimasPost {
     required this.imageUrls,
     required this.favoriteUids,
     required this.favoriteCount,
+    required this.isPublic,
     required this.tags,
     required this.createdAt,
   });
@@ -32,6 +32,7 @@ class NijimasPost {
     List<String>? imageUrls,
     List<String>? favoriteUids,
     int? favoriteCount,
+    bool? isPublic,
     List<String>? tags,
     DateTime? createdAt,
   }) {
@@ -43,6 +44,7 @@ class NijimasPost {
       imageUrls: imageUrls ?? this.imageUrls,
       favoriteUids: favoriteUids ?? this.favoriteUids,
       favoriteCount: favoriteCount ?? this.favoriteCount,
+      isPublic: isPublic ?? this.isPublic,
       tags: tags ?? this.tags,
       createdAt: createdAt ?? this.createdAt,
     );
@@ -77,47 +79,9 @@ class NijimasPost {
       imageUrls: List<String>.from(map['imageUrls']),
       favoriteUids: List<String>.from(map['favoriteUids']),
       favoriteCount: map['favoriteCount']?.toInt() ?? 0,
+      isPublic: map['isPublic'] ?? true,
       tags: List<String>.from(map['tags']),
       createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt']),
     );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory NijimasPost.fromJson(String source) =>
-      NijimasPost.fromMap(json.decode(source));
-
-  @override
-  String toString() {
-    return 'Post(id: $id, uid: $uid, geoPoint: $geoPoint, text: $text, imageUrls: $imageUrls, favoriteUids: $favoriteUids, favoriteCount: $favoriteCount, tags: $tags, createdAt: $createdAt)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is NijimasPost &&
-        other.id == id &&
-        other.uid == uid &&
-        other.geoPoint == geoPoint &&
-        other.text == text &&
-        listEquals(other.imageUrls, imageUrls) &&
-        listEquals(other.favoriteUids, favoriteUids) &&
-        other.favoriteCount == favoriteCount &&
-        listEquals(other.tags, tags) &&
-        other.createdAt == createdAt;
-  }
-
-  @override
-  int get hashCode {
-    return id.hashCode ^
-        uid.hashCode ^
-        geoPoint.hashCode ^
-        text.hashCode ^
-        imageUrls.hashCode ^
-        favoriteUids.hashCode ^
-        favoriteCount.hashCode ^
-        tags.hashCode ^
-        createdAt.hashCode;
   }
 }
