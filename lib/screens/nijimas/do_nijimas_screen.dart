@@ -5,6 +5,7 @@ import 'package:flutter_sequence_animation/flutter_sequence_animation.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nijimas/controllers/nijimas_controller.dart';
 import 'package:nijimas/core/constants/constants.dart';
 import 'package:nijimas/core/theme/my_colors.dart';
 import 'package:nijimas/core/theme/text_styles.dart';
@@ -23,6 +24,15 @@ class DoNijimasScreen extends HookConsumerWidget {
     final mediaQuery = MediaQuery.of(context).size;
     final useIsPushed = useState(false);
     bool isPublic = true;
+
+    void doNijimas() async {
+      final isPushed = await ref
+          .read(nijimasControllerProvider.notifier)
+          .doNijimas(context: context, isPublic: isPublic);
+      if (isPushed) {
+        useIsPushed.value = true;
+      }
+    }
 
     final animationController = useAnimationController(
       duration: const Duration(seconds: 5),
@@ -156,14 +166,13 @@ class DoNijimasScreen extends HookConsumerWidget {
                                 const EdgeInsets.only(bottom: kToolbarHeight),
                             height: mediaQuery.height * 0.8,
                             width: mediaQuery.width * 0.8,
-                            //ここを変える、ジェスチャーを付け替える
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 GestureDetector(
                                   onTap: () {
                                     if (!useIsPushed.value) {
-                                      useIsPushed.value = true;
+                                      doNijimas();
                                     }
                                   },
                                   child: const SizedBox(
