@@ -14,5 +14,5 @@ final loggedInRoute = RouteMap(routes: {
           child: UserProfileScreen(
         uid: routeData.pathParameters['uid']!,
       )),
-  "/do-nijimas": (_) => MaterialPage(child: DoNijimasScreen())
+  "/do-nijimas": (_) => const MaterialPage(child: DoNijimasScreen())
 });

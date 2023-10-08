@@ -5,7 +5,7 @@ import 'package:nijimas/core/constants/constants.dart';
 import 'package:nijimas/core/providers/storage_repository_provider.dart';
 import 'package:nijimas/core/providers/user_notifier_provider.dart';
 import 'package:nijimas/core/utils.dart';
-import 'package:nijimas/models/post_model/nijimas_post_model.dart';
+import 'package:nijimas/models/nijimas_model.dart';
 import 'package:nijimas/repositories/nijimas_repository.dart';
 import 'package:uuid/uuid.dart';
 
@@ -31,22 +31,18 @@ class NijimasController extends Notifier<bool> {
   }) async {
     bool isPushed = false;
     state = true;
-    String postId = const Uuid().v1();
+    String nijimasId = const Uuid().v1();
     final user = ref.watch(userProvider);
 
-    final nijimasPost = NijimasPost(
-      id: postId,
+    final nijimas = Nijimas(
+      nijimasId: nijimasId,
       uid: user!.uid,
-      geoPoint: GeoPoint(22.2, 22.2),
-      imageUrls: [],
-      favoriteUids: [],
-      favoriteCount: 0,
-      isPublic: isPublic,
-      tags: [],
+      geoPoint: const GeoPoint(22.2, 22.2),
+      section: "kaidori",
       createdAt: DateTime.now(),
     );
 
-    final res = await _nijimasRepository.doNijimas(nijimasPost);
+    final res = await _nijimasRepository.doNijimas(nijimas);
 
     state = false;
 

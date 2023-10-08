@@ -5,7 +5,7 @@ import 'package:nijimas/core/constants/firebase_constants.dart';
 import 'package:nijimas/core/failure.dart';
 import 'package:nijimas/core/providers/firebase_providers.dart';
 import 'package:nijimas/core/type_defs.dart';
-import 'package:nijimas/models/post_model/nijimas_post_model.dart';
+import 'package:nijimas/models/nijimas_model.dart';
 
 final nijimasRepositoryProvider = Provider<NijimasRepository>((ref) {
   return NijimasRepository(firestore: ref.watch(firestoreProvider));
@@ -17,12 +17,12 @@ class NijimasRepository {
     required FirebaseFirestore firestore,
   }) : _firestore = firestore;
 
-  CollectionReference get _posts =>
-      _firestore.collection(FirebaseConstants.postsCollection);
+  CollectionReference get _nijimas =>
+      _firestore.collection(FirebaseConstants.nijimasCollection);
 
-  FutureVoid doNijimas(NijimasPost post) async {
+  FutureVoid doNijimas(Nijimas nijimas) async {
     try {
-      return right(_posts.doc(post.id).set(post.toMap()));
+      return right(_nijimas.doc(nijimas.nijimasId).set(nijimas.toMap()));
     } on FirebaseException catch (e) {
       return left(Failure(e.toString()));
     }

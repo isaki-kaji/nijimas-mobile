@@ -3,15 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_sequence_animation/flutter_sequence_animation.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/controllers/nijimas_controller.dart';
 import 'package:nijimas/core/constants/constants.dart';
 import 'package:nijimas/core/theme/my_colors.dart';
 import 'package:nijimas/core/theme/text_styles.dart';
-import 'package:nijimas/core/utils.dart';
 import 'package:nijimas/widgets/common/loader.dart';
-import 'package:routemaster/routemaster.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 //レンダリングしたときに現在地が本日登録済みかを読み取る
@@ -25,6 +22,7 @@ class DoNijimasScreen extends HookConsumerWidget {
     final mediaQuery = MediaQuery.of(context).size;
     final useIsPushed = useState(false);
     bool isPublic = true;
+    bool doneNijimas = false;
     final isLoading = ref.watch(nijimasControllerProvider);
 
     void doNijimas() async {
@@ -61,16 +59,6 @@ class DoNijimasScreen extends HookConsumerWidget {
       return null;
     }, [useIsPushed.value]);
 
-    useEffect(() {
-      checkLocationPermission().then((locationPermission) {
-        if (locationPermission == LocationPermission.denied) {
-          showErrorSnackBar(context, Constants.errorMessage);
-          Routemaster.of(context).pop();
-        }
-      });
-      return null;
-    }, []);
-
     return Scaffold(
       appBar: AppBar(),
       body: isLoading
@@ -85,10 +73,7 @@ class DoNijimasScreen extends HookConsumerWidget {
                       final waterLevel = sequenceAnimation['waterLevel'].value;
                       return GestureDetector(
                         onTap: () {
-                          if (useIsPushed.value) {
-                            useIsPushed.value = false;
-                            animationController.reset();
-                          }
+                          if (useIsPushed.value) {}
                         },
                         child: Container(
                           color: MyColors.pinkColor,

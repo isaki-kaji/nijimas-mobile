@@ -19,7 +19,6 @@ class HomeScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    print("build");
     final user = ref.watch(userProvider);
     final isGuest = !user!.isAuthenticated;
     final usePage = useState(0);

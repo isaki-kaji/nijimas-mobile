@@ -32,11 +32,3 @@ void showSuccessSnackBar(BuildContext context, String message) {
       ),
     ));
 }
-
-Future<LocationPermission> checkLocationPermission() async {
-  final locationPermission = await Geolocator.checkPermission();
-  if (locationPermission == LocationPermission.denied) {
-    await Geolocator.requestPermission();
-  }
-  return locationPermission;
-}
