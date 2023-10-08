@@ -62,6 +62,7 @@ class NijimasPost {
       'imageUrls': imageUrls,
       'favoriteUids': favoriteUids,
       'favoriteCount': favoriteCount,
+      'isPublic': isPublic,
       'tags': tags,
       'createdAt': createdAt.millisecondsSinceEpoch,
     };
