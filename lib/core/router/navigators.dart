@@ -13,4 +13,8 @@ class Navigators {
   static void toDoNijimas(BuildContext context) {
     Routemaster.of(context).push('/do-nijimas');
   }
+
+  static void toAddPost(BuildContext context, String nijimasId) {
+    Routemaster.of(context).push('/add-post/$nijimasId');
+  }
 }

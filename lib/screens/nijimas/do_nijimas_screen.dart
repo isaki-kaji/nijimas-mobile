@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/controllers/nijimas_controller.dart';
 import 'package:nijimas/core/constants/constants.dart';
+import 'package:nijimas/core/router/navigators.dart';
 import 'package:nijimas/core/theme/my_colors.dart';
 import 'package:nijimas/core/theme/text_styles.dart';
 import 'package:nijimas/widgets/common/error_text.dart';
@@ -72,7 +73,9 @@ class DoNijimasScreen extends HookConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Navigators.toAddPost(context, data.nijimasId);
+                          },
                           child: const SizedBox(
                             height: 280,
                             child: Card(

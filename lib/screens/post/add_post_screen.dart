@@ -6,6 +6,7 @@ class AddPostScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const Scaffold(body: Center(child: Text("add_post")));
+    return Scaffold(
+        appBar: AppBar(), body: const Center(child: Text("add_post")));
   }
 }
