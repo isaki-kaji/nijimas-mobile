@@ -27,4 +27,22 @@ class NijimasRepository {
       return left(Failure(e.toString()));
     }
   }
+
+  Stream<Nijimas?> getCurrentNijimas(String section, String uid) {
+    final now = DateTime.now().millisecondsSinceEpoch;
+    final twentyFourHoursAgo = now - (24 * 60 * 60 * 1000);
+    return _nijimas
+        .where('section', isEqualTo: section)
+        .where('uid', isEqualTo: uid)
+        .where('createdAt', isGreaterThanOrEqualTo: twentyFourHoursAgo)
+        .snapshots()
+        .map((snapshot) {
+      final docs = snapshot.docs;
+      if (docs.isNotEmpty) {
+        return Nijimas.fromMap(docs.first.data() as Map<String, dynamic>);
+      } else {
+        return null;
+      }
+    });
+  }
 }

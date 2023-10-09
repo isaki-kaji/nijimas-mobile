@@ -12,6 +12,12 @@ import 'package:uuid/uuid.dart';
 final nijimasControllerProvider =
     NotifierProvider<NijimasController, bool>(NijimasController.new);
 
+final getCurrentNijimasProvider = StreamProvider.family((ref, String section) {
+  return ref
+      .read(nijimasControllerProvider.notifier)
+      .getCurrentNijimas(section, ref.watch(userProvider)!.uid);
+});
+
 class NijimasController extends Notifier<bool> {
   late final NijimasRepository _nijimasRepository;
   late final StorageRepository _storageRepository;
@@ -50,5 +56,9 @@ class NijimasController extends Notifier<bool> {
         (r) => isPushed = true);
 
     return isPushed;
+  }
+
+  Stream<Nijimas?> getCurrentNijimas(String section, String uid) {
+    return _nijimasRepository.getCurrentNijimas(section, uid);
   }
 }
