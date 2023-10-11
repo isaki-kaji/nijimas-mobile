@@ -14,4 +14,6 @@ class Constants {
 
   static const doNijimasDescription =
       "新たなニジマスログが登録されました。次はこの区画内で起こった出来事を投稿してみましょう。";
+
+  static const addTagDescription = "登録できるタグは3つまでです。";
 }
