@@ -10,7 +10,7 @@ class Post {
   GeoPoint geoPoint;
   String section;
   String? text;
-  List<String> imageUrls;
+  List<String>? imageUrls;
   List<String> favoriteUids;
   int favoriteCount;
   bool isPublic;

@@ -28,6 +28,7 @@ class PostController extends Notifier<bool> {
       required Nijimas doneNijimas,
       required bool isPublic,
       String? text,
+      List<String>? imageUrls,
       required List<String> tags}) async {
     state = true;
     String postId = const Uuid().v1();
@@ -40,7 +41,7 @@ class PostController extends Notifier<bool> {
         geoPoint: doneNijimas.geoPoint,
         section: doneNijimas.section,
         text: text,
-        imageUrls: [],
+        imageUrls: imageUrls,
         favoriteUids: [],
         favoriteCount: 0,
         isPublic: isPublic,
