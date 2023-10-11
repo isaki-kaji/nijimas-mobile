@@ -11,7 +11,6 @@ import 'package:nijimas/core/theme/my_colors.dart';
 import 'package:nijimas/core/theme/text_styles.dart';
 import 'package:nijimas/widgets/common/error_text.dart';
 import 'package:nijimas/widgets/common/loader.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 
 //レンダリングしたときに現在地が本日登録済みかを読み取る
 //→getSectionする。
@@ -93,23 +92,23 @@ class DoNijimasScreen extends HookConsumerWidget {
                           ),
                         ),
                         const SizedBox(height: 30),
-                        ToggleSwitch(
-                          minWidth: 90.0,
-                          initialLabelIndex: 1,
-                          cornerRadius: 20.0,
-                          activeFgColor: Colors.white,
-                          inactiveBgColor: Colors.grey,
-                          inactiveFgColor: Colors.white,
-                          totalSwitches: 2,
-                          labels: const ['Private', 'Public'],
-                          activeBgColors: const [
-                            [MyColors.pinkColor],
-                            [MyColors.pinkColor]
-                          ],
-                          onToggle: (index) {
-                            (index == 1) ? isPublic = true : isPublic = false;
-                          },
-                        ),
+                        // ToggleSwitch(
+                        //   minWidth: 90.0,
+                        //   initialLabelIndex: 1,
+                        //   cornerRadius: 20.0,
+                        //   activeFgColor: Colors.white,
+                        //   inactiveBgColor: Colors.grey,
+                        //   inactiveFgColor: Colors.white,
+                        //   totalSwitches: 2,
+                        //   labels: const ['Private', 'Public'],
+                        //   activeBgColors: const [
+                        //     [MyColors.pinkColor],
+                        //     [MyColors.pinkColor]
+                        //   ],
+                        //   onToggle: (index) {
+                        //     (index == 1) ? isPublic = true : isPublic = false;
+                        //   },
+                        // ),
                       ],
                     );
                   } else {

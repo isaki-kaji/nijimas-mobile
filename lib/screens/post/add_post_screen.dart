@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class AddPostScreen extends ConsumerWidget {
+//text,isPublic,tags,imageUrlsが入力可能
+
+class AddPostScreen extends HookConsumerWidget {
   const AddPostScreen({super.key});
 
   @override
