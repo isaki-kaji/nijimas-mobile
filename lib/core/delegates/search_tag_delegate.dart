@@ -1,29 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/controllers/tag_controller.dart';
-import 'package:nijimas/core/constants/constants.dart';
 import 'package:nijimas/widgets/common/error_text.dart';
-import 'package:nijimas/widgets/common/loader.dart';
+import 'package:nijimas/widgets/post/tag_list_tile.dart';
+import 'package:rxdart/rxdart.dart';
 
 class SearchTagDelegate extends SearchDelegate {
   final WidgetRef ref;
-  List<String> selectedTags = [];
-  SearchTagDelegate({required this.ref});
+  final void Function(String) addTag;
+  final _querySubject = BehaviorSubject<String>();
+
+  SearchTagDelegate({required this.ref, required this.addTag});
 
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
       IconButton(
-          onPressed: () {
-            query = "";
-          },
-          icon: const Icon(Icons.close))
+        onPressed: () {
+          query = "";
+          _querySubject.add(query);
+        },
+        icon: const Icon(Icons.close),
+      ),
     ];
   }
 
   @override
   Widget? buildLeading(BuildContext context) {
-    return null;
+    return IconButton(
+      icon: AnimatedIcon(
+        icon: AnimatedIcons.menu_arrow,
+        progress: transitionAnimation,
+      ),
+      onPressed: () {
+        close(context, null);
+      },
+    );
   }
 
   @override
@@ -33,30 +45,44 @@ class SearchTagDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return ref.watch(searchTagProvider(query)).when(
-        data: (tags) => ListView.builder(
-              itemCount: tags.length,
-              itemBuilder: (BuildContext context, int index) {
-                final tag = tags[index];
-                return ListTile(
-                    title: Text(tag),
-                    onTap: () => selectTag(context, tag, selectedTags));
-              },
-            ),
-        error: (error, stacktrace) => ErrorText(error: error.toString()),
-        loading: () => const Loader());
+    _querySubject.add(query);
+
+    return StreamBuilder<String>(
+      stream: _querySubject.debounceTime(const Duration(seconds: 1)),
+      builder: (context, snapshot) {
+        final delayedQuery = snapshot.data ?? '';
+        return ref.watch(searchTagProvider(delayedQuery)).when(
+            data: (tags) => ListView.builder(
+                  itemCount: tags.length + 1,
+                  itemBuilder: (BuildContext context, int index) {
+                    if (index == 0) {
+                      return null;
+                    }
+
+                    final tag = tags[index - 1];
+                    return TagListTile(
+                      tagName: tag.tagName,
+                      addTag: () {
+                        addTag(tag.tagName);
+                        close(context, tag.tagName);
+                      },
+                    );
+                  },
+                ),
+            error: (error, stacktrace) => ErrorText(error: error.toString()),
+            loading: () => TagListTile(
+                tagName: query,
+                addTag: () {
+                  addTag(query);
+                  close(context, query);
+                }));
+      },
+    );
   }
 
-  void selectTag(BuildContext context, String tag, List<String> selectedTags) {
-    if (selectedTags.contains(tag)) {
-      selectedTags.remove(tag);
-    } else {
-      if (selectedTags.length < 3) {
-        selectedTags.add(tag);
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text(Constants.addTagDescription)));
-      }
-    }
+  @override
+  void close(BuildContext context, result) {
+    _querySubject.close();
+    super.close(context, result);
   }
 }

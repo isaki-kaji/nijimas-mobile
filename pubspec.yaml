@@ -58,6 +58,8 @@ dependencies:
   geolocator: ^10.1.0
   toggle_switch: ^2.1.0
   uuid: ^3.0.7
+  textfield_search: ^0.10.0
+  rxdart: ^0.27.7
 
 dev_dependencies:
   flutter_test:
