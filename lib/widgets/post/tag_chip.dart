@@ -5,7 +5,7 @@ class TagChip extends StatelessWidget {
   final String tagName;
   final void Function(String) removeTag;
 
-  TagChip({Key? key, required this.tagName, required this.removeTag})
+  const TagChip({Key? key, required this.tagName, required this.removeTag})
       : super(key: key);
 
   @override

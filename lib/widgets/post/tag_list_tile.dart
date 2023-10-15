@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class TagListTile extends StatelessWidget {
-  String tagName;
-  void Function() addTag;
-  TagListTile({super.key, required this.tagName, required this.addTag});
+  final String tagName;
+  final void Function() addTag;
+  const TagListTile({super.key, required this.tagName, required this.addTag});
 
   @override
   Widget build(BuildContext context) {
