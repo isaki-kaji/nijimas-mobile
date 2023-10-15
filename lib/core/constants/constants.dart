@@ -1,5 +1,5 @@
+import 'package:nijimas/screens/feed/feed_screen.dart';
 import 'package:nijimas/screens/nijimas/nijimas_map_screen.dart';
-import 'package:nijimas/screens/nijimas/nijimas_post_screen.dart';
 
 class Constants {
   static const nijimasLogoPath = "assets/images/nijimas.png";
@@ -8,7 +8,7 @@ class Constants {
   static const defaultAvatarPath = "assets/images/avatar.png";
   static const defaultBannerPath = "assets/images/banner.png";
 
-  static const tabPages = [NijimasPostScreen(), NijimasMapScreen()];
+  static const tabPages = [FeedScreen(), NijimasMapScreen()];
 
   static const errorMessage = "何らかのエラーが発生しました。時間をおいて再度お試しください…";
 

@@ -5,6 +5,7 @@ import 'package:nijimas/core/constants/firebase_constants.dart';
 import 'package:nijimas/core/failure.dart';
 import 'package:nijimas/core/providers/firebase_providers.dart';
 import 'package:nijimas/core/type_defs.dart';
+import 'package:nijimas/models/tag_model/tag_model.dart';
 
 final tagRepositoryProvider = Provider<TagRepository>((ref) {
   return TagRepository(
@@ -21,9 +22,9 @@ class TagRepository {
   CollectionReference get _tags =>
       _firestore.collection(FirebaseConstants.tagsCollection);
 
-  FutureVoid addTag(String tag) async {
+  FutureVoid addTag(Tag tag) async {
     try {
-      return right(_tags.doc(tag).set({'tagId': tag}));
+      return right(_tags.doc(tag.tagName).set(tag.toJson()));
     } on FirebaseException catch (e) {
       throw e.message!;
     } catch (e) {
@@ -31,10 +32,10 @@ class TagRepository {
     }
   }
 
-  Stream<List<String>> searchTag(String query) {
+  Stream<List<Tag>> searchTag(String query) {
     return _tags
         .where(
-          "tagId",
+          "tagName",
           isGreaterThanOrEqualTo: query.isEmpty ? 0 : query,
           isLessThan: query.isEmpty
               ? null
@@ -45,9 +46,9 @@ class TagRepository {
         )
         .snapshots()
         .map((event) {
-      List<String> tags = [];
+      List<Tag> tags = [];
       for (var tag in event.docs) {
-        tags.add(tag.id); // tagIdだけをtagsに格納する
+        tags.add(Tag.fromMap(tag.data() as Map<String, dynamic>));
       }
       return tags;
     });
