@@ -101,6 +101,8 @@ class DoNijimasScreen extends HookConsumerWidget {
                                   if (data.isNotEmpty) {
                                     showErrorSnackBar(context,
                                         "本日の「$section」区画のNijimasは既に登録済みです。");
+                                  } else {
+                                    doNijimas();
                                   }
                                 },
                                 loading: () => const Loader(),

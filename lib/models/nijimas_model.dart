@@ -1,18 +1,21 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 
 class Nijimas {
   String nijimasId;
   String uid;
   GeoPoint geoPoint;
   String section;
+  List<String> photos;
   DateTime createdAt;
   Nijimas({
     required this.nijimasId,
     required this.uid,
     required this.geoPoint,
     required this.section,
+    required this.photos,
     required this.createdAt,
   });
 
@@ -21,6 +24,7 @@ class Nijimas {
     String? uid,
     GeoPoint? geoPoint,
     String? section,
+    List<String>? photos,
     DateTime? createdAt,
   }) {
     return Nijimas(
@@ -28,6 +32,7 @@ class Nijimas {
       uid: uid ?? this.uid,
       geoPoint: geoPoint ?? this.geoPoint,
       section: section ?? this.section,
+      photos: photos ?? this.photos,
       createdAt: createdAt ?? this.createdAt,
     );
   }
@@ -41,6 +46,7 @@ class Nijimas {
         'longitude': geoPoint.longitude,
       },
       'section': section,
+      'photos': photos,
       'createdAt': createdAt.millisecondsSinceEpoch,
     };
   }
@@ -54,6 +60,7 @@ class Nijimas {
         map['geoPoint']['latitude'] as double,
         map['geoPoint']['longitude'] as double,
       ),
+      photos: List<String>.from(map['photos']),
       createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt']),
     );
   }
@@ -65,7 +72,7 @@ class Nijimas {
 
   @override
   String toString() {
-    return 'Nijimas(nijimasId: $nijimasId, uid: $uid, geoPoint: $geoPoint, section: $section, createdAt: $createdAt)';
+    return 'Nijimas(nijimasId: $nijimasId, uid: $uid, geoPoint: $geoPoint, section: $section, photos: $photos, createdAt: $createdAt)';
   }
 
   @override
@@ -77,6 +84,7 @@ class Nijimas {
         other.uid == uid &&
         other.geoPoint == geoPoint &&
         other.section == section &&
+        listEquals(other.photos, photos) &&
         other.createdAt == createdAt;
   }
 
@@ -86,6 +94,7 @@ class Nijimas {
         uid.hashCode ^
         geoPoint.hashCode ^
         section.hashCode ^
+        photos.hashCode ^
         createdAt.hashCode;
   }
 }
