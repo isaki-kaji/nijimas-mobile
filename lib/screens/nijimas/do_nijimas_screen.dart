@@ -118,7 +118,11 @@ class DoNijimasScreen extends HookConsumerWidget {
                                                 .value = data.indexOf(nijimas),
                                             child: Card(
                                                 color: MyColors.whiteColor,
-                                                child: Text(nijimas.section)),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Text(nijimas.section),
+                                                )),
                                           ),
                                         );
                                       }).toList(),
