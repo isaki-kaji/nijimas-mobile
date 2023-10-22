@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:blinking_text/blinking_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -86,55 +88,79 @@ class DoNijimasScreen extends HookConsumerWidget {
           ? const Loader()
           //アニメーション中かどうかで最上位制御
           : !useIsInAnimation.value
-              ? Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    (useIsAddPostButton.value)
-                        ? CenterButton(
-                            icon: FontAwesomeIcons.plus,
-                            onTap: () => Navigators.toAddPost(context, "id"))
-                        : CenterButton(
-                            icon: FontAwesomeIcons.droplet,
-                            onTap: () {
-                              currentNijimas.when(
-                                data: (data) {
-                                  if (data.isNotEmpty) {
-                                    showErrorSnackBar(context,
-                                        "本日の「$section」区画のNijimasは既に登録済みです。");
-                                  } else {
-                                    doNijimas();
-                                  }
-                                },
-                                loading: () => const Loader(),
-                                error: (error, stackTrace) =>
-                                    ErrorText(error: error.toString()),
+              ? Stack(children: [
+                  (useIsAddPostButton.value)
+                      ? todayNijimas.when(
+                          data: (data) {
+                            if (data.isNotEmpty) {
+                              return Positioned(
+                                top: 60,
+                                child: Row(
+                                  children: data.map((nijimas) {
+                                    return Text(nijimas.section);
+                                  }).toList(),
+                                ),
                               );
-                            }),
-                    const SizedBox(height: 30),
-                    todayNijimas.when(
-                      data: (data) {
-                        if (data.isNotEmpty) {
-                          return IconButton(
-                            icon: const FaIcon(
-                              FontAwesomeIcons.rotate,
-                              color: MyColors.pinkColor,
-                              size: 30,
-                            ),
-                            onPressed: () {
-                              useIsAddPostButton.value =
-                                  !useIsAddPostButton.value;
-                            },
-                          );
-                        } else {
-                          return const SizedBox(height: 50);
-                        }
-                      },
-                      loading: () => const Loader(),
-                      error: (error, stackTrace) =>
-                          ErrorText(error: error.toString()),
-                    )
-                  ],
-                )
+                            } else {
+                              return const SizedBox();
+                            }
+                          },
+                          loading: () => const Loader(),
+                          error: (error, stackTrace) =>
+                              ErrorText(error: error.toString()),
+                        )
+                      : const SizedBox(),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      (useIsAddPostButton.value)
+                          ? CenterButton(
+                              icon: FontAwesomeIcons.plus,
+                              onTap: () => Navigators.toAddPost(context, "id"))
+                          : CenterButton(
+                              icon: FontAwesomeIcons.droplet,
+                              onTap: () {
+                                currentNijimas.when(
+                                  data: (data) {
+                                    if (data.isNotEmpty) {
+                                      showErrorSnackBar(context,
+                                          "本日の「$section」区画のNijimasは既に登録済みです。");
+                                    } else {
+                                      doNijimas();
+                                    }
+                                  },
+                                  loading: () => const Loader(),
+                                  error: (error, stackTrace) =>
+                                      ErrorText(error: error.toString()),
+                                );
+                              }),
+                      const SizedBox(height: 30),
+                      todayNijimas.when(
+                          data: (data) {
+                            if (data.isNotEmpty) {
+                              return IconButton(
+                                icon: const FaIcon(
+                                  FontAwesomeIcons.rotate,
+                                  color: MyColors.pinkColor,
+                                  size: 30,
+                                ),
+                                onPressed: () {
+                                  useIsAddPostButton.value =
+                                      !useIsAddPostButton.value;
+                                },
+                              );
+                            } else {
+                              return const SizedBox(height: 50);
+                            }
+                          },
+                          loading: () => const Loader(),
+                          error: (error, stackTrace) {
+                            print(error.toString());
+                            return ErrorText(error: error.toString());
+                          })
+                    ],
+                  ),
+                ])
               : Stack(
                   children: [
                     Positioned(
