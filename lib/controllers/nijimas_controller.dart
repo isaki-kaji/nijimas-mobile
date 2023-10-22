@@ -18,6 +18,12 @@ final getCurrentNijimasProvider = StreamProvider.family((ref, String section) {
       .getCurrentNijimas(section, ref.watch(userProvider)!.uid);
 });
 
+final getTodayNijimasProvider = StreamProvider((ref) {
+  return ref
+      .read(nijimasControllerProvider.notifier)
+      .getTodayNijimas(ref.watch(userProvider)!.uid);
+});
+
 class NijimasController extends Notifier<bool> {
   late final NijimasRepository _nijimasRepository;
   late final StorageRepository _storageRepository;
@@ -58,7 +64,11 @@ class NijimasController extends Notifier<bool> {
     return isPushed;
   }
 
-  Stream<Nijimas?> getCurrentNijimas(String section, String uid) {
+  Stream<List<Nijimas>> getCurrentNijimas(String section, String uid) {
     return _nijimasRepository.getCurrentNijimas(section, uid);
+  }
+
+  Stream<List<Nijimas>> getTodayNijimas(String uid) {
+    return _nijimasRepository.getTodayNijimas(uid);
   }
 }

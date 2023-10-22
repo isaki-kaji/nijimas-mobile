@@ -28,7 +28,7 @@ class NijimasRepository {
     }
   }
 
-  Stream<Nijimas?> getCurrentNijimas(String section, String uid) {
+  Stream<List<Nijimas>> getCurrentNijimas(String section, String uid) {
     final now = DateTime.now().millisecondsSinceEpoch;
     final twentyFourHoursAgo = now - (24 * 60 * 60 * 1000);
     return _nijimas
@@ -39,9 +39,30 @@ class NijimasRepository {
         .map((snapshot) {
       final docs = snapshot.docs;
       if (docs.isNotEmpty) {
-        return Nijimas.fromMap(docs.first.data() as Map<String, dynamic>);
+        return docs
+            .map((doc) => Nijimas.fromMap(doc.data() as Map<String, dynamic>))
+            .toList();
       } else {
-        return null;
+        return [];
+      }
+    });
+  }
+
+  Stream<List<Nijimas>> getTodayNijimas(String uid) {
+    final now = DateTime.now().millisecondsSinceEpoch;
+    final twentyFourHoursAgo = now - (24 * 60 * 60 * 1000);
+    return _nijimas
+        .where('uid', isEqualTo: uid)
+        .where('createdAt', isGreaterThanOrEqualTo: twentyFourHoursAgo)
+        .snapshots()
+        .map((snapshot) {
+      final docs = snapshot.docs;
+      if (docs.isNotEmpty) {
+        return docs
+            .map((doc) => Nijimas.fromMap(doc.data() as Map<String, dynamic>))
+            .toList();
+      } else {
+        return [];
       }
     });
   }
