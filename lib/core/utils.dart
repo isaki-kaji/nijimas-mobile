@@ -6,6 +6,7 @@ void showErrorSnackBar(BuildContext context, String message) {
   ScaffoldMessenger.of(context)
     ..hideCurrentSnackBar()
     ..showSnackBar(SnackBar(
+      padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
       backgroundColor: Colors.transparent,
       elevation: 0,
       content: AwesomeSnackbarContent(
@@ -21,6 +22,7 @@ void showSuccessSnackBar(BuildContext context, String message) {
   ScaffoldMessenger.of(context)
     ..hideCurrentSnackBar()
     ..showSnackBar(SnackBar(
+      padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
       backgroundColor: Colors.transparent,
       elevation: 0,
       content: AwesomeSnackbarContent(

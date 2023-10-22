@@ -9,6 +9,7 @@ import 'package:nijimas/core/constants/constants.dart';
 import 'package:nijimas/core/router/navigators.dart';
 import 'package:nijimas/core/theme/my_colors.dart';
 import 'package:nijimas/core/theme/text_styles.dart';
+import 'package:nijimas/core/utils.dart';
 import 'package:nijimas/widgets/common/error_text.dart';
 import 'package:nijimas/widgets/common/loader.dart';
 import 'package:nijimas/widgets/nijimas/center_button.dart';
@@ -24,11 +25,13 @@ class DoNijimasScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final mediaQuery = MediaQuery.of(context).size;
     final useIsInAnimation = useState(false);
+    final useIsAddPostButton = useState(false);
     bool isPublic = true;
     const section = "kaidori";
     final isLoading = ref.watch(nijimasControllerProvider);
 
     final currentNijimas = ref.watch(getCurrentNijimasProvider(section));
+    final todayNijimas = ref.watch(getTodayNijimasProvider);
 
     void doNijimas() async {
       final isPushed = await ref
@@ -64,75 +67,72 @@ class DoNijimasScreen extends HookConsumerWidget {
       return null;
     }, [useIsInAnimation.value]);
 
+    useEffect(() {
+      currentNijimas.when(
+        data: (data) {
+          if (data.isNotEmpty) {
+            useIsAddPostButton.value = true;
+          }
+        },
+        loading: () => const Loader(),
+        error: (error, stackTrace) => ErrorText(error: error.toString()),
+      );
+      return null;
+    }, []);
+
     return Scaffold(
       appBar: AppBar(),
       body: isLoading
           ? const Loader()
           //アニメーション中かどうかで最上位制御
           : !useIsInAnimation.value
-              ? ref.watch(getCurrentNijimasProvider(section)).when(
-                    data: (data) {
-                      if (data.isNotEmpty) {
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CenterButton(
-                                icon: FontAwesomeIcons.plus,
-                                onTap: () {
-                                  Navigators.toAddPost(context, "id");
-                                }),
-                            const SizedBox(height: 30),
-                            // ToggleSwitch(
-                            //   minWidth: 90.0,
-                            //   initialLabelIndex: 1,
-                            //   cornerRadius: 20.0,
-                            //   activeFgColor: Colors.white,
-                            //   inactiveBgColor: Colors.grey,
-                            //   inactiveFgColor: Colors.white,
-                            //   totalSwitches: 2,
-                            //   labels: const ['Private', 'Public'],
-                            //   activeBgColors: const [
-                            //     [MyColors.pinkColor],
-                            //     [MyColors.pinkColor]
-                            //   ],
-                            //   onToggle: (index) {
-                            //     (index == 1) ? isPublic = true : isPublic = false;
-                            //   },
-                            // ),
-                            IconButton(
-                              icon: const FaIcon(
-                                FontAwesomeIcons.repeat,
-                                color: MyColors.pinkColor,
-                                size: 30,
-                              ),
-                              onPressed: () {},
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    (useIsAddPostButton.value)
+                        ? CenterButton(
+                            icon: FontAwesomeIcons.plus,
+                            onTap: () => Navigators.toAddPost(context, "id"))
+                        : CenterButton(
+                            icon: FontAwesomeIcons.droplet,
+                            onTap: () {
+                              currentNijimas.when(
+                                data: (data) {
+                                  if (data.isNotEmpty) {
+                                    showErrorSnackBar(context,
+                                        "本日の「$section」区画のNijimasは既に登録済みです。");
+                                  }
+                                },
+                                loading: () => const Loader(),
+                                error: (error, stackTrace) =>
+                                    ErrorText(error: error.toString()),
+                              );
+                            }),
+                    const SizedBox(height: 30),
+                    todayNijimas.when(
+                      data: (data) {
+                        if (data.isNotEmpty) {
+                          return IconButton(
+                            icon: const FaIcon(
+                              FontAwesomeIcons.rotate,
+                              color: MyColors.pinkColor,
+                              size: 30,
                             ),
-                          ],
-                        );
-                      } else {
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CenterButton(
-                                icon: FontAwesomeIcons.droplet,
-                                onTap: () => doNijimas()),
-                            const SizedBox(height: 30),
-                            IconButton(
-                              icon: const FaIcon(
-                                FontAwesomeIcons.rotate,
-                                color: MyColors.pinkColor,
-                                size: 30,
-                              ),
-                              onPressed: () {},
-                            ),
-                          ],
-                        );
-                      }
-                    },
-                    loading: () => const Loader(),
-                    error: (error, stackTrace) =>
-                        ErrorText(error: error.toString()),
-                  )
+                            onPressed: () {
+                              useIsAddPostButton.value =
+                                  !useIsAddPostButton.value;
+                            },
+                          );
+                        } else {
+                          return const SizedBox(height: 50);
+                        }
+                      },
+                      loading: () => const Loader(),
+                      error: (error, stackTrace) =>
+                          ErrorText(error: error.toString()),
+                    )
+                  ],
+                )
               : Stack(
                   children: [
                     Positioned(
@@ -146,6 +146,7 @@ class DoNijimasScreen extends HookConsumerWidget {
                             onTap: () {
                               if (useIsInAnimation.value) {
                                 useIsInAnimation.value = false;
+                                useIsAddPostButton.value = true;
                                 animationController.reset();
                               }
                             },
