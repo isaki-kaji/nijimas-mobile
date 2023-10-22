@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:blinking_text/blinking_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -28,8 +26,9 @@ class DoNijimasScreen extends HookConsumerWidget {
     final mediaQuery = MediaQuery.of(context).size;
     final useIsInAnimation = useState(false);
     final useIsAddPostButton = useState(false);
+    final useSelectedNijimas = useState(0);
     bool isPublic = true;
-    const section = "kaidori";
+    const section = "sekido";
     final isLoading = ref.watch(nijimasControllerProvider);
 
     final currentNijimas = ref.watch(getCurrentNijimasProvider(section));
@@ -93,12 +92,38 @@ class DoNijimasScreen extends HookConsumerWidget {
                       ? todayNijimas.when(
                           data: (data) {
                             if (data.isNotEmpty) {
+                              //Positionedを広げて、かつCenterでラップすることでRowを広げる
                               return Positioned(
-                                top: 60,
-                                child: Row(
-                                  children: data.map((nijimas) {
-                                    return Text(nijimas.section);
-                                  }).toList(),
+                                top: 40,
+                                left: 0,
+                                right: 0,
+                                child: Center(
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: data.map((nijimas) {
+                                        return SizedBox(
+                                          width: useSelectedNijimas.value ==
+                                                  data.indexOf(nijimas)
+                                              ? 160
+                                              : 140,
+                                          height: useSelectedNijimas.value ==
+                                                  data.indexOf(nijimas)
+                                              ? 100
+                                              : 80,
+                                          child: GestureDetector(
+                                            onTap: () => useSelectedNijimas
+                                                .value = data.indexOf(nijimas),
+                                            child: Card(
+                                                color: MyColors.whiteColor,
+                                                child: Text(nijimas.section)),
+                                          ),
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ),
                                 ),
                               );
                             } else {
@@ -124,7 +149,7 @@ class DoNijimasScreen extends HookConsumerWidget {
                                   data: (data) {
                                     if (data.isNotEmpty) {
                                       showErrorSnackBar(context,
-                                          "本日の「$section」区画のNijimasは既に登録済みです。");
+                                          "本日「$section」区画のNijimasは登録済みです。");
                                     } else {
                                       doNijimas();
                                     }
