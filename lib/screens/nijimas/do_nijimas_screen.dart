@@ -11,6 +11,7 @@ import 'package:nijimas/core/theme/my_colors.dart';
 import 'package:nijimas/core/theme/text_styles.dart';
 import 'package:nijimas/widgets/common/error_text.dart';
 import 'package:nijimas/widgets/common/loader.dart';
+import 'package:nijimas/widgets/nijimas/center_button.dart';
 
 //レンダリングしたときに現在地が本日登録済みかを読み取る
 //→getSectionする。
@@ -75,26 +76,11 @@ class DoNijimasScreen extends HookConsumerWidget {
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigators.toAddPost(context, "id");
-                              },
-                              child: const SizedBox(
-                                height: 280,
-                                child: Card(
-                                  shape: CircleBorder(),
-                                  elevation: 6.0,
-                                  color: Colors.white,
-                                  child: Center(
-                                    child: FaIcon(
-                                      FontAwesomeIcons.plus,
-                                      color: MyColors.pinkColor,
-                                      size: 180,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
+                            CenterButton(
+                                icon: FontAwesomeIcons.plus,
+                                onTap: () {
+                                  Navigators.toAddPost(context, "id");
+                                }),
                             const SizedBox(height: 30),
                             // ToggleSwitch(
                             //   minWidth: 90.0,
@@ -127,26 +113,9 @@ class DoNijimasScreen extends HookConsumerWidget {
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            GestureDetector(
-                              onTap: () {
-                                doNijimas();
-                              },
-                              child: const SizedBox(
-                                height: 280,
-                                child: Card(
-                                  shape: CircleBorder(),
-                                  elevation: 6.0,
-                                  color: Colors.white,
-                                  child: Center(
-                                    child: FaIcon(
-                                      FontAwesomeIcons.droplet,
-                                      color: MyColors.pinkColor,
-                                      size: 180,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
+                            CenterButton(
+                                icon: FontAwesomeIcons.droplet,
+                                onTap: () => doNijimas()),
                             const SizedBox(height: 30),
                             IconButton(
                               icon: const FaIcon(
