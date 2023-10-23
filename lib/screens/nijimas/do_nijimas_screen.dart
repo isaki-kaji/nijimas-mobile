@@ -117,6 +117,10 @@ class DoNijimasScreen extends HookConsumerWidget {
                                             onTap: () => useSelectedNijimas
                                                 .value = data.indexOf(nijimas),
                                             child: Card(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(16),
+                                                ),
                                                 color: MyColors.whiteColor,
                                                 child: Padding(
                                                   padding:
