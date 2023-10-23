@@ -50,7 +50,7 @@ class NijimasController extends Notifier<bool> {
       nijimasId: nijimasId,
       uid: user!.uid,
       geoPoint: const GeoPoint(22.2, 22.2),
-      section: "sekido",
+      section: "kaidori",
       photos: [],
       createdAt: DateTime.now(),
     );

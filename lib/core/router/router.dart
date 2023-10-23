@@ -16,5 +16,5 @@ final loggedInRoute = RouteMap(routes: {
         uid: routeData.pathParameters['uid']!,
       )),
   "/do-nijimas": (_) => const MaterialPage(child: DoNijimasScreen()),
-  "/add-post/:nijimasId": (_) => const MaterialPage(child: AddPostScreen()),
+  "/add-post": (_) => const MaterialPage(child: AddPostScreen()),
 });

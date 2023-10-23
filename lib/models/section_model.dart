@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+//geoPointで一意になるからsectionIdはいらないかも
+
 class Section {
   String sectionId;
   String sectionName;

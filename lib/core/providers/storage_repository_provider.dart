@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/core/failure.dart';
 import 'package:nijimas/core/providers/firebase_providers.dart';
 import 'package:nijimas/core/type_defs.dart';

@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/controllers/nijimas_controller.dart';
 import 'package:nijimas/core/constants/constants.dart';
+import 'package:nijimas/core/providers/nijimas_notifier_provider.dart';
 import 'package:nijimas/core/router/navigators.dart';
 import 'package:nijimas/core/theme/my_colors.dart';
 import 'package:nijimas/core/theme/text_styles.dart';
@@ -26,9 +27,9 @@ class DoNijimasScreen extends HookConsumerWidget {
     final mediaQuery = MediaQuery.of(context).size;
     final useIsInAnimation = useState(false);
     final useIsAddPostButton = useState(false);
-    final useSelectedNijimas = useState(0);
+    final useSelectedNijimasNum = useState(0);
     bool isPublic = true;
-    const section = "sekido";
+    const section = "kaidori";
     final isLoading = ref.watch(nijimasControllerProvider);
 
     final currentNijimas = ref.watch(getCurrentNijimasProvider(section));
@@ -105,17 +106,23 @@ class DoNijimasScreen extends HookConsumerWidget {
                                           MainAxisAlignment.center,
                                       children: data.map((nijimas) {
                                         return SizedBox(
-                                          width: useSelectedNijimas.value ==
+                                          width: useSelectedNijimasNum.value ==
                                                   data.indexOf(nijimas)
                                               ? 160
                                               : 140,
-                                          height: useSelectedNijimas.value ==
+                                          height: useSelectedNijimasNum.value ==
                                                   data.indexOf(nijimas)
                                               ? 100
                                               : 80,
                                           child: GestureDetector(
-                                            onTap: () => useSelectedNijimas
-                                                .value = data.indexOf(nijimas),
+                                            onTap: () {
+                                              useSelectedNijimasNum.value =
+                                                  data.indexOf(nijimas);
+                                              ref
+                                                  .read(
+                                                      nijimasProvider.notifier)
+                                                  .update(nijimas);
+                                            },
                                             child: Card(
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
@@ -149,7 +156,7 @@ class DoNijimasScreen extends HookConsumerWidget {
                       (useIsAddPostButton.value)
                           ? CenterButton(
                               icon: FontAwesomeIcons.plus,
-                              onTap: () => Navigators.toAddPost(context, "id"))
+                              onTap: () => Navigators.toAddPost(context))
                           : CenterButton(
                               icon: FontAwesomeIcons.droplet,
                               onTap: () {

@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/core/delegates/search_tag_delegate.dart';
+import 'package:nijimas/core/providers/nijimas_notifier_provider.dart';
 import 'package:nijimas/core/utils.dart';
 import 'package:nijimas/widgets/post/tag_chip.dart';
 
 class AddPostScreen extends HookConsumerWidget {
   const AddPostScreen({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final useSelectedTags = useState<List<String>>([]);
+
+    final nijimas = ref.watch(nijimasProvider)!.section;
 
     void addTag(String tagName) {
       if (useSelectedTags.value.length < 3) {
@@ -61,6 +65,7 @@ class AddPostScreen extends HookConsumerWidget {
               }).toList(),
             ),
           ),
+          Text(nijimas)
         ],
       ),
     );
