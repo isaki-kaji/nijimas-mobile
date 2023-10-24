@@ -17,4 +17,8 @@ class Navigators {
   static void toAddPost(BuildContext context) {
     Routemaster.of(context).push('/add-post');
   }
+
+  static void toTakePhoto(BuildContext context) {
+    Routemaster.of(context).push('/take-photo');
+  }
 }

@@ -11,6 +11,7 @@ import 'package:nijimas/core/router/navigators.dart';
 import 'package:nijimas/core/theme/my_colors.dart';
 import 'package:nijimas/core/theme/text_styles.dart';
 import 'package:nijimas/core/utils.dart';
+import 'package:nijimas/models/nijimas_model.dart';
 import 'package:nijimas/widgets/common/error_text.dart';
 import 'package:nijimas/widgets/common/loader.dart';
 import 'package:nijimas/widgets/nijimas/center_button.dart';
@@ -28,6 +29,7 @@ class DoNijimasScreen extends HookConsumerWidget {
     final useIsInAnimation = useState(false);
     final useIsAddPostButton = useState(false);
     final useSelectedNijimasNum = useState(0);
+    late Nijimas selectedNijimas;
     bool isPublic = true;
     const section = "kaidori";
     final isLoading = ref.watch(nijimasControllerProvider);
@@ -105,6 +107,9 @@ class DoNijimasScreen extends HookConsumerWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: data.map((nijimas) {
+                                        if (data.indexOf(nijimas) == 0) {
+                                          selectedNijimas = nijimas;
+                                        }
                                         return SizedBox(
                                           width: useSelectedNijimasNum.value ==
                                                   data.indexOf(nijimas)
@@ -118,10 +123,7 @@ class DoNijimasScreen extends HookConsumerWidget {
                                             onTap: () {
                                               useSelectedNijimasNum.value =
                                                   data.indexOf(nijimas);
-                                              ref
-                                                  .read(
-                                                      nijimasProvider.notifier)
-                                                  .update(nijimas);
+                                              selectedNijimas = nijimas;
                                             },
                                             child: Card(
                                                 shape: RoundedRectangleBorder(
@@ -156,7 +158,12 @@ class DoNijimasScreen extends HookConsumerWidget {
                       (useIsAddPostButton.value)
                           ? CenterButton(
                               icon: FontAwesomeIcons.plus,
-                              onTap: () => Navigators.toAddPost(context))
+                              onTap: () {
+                                ref
+                                    .read(nijimasProvider.notifier)
+                                    .update(selectedNijimas);
+                                Navigators.toAddPost(context);
+                              })
                           : CenterButton(
                               icon: FontAwesomeIcons.droplet,
                               onTap: () {
@@ -304,7 +311,9 @@ class DoNijimasScreen extends HookConsumerWidget {
       floatingActionButton: useIsInAnimation.value
           ? null
           : FloatingActionButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigators.toTakePhoto(context);
+              },
               backgroundColor: Colors.white,
               child: const Icon(
                 Icons.camera_alt_outlined,
