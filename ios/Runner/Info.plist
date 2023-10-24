@@ -62,5 +62,7 @@
 <string>This app needs access to location when open.</string>
 <key>NSLocationAlwaysUsageDescription</key>
 <string>This app needs access to location when in the background.</string>
+<key>NSCameraUsageDescription</key>
+<string>This app need to allow users to post photos they have taken.</string>
 </dict>
 </plist>
