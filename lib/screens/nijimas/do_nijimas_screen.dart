@@ -12,6 +12,7 @@ import 'package:nijimas/core/theme/my_colors.dart';
 import 'package:nijimas/core/theme/text_styles.dart';
 import 'package:nijimas/core/utils.dart';
 import 'package:nijimas/models/nijimas_model.dart';
+import 'package:nijimas/test/test_data.dart';
 import 'package:nijimas/widgets/common/error_text.dart';
 import 'package:nijimas/widgets/common/loader.dart';
 import 'package:nijimas/widgets/nijimas/center_button.dart';
@@ -31,10 +32,10 @@ class DoNijimasScreen extends HookConsumerWidget {
     final useSelectedNijimasNum = useState(0);
     late Nijimas selectedNijimas;
     bool isPublic = true;
-    const section = "kaidori";
     final isLoading = ref.watch(nijimasControllerProvider);
 
-    final currentNijimas = ref.watch(getCurrentNijimasProvider(section));
+    final currentNijimas =
+        ref.watch(getCurrentNijimasProvider(TestData.section));
     final todayNijimas = ref.watch(getTodayNijimasProvider);
 
     void doNijimas() async {
@@ -107,7 +108,8 @@ class DoNijimasScreen extends HookConsumerWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: data.map((nijimas) {
-                                        if (data.indexOf(nijimas) == 0) {
+                                        if (data.indexOf(nijimas) == 0 &&
+                                            useSelectedNijimasNum.value == 0) {
                                           selectedNijimas = nijimas;
                                         }
                                         return SizedBox(
@@ -121,9 +123,12 @@ class DoNijimasScreen extends HookConsumerWidget {
                                               : 80,
                                           child: GestureDetector(
                                             onTap: () {
+                                              ref
+                                                  .read(
+                                                      nijimasProvider.notifier)
+                                                  .update(nijimas);
                                               useSelectedNijimasNum.value =
                                                   data.indexOf(nijimas);
-                                              selectedNijimas = nijimas;
                                             },
                                             child: Card(
                                                 shape: RoundedRectangleBorder(
@@ -159,9 +164,11 @@ class DoNijimasScreen extends HookConsumerWidget {
                           ? CenterButton(
                               icon: FontAwesomeIcons.plus,
                               onTap: () {
-                                ref
-                                    .read(nijimasProvider.notifier)
-                                    .update(selectedNijimas);
+                                if (useSelectedNijimasNum.value == 0) {
+                                  ref
+                                      .read(nijimasProvider.notifier)
+                                      .update(selectedNijimas);
+                                }
                                 Navigators.toAddPost(context);
                               })
                           : CenterButton(
@@ -171,7 +178,7 @@ class DoNijimasScreen extends HookConsumerWidget {
                                   data: (data) {
                                     if (data.isNotEmpty) {
                                       showErrorSnackBar(context,
-                                          "本日「$section」区画のNijimasは登録済みです。");
+                                          "本日「${TestData.section}」区画のNijimasは登録済みです。");
                                     } else {
                                       doNijimas();
                                     }

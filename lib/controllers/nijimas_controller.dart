@@ -7,6 +7,7 @@ import 'package:nijimas/core/providers/user_notifier_provider.dart';
 import 'package:nijimas/core/utils.dart';
 import 'package:nijimas/models/nijimas_model.dart';
 import 'package:nijimas/repositories/nijimas_repository.dart';
+import 'package:nijimas/test/test_data.dart';
 import 'package:uuid/uuid.dart';
 
 final nijimasControllerProvider =
@@ -50,7 +51,7 @@ class NijimasController extends Notifier<bool> {
       nijimasId: nijimasId,
       uid: user!.uid,
       geoPoint: const GeoPoint(22.2, 22.2),
-      section: "kaidori",
+      section: TestData.section,
       photos: [],
       createdAt: DateTime.now(),
     );
