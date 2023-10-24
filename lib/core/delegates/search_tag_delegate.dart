@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/controllers/tag_controller.dart';
+import 'package:nijimas/core/utils.dart';
 import 'package:nijimas/widgets/common/error_text.dart';
 import 'package:nijimas/widgets/post/tag_list_tile.dart';
 import 'package:rxdart/rxdart.dart';
@@ -73,8 +74,12 @@ class SearchTagDelegate extends SearchDelegate {
             loading: () => TagListTile(
                 tagName: query,
                 addTag: () {
-                  addTag(query);
-                  close(context, query);
+                  if (query.isNotEmpty && query.length < 30) {
+                    addTag(query);
+                    close(context, query);
+                  } else {
+                    showErrorSnackBar(context, "タグは30文字以内で入力してください。");
+                  }
                 }));
       },
     );
