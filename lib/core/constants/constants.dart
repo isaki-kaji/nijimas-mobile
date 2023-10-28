@@ -13,7 +13,10 @@ class Constants {
   static const errorMessage = "何らかのエラーが発生しました。時間をおいて再度お試しください…";
 
   static const doNijimasDescription =
-      "新たなニジマスログが登録されました。次はこの区画内で起こった出来事を投稿してみましょう。";
+      "新たなニジマスが登録されました。次はこの区画内で起こった出来事を投稿してみましょう。";
 
   static const addTagDescription = "登録できるタグは3つまでです。";
+
+  static const cameraButtonDescription =
+      "まずは画面中央のNijimasボタンをタップしてNijimasを登録しましょう。";
 }

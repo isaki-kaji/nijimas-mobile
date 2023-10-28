@@ -9,6 +9,11 @@ class TextStyles {
         color: MyColors.whiteColor);
   }
 
+  static TextStyle appBarTitle() {
+    return const TextStyle(
+        fontSize: 20, fontWeight: FontWeight.bold, color: MyColors.blackColor);
+  }
+
   static TextStyle push() {
     return const TextStyle(
         fontSize: 30, fontWeight: FontWeight.bold, color: MyColors.pinkColor);

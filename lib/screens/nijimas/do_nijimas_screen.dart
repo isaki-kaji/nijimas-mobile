@@ -319,7 +319,19 @@ class DoNijimasScreen extends HookConsumerWidget {
           ? null
           : FloatingActionButton(
               onPressed: () {
-                Navigators.toTakePhoto(context);
+                currentNijimas.when(
+                  data: (data) {
+                    if (data.isNotEmpty) {
+                      Navigators.toTakePhoto(context);
+                    } else {
+                      showErrorSnackBar(
+                          context, Constants.cameraButtonDescription);
+                    }
+                  },
+                  loading: () => const Loader(),
+                  error: (error, stackTrace) =>
+                      ErrorText(error: error.toString()),
+                );
               },
               backgroundColor: Colors.white,
               child: const Icon(
