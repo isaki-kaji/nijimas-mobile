@@ -98,7 +98,7 @@ class DoNijimasScreen extends HookConsumerWidget {
                             if (data.isNotEmpty) {
                               //Positionedを広げて、かつCenterでラップすることでRowを広げる
                               return Positioned(
-                                top: 40,
+                                top: 20,
                                 left: 0,
                                 right: 0,
                                 child: Center(
