@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:nijimas/core/constants/constants.dart';
+import 'package:nijimas/core/constants/firebase_constants.dart';
 import 'package:nijimas/core/providers/storage_repository_provider.dart';
 import 'package:nijimas/core/providers/user_notifier_provider.dart';
 import 'package:nijimas/core/utils.dart';
@@ -72,5 +74,34 @@ class NijimasController extends Notifier<bool> {
 
   Stream<List<Nijimas>> getTodayNijimas(String uid) {
     return _nijimasRepository.getTodayNijimas(uid);
+  }
+
+  void storePhoto(
+      {required String nijimasId,
+      required XFile? xFile,
+      required BuildContext context}) async {
+    state = true;
+
+    String photoId = const Uuid().v1();
+    final uid = _ref.read(userProvider)!.uid;
+
+    final photoRes = await _storageRepository.storePhoto(
+        path: "${FirebaseConstants.nijimasCollection}/$uid/$nijimasId",
+        id: photoId,
+        xFile: xFile);
+
+    photoRes.fold(
+        (l) => showErrorSnackBar(context, Constants.storePhotoErrorMessage),
+        (r) => ());
+
+    final photoToNijimasRes =
+        await _nijimasRepository.storePhotoInNijimas(nijimasId, photoId);
+
+    photoToNijimasRes.fold(
+        (l) => showErrorSnackBar(context, Constants.storePhotoErrorMessage),
+        (r) =>
+            showSuccessSnackBar(context, Constants.storePhotoSuccessMessage));
+
+    state = false;
   }
 }

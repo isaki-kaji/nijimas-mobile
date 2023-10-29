@@ -28,6 +28,16 @@ class NijimasRepository {
     }
   }
 
+  FutureVoid storePhotoInNijimas(String nijimasId, String photoId) async {
+    try {
+      return right(_nijimas.doc(nijimasId).update({
+        'photos': FieldValue.arrayUnion([photoId])
+      }));
+    } on FirebaseException catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
   Stream<List<Nijimas>> getCurrentNijimas(String section, String uid) {
     final now = DateTime.now().millisecondsSinceEpoch;
     final twentyFourHoursAgo = now - (24 * 60 * 60 * 1000);

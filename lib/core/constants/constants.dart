@@ -19,4 +19,8 @@ class Constants {
 
   static const cameraButtonDescription =
       "まずは画面中央のNijimasボタンをタップしてNijimasを登録しましょう。";
+
+  static const storePhotoErrorMessage = "写真の保存に失敗しました。時間をおいて再度お試しください。";
+
+  static const storePhotoSuccessMessage = "写真の保存に成功しました。";
 }

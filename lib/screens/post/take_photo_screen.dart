@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:nijimas/controllers/nijimas_controller.dart';
 import 'package:nijimas/core/theme/my_colors.dart';
 import 'package:nijimas/core/theme/text_styles.dart';
+import 'package:nijimas/models/nijimas_model.dart';
 import 'package:nijimas/test/test_data.dart';
 import 'package:nijimas/widgets/common/error_text.dart';
 import 'package:nijimas/widgets/common/loader.dart';
@@ -17,8 +18,10 @@ class TakePhotoScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final _photo = useState<XFile?>(null);
+    final isLoading = ref.watch(nijimasControllerProvider);
+    final useTakenPhoto = useState<XFile?>(null);
     final picker = ImagePicker();
+    late final Nijimas nijimas;
 
     final currentNijimas =
         ref.watch(getCurrentNijimasProvider(TestData.section));
@@ -26,7 +29,7 @@ class TakePhotoScreen extends HookConsumerWidget {
     Future takePhoto() async {
       final photo = await picker.pickImage(source: ImageSource.camera);
       if (photo != null) {
-        _photo.value = photo;
+        useTakenPhoto.value = photo;
       }
     }
 
@@ -40,21 +43,34 @@ class TakePhotoScreen extends HookConsumerWidget {
           centerTitle: false,
           title: currentNijimas.when(
             data: (data) {
+              nijimas = data[0];
               return Text(data[0].section, style: TextStyles.appBarTitle());
             },
             loading: () => const Loader(),
             error: (error, stackTrace) => ErrorText(error: error.toString()),
           )),
-      body: _photo.value == null
-          ? const Center(child: Text('No photo taken yet.'))
-          : Column(
-              children: [
-                Image.file(File(_photo.value!.path)),
-                const SizedBox(height: 20),
-                IconButton(
-                    onPressed: () {}, icon: const Icon(FontAwesomeIcons.plus))
-              ],
-            ),
+      body: isLoading
+          ? const Loader()
+          : useTakenPhoto.value == null
+              ? const Center(child: Text('No photo taken yet.'))
+              : Column(
+                  children: [
+                    Image.file(File(useTakenPhoto.value!.path)),
+                    const SizedBox(height: 20),
+                    IconButton(
+                        onPressed: () {
+                          ref
+                              .read(nijimasControllerProvider.notifier)
+                              .storePhoto(
+                                  nijimasId: nijimas.nijimasId,
+                                  xFile: useTakenPhoto.value,
+                                  context: context);
+                          useTakenPhoto.value = null;
+                        },
+                        icon: const Icon(FontAwesomeIcons.plus,
+                            color: MyColors.pinkColor))
+                  ],
+                ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: MyColors.whiteColor,
         onPressed: () {
