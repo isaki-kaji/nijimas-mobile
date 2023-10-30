@@ -12,6 +12,9 @@ import 'package:nijimas/repositories/nijimas_repository.dart';
 import 'package:nijimas/test/test_data.dart';
 import 'package:uuid/uuid.dart';
 
+DateTime dateTime = DateTime.utc(2023, 10, 29, 22, 53);
+int millisecondsSinceEpoch = dateTime.millisecondsSinceEpoch;
+
 final nijimasControllerProvider =
     NotifierProvider<NijimasController, bool>(NijimasController.new);
 
@@ -55,7 +58,7 @@ class NijimasController extends Notifier<bool> {
       geoPoint: const GeoPoint(22.2, 22.2),
       section: TestData.section,
       photos: [],
-      createdAt: DateTime.now(),
+      createdAt: DateTime.now().toUtc(),
     );
 
     final res = await _nijimasRepository.doNijimas(nijimas);

@@ -39,7 +39,7 @@ class NijimasRepository {
   }
 
   Stream<List<Nijimas>> getCurrentNijimas(String section, String uid) {
-    final now = DateTime.now().millisecondsSinceEpoch;
+    final now = DateTime.now().toUtc().millisecondsSinceEpoch;
     final twentyFourHoursAgo = now - (24 * 60 * 60 * 1000);
     return _nijimas
         .where('section', isEqualTo: section)
@@ -59,7 +59,7 @@ class NijimasRepository {
   }
 
   Stream<List<Nijimas>> getTodayNijimas(String uid) {
-    final now = DateTime.now().millisecondsSinceEpoch;
+    final now = DateTime.now().toUtc().millisecondsSinceEpoch;
     final twentyFourHoursAgo = now - (24 * 60 * 60 * 1000);
     return _nijimas
         .where('uid', isEqualTo: uid)
