@@ -51,6 +51,7 @@ class Nijimas {
     };
   }
 
+  //UTC時間でデシリアイズしている点に注意
   factory Nijimas.fromMap(Map<String, dynamic> map) {
     return Nijimas(
       nijimasId: map['nijimasId'] ?? '',
@@ -61,7 +62,8 @@ class Nijimas {
         map['geoPoint']['longitude'] as double,
       ),
       photos: List<String>.from(map['photos']),
-      createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt']),
+      createdAt:
+          DateTime.fromMillisecondsSinceEpoch(map['createdAt'], isUtc: true),
     );
   }
 
