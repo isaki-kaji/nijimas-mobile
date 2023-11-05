@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -98,13 +99,40 @@ class AddPostScreen extends HookConsumerWidget {
                   if (data[0].photos.isEmpty) {
                     return const SizedBox();
                   }
-                  return SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.3,
-                    width: double.infinity,
-                    child: Image.network(
-                      data[0].photos[0],
-                      fit: BoxFit.cover,
+                  return CarouselSlider(
+                    options: CarouselOptions(
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      viewportFraction: 0.9,
+                      enableInfiniteScroll: false,
                     ),
+                    items: data[0].photos.map((photo) {
+                      return Builder(
+                        builder: (BuildContext context) {
+                          return GestureDetector(
+                            onTap: () {
+                              if (!useSelectedPhotos.value.contains(photo)) {
+                                addPhoto(photo);
+                              } else {
+                                removePhoto(photo);
+                              }
+                            },
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 3.0),
+                              child: SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.3,
+                                width: double.infinity,
+                                child: Image.network(
+                                  photo,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }).toList(),
                   );
                 },
                 loading: () => const Loader(),
