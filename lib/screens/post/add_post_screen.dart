@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/controllers/nijimas_controller.dart';
 import 'package:nijimas/core/providers/nijimas_notifier_provider.dart';
+import 'package:nijimas/core/theme/my_colors.dart';
 import 'package:nijimas/core/utils.dart';
 import 'package:nijimas/widgets/common/error_text.dart';
 import 'package:nijimas/widgets/common/loader.dart';
@@ -14,6 +15,8 @@ class AddPostScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final useSelectedTags = useState<List<String>>([]);
+    final useSelectedPhotos = useState<List<String>>([]);
+
     final useTagController = useTextEditingController();
 
     final nijimas = ref.watch(nijimasProvider)!.section;
@@ -29,6 +32,19 @@ class AddPostScreen extends HookConsumerWidget {
     void removeTag(String tagName) {
       useSelectedTags.value =
           useSelectedTags.value.where((tag) => tag != tagName).toList();
+    }
+
+    void addPhoto(String photoPath) {
+      if (useSelectedPhotos.value.length < 4) {
+        useSelectedPhotos.value = [...useSelectedPhotos.value, photoPath];
+      } else {
+        showErrorSnackBar(context, "登録できる写真は4枚までです。");
+      }
+    }
+
+    void removePhoto(String photoPath) {
+      useSelectedPhotos.value =
+          useSelectedPhotos.value.where((photo) => photo != photoPath).toList();
     }
 
     return Scaffold(
@@ -94,7 +110,22 @@ class AddPostScreen extends HookConsumerWidget {
                 loading: () => const Loader(),
                 error: (error, stackTrace) =>
                     ErrorText(error: error.toString()),
-              )
+              ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: List.generate(4, (index) {
+                if (index < useSelectedPhotos.value.length) {
+                  return const Icon(Icons.circle, color: MyColors.lightGreen);
+                }
+                return const Icon(
+                  Icons.circle_outlined,
+                  color: Colors.grey,
+                );
+              }),
+            ),
+          )
         ],
       ),
     );

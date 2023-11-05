@@ -14,6 +14,11 @@ class TextStyles {
         fontSize: 20, fontWeight: FontWeight.bold, color: MyColors.blackColor);
   }
 
+  static TextStyle subTitle() {
+    return const TextStyle(
+        fontSize: 16, fontWeight: FontWeight.bold, color: MyColors.blackColor);
+  }
+
   static TextStyle push() {
     return const TextStyle(
         fontSize: 30, fontWeight: FontWeight.bold, color: MyColors.pinkColor);
