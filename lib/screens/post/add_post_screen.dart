@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nijimas/controllers/nijimas_controller.dart';
 import 'package:nijimas/core/providers/nijimas_notifier_provider.dart';
 import 'package:nijimas/core/utils.dart';
+import 'package:nijimas/widgets/common/error_text.dart';
+import 'package:nijimas/widgets/common/loader.dart';
 import 'package:nijimas/widgets/post/tag_chip.dart';
 
 class AddPostScreen extends HookConsumerWidget {
@@ -59,7 +62,7 @@ class AddPostScreen extends HookConsumerWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 12.0),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Wrap(
@@ -74,6 +77,24 @@ class AddPostScreen extends HookConsumerWidget {
               ),
             ),
           ),
+          ref.watch(getCurrentNijimasProvider(nijimas)).when(
+                data: (data) {
+                  if (data[0].photos.isEmpty) {
+                    return const SizedBox();
+                  }
+                  return SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.3,
+                    width: double.infinity,
+                    child: Image.network(
+                      data[0].photos[0],
+                      fit: BoxFit.cover,
+                    ),
+                  );
+                },
+                loading: () => const Loader(),
+                error: (error, stackTrace) =>
+                    ErrorText(error: error.toString()),
+              )
         ],
       ),
     );
