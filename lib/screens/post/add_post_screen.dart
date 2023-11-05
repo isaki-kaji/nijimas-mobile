@@ -53,108 +53,151 @@ class AddPostScreen extends HookConsumerWidget {
         centerTitle: false,
         title: Text(nijimas, style: const TextStyle(color: Colors.black)),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-            child: TextField(
-              controller: useTagController,
-              decoration: const InputDecoration(
-                filled: true,
-                hintText: "タグを追加",
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.all(18),
-              ),
-              onSubmitted: (value) {
-                if (value.isNotEmpty) {
-                  if (value.length <= 20) {
-                    addTag(value);
-                    useTagController.clear();
-                  } else {
-                    showErrorSnackBar(context, "タグは20文字以内で入力してください。");
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+              child: TextField(
+                controller: useTagController,
+                decoration: const InputDecoration(
+                  filled: true,
+                  hintText: "タグを追加",
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.all(18),
+                ),
+                onSubmitted: (value) {
+                  if (value.isNotEmpty) {
+                    if (value.length <= 20) {
+                      addTag(value);
+                      useTagController.clear();
+                    } else {
+                      showErrorSnackBar(context, "タグは20文字以内で入力してください。");
+                    }
                   }
-                }
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 12.0),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: useSelectedTags.value.map((tag) {
-                  return TagChip(
-                    tagName: tag,
-                    removeTag: (tagToRemove) => removeTag(tagToRemove),
-                  );
-                }).toList(),
-              ),
-            ),
-          ),
-          ref.watch(getCurrentNijimasProvider(nijimas)).when(
-                data: (data) {
-                  if (data[0].photos.isEmpty) {
-                    return const SizedBox();
-                  }
-                  return CarouselSlider(
-                    options: CarouselOptions(
-                      height: MediaQuery.of(context).size.height * 0.3,
-                      viewportFraction: 0.9,
-                      enableInfiniteScroll: false,
-                    ),
-                    items: data[0].photos.map((photo) {
-                      return Builder(
-                        builder: (BuildContext context) {
-                          return GestureDetector(
-                            onTap: () {
-                              if (!useSelectedPhotos.value.contains(photo)) {
-                                addPhoto(photo);
-                              } else {
-                                removePhoto(photo);
-                              }
-                            },
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 3.0),
-                              child: SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.3,
-                                width: double.infinity,
-                                child: Image.network(
-                                  photo,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    }).toList(),
-                  );
                 },
-                loading: () => const Loader(),
-                error: (error, stackTrace) =>
-                    ErrorText(error: error.toString()),
               ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: List.generate(4, (index) {
-                if (index < useSelectedPhotos.value.length) {
-                  return const Icon(Icons.circle, color: MyColors.lightGreen);
-                }
-                return const Icon(
-                  Icons.circle_outlined,
-                  color: Colors.grey,
-                );
-              }),
             ),
-          )
-        ],
+            Padding(
+              padding:
+                  const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 12.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: useSelectedTags.value.map((tag) {
+                    return TagChip(
+                      tagName: tag,
+                      removeTag: (tagToRemove) => removeTag(tagToRemove),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+            ref.watch(getCurrentNijimasProvider(nijimas)).when(
+                  data: (data) {
+                    if (data[0].photos.isEmpty) {
+                      return const SizedBox();
+                    }
+                    return CarouselSlider(
+                      options: CarouselOptions(
+                        height: MediaQuery.of(context).size.height * 0.3,
+                        viewportFraction: 0.9,
+                        enableInfiniteScroll: false,
+                      ),
+                      items: data[0].photos.map((photo) {
+                        return Builder(
+                          builder: (BuildContext context) {
+                            return GestureDetector(
+                              onTap: () {
+                                if (!useSelectedPhotos.value.contains(photo)) {
+                                  addPhoto(photo);
+                                } else {
+                                  removePhoto(photo);
+                                }
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 3.0),
+                                child: Stack(children: [
+                                  SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.3,
+                                    width: double.infinity,
+                                    child: ColorFiltered(
+                                      colorFilter: useSelectedPhotos.value
+                                              .contains(photo)
+                                          ? const ColorFilter.mode(
+                                              Colors.black54, BlendMode.darken)
+                                          : const ColorFilter.mode(
+                                              Colors.transparent,
+                                              BlendMode.darken),
+                                      child: Image.network(
+                                        photo,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: useSelectedPhotos.value
+                                              .contains(photo)
+                                          ? Stack(
+                                              alignment: Alignment.center,
+                                              children: [
+                                                  const Icon(
+                                                    Icons.circle,
+                                                    color: MyColors.lightGreen,
+                                                  ),
+                                                  Text(
+                                                    (useSelectedPhotos.value
+                                                                .indexOf(
+                                                                    photo) +
+                                                            1)
+                                                        .toString(),
+                                                    style: const TextStyle(
+                                                        color: Colors.white),
+                                                  )
+                                                ])
+                                          : const Icon(
+                                              Icons.check_circle_outline,
+                                              color: Colors.grey,
+                                            ),
+                                    ),
+                                  )
+                                ]),
+                              ),
+                            );
+                          },
+                        );
+                      }).toList(),
+                    );
+                  },
+                  loading: () => const Loader(),
+                  error: (error, stackTrace) =>
+                      ErrorText(error: error.toString()),
+                ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: List.generate(4, (index) {
+                  if (index < useSelectedPhotos.value.length) {
+                    return const Icon(Icons.circle, color: MyColors.lightGreen);
+                  }
+                  return const Icon(
+                    Icons.circle_outlined,
+                    color: Colors.grey,
+                  );
+                }),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
