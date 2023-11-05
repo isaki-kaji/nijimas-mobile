@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nijimas/core/failure.dart';
 import 'package:nijimas/core/providers/firebase_providers.dart';
+import 'package:nijimas/core/type_defs.dart';
 
 final storageRepositoryProvider = Provider(
     (ref) => StorageRepository(firebaseStorage: ref.watch(storageProvider)));
@@ -15,7 +16,7 @@ class StorageRepository {
   StorageRepository({required FirebaseStorage firebaseStorage})
       : _firebaseStorage = firebaseStorage;
 
-  Future storePhoto(
+  FutureEither<String> storePhoto(
       {required String path, required String id, required XFile? xFile}) async {
     try {
       if (xFile == null) {

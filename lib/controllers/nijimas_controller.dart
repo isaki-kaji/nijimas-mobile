@@ -93,12 +93,16 @@ class NijimasController extends Notifier<bool> {
         id: photoId,
         xFile: xFile);
 
+    String photoPath = "";
+
     photoRes.fold(
         (l) => showErrorSnackBar(context, Constants.storePhotoErrorMessage),
-        (r) => ());
+        (r) {
+      photoPath = r;
+    });
 
     final photoToNijimasRes =
-        await _nijimasRepository.storePhotoInNijimas(nijimasId, photoId);
+        await _nijimasRepository.storePhotoInNijimas(nijimasId, photoPath);
 
     photoToNijimasRes.fold(
         (l) => showErrorSnackBar(context, Constants.storePhotoErrorMessage),

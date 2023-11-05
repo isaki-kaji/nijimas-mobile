@@ -28,10 +28,10 @@ class NijimasRepository {
     }
   }
 
-  FutureVoid storePhotoInNijimas(String nijimasId, String photoId) async {
+  FutureVoid storePhotoInNijimas(String nijimasId, String photoPath) async {
     try {
       return right(_nijimas.doc(nijimasId).update({
-        'photos': FieldValue.arrayUnion([photoId])
+        'photos': FieldValue.arrayUnion([photoPath])
       }));
     } on FirebaseException catch (e) {
       return left(Failure(e.toString()));
