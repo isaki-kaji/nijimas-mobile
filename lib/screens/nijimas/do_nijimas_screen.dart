@@ -31,7 +31,6 @@ class DoNijimasScreen extends HookConsumerWidget {
     final useIsAddPostButton = useState(false);
     final useSelectedNijimasNum = useState(0);
     late Nijimas selectedNijimas;
-    bool isPublic = true;
     final isLoading = ref.watch(nijimasControllerProvider);
 
     final currentNijimas =
@@ -41,7 +40,7 @@ class DoNijimasScreen extends HookConsumerWidget {
     void doNijimas() async {
       final isPushed = await ref
           .read(nijimasControllerProvider.notifier)
-          .doNijimas(context: context, isPublic: isPublic);
+          .doNijimas(context: context);
       if (isPushed) {
         useIsInAnimation.value = true;
       }
