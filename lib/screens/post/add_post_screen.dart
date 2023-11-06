@@ -13,10 +13,6 @@ import 'package:nijimas/widgets/common/loader.dart';
 import 'package:nijimas/widgets/post/tag_chip.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
-//タグに絵文字を入力させない
-//タグに同じものを入力させない
-//写真もしくはテキストがないと投稿できないようにする
-
 class AddPostScreen extends HookConsumerWidget {
   const AddPostScreen({super.key});
 
@@ -35,6 +31,15 @@ class AddPostScreen extends HookConsumerWidget {
 
     void addTag(String tagName) {
       if (useSelectedTags.value.length < 3) {
+        if (useSelectedTags.value.contains(tagName)) {
+          showErrorSnackBar(context, "同じタグは登録できません。");
+          return;
+        }
+        if (hasEmoji(tagName)) {
+          showErrorSnackBar(context, "絵文字は登録できません。");
+          return;
+        }
+
         useSelectedTags.value = [...useSelectedTags.value, tagName];
       } else {
         showErrorSnackBar(context, "登録できるタグは3つまでです。");
@@ -266,6 +271,11 @@ class AddPostScreen extends HookConsumerWidget {
             floatingActionButton: FloatingActionButton(
               backgroundColor: MyColors.whiteColor,
               onPressed: () {
+                if (useSelectedPhotos.value.isEmpty &&
+                    useTextController.text.isEmpty) {
+                  showErrorSnackBar(context, "写真を選択、またはテキストを入力してください。");
+                  return;
+                }
                 ref.read(postControllerProvider.notifier).addPost(
                     context: context,
                     doneNijimas: nijimas,
