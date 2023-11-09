@@ -7,6 +7,8 @@ import 'package:nijimas/core/providers/firebase_providers.dart';
 import 'package:nijimas/core/type_defs.dart';
 import 'package:nijimas/models/nijimas_model.dart';
 
+//cloudFunctionsを使用する必要あり
+
 final nijimasRepositoryProvider = Provider<NijimasRepository>((ref) {
   return NijimasRepository(firestore: ref.watch(firestoreProvider));
 });

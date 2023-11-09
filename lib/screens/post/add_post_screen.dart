@@ -13,6 +13,9 @@ import 'package:nijimas/widgets/common/loader.dart';
 import 'package:nijimas/widgets/post/tag_chip.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
+//23:04
+//リアルタイムで取得しない...
+
 class AddPostScreen extends HookConsumerWidget {
   const AddPostScreen({super.key});
 

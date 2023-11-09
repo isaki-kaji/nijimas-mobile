@@ -10,6 +10,7 @@ class Nijimas {
   String section;
   List<String> photos;
   DateTime createdAt;
+  bool isWithinADay;
   Nijimas({
     required this.nijimasId,
     required this.uid,
@@ -17,6 +18,7 @@ class Nijimas {
     required this.section,
     required this.photos,
     required this.createdAt,
+    required this.isWithinADay,
   });
 
   Nijimas copyWith({
@@ -26,6 +28,7 @@ class Nijimas {
     String? section,
     List<String>? photos,
     DateTime? createdAt,
+    bool? isWithinADay,
   }) {
     return Nijimas(
       nijimasId: nijimasId ?? this.nijimasId,
@@ -34,6 +37,7 @@ class Nijimas {
       section: section ?? this.section,
       photos: photos ?? this.photos,
       createdAt: createdAt ?? this.createdAt,
+      isWithinADay: isWithinADay ?? this.isWithinADay,
     );
   }
 
@@ -48,10 +52,10 @@ class Nijimas {
       'section': section,
       'photos': photos,
       'createdAt': createdAt.millisecondsSinceEpoch,
+      'isWithinADay': isWithinADay,
     };
   }
 
-  //UTC時間でデシリアイズしている点に注意
   factory Nijimas.fromMap(Map<String, dynamic> map) {
     return Nijimas(
       nijimasId: map['nijimasId'] ?? '',
@@ -62,8 +66,8 @@ class Nijimas {
         map['geoPoint']['longitude'] as double,
       ),
       photos: List<String>.from(map['photos']),
-      createdAt:
-          DateTime.fromMillisecondsSinceEpoch(map['createdAt'], isUtc: true),
+      createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt']),
+      isWithinADay: map['isWithinADay'] ?? false,
     );
   }
 
@@ -74,7 +78,7 @@ class Nijimas {
 
   @override
   String toString() {
-    return 'Nijimas(nijimasId: $nijimasId, uid: $uid, geoPoint: $geoPoint, section: $section, photos: $photos, createdAt: $createdAt)';
+    return 'Nijimas(nijimasId: $nijimasId, uid: $uid, geoPoint: $geoPoint, section: $section, photos: $photos, createdAt: $createdAt, isWithinADay: $isWithinADay)';
   }
 
   @override
@@ -87,7 +91,8 @@ class Nijimas {
         other.geoPoint == geoPoint &&
         other.section == section &&
         listEquals(other.photos, photos) &&
-        other.createdAt == createdAt;
+        other.createdAt == createdAt &&
+        other.isWithinADay == isWithinADay;
   }
 
   @override
@@ -97,6 +102,7 @@ class Nijimas {
         geoPoint.hashCode ^
         section.hashCode ^
         photos.hashCode ^
-        createdAt.hashCode;
+        createdAt.hashCode ^
+        isWithinADay.hashCode;
   }
 }

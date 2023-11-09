@@ -55,6 +55,7 @@ class NijimasController extends Notifier<bool> {
       section: TestData.section,
       photos: [],
       createdAt: DateTime.now().toUtc(),
+      isWithinADay: true,
     );
 
     final res = await _nijimasRepository.doNijimas(nijimas);
