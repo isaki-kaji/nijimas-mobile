@@ -128,112 +128,121 @@ class AddPostScreen extends HookConsumerWidget {
                   ref.watch(getCurrentNijimasProvider(nijimas.section)).when(
                         data: (data) {
                           if (data[0].photos.isEmpty) {
-                            return const SizedBox();
+                            return const SizedBox.shrink();
                           }
-                          return CarouselSlider(
-                            options: CarouselOptions(
-                              height: MediaQuery.of(context).size.height * 0.3,
-                              viewportFraction: 0.92,
-                              enableInfiniteScroll: false,
-                            ),
-                            items: data[0].photos.map((photo) {
-                              return Builder(
-                                builder: (BuildContext context) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      if (!useSelectedPhotos.value
-                                          .contains(photo)) {
-                                        addPhoto(photo);
-                                      } else {
-                                        removePhoto(photo);
-                                      }
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 3.0),
-                                      child: Stack(children: [
-                                        SizedBox(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.3,
-                                          width: double.infinity,
-                                          child: ColorFiltered(
-                                            colorFilter: useSelectedPhotos.value
-                                                    .contains(photo)
-                                                ? const ColorFilter.mode(
-                                                    Colors.black54,
-                                                    BlendMode.darken)
-                                                : const ColorFilter.mode(
-                                                    Colors.transparent,
-                                                    BlendMode.darken),
-                                            child: Image.network(
-                                              photo,
-                                              fit: BoxFit.cover,
+                          return Column(
+                            children: [
+                              CarouselSlider(
+                                options: CarouselOptions(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.3,
+                                  viewportFraction: 0.92,
+                                  enableInfiniteScroll: false,
+                                ),
+                                items: data[0].photos.map((photo) {
+                                  return Builder(
+                                    builder: (BuildContext context) {
+                                      return GestureDetector(
+                                        onTap: () {
+                                          if (!useSelectedPhotos.value
+                                              .contains(photo)) {
+                                            addPhoto(photo);
+                                          } else {
+                                            removePhoto(photo);
+                                          }
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 3.0),
+                                          child: Stack(children: [
+                                            SizedBox(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.3,
+                                              width: double.infinity,
+                                              child: ColorFiltered(
+                                                colorFilter: useSelectedPhotos
+                                                        .value
+                                                        .contains(photo)
+                                                    ? const ColorFilter.mode(
+                                                        Colors.black54,
+                                                        BlendMode.darken)
+                                                    : const ColorFilter.mode(
+                                                        Colors.transparent,
+                                                        BlendMode.darken),
+                                                child: Image.network(
+                                                  photo,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
                                             ),
-                                          ),
+                                            Align(
+                                              alignment: Alignment.bottomRight,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child:
+                                                    useSelectedPhotos.value
+                                                            .contains(photo)
+                                                        ? Stack(
+                                                            alignment: Alignment
+                                                                .center,
+                                                            children: [
+                                                                const Icon(
+                                                                  Icons.circle,
+                                                                  color: MyColors
+                                                                      .lightGreen,
+                                                                ),
+                                                                Text(
+                                                                  (useSelectedPhotos
+                                                                              .value
+                                                                              .indexOf(photo) +
+                                                                          1)
+                                                                      .toString(),
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .white),
+                                                                )
+                                                              ])
+                                                        : const Icon(
+                                                            Icons
+                                                                .check_circle_outline,
+                                                            color: Colors.grey,
+                                                          ),
+                                              ),
+                                            )
+                                          ]),
                                         ),
-                                        Align(
-                                          alignment: Alignment.bottomRight,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: useSelectedPhotos.value
-                                                    .contains(photo)
-                                                ? Stack(
-                                                    alignment: Alignment.center,
-                                                    children: [
-                                                        const Icon(
-                                                          Icons.circle,
-                                                          color: MyColors
-                                                              .lightGreen,
-                                                        ),
-                                                        Text(
-                                                          (useSelectedPhotos
-                                                                      .value
-                                                                      .indexOf(
-                                                                          photo) +
-                                                                  1)
-                                                              .toString(),
-                                                          style:
-                                                              const TextStyle(
-                                                                  color: Colors
-                                                                      .white),
-                                                        )
-                                                      ])
-                                                : const Icon(
-                                                    Icons.check_circle_outline,
-                                                    color: Colors.grey,
-                                                  ),
-                                          ),
-                                        )
-                                      ]),
-                                    ),
+                                      );
+                                    },
                                   );
-                                },
-                              );
-                            }).toList(),
+                                }).toList(),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: List.generate(4, (index) {
+                                    if (index <
+                                        useSelectedPhotos.value.length) {
+                                      return const Icon(Icons.circle,
+                                          color: MyColors.lightGreen);
+                                    }
+                                    return const Icon(
+                                      Icons.circle_outlined,
+                                      color: Colors.grey,
+                                    );
+                                  }),
+                                ),
+                              ),
+                            ],
                           );
                         },
                         loading: () => const Loader(),
                         error: (error, stackTrace) =>
                             ErrorText(error: error.toString()),
                       ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: List.generate(4, (index) {
-                        if (index < useSelectedPhotos.value.length) {
-                          return const Icon(Icons.circle,
-                              color: MyColors.lightGreen);
-                        }
-                        return const Icon(
-                          Icons.circle_outlined,
-                          color: Colors.grey,
-                        );
-                      }),
-                    ),
-                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         vertical: 8.0, horizontal: 16.0),

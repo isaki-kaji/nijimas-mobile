@@ -21,6 +21,8 @@ import 'package:nijimas/widgets/nijimas/center_button.dart';
 //→getSectionする。
 //waterに魚が泳ぐアニメーションをつけたい
 
+//新しい区画に入ったら何か合図を出す
+
 class DoNijimasScreen extends HookConsumerWidget {
   const DoNijimasScreen({super.key});
 
@@ -85,113 +87,101 @@ class DoNijimasScreen extends HookConsumerWidget {
     }, []);
 
     return Scaffold(
-      appBar: AppBar(),
-      body: isLoading
-          ? const Loader()
-          //アニメーション中かどうかで最上位制御
-          : !useIsInAnimation.value
-              ? Stack(children: [
-                  (useIsAddPostButton.value)
-                      ? todayNijimas.when(
-                          data: (data) {
-                            if (data.isNotEmpty) {
-                              //Positionedを広げて、かつCenterでラップすることでRowを広げる
-                              return Positioned(
-                                top: 15,
-                                left: 0,
-                                right: 0,
-                                child: Center(
-                                  child: SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: data.map((nijimas) {
-                                        if (data.indexOf(nijimas) == 0 &&
-                                            useSelectedNijimasNum.value == 0) {
-                                          selectedNijimas = nijimas;
-                                        }
-                                        return SizedBox(
-                                          width: useSelectedNijimasNum.value ==
-                                                  data.indexOf(nijimas)
-                                              ? 160
-                                              : 140,
-                                          height: useSelectedNijimasNum.value ==
-                                                  data.indexOf(nijimas)
-                                              ? 100
-                                              : 80,
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              ref
-                                                  .read(
-                                                      nijimasProvider.notifier)
-                                                  .update(nijimas);
-                                              useSelectedNijimasNum.value =
-                                                  data.indexOf(nijimas);
-                                            },
-                                            child: Card(
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(16),
-                                                ),
-                                                color: MyColors.whiteColor,
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Text(nijimas.section),
-                                                )),
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            } else {
-                              return const SizedBox();
-                            }
-                          },
-                          loading: () => const Loader(),
-                          error: (error, stackTrace) =>
-                              ErrorText(error: error.toString()),
-                        )
-                      : const SizedBox(),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      (useIsAddPostButton.value)
-                          ? CenterButton(
-                              icon: FontAwesomeIcons.plus,
-                              onTap: () {
-                                if (useSelectedNijimasNum.value == 0) {
-                                  ref
-                                      .read(nijimasProvider.notifier)
-                                      .update(selectedNijimas);
-                                }
-                                Navigators.toAddPost(context);
-                              })
-                          : CenterButton(
-                              icon: FontAwesomeIcons.droplet,
-                              onTap: () {
-                                currentNijimas.when(
-                                  data: (data) {
-                                    if (data.isNotEmpty) {
-                                      showErrorSnackBar(context,
-                                          "本日「${TestData.section}」区画のNijimasは登録済みです。");
-                                    } else {
-                                      doNijimas();
+        appBar: AppBar(),
+        body: isLoading
+            ? const Loader()
+            //アニメーション中かどうかで最上位制御
+            : !useIsInAnimation.value
+                ? todayNijimas.when(
+                    data: (data) {
+                      return Stack(children: [
+                        if (data.isNotEmpty && useIsAddPostButton.value)
+                          //Positionedを広げて、かつCenterでラップすることでRowを広げる
+                          Positioned(
+                            top: 15,
+                            left: 0,
+                            right: 0,
+                            child: Center(
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: data.map((nijimas) {
+                                    if (data.indexOf(nijimas) == 0 &&
+                                        useSelectedNijimasNum.value == 0) {
+                                      selectedNijimas = nijimas;
                                     }
-                                  },
-                                  loading: () => const Loader(),
-                                  error: (error, stackTrace) =>
-                                      ErrorText(error: error.toString()),
-                                );
-                              }),
-                      const SizedBox(height: 30),
-                      todayNijimas.when(
-                          data: (data) {
-                            if (data.isNotEmpty) {
-                              return IconButton(
+                                    return SizedBox(
+                                      width: useSelectedNijimasNum.value ==
+                                              data.indexOf(nijimas)
+                                          ? 160
+                                          : 140,
+                                      height: useSelectedNijimasNum.value ==
+                                              data.indexOf(nijimas)
+                                          ? 100
+                                          : 80,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          ref
+                                              .read(nijimasProvider.notifier)
+                                              .update(nijimas);
+                                          useSelectedNijimasNum.value =
+                                              data.indexOf(nijimas);
+                                        },
+                                        child: Card(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(16),
+                                            ),
+                                            color: MyColors.whiteColor,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Text(nijimas.section),
+                                            )),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            ),
+                          )
+                        else
+                          const SizedBox.shrink(),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            (data.isNotEmpty && useIsAddPostButton.value)
+                                ? CenterButton(
+                                    icon: FontAwesomeIcons.plus,
+                                    onTap: () {
+                                      if (useSelectedNijimasNum.value == 0) {
+                                        ref
+                                            .read(nijimasProvider.notifier)
+                                            .update(selectedNijimas);
+                                      }
+                                      Navigators.toAddPost(context);
+                                    })
+                                : CenterButton(
+                                    icon: FontAwesomeIcons.droplet,
+                                    onTap: () {
+                                      currentNijimas.when(
+                                        data: (data) {
+                                          if (data.isNotEmpty) {
+                                            showErrorSnackBar(context,
+                                                "本日「${TestData.section}」区画のNijimasは登録済みです。");
+                                          } else {
+                                            doNijimas();
+                                          }
+                                        },
+                                        loading: () => const Loader(),
+                                        error: (error, stackTrace) =>
+                                            ErrorText(error: error.toString()),
+                                      );
+                                    }),
+                            const SizedBox(height: 30),
+                            if (data.isNotEmpty)
+                              IconButton(
                                 icon: const FaIcon(
                                   FontAwesomeIcons.rotate,
                                   color: MyColors.pinkColor,
@@ -201,143 +191,143 @@ class DoNijimasScreen extends HookConsumerWidget {
                                   useIsAddPostButton.value =
                                       !useIsAddPostButton.value;
                                 },
-                              );
-                            } else {
-                              return const SizedBox(height: 50);
-                            }
+                              )
+                            else
+                              const SizedBox(height: 50),
+                          ],
+                        ),
+                      ]);
+                    },
+                    loading: () => const Loader(),
+                    error: (error, stackTrace) =>
+                        ErrorText(error: error.toString()))
+                : Stack(
+                    children: [
+                      Positioned(
+                        bottom: 0,
+                        child: AnimatedBuilder(
+                          animation: animationController,
+                          builder: (context, child) {
+                            final waterLevel =
+                                sequenceAnimation['waterLevel'].value;
+                            return GestureDetector(
+                              onTap: () {
+                                if (useIsInAnimation.value) {
+                                  useIsInAnimation.value = false;
+                                  useIsAddPostButton.value = true;
+                                  animationController.reset();
+                                }
+                              },
+                              child: Container(
+                                color: MyColors.pinkColor,
+                                height: waterLevel,
+                                width: mediaQuery.width,
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      bottom: mediaQuery.height * 0.1),
+                                  child: (waterLevel >= mediaQuery.height * 0.8)
+                                      ? Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 40.0,
+                                                      vertical: 30),
+                                              child: Text(
+                                                Constants.doNijimasDescription,
+                                                style:
+                                                    TextStyles.description(15),
+                                              ),
+                                            ),
+                                            BlinkText(
+                                              "push",
+                                              style: TextStyles.push(),
+                                              beginColor: MyColors.pinkColor,
+                                              endColor: MyColors.whiteColor,
+                                              duration:
+                                                  const Duration(seconds: 1),
+                                            ),
+                                          ],
+                                        )
+                                      : null,
+                                ),
+                              ),
+                            );
                           },
-                          loading: () => const Loader(),
-                          error: (error, stackTrace) {
-                            print(error.toString());
-                            return ErrorText(error: error.toString());
-                          })
-                    ],
-                  ),
-                ])
-              : Stack(
-                  children: [
-                    Positioned(
-                      bottom: 0,
-                      child: AnimatedBuilder(
-                        animation: animationController,
-                        builder: (context, child) {
-                          final waterLevel =
-                              sequenceAnimation['waterLevel'].value;
-                          return GestureDetector(
+                        ),
+                      ),
+                      Center(
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.only(bottom: kToolbarHeight),
+                          child: Text("Nijimas!!", style: TextStyles.title(60)),
+                        ),
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        child: Center(
+                          child: GestureDetector(
                             onTap: () {
-                              if (useIsInAnimation.value) {
-                                useIsInAnimation.value = false;
-                                useIsAddPostButton.value = true;
-                                animationController.reset();
+                              if (!useIsInAnimation.value) {
+                                useIsInAnimation.value = true;
                               }
                             },
-                            child: Container(
-                              color: MyColors.pinkColor,
-                              height: waterLevel,
-                              width: mediaQuery.width,
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    bottom: mediaQuery.height * 0.1),
-                                child: (waterLevel >= mediaQuery.height * 0.8)
-                                    ? Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 40.0, vertical: 30),
-                                            child: Text(
-                                              Constants.doNijimasDescription,
-                                              style: TextStyles.description(15),
-                                            ),
-                                          ),
-                                          BlinkText(
-                                            "push",
-                                            style: TextStyles.push(),
-                                            beginColor: MyColors.pinkColor,
-                                            endColor: MyColors.whiteColor,
-                                            duration:
-                                                const Duration(seconds: 1),
-                                          ),
-                                        ],
-                                      )
-                                    : null,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: kToolbarHeight),
-                        child: Text("Nijimas!!", style: TextStyles.title(60)),
-                      ),
-                    ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: Center(
-                        child: GestureDetector(
-                          onTap: () {
-                            if (!useIsInAnimation.value) {
-                              useIsInAnimation.value = true;
-                            }
-                          },
-                          child: AnimatedSwitcher(
-                            duration: const Duration(seconds: 0),
-                            child: AnimatedBuilder(
-                              animation: animationController,
-                              builder: (context, child) {
-                                // アイコンの位置を取得
-                                final iconPosition =
-                                    sequenceAnimation['iconPosition'].value;
+                            child: AnimatedSwitcher(
+                              duration: const Duration(seconds: 0),
+                              child: AnimatedBuilder(
+                                animation: animationController,
+                                builder: (context, child) {
+                                  // アイコンの位置を取得
+                                  final iconPosition =
+                                      sequenceAnimation['iconPosition'].value;
 
-                                // アイコンの位置を計算
-                                final translateY =
-                                    MediaQuery.of(context).size.height *
-                                        iconPosition;
+                                  // アイコンの位置を計算
+                                  final translateY =
+                                      MediaQuery.of(context).size.height *
+                                          iconPosition;
 
-                                return Transform.translate(
-                                  offset: Offset(0, translateY),
-                                  child: child,
-                                );
-                              },
-                              child: const FaIcon(
-                                FontAwesomeIcons.droplet,
-                                color: MyColors.pinkColor,
-                                size: 180,
+                                  return Transform.translate(
+                                    offset: Offset(0, translateY),
+                                    child: child,
+                                  );
+                                },
+                                child: const FaIcon(
+                                  FontAwesomeIcons.droplet,
+                                  color: MyColors.pinkColor,
+                                  size: 180,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
+        floatingActionButton: useIsInAnimation.value
+            ? null
+            : FloatingActionButton(
+                onPressed: () {
+                  currentNijimas.when(
+                    data: (data) {
+                      if (data.isNotEmpty) {
+                        Navigators.toTakePhoto(context);
+                      } else {
+                        showErrorSnackBar(
+                            context, Constants.cameraButtonDescription);
+                      }
+                    },
+                    loading: () => const Loader(),
+                    error: (error, stackTrace) =>
+                        ErrorText(error: error.toString()),
+                  );
+                },
+                backgroundColor: Colors.white,
+                child: const Icon(
+                  Icons.camera_alt_outlined,
+                  color: MyColors.lightGreen,
                 ),
-      floatingActionButton: useIsInAnimation.value
-          ? null
-          : FloatingActionButton(
-              onPressed: () {
-                currentNijimas.when(
-                  data: (data) {
-                    if (data.isNotEmpty) {
-                      Navigators.toTakePhoto(context);
-                    } else {
-                      showErrorSnackBar(
-                          context, Constants.cameraButtonDescription);
-                    }
-                  },
-                  loading: () => const Loader(),
-                  error: (error, stackTrace) =>
-                      ErrorText(error: error.toString()),
-                );
-              },
-              backgroundColor: Colors.white,
-              child: const Icon(
-                Icons.camera_alt_outlined,
-                color: MyColors.lightGreen,
-              ),
-            ),
-    );
+              ));
   }
 }
