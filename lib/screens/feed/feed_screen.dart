@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class FeedScreen extends ConsumerWidget {
+class FeedScreen extends HookConsumerWidget {
   const FeedScreen({super.key});
 
   @override

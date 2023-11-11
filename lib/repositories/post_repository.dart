@@ -6,6 +6,7 @@ import 'package:nijimas/core/failure.dart';
 import 'package:nijimas/core/providers/firebase_providers.dart';
 import 'package:nijimas/core/type_defs.dart';
 import 'package:nijimas/models/post_model.dart';
+import 'package:nijimas/models/user_model/user_model.dart';
 
 final postRepositoryProvider = Provider<PostRepository>((ref) {
   return PostRepository(
@@ -30,5 +31,17 @@ class PostRepository {
     } catch (e) {
       return left(Failure(e.toString()));
     }
+  }
+
+  Stream<List<Post>> fetchUserFollowingPosts(UserModel user) {
+    List<String> followingList = user.following;
+    followingList.add(user.uid);
+    return _posts
+        .where("uid", whereIn: followingList.map((e) => e).toList())
+        .orderBy("createdAt", descending: true)
+        .snapshots()
+        .map((event) => event.docs
+            .map((e) => Post.fromMap(e.data() as Map<String, dynamic>))
+            .toList());
   }
 }

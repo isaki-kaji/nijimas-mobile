@@ -5,6 +5,7 @@ import 'package:nijimas/core/providers/user_notifier_provider.dart';
 import 'package:nijimas/core/utils.dart';
 import 'package:nijimas/models/nijimas_model.dart';
 import 'package:nijimas/models/post_model.dart';
+import 'package:nijimas/models/user_model/user_model.dart';
 import 'package:nijimas/repositories/post_repository.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:uuid/uuid.dart';
@@ -56,5 +57,9 @@ class PostController extends Notifier<bool> {
       showSuccessSnackBar(context, "投稿しました!!");
       Routemaster.of(context).pop();
     });
+  }
+
+  Stream<List<Post>> fetchUserFollowingPosts(UserModel user) {
+    return _postRepository.fetchUserFollowingPosts(user);
   }
 }
