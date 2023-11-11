@@ -13,6 +13,13 @@ import 'package:uuid/uuid.dart';
 final postControllerProvider =
     NotifierProvider<PostController, bool>(PostController.new);
 
+final fetchUserFollowingPostsProvider =
+    StreamProvider.family((ref, UserModel user) {
+  return ref
+      .watch(postControllerProvider.notifier)
+      .fetchUserFollowingPosts(user);
+});
+
 class PostController extends Notifier<bool> {
   late final PostRepository _postRepository;
   late final Ref _ref;

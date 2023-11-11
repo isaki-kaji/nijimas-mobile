@@ -34,8 +34,7 @@ class PostRepository {
   }
 
   Stream<List<Post>> fetchUserFollowingPosts(UserModel user) {
-    List<String> followingList = user.following;
-    followingList.add(user.uid);
+    List<String> followingList = [...user.following, user.uid];
     return _posts
         .where("uid", whereIn: followingList.map((e) => e).toList())
         .orderBy("createdAt", descending: true)
