@@ -10,6 +10,7 @@ void showErrorSnackBar(BuildContext context, String message) {
       backgroundColor: Colors.transparent,
       elevation: 0,
       duration: const Duration(seconds: 2),
+      behavior: SnackBarBehavior.floating,
       content: AwesomeSnackbarContent(
         title: 'Oh no!',
         color: MyColors.pinkColor,
@@ -27,6 +28,7 @@ void showSuccessSnackBar(BuildContext context, String message) {
       backgroundColor: Colors.transparent,
       elevation: 0,
       duration: const Duration(seconds: 2),
+      behavior: SnackBarBehavior.floating,
       content: AwesomeSnackbarContent(
         title: 'Success!',
         color: MyColors.lightGreen,
