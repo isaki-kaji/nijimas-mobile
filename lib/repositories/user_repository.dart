@@ -16,7 +16,7 @@ class UserRepository {
   CollectionReference get _users =>
       _firestore.collection(FirebaseConstants.usersCollection);
 
-  Stream<UserModel> fetchUser(String uid) {
+  Stream<UserModel> getUserById(String uid) {
     return _users.doc(uid).snapshots().map(
         (event) => UserModel.fromJson(event.data() as Map<String, dynamic>));
   }
