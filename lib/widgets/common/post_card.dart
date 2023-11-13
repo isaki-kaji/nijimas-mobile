@@ -1,7 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nijimas/controllers/post_controller.dart';
 import 'package:nijimas/controllers/user_controller.dart';
+import 'package:nijimas/core/providers/user_notifier_provider.dart';
+import 'package:nijimas/core/theme/my_colors.dart';
 import 'package:nijimas/core/theme/text_styles.dart';
 import 'package:nijimas/models/post_model.dart';
 import 'package:nijimas/widgets/common/error_text.dart';
@@ -10,8 +13,14 @@ class PostCard extends ConsumerWidget {
   final Post post;
   const PostCard({super.key, required this.post});
 
+  void favoritePost(WidgetRef ref) {
+    ref.read(postControllerProvider.notifier).favoritePost(post);
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(userProvider);
+
     return ref.watch(getUserByIdProvider(post.uid)).when(
           data: (data) {
             return Column(
@@ -82,7 +91,38 @@ class PostCard extends ConsumerWidget {
                       child: Text(post.text!),
                     ),
                   ),
-                const SizedBox(height: 15.0),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          (post.favoriteUids.contains(user!.uid))
+                              ? IconButton(
+                                  onPressed: () => favoritePost(ref),
+                                  icon: const Icon(Icons.favorite),
+                                  color: MyColors.pinkColor,
+                                )
+                              : IconButton(
+                                  onPressed: () => favoritePost(ref),
+                                  icon: const Icon(Icons.favorite_border),
+                                ),
+                          Text(post.favoriteCount.toString()),
+                        ],
+                      ),
+                      (post.uid == user!.uid)
+                          ? IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.delete,
+                                color: MyColors.redColor,
+                              ))
+                          : const SizedBox.shrink()
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 12.0),
                 const Divider(),
               ],
             );

@@ -69,4 +69,9 @@ class PostController extends Notifier<bool> {
   Stream<List<Post>> fetchUserFollowingPosts(UserModel user) {
     return _postRepository.fetchUserFollowingPosts(user);
   }
+
+  void favoritePost(Post post) async {
+    final uid = _ref.read(userProvider)!.uid;
+    _postRepository.favoritePost(post, uid);
+  }
 }

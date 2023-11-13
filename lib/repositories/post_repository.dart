@@ -43,4 +43,18 @@ class PostRepository {
             .map((e) => Post.fromMap(e.data() as Map<String, dynamic>))
             .toList());
   }
+
+  void favoritePost(Post post, String uid) async {
+    if (post.favoriteUids.contains(uid)) {
+      _posts.doc(post.postId).update({
+        "favoriteUids": FieldValue.arrayRemove([uid]),
+        "favoriteCount": FieldValue.increment(-1),
+      });
+    } else {
+      _posts.doc(post.postId).update({
+        "favoriteUids": FieldValue.arrayUnion([uid]),
+        "favoriteCount": FieldValue.increment(1),
+      });
+    }
+  }
 }
