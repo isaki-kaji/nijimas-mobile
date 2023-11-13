@@ -24,6 +24,11 @@ class TextStyles {
         fontSize: 30, fontWeight: FontWeight.bold, color: MyColors.pinkColor);
   }
 
+  static TextStyle tag() {
+    return const TextStyle(
+        fontSize: 14, fontWeight: FontWeight.w200, color: Colors.black45);
+  }
+
   static TextStyle description(double size) {
     return TextStyle(
         fontSize: size,
