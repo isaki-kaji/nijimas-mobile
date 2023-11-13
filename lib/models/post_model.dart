@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 
 class Post {
   String postId;
@@ -12,7 +13,6 @@ class Post {
   String? text;
   List<String>? photos;
   List<String> favoriteUids;
-  int favoriteCount;
   bool isPublic;
   List<String> tags;
   DateTime createdAt;
@@ -25,7 +25,6 @@ class Post {
     this.text,
     required this.photos,
     required this.favoriteUids,
-    required this.favoriteCount,
     required this.isPublic,
     required this.tags,
     required this.createdAt,
@@ -38,9 +37,8 @@ class Post {
     GeoPoint? geoPoint,
     String? section,
     ValueGetter<String?>? text,
-    List<String>? imageUrls,
+    ValueGetter<List<String>?>? photos,
     List<String>? favoriteUids,
-    int? favoriteCount,
     bool? isPublic,
     List<String>? tags,
     DateTime? createdAt,
@@ -51,10 +49,9 @@ class Post {
       uid: uid ?? this.uid,
       geoPoint: geoPoint ?? this.geoPoint,
       section: section ?? this.section,
-      text: text != null ? text() : this.text,
-      photos: imageUrls ?? this.photos,
+      text: text?.call() ?? this.text,
+      photos: photos?.call() ?? this.photos,
       favoriteUids: favoriteUids ?? this.favoriteUids,
-      favoriteCount: favoriteCount ?? this.favoriteCount,
       isPublic: isPublic ?? this.isPublic,
       tags: tags ?? this.tags,
       createdAt: createdAt ?? this.createdAt,
@@ -72,9 +69,8 @@ class Post {
       },
       'section': section,
       'text': text,
-      'imageUrls': photos,
+      'photos': photos,
       'favoriteUids': favoriteUids,
-      'favoriteCount': favoriteCount,
       'isPublic': isPublic,
       'tags': tags,
       'createdAt': createdAt.millisecondsSinceEpoch,
@@ -92,9 +88,8 @@ class Post {
       ),
       section: map['section'] ?? '',
       text: map['text'],
-      photos: List<String>.from(map['imageUrls']),
+      photos: List<String>.from(map['photos']),
       favoriteUids: List<String>.from(map['favoriteUids']),
-      favoriteCount: map['favoriteCount']?.toInt() ?? 0,
       isPublic: map['isPublic'] ?? false,
       tags: List<String>.from(map['tags']),
       createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt']),
@@ -107,7 +102,7 @@ class Post {
 
   @override
   String toString() {
-    return 'Post(postId: $postId, nijimasId: $nijimasId, uid: $uid, geoPoint: $geoPoint, section: $section, text: $text, imageUrls: $photos, favoriteUids: $favoriteUids, favoriteCount: $favoriteCount, isPublic: $isPublic, tags: $tags, createdAt: $createdAt)';
+    return 'Post(postId: $postId, nijimasId: $nijimasId, uid: $uid, geoPoint: $geoPoint, section: $section, text: $text, photos: $photos, favoriteUids: $favoriteUids, isPublic: $isPublic, tags: $tags, createdAt: $createdAt)';
   }
 
   @override
@@ -123,7 +118,6 @@ class Post {
         other.text == text &&
         listEquals(other.photos, photos) &&
         listEquals(other.favoriteUids, favoriteUids) &&
-        other.favoriteCount == favoriteCount &&
         other.isPublic == isPublic &&
         listEquals(other.tags, tags) &&
         other.createdAt == createdAt;
@@ -139,7 +133,6 @@ class Post {
         text.hashCode ^
         photos.hashCode ^
         favoriteUids.hashCode ^
-        favoriteCount.hashCode ^
         isPublic.hashCode ^
         tags.hashCode ^
         createdAt.hashCode;

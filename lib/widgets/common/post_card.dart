@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/controllers/post_controller.dart';
 import 'package:nijimas/controllers/user_controller.dart';
@@ -27,7 +28,7 @@ class PostCard extends ConsumerWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 14.0, vertical: 4.0),
+                      horizontal: 14.0, vertical: 8.0),
                   child: Row(
                     children: [
                       CircleAvatar(
@@ -98,6 +99,12 @@ class PostCard extends ConsumerWidget {
                     children: [
                       Row(
                         children: [
+                          IconButton(
+                            icon: const FaIcon(FontAwesomeIcons.locationDot,
+                                size: 20.0),
+                            onPressed: () {},
+                          ),
+                          const SizedBox(width: 8.0),
                           (post.favoriteUids.contains(user!.uid))
                               ? IconButton(
                                   onPressed: () => favoritePost(ref),
@@ -108,7 +115,7 @@ class PostCard extends ConsumerWidget {
                                   onPressed: () => favoritePost(ref),
                                   icon: const Icon(Icons.favorite_border),
                                 ),
-                          Text(post.favoriteCount.toString()),
+                          Text(post.favoriteUids.length.toString()),
                         ],
                       ),
                       (post.uid == user!.uid)
@@ -122,7 +129,7 @@ class PostCard extends ConsumerWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 12.0),
+                const SizedBox(height: 6.0),
                 const Divider(),
               ],
             );

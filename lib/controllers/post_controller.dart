@@ -51,7 +51,6 @@ class PostController extends Notifier<bool> {
         text: text,
         photos: postPhotos,
         favoriteUids: [],
-        favoriteCount: 0,
         isPublic: isPublic,
         tags: tags,
         createdAt: DateTime.now().toUtc());
