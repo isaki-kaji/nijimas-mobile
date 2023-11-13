@@ -26,7 +26,7 @@ class TextStyles {
 
   static TextStyle tag() {
     return const TextStyle(
-        fontSize: 14, fontWeight: FontWeight.w200, color: Colors.black45);
+        fontSize: 14, fontWeight: FontWeight.w200, color: Colors.black54);
   }
 
   static TextStyle description(double size) {

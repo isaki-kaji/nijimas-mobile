@@ -49,7 +49,7 @@ class PostController extends Notifier<bool> {
         geoPoint: doneNijimas.geoPoint,
         section: doneNijimas.section,
         text: text,
-        imageUrls: postPhotos,
+        photos: postPhotos,
         favoriteUids: [],
         favoriteCount: 0,
         isPublic: isPublic,

@@ -10,7 +10,7 @@ class Post {
   GeoPoint geoPoint;
   String section;
   String? text;
-  List<String>? imageUrls;
+  List<String>? photos;
   List<String> favoriteUids;
   int favoriteCount;
   bool isPublic;
@@ -23,7 +23,7 @@ class Post {
     required this.geoPoint,
     required this.section,
     this.text,
-    required this.imageUrls,
+    required this.photos,
     required this.favoriteUids,
     required this.favoriteCount,
     required this.isPublic,
@@ -52,7 +52,7 @@ class Post {
       geoPoint: geoPoint ?? this.geoPoint,
       section: section ?? this.section,
       text: text != null ? text() : this.text,
-      imageUrls: imageUrls ?? this.imageUrls,
+      photos: imageUrls ?? this.photos,
       favoriteUids: favoriteUids ?? this.favoriteUids,
       favoriteCount: favoriteCount ?? this.favoriteCount,
       isPublic: isPublic ?? this.isPublic,
@@ -72,7 +72,7 @@ class Post {
       },
       'section': section,
       'text': text,
-      'imageUrls': imageUrls,
+      'imageUrls': photos,
       'favoriteUids': favoriteUids,
       'favoriteCount': favoriteCount,
       'isPublic': isPublic,
@@ -92,7 +92,7 @@ class Post {
       ),
       section: map['section'] ?? '',
       text: map['text'],
-      imageUrls: List<String>.from(map['imageUrls']),
+      photos: List<String>.from(map['imageUrls']),
       favoriteUids: List<String>.from(map['favoriteUids']),
       favoriteCount: map['favoriteCount']?.toInt() ?? 0,
       isPublic: map['isPublic'] ?? false,
@@ -107,7 +107,7 @@ class Post {
 
   @override
   String toString() {
-    return 'Post(postId: $postId, nijimasId: $nijimasId, uid: $uid, geoPoint: $geoPoint, section: $section, text: $text, imageUrls: $imageUrls, favoriteUids: $favoriteUids, favoriteCount: $favoriteCount, isPublic: $isPublic, tags: $tags, createdAt: $createdAt)';
+    return 'Post(postId: $postId, nijimasId: $nijimasId, uid: $uid, geoPoint: $geoPoint, section: $section, text: $text, imageUrls: $photos, favoriteUids: $favoriteUids, favoriteCount: $favoriteCount, isPublic: $isPublic, tags: $tags, createdAt: $createdAt)';
   }
 
   @override
@@ -121,7 +121,7 @@ class Post {
         other.geoPoint == geoPoint &&
         other.section == section &&
         other.text == text &&
-        listEquals(other.imageUrls, imageUrls) &&
+        listEquals(other.photos, photos) &&
         listEquals(other.favoriteUids, favoriteUids) &&
         other.favoriteCount == favoriteCount &&
         other.isPublic == isPublic &&
@@ -137,7 +137,7 @@ class Post {
         geoPoint.hashCode ^
         section.hashCode ^
         text.hashCode ^
-        imageUrls.hashCode ^
+        photos.hashCode ^
         favoriteUids.hashCode ^
         favoriteCount.hashCode ^
         isPublic.hashCode ^
