@@ -73,4 +73,14 @@ class PostController extends Notifier<bool> {
     final uid = _ref.read(userProvider)!.uid;
     _postRepository.favoritePost(post, uid);
   }
+
+  void deletePost(Post post, BuildContext context) {
+    showMyDialog(context, "", "投稿を削除しますか？", () async {
+      final res = await _postRepository.deletePost(post);
+      res.fold((l) => null, (r) {
+        showSuccessSnackBar(context, "投稿を削除しました!!");
+        Routemaster.of(context).pop();
+      });
+    });
+  }
 }

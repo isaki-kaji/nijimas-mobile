@@ -18,6 +18,10 @@ class PostCard extends ConsumerWidget {
     ref.read(postControllerProvider.notifier).favoritePost(post);
   }
 
+  void deletePost(WidgetRef ref, BuildContext context) async {
+    ref.read(postControllerProvider.notifier).deletePost(post, context);
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider);
@@ -118,9 +122,9 @@ class PostCard extends ConsumerWidget {
                           Text(post.favoriteUids.length.toString()),
                         ],
                       ),
-                      (post.uid == user!.uid)
+                      (post.uid == user.uid)
                           ? IconButton(
-                              onPressed: () {},
+                              onPressed: () => deletePost(ref, context),
                               icon: Icon(
                                 Icons.delete,
                                 color: MyColors.redColor,

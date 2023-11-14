@@ -48,13 +48,21 @@ class PostRepository {
     if (post.favoriteUids.contains(uid)) {
       _posts.doc(post.postId).update({
         "favoriteUids": FieldValue.arrayRemove([uid]),
-        "favoriteCount": FieldValue.increment(-1),
       });
     } else {
       _posts.doc(post.postId).update({
         "favoriteUids": FieldValue.arrayUnion([uid]),
-        "favoriteCount": FieldValue.increment(1),
       });
+    }
+  }
+
+  FutureVoid deletePost(Post post) async {
+    try {
+      return right(_posts.doc(post.postId).delete());
+    } on FirebaseException catch (e) {
+      throw e.message!;
+    } catch (e) {
+      return left(Failure(e.toString()));
     }
   }
 }
