@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -12,9 +14,6 @@ import 'package:nijimas/widgets/common/error_text.dart';
 import 'package:nijimas/widgets/common/loader.dart';
 import 'package:nijimas/widgets/post/tag_chip.dart';
 import 'package:toggle_switch/toggle_switch.dart';
-
-//23:04
-//リアルタイムで取得しない...
 
 class AddPostScreen extends HookConsumerWidget {
   const AddPostScreen({super.key});
@@ -69,235 +68,247 @@ class AddPostScreen extends HookConsumerWidget {
 
     return isLoading
         ? const Loader()
-        : Scaffold(
-            appBar: AppBar(
-              automaticallyImplyLeading: false,
-              centerTitle: false,
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back_ios),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+        : GestureDetector(
+            onTap: () {
+              // 現在のフォーカスを取得してキーボードを閉じる
+              FocusScopeNode currentFocus = FocusScope.of(context);
+
+              if (!currentFocus.hasPrimaryFocus) {
+                currentFocus.unfocus();
+              }
+            },
+            child: Scaffold(
+              appBar: AppBar(
+                automaticallyImplyLeading: false,
+                centerTitle: false,
+                leading: IconButton(
+                  icon: const Icon(Icons.arrow_back_ios),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                title: Text(nijimas.section,
+                    style: const TextStyle(color: Colors.black)),
               ),
-              title: Text(nijimas.section,
-                  style: const TextStyle(color: Colors.black)),
-            ),
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 8.0, horizontal: 16.0),
-                    child: TextField(
-                      controller: useTagController,
-                      decoration: const InputDecoration(
-                        filled: true,
-                        hintText: "タグを追加",
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.all(18),
-                      ),
-                      onSubmitted: (value) {
-                        if (value.isNotEmpty) {
-                          if (value.length <= 20) {
-                            addTag(value);
-                            useTagController.clear();
-                          } else {
-                            showErrorSnackBar(context, "タグは20文字以内で入力してください。");
+              body: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8.0, horizontal: 16.0),
+                      child: TextField(
+                        controller: useTagController,
+                        decoration: const InputDecoration(
+                          filled: true,
+                          hintText: "タグを追加",
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.all(18),
+                        ),
+                        onSubmitted: (value) {
+                          if (value.isNotEmpty) {
+                            if (value.length <= 20) {
+                              addTag(value);
+                              useTagController.clear();
+                            } else {
+                              showErrorSnackBar(context, "タグは20文字以内で入力してください。");
+                            }
                           }
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 8.0, right: 8.0, bottom: 12.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Wrap(
+                          spacing: 8,
+                          runSpacing: 8,
+                          children: useSelectedTags.value.map((tag) {
+                            return TagChip(
+                              tagName: tag,
+                              removeTag: (tagToRemove) =>
+                                  removeTag(tagToRemove),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ),
+                    ref.watch(getCurrentNijimasProvider(nijimas.section)).when(
+                          data: (data) {
+                            if (data[0].photos.isEmpty) {
+                              return const SizedBox.shrink();
+                            }
+                            return Column(
+                              children: [
+                                CarouselSlider(
+                                  options: CarouselOptions(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.3,
+                                    viewportFraction: 0.92,
+                                    enableInfiniteScroll: false,
+                                  ),
+                                  items: data[0].photos.map((photo) {
+                                    return Builder(
+                                      builder: (BuildContext context) {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            if (!useSelectedPhotos.value
+                                                .contains(photo)) {
+                                              addPhoto(photo);
+                                            } else {
+                                              removePhoto(photo);
+                                            }
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 3.0),
+                                            child: Stack(children: [
+                                              SizedBox(
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.3,
+                                                width: double.infinity,
+                                                child: ColorFiltered(
+                                                  colorFilter: useSelectedPhotos
+                                                          .value
+                                                          .contains(photo)
+                                                      ? const ColorFilter.mode(
+                                                          Colors.black54,
+                                                          BlendMode.darken)
+                                                      : const ColorFilter.mode(
+                                                          Colors.transparent,
+                                                          BlendMode.darken),
+                                                  child: Image.network(
+                                                    photo,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              ),
+                                              Align(
+                                                alignment:
+                                                    Alignment.bottomRight,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: useSelectedPhotos.value
+                                                          .contains(photo)
+                                                      ? Stack(
+                                                          alignment:
+                                                              Alignment.center,
+                                                          children: [
+                                                              const Icon(
+                                                                Icons.circle,
+                                                                color: MyColors
+                                                                    .lightGreen,
+                                                              ),
+                                                              Text(
+                                                                (useSelectedPhotos
+                                                                            .value
+                                                                            .indexOf(photo) +
+                                                                        1)
+                                                                    .toString(),
+                                                                style: const TextStyle(
+                                                                    color: Colors
+                                                                        .white),
+                                                              )
+                                                            ])
+                                                      : const Icon(
+                                                          Icons
+                                                              .check_circle_outline,
+                                                          color: Colors.grey,
+                                                        ),
+                                                ),
+                                              )
+                                            ]),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  }).toList(),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: List.generate(4, (index) {
+                                      if (index <
+                                          useSelectedPhotos.value.length) {
+                                        return const Icon(Icons.circle,
+                                            color: MyColors.lightGreen);
+                                      }
+                                      return const Icon(
+                                        Icons.circle_outlined,
+                                        color: Colors.grey,
+                                      );
+                                    }),
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                          loading: () => const Loader(),
+                          error: (error, stackTrace) =>
+                              ErrorText(error: error.toString()),
+                        ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8.0, horizontal: 16.0),
+                      child: TextField(
+                        controller: useTextController,
+                        maxLines: 6,
+                        maxLength: 150,
+                        decoration: const InputDecoration(
+                          filled: true,
+                          hintText: "本文を入力",
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.all(18),
+                        ),
+                        onSubmitted: (_) {},
+                      ),
+                    ),
+                    ToggleSwitch(
+                      minWidth: 90.0,
+                      initialLabelIndex: 0,
+                      cornerRadius: 20.0,
+                      activeFgColor: Colors.white,
+                      activeBgColor: const [MyColors.pinkColor],
+                      inactiveBgColor: Colors.grey,
+                      inactiveFgColor: Colors.white,
+                      totalSwitches: 2,
+                      labels: const ['公開', '非公開'],
+                      onToggle: (index) {
+                        if (index == 0) {
+                          isPublic = true;
+                        } else {
+                          isPublic = false;
                         }
                       },
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 8.0, right: 8.0, bottom: 12.0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Wrap(
-                        spacing: 8,
-                        runSpacing: 8,
-                        children: useSelectedTags.value.map((tag) {
-                          return TagChip(
-                            tagName: tag,
-                            removeTag: (tagToRemove) => removeTag(tagToRemove),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  ),
-                  ref.watch(getCurrentNijimasProvider(nijimas.section)).when(
-                        data: (data) {
-                          if (data[0].photos.isEmpty) {
-                            return const SizedBox.shrink();
-                          }
-                          return Column(
-                            children: [
-                              CarouselSlider(
-                                options: CarouselOptions(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.3,
-                                  viewportFraction: 0.92,
-                                  enableInfiniteScroll: false,
-                                ),
-                                items: data[0].photos.map((photo) {
-                                  return Builder(
-                                    builder: (BuildContext context) {
-                                      return GestureDetector(
-                                        onTap: () {
-                                          if (!useSelectedPhotos.value
-                                              .contains(photo)) {
-                                            addPhoto(photo);
-                                          } else {
-                                            removePhoto(photo);
-                                          }
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 3.0),
-                                          child: Stack(children: [
-                                            SizedBox(
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.3,
-                                              width: double.infinity,
-                                              child: ColorFiltered(
-                                                colorFilter: useSelectedPhotos
-                                                        .value
-                                                        .contains(photo)
-                                                    ? const ColorFilter.mode(
-                                                        Colors.black54,
-                                                        BlendMode.darken)
-                                                    : const ColorFilter.mode(
-                                                        Colors.transparent,
-                                                        BlendMode.darken),
-                                                child: Image.network(
-                                                  photo,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                            ),
-                                            Align(
-                                              alignment: Alignment.bottomRight,
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child:
-                                                    useSelectedPhotos.value
-                                                            .contains(photo)
-                                                        ? Stack(
-                                                            alignment: Alignment
-                                                                .center,
-                                                            children: [
-                                                                const Icon(
-                                                                  Icons.circle,
-                                                                  color: MyColors
-                                                                      .lightGreen,
-                                                                ),
-                                                                Text(
-                                                                  (useSelectedPhotos
-                                                                              .value
-                                                                              .indexOf(photo) +
-                                                                          1)
-                                                                      .toString(),
-                                                                  style: const TextStyle(
-                                                                      color: Colors
-                                                                          .white),
-                                                                )
-                                                              ])
-                                                        : const Icon(
-                                                            Icons
-                                                                .check_circle_outline,
-                                                            color: Colors.grey,
-                                                          ),
-                                              ),
-                                            )
-                                          ]),
-                                        ),
-                                      );
-                                    },
-                                  );
-                                }).toList(),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: List.generate(4, (index) {
-                                    if (index <
-                                        useSelectedPhotos.value.length) {
-                                      return const Icon(Icons.circle,
-                                          color: MyColors.lightGreen);
-                                    }
-                                    return const Icon(
-                                      Icons.circle_outlined,
-                                      color: Colors.grey,
-                                    );
-                                  }),
-                                ),
-                              ),
-                            ],
-                          );
-                        },
-                        loading: () => const Loader(),
-                        error: (error, stackTrace) =>
-                            ErrorText(error: error.toString()),
-                      ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 8.0, horizontal: 16.0),
-                    child: TextField(
-                      controller: useTextController,
-                      maxLines: 6,
-                      maxLength: 150,
-                      decoration: const InputDecoration(
-                        filled: true,
-                        hintText: "本文を入力",
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.all(18),
-                      ),
-                    ),
-                  ),
-                  ToggleSwitch(
-                    minWidth: 90.0,
-                    initialLabelIndex: 0,
-                    cornerRadius: 20.0,
-                    activeFgColor: Colors.white,
-                    activeBgColor: const [MyColors.pinkColor],
-                    inactiveBgColor: Colors.grey,
-                    inactiveFgColor: Colors.white,
-                    totalSwitches: 2,
-                    labels: const ['公開', '非公開'],
-                    onToggle: (index) {
-                      if (index == 0) {
-                        isPublic = true;
-                      } else {
-                        isPublic = false;
-                      }
-                    },
-                  ),
-                  const SizedBox(height: 150),
-                ],
+                    const SizedBox(height: 150),
+                  ],
+                ),
               ),
-            ),
-            floatingActionButton: FloatingActionButton(
-              backgroundColor: MyColors.whiteColor,
-              onPressed: () {
-                if (useSelectedPhotos.value.isEmpty &&
-                    useTextController.text.isEmpty) {
-                  showErrorSnackBar(context, "写真を選択、またはテキストを入力してください。");
-                  return;
-                }
-                ref.read(postControllerProvider.notifier).addPost(
-                    context: context,
-                    doneNijimas: nijimas,
-                    isPublic: isPublic,
-                    text: useTextController.text,
-                    postPhotos: useSelectedPhotos.value,
-                    tags: useSelectedTags.value);
-              },
-              child: const FaIcon(FontAwesomeIcons.plus,
-                  color: MyColors.pinkColor),
+              floatingActionButton: FloatingActionButton(
+                backgroundColor: MyColors.whiteColor,
+                onPressed: () {
+                  if (useSelectedPhotos.value.isEmpty &&
+                      useTextController.text.isEmpty) {
+                    showErrorSnackBar(context, "写真を選択、またはテキストを入力してください。");
+                    return;
+                  }
+                  ref.read(postControllerProvider.notifier).addPost(
+                      context: context,
+                      doneNijimas: nijimas,
+                      isPublic: isPublic,
+                      text: useTextController.text,
+                      postPhotos: useSelectedPhotos.value,
+                      tags: useSelectedTags.value);
+                },
+                child: const FaIcon(FontAwesomeIcons.plus,
+                    color: MyColors.pinkColor),
+              ),
             ),
           );
   }

@@ -35,4 +35,8 @@ class TextStyles {
         fontWeight: FontWeight.normal,
         color: MyColors.whiteColor);
   }
+
+  static TextStyle sectionCard() {
+    return const TextStyle(color: MyColors.whiteColor, fontSize: 18.0);
+  }
 }

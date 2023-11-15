@@ -112,35 +112,56 @@ class DoNijimasScreen extends HookConsumerWidget {
                                       selectedNijimas = nijimas;
                                     }
                                     return SizedBox(
-                                      width: useSelectedNijimasNum.value ==
-                                              data.indexOf(nijimas)
-                                          ? 160
-                                          : 140,
-                                      height: useSelectedNijimasNum.value ==
-                                              data.indexOf(nijimas)
-                                          ? 100
-                                          : 80,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          ref
-                                              .read(nijimasProvider.notifier)
-                                              .update(nijimas);
-                                          useSelectedNijimasNum.value =
-                                              data.indexOf(nijimas);
-                                        },
-                                        child: Card(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(16),
-                                            ),
-                                            color: MyColors.whiteColor,
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Text(nijimas.section),
-                                            )),
-                                      ),
-                                    );
+                                        width: useSelectedNijimasNum.value ==
+                                                data.indexOf(nijimas)
+                                            ? 160
+                                            : 130,
+                                        height: useSelectedNijimasNum.value ==
+                                                data.indexOf(nijimas)
+                                            ? 100
+                                            : 80,
+                                        child: GestureDetector(
+                                            onTap: () {
+                                              ref
+                                                  .read(
+                                                      nijimasProvider.notifier)
+                                                  .update(nijimas);
+                                              useSelectedNijimasNum.value =
+                                                  data.indexOf(nijimas);
+                                            },
+                                            child: Card(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(16),
+                                                ),
+                                                color: Colors.grey
+                                                    .withOpacity(0.4),
+                                                child: Stack(children: [
+                                                  (nijimas.photos.isNotEmpty)
+                                                      ? ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(16),
+                                                          child: SizedBox(
+                                                            width:
+                                                                double.infinity,
+                                                            child: Image.network(
+                                                                nijimas
+                                                                    .photos[0],
+                                                                fit: BoxFit
+                                                                    .fitWidth),
+                                                          ),
+                                                        )
+                                                      : const SizedBox.shrink(),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Text(nijimas.section,
+                                                        style: TextStyles
+                                                            .sectionCard()),
+                                                  ),
+                                                ]))));
                                   }).toList(),
                                 ),
                               ),
