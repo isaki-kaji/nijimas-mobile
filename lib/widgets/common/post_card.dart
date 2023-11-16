@@ -45,19 +45,6 @@ class PostCard extends ConsumerWidget {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: post.tags.map((tag) {
-                        return Text("#$tag", style: TextStyles.tag());
-                      }).toList(),
-                    ),
-                  ),
-                ),
                 if (post.photos!.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -87,6 +74,19 @@ class PostCard extends ConsumerWidget {
                       }).toList(),
                     ),
                   ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: post.tags.map((tag) {
+                        return Text("#$tag", style: TextStyles.tag());
+                      }).toList(),
+                    ),
+                  ),
+                ),
                 if (post.text != null)
                   Padding(
                     padding: const EdgeInsets.symmetric(
