@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/controllers/post_controller.dart';
 import 'package:nijimas/core/providers/user_notifier_provider.dart';
@@ -12,6 +13,8 @@ class FeedScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider);
+    final scrollController = useScrollController();
+
     return ref.watch(fetchUserFollowingPostsProvider(user!)).when(
         data: (data) {
           return ListView.builder(

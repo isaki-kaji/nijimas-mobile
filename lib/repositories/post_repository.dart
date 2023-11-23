@@ -44,6 +44,23 @@ class PostRepository {
             .toList());
   }
 
+  Stream<List<Post>> fetchPaginationUserFollowingPosts(UserModel user,
+      {DocumentSnapshot? lastDocument}) {
+    List<String> followingList = [...user.following, user.uid];
+    var query = FirebaseFirestore.instance
+        .collection('posts')
+        .where("uid", whereIn: followingList)
+        .orderBy("createdAt", descending: true)
+        .limit(20);
+
+    if (lastDocument != null) {
+      query = query.startAfterDocument(lastDocument);
+    }
+
+    return query.snapshots().map((snapshot) =>
+        snapshot.docs.map((doc) => Post.fromMap(doc.data())).toList());
+  }
+
   void favoritePost(Post post, String uid) async {
     if (post.favoriteUids.contains(uid)) {
       _posts.doc(post.postId).update({
