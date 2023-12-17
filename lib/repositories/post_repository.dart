@@ -36,29 +36,13 @@ class PostRepository {
   Stream<List<Post>> fetchUserFollowingPosts(UserModel user) {
     List<String> followingList = [...user.following, user.uid];
     return _posts
-        .where("uid", whereIn: followingList.map((e) => e).toList())
+        .where("uid", whereIn: followingList)
         .orderBy("createdAt", descending: true)
+        .limit(50)
         .snapshots()
         .map((event) => event.docs
             .map((e) => Post.fromMap(e.data() as Map<String, dynamic>))
             .toList());
-  }
-
-  Stream<List<Post>> fetchPaginationUserFollowingPosts(UserModel user,
-      {DocumentSnapshot? lastDocument}) {
-    List<String> followingList = [...user.following, user.uid];
-    var query = FirebaseFirestore.instance
-        .collection('posts')
-        .where("uid", whereIn: followingList)
-        .orderBy("createdAt", descending: true)
-        .limit(20);
-
-    if (lastDocument != null) {
-      query = query.startAfterDocument(lastDocument);
-    }
-
-    return query.snapshots().map((snapshot) =>
-        snapshot.docs.map((doc) => Post.fromMap(doc.data())).toList());
   }
 
   void favoritePost(Post post, String uid) async {
