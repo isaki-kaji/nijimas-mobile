@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "347460974318",
+    "project_id": "nijimas-2832c",
+    "storage_bucket": "nijimas-2832c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:347460974318:android:77983887c728f8c546e5ff",
+        "android_client_info": {
+          "package_name": "com.example.nijimas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSGGDIf7_AxRKYzOb5xGlWiAE7VaboWYI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
