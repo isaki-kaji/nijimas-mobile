@@ -4,4 +4,7 @@ l10n:
 assets:
 	flutter packages pub run build_runner build
 
-.PHONY: l10n assets
+generate:
+	flutter packages pub run build_runner build
+
+.PHONY: l10n assets generate
