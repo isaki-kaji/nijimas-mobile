@@ -2,8 +2,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n//app_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/firebase_options.dart';
-import 'package:nijimas/screen/auth/auth_screen.dart';
+import 'package:nijimas/presentation/router/go_router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,12 +14,17 @@ void main() async {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  Widget build(BuildContext context, WidgetRef ref) {
+    final router = ref.watch(routerProvider);
+    ref.listen(authStateNotifierProvider, (_, __) {
+      router.refresh();
+    });
+
+    return MaterialApp.router(
       title: 'Nijimas',
       localizationsDelegates: L10n.localizationsDelegates,
       supportedLocales: L10n.supportedLocales,
@@ -26,7 +32,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.pink),
         useMaterial3: true,
       ),
-      home: const AuthScreen(title: 'Flutter Demo Home Page'),
+      routeInformationParser: ref.watch(routerProvider).routeInformationParser,
+      routerDelegate: ref.watch(routerProvider).routerDelegate,
     );
   }
 }

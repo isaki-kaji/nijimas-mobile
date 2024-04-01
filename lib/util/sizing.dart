@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
-double sizingWidthByMQ(BuildContext context, double percent) {
-  return MediaQuery.of(context).size.width * percent;
-}
+class Sizing {
+  static double widthByMQ(BuildContext context, double percent) {
+    return MediaQuery.of(context).size.width * percent;
+  }
 
-double sizingHeightByMQ(BuildContext context, double percent) {
-  return MediaQuery.of(context).size.height * percent;
+  static double heightByMQ(BuildContext context, double percent) {
+    return MediaQuery.of(context).size.height * percent;
+  }
 }
