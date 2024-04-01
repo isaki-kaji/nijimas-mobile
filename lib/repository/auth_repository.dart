@@ -4,7 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/web.dart';
 import 'package:nijimas/core/provider/firebase_provider.dart';
 import 'package:nijimas/core/provider/logger_provider.dart';
-import 'package:nijimas/domain/model/auth_user.dart';
 import 'package:nijimas/repository/abstract_auth_repository.dart';
 
 final authRepositoryProvider = Provider<AbstractAuthRepository>((ref) {
@@ -29,7 +28,10 @@ final class AuthRepository extends AbstractAuthRepository {
         _logger = logger;
 
   @override
-  Future<AuthUser?> signInWithGoogle() async {
+  Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
+
+  @override
+  Future<User?> signInWithGoogle() async {
     try {
       final googleUser = await _googleSignIn.signIn();
       if (googleUser == null) {
@@ -47,16 +49,8 @@ final class AuthRepository extends AbstractAuthRepository {
 
       final userCredential =
           await _firebaseAuth.signInWithCredential(credential);
-      final user = userCredential.user;
-      if (user == null) {
-        return null;
-      }
-      final idToken = await user.getIdToken();
-      if (idToken == null) {
-        return null;
-      }
 
-      return AuthUser(uid: user.uid, idToken: idToken);
+      return userCredential.user;
     } catch (e) {
       _logger.w('Failed to sign in with Google: $e');
       return null;

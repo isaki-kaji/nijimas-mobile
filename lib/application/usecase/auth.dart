@@ -1,6 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/usecase/abstract_auth.dart';
-import 'package:nijimas/domain/model/auth_user.dart';
 import 'package:nijimas/repository/abstract_auth_repository.dart';
 import 'package:nijimas/repository/auth_repository.dart';
 
@@ -14,7 +14,10 @@ class AuthUseCase extends AbstractAuthUsecase {
   AuthUseCase(this._authRepository);
 
   @override
-  Future<AuthUser?> signInWithGoogle() async {
+  Stream<User?> get authStateChanges => _authRepository.authStateChanges;
+
+  @override
+  Future<User?> signInWithGoogle() async {
     return await _authRepository.signInWithGoogle();
   }
 
