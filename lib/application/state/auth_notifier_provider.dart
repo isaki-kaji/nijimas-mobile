@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'auth_notifier_provider.g.dart';
 
 @riverpod
-class UserNotifier extends _$UserNotifier {
+class AuthNotifier extends _$AuthNotifier {
   @override
   bool build() => false;
 

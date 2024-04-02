@@ -14,7 +14,7 @@ void main() async {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends ConsumerWidget {
+class MyApp extends HookConsumerWidget {
   const MyApp({super.key});
 
   @override
@@ -23,17 +23,16 @@ class MyApp extends ConsumerWidget {
     ref.listen(authStateNotifierProvider, (_, __) {
       router.refresh();
     });
-
     return MaterialApp.router(
       title: 'Nijimas',
+      debugShowCheckedModeBanner: false,
       localizationsDelegates: L10n.localizationsDelegates,
       supportedLocales: L10n.supportedLocales,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.pink),
         useMaterial3: true,
       ),
-      routeInformationParser: ref.watch(routerProvider).routeInformationParser,
-      routerDelegate: ref.watch(routerProvider).routerDelegate,
+      routerConfig: ref.watch(routerProvider),
     );
   }
 }
