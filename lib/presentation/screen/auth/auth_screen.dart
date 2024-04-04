@@ -13,13 +13,22 @@ class AuthScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isLoading = ref.watch(authNotifierProvider);
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: [
+          TextButton(
+              onPressed: () =>
+                  ref.read(authNotifierProvider.notifier).signInAsGuest(),
+              child: const Text("skip"))
+        ],
+      ),
       body: isLoading
           ? const Loader()
           : Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: Sizing.heightByMQ(context, 0.05)),
                   Assets.title.image(width: Sizing.widthByMQ(context, 1.0)),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -40,6 +49,7 @@ class AuthScreen extends HookConsumerWidget {
                       size: 35,
                     ),
                   ),
+                  SizedBox(height: Sizing.heightByMQ(context, 0.05)),
                 ],
               ),
             ),

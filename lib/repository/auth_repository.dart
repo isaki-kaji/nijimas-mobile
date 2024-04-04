@@ -58,6 +58,17 @@ final class AuthRepository extends AbstractAuthRepository {
   }
 
   @override
+  Future<User?> signInAsGuest() async {
+    try {
+      final userCredential = await _firebaseAuth.signInAnonymously();
+      return userCredential.user;
+    } catch (e) {
+      _logger.w('Failed to sign in as a guest: $e');
+      return null;
+    }
+  }
+
+  @override
   Future<void> signOut() async {
     await _googleSignIn.signOut();
     await _firebaseAuth.signOut();

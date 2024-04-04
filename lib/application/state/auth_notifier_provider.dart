@@ -18,6 +18,16 @@ class AuthNotifier extends _$AuthNotifier {
     }
   }
 
+  void signInAsGuest() async {
+    final auth = ref.read(authUseCaseProvider);
+    state = true;
+    final user = await auth.signInAsGuest();
+    state = false;
+    if (user == null) {
+      print("エラースナックバーを表示予定");
+    }
+  }
+
   void signOut() async {
     final auth = ref.read(authUseCaseProvider);
     await auth.signOut();

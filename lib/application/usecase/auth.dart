@@ -22,6 +22,11 @@ class AuthUseCase extends AbstractAuthUsecase {
   }
 
   @override
+  Future<User?> signInAsGuest() async {
+    return await _authRepository.signInAsGuest();
+  }
+
+  @override
   Future<void> signOut() async {
     return await _authRepository.signOut();
   }
