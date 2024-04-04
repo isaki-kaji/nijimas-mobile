@@ -18,7 +18,11 @@ class AuthUseCase extends AbstractAuthUsecase {
 
   @override
   Future<User?> signInWithGoogle() async {
-    return await _authRepository.signInWithGoogle();
+    final user = await _authRepository.signInWithGoogle();
+    if (user != null) {
+      await _authRepository.registerUserStatus(user);
+    }
+    return user;
   }
 
   @override
