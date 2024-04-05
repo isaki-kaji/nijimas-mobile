@@ -1,10 +1,10 @@
-import 'package:nijimas/application/usecase/auth.dart';
+import 'package:nijimas/application/usecase/auth_usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'auth_notifier_provider.g.dart';
+part 'auth_provider.g.dart';
 
 @riverpod
-class AuthNotifier extends _$AuthNotifier {
+class Auth extends _$Auth {
   @override
   bool build() => false;
 

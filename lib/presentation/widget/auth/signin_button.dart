@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nijimas/application/state/auth_notifier_provider.dart';
+import 'package:nijimas/application/state/auth_provider.dart';
 
 class SignInButton extends ConsumerWidget {
   final String labelText;
@@ -13,7 +13,7 @@ class SignInButton extends ConsumerWidget {
       required this.logo});
 
   void signInWithGoogle(WidgetRef ref) {
-    ref.read(authNotifierProvider.notifier).signInWithGoogle();
+    ref.read(authProvider.notifier).signInWithGoogle();
   }
 
   @override

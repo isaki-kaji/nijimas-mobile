@@ -17,8 +17,7 @@ final routerProvider = Provider((ref) => GoRouter(
         ),
       ],
       redirect: (context, state) {
-        final isSignedIn =
-            ref.read(authStateNotifierProvider.notifier).isSignedIn;
+        final isSignedIn = ref.read(authStateProvider.notifier).isSignedIn;
         if (!isSignedIn) {
           return state.matchedLocation == '/signin' ? null : '/signin';
         }

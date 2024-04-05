@@ -20,7 +20,7 @@ class MyApp extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(routerProvider);
-    ref.listen(authStateNotifierProvider, (_, __) {
+    ref.listen(authStateProvider, (_, __) {
       router.refresh();
     });
     return MaterialApp.router(

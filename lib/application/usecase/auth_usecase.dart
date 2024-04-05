@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nijimas/application/usecase/abstract_auth.dart';
+import 'package:nijimas/application/usecase/abstract_auth_usecase.dart';
 import 'package:nijimas/repository/abstract_auth_repository.dart';
 import 'package:nijimas/repository/abstract_user_status_repository.dart';
 import 'package:nijimas/repository/auth_repository.dart';

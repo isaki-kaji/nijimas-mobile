@@ -1,25 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'auth_notifier_provider.dart';
+part of 'auth_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$authNotifierHash() => r'6eac61b08edf603d0144cd6ce5bdd5b205fcdb7d';
+String _$authHash() => r'd1710ef03fc0b23520d02bf9cfc7829840c97a3b';
 
-/// See also [AuthNotifier].
-@ProviderFor(AuthNotifier)
-final authNotifierProvider =
-    AutoDisposeNotifierProvider<AuthNotifier, bool>.internal(
-  AuthNotifier.new,
-  name: r'authNotifierProvider',
+/// See also [Auth].
+@ProviderFor(Auth)
+final authProvider = AutoDisposeNotifierProvider<Auth, bool>.internal(
+  Auth.new,
+  name: r'authProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$authNotifierHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$authHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$AuthNotifier = AutoDisposeNotifier<bool>;
+typedef _$Auth = AutoDisposeNotifier<bool>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
