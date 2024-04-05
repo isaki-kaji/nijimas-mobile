@@ -1,6 +1,4 @@
 {
-    "helloWorld": "Hello World!!",
-    "@helloWorld": {
-        "description":"greet"
-    }
+    "welcome": "welcome!!",
+    "enterYourName": "Please enter your name"
 }

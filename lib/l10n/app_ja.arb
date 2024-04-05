@@ -1,6 +1,4 @@
 {
-    "helloWorld": "こんにちは！",
-    "@helloWorld": {
-        "description":"あいさつ"
-    }
+    "welcome": "ようこそ！",
+    "enterYourName": "あなたの名前を入力してください"
 }

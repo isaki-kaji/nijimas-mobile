@@ -27,6 +27,8 @@ dependencies:
   flutter_hooks: ^0.20.5
   loading_animation_widget: ^1.2.1
   cloud_firestore: ^4.15.8
+  google_fonts: 6.1.0
+  animated_text_kit: ^4.2.2
 
 dev_dependencies:
   flutter_test:

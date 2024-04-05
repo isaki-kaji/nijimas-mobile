@@ -28,14 +28,11 @@ final routerProvider = Provider((ref) => GoRouter(
         if (!isSignedIn) {
           return state.matchedLocation == '/signin' ? null : '/signin';
         }
-        if (state.matchedLocation == '/signin') {
-          final isFirstSignIn =
-              await ref.read(userStatusProvider.notifier).isFirstSignIn();
-          if (isFirstSignIn) {
-            return '/register-user';
-          }
-          return '/';
+        final isFirstSignIn =
+            await ref.read(userStatusProvider.notifier).isFirstSignIn();
+        if (isFirstSignIn) {
+          return '/register-user';
         }
-        return null;
+        return '/';
       },
     ));
