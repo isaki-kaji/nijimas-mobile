@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
 class MyColor {
-  static const colorizeColors = [
-    Colors.purple,
-    Colors.blue,
-    Colors.yellow,
-    Colors.red,
-  ];
+  static List<List<Color>> getWaveColors() {
+    const baseColor = Colors.tealAccent;
+    const subColor = Colors.teal;
+    return [
+      [baseColor, baseColor.shade700],
+      [
+        subColor,
+        subColor.shade300,
+      ]
+    ];
+  }
 }
