@@ -21,6 +21,9 @@ class AuthUseCase extends AbstractAuthUsecase {
   Stream<User?> get authStateChanges => _authRepository.authStateChanges;
 
   @override
+  User? get currentUser => _authRepository.currentUser;
+
+  @override
   Future<User?> signInWithGoogle() async {
     final user = await _authRepository.signInWithGoogle();
     if (user != null) {

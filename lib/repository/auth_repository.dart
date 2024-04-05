@@ -31,6 +31,9 @@ final class AuthRepository extends AbstractAuthRepository {
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
   @override
+  User? get currentUser => _firebaseAuth.currentUser;
+
+  @override
   Future<User?> signInWithGoogle() async {
     try {
       final googleUser = await _googleSignIn.signIn();
