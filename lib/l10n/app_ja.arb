@@ -1,4 +1,6 @@
 {
     "welcome": "ようこそ！",
-    "enterYourName": "あなたの名前を入力してください"
+    "enterYourName": "あなたの名前を入力してください",
+    "nameCanBeChanged": "※名前は後から変更できます。",
+    "enterNameCaption": "3〜15文字で入力してください"
 }

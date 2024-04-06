@@ -24,6 +24,6 @@ class MyTextStyle {
   );
 
   static const TextStyle caption = TextStyle(
-    fontSize: 14,
+    fontSize: 10,
   );
 }

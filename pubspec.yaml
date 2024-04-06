@@ -28,9 +28,10 @@ dependencies:
   loading_animation_widget: ^1.2.1
   cloud_firestore: ^4.15.8
   google_fonts: 6.1.0
-  animated_text_kit: ^4.2.2
-  simple_animations: ^5.0.2
   wave: ^0.2.2
+  http: ^1.2.0
+  json_annotation: ^4.8.1
+  top_snackbar_flutter: ^3.1.0
 
 dev_dependencies:
   flutter_test:

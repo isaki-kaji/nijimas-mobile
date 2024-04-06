@@ -6,16 +6,16 @@ import 'package:nijimas/repository/abstract_user_status_repository.dart';
 import 'package:nijimas/repository/auth_repository.dart';
 import 'package:nijimas/repository/user_status_repository.dart';
 
-final authUseCaseProvider = Provider<AbstractAuthUsecase>((ref) {
-  return AuthUseCase(
+final authUsecaseProvider = Provider<AbstractAuthUsecase>((ref) {
+  return AuthUsecase(
       ref.read(authRepositoryProvider), ref.read(userStatusRepositoryProvider));
 });
 
-class AuthUseCase extends AbstractAuthUsecase {
+class AuthUsecase extends AbstractAuthUsecase {
   final AbstractAuthRepository _authRepository;
   final AbstractUserStatusRepository _userStatusRepository;
 
-  AuthUseCase(this._authRepository, this._userStatusRepository);
+  AuthUsecase(this._authRepository, this._userStatusRepository);
 
   @override
   Stream<User?> get authStateChanges => _authRepository.authStateChanges;

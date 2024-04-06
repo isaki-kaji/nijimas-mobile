@@ -8,7 +8,7 @@ part 'auth_state_provider.g.dart';
 class AuthState extends _$AuthState {
   @override
   Stream<User?> build() {
-    final auth = ref.read(authUseCaseProvider);
+    final auth = ref.read(authUsecaseProvider);
     return auth.authStateChanges;
   }
 

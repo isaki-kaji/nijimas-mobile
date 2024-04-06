@@ -9,7 +9,7 @@ final userStatusUseCaseProvider = Provider<UserStatusUseCase>((ref) {
   return UserStatusUseCase(userStatusRepository);
 });
 
-class UserStatusUseCase extends AbstractUserStatusUseCase {
+class UserStatusUseCase extends AbstractUserStatusUsecase {
   final AbstractUserStatusRepository _userStatusRepository;
 
   UserStatusUseCase(this._userStatusRepository);

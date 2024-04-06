@@ -9,7 +9,7 @@ class Auth extends _$Auth {
   bool build() => false;
 
   void signInWithGoogle() async {
-    final auth = ref.read(authUseCaseProvider);
+    final auth = ref.read(authUsecaseProvider);
     state = true;
     final user = await auth.signInWithGoogle();
     state = false;
@@ -19,7 +19,7 @@ class Auth extends _$Auth {
   }
 
   void signInAsGuest() async {
-    final auth = ref.read(authUseCaseProvider);
+    final auth = ref.read(authUsecaseProvider);
     state = true;
     final user = await auth.signInAsGuest();
     state = false;
@@ -29,7 +29,7 @@ class Auth extends _$Auth {
   }
 
   void signOut() async {
-    final auth = ref.read(authUseCaseProvider);
+    final auth = ref.read(authUsecaseProvider);
     await auth.signOut();
   }
 }

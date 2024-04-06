@@ -10,7 +10,7 @@ class UserStatus extends _$UserStatus {
   bool build() => false;
 
   Future<bool> isFirstSignIn() {
-    final user = ref.read(authUseCaseProvider).currentUser!;
+    final user = ref.read(authUsecaseProvider).currentUser!;
     return ref.read(userStatusUseCaseProvider).isFirstSignIn(user);
   }
 }
