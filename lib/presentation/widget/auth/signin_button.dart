@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nijimas/application/state/auth_provider.dart';
+import 'package:nijimas/application/usecase/auth_usecase.dart';
+import 'package:nijimas/util/snack_bar.dart';
 
 class SignInButton extends ConsumerWidget {
   final String labelText;
@@ -12,18 +13,17 @@ class SignInButton extends ConsumerWidget {
       required this.type,
       required this.logo});
 
-  void signInWithGoogle(WidgetRef ref) {
-    ref.read(authProvider.notifier).signInWithGoogle();
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.all(18.0),
       child: ElevatedButton.icon(
-        onPressed: () {
+        onPressed: () async {
+          final usecase = ref.read(authUsecaseProvider);
           if (type == "google") {
-            signInWithGoogle(ref);
+            await usecase.signInWithGoogle(onFailure: () {
+              showTopErrorSnackBar(context, "Googleサインインに失敗しました");
+            });
           }
         },
         icon: logo,

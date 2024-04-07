@@ -38,4 +38,15 @@ class UserStatusRepository extends AbstractUserStatusRepository {
         createdAt: user.metadata.creationTime!);
     await _userStatus.doc(user.uid).set(userStatus.toJson());
   }
+
+  @override
+  Future<void> toggleIsFirstSignIn(User user) async {
+    final userStatus = await getUserStatus(user);
+    if (userStatus == null) {
+      return;
+    }
+    await _userStatus.doc(user.uid).update({
+      'isFirstSignIn': false,
+    });
+  }
 }

@@ -22,4 +22,9 @@ class UserStatusUseCase extends AbstractUserStatusUsecase {
     }
     return userStatus.isFirstSignIn;
   }
+
+  @override
+  Future<void> toggleIsFirstSignIn(User user) async {
+    await _userStatusRepository.toggleIsFirstSignIn(user);
+  }
 }

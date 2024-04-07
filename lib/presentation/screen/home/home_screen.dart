@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nijimas/application/state/auth_provider.dart';
+import 'package:nijimas/application/usecase/auth_usecase.dart';
 
 class HomeScreen extends HookConsumerWidget {
   const HomeScreen({super.key});
@@ -15,7 +15,7 @@ class HomeScreen extends HookConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          ref.read(authProvider.notifier).signOut();
+          ref.read(authUsecaseProvider).signOut();
         },
         child: const Icon(Icons.add),
       ),

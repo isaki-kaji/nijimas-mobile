@@ -34,6 +34,9 @@ final class AuthRepository extends AbstractAuthRepository {
   User? get currentUser => _firebaseAuth.currentUser;
 
   @override
+  bool get isAnonymous => _firebaseAuth.currentUser?.isAnonymous ?? true;
+
+  @override
   Future<User?> signInWithGoogle() async {
     try {
       final googleUser = await _googleSignIn.signIn();

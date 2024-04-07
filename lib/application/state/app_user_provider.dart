@@ -16,6 +16,11 @@ class AppUser extends _$AppUser {
     return auth.currentUser;
   }
 
+  bool isAnonymous() {
+    final auth = ref.read(authUsecaseProvider);
+    return auth.isAnonymous;
+  }
+
   Future<void> createUser(CreateUserRequest request) async {
     final user = ref.read(userUsecaseProvider);
     state = true;
