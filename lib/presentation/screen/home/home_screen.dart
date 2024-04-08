@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nijimas/application/usecase/auth_usecase.dart';
 
 class HomeScreen extends HookConsumerWidget {
   const HomeScreen({super.key});
@@ -15,7 +15,8 @@ class HomeScreen extends HookConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          ref.read(authUsecaseProvider).signOut();
+          //ref.read(authUsecaseProvider).signOut();
+          GoRouter.of(context).go('/user/profile');
         },
         child: const Icon(Icons.add),
       ),

@@ -43,7 +43,7 @@ class UserStatusRepository extends AbstractUserStatusRepository {
   Future<void> toggleIsFirstSignIn(User user) async {
     final userStatus = await getUserStatus(user);
     if (userStatus == null) {
-      return;
+      throw Exception('UserStatus is not found');
     }
     await _userStatus.doc(user.uid).update({
       'isFirstSignIn': false,

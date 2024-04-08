@@ -5,6 +5,12 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'auth_state_provider.g.dart';
 
 @riverpod
-Stream<User?> authState(AuthStateRef ref) {
-  return ref.watch(authUsecaseProvider).authStateChanges;
+class AuthState extends _$AuthState {
+  @override
+  Stream<User?> build() {
+    final auth = ref.read(authUsecaseProvider);
+    return auth.authStateChanges;
+  }
+
+  bool get isSignedIn => state.valueOrNull != null;
 }
