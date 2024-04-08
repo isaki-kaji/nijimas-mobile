@@ -1,7 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
-import 'package:nijimas/application/usecase/user_status_usecase.dart';
+import 'package:nijimas/application/state/is_first_signin_provider.dart';
 import 'package:nijimas/presentation/screen/auth/auth_screen.dart';
 import 'package:nijimas/presentation/screen/home/home_screen.dart';
 import 'package:nijimas/presentation/screen/user/register_user_scree.dart';
@@ -31,8 +31,7 @@ final routerProvider = Provider((ref) => GoRouter(
         if (signedInUser == null) {
           return state.matchedLocation == '/signin' ? null : '/signin';
         }
-        final isFirstSignIn =
-            await ref.read(userStatusUseCaseProvider).isFirstSignIn();
+        final isFirstSignIn = await ref.read(isFirstSigninProvider.future);
         if (isFirstSignIn && !isAnonymous) {
           return '/user/register';
         }
