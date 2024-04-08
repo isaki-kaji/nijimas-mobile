@@ -15,8 +15,7 @@ class HomeScreen extends HookConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          //ref.read(authUsecaseProvider).signOut();
-          GoRouter.of(context).go('/user/profile');
+          GoRouter.of(context).push('/user/profile');
         },
         child: const Icon(Icons.add),
       ),

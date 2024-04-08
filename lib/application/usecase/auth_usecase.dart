@@ -19,12 +19,6 @@ class AuthUsecase extends AbstractAuthUsecase {
   Stream<User?> get authStateChanges => _authRepository.authStateChanges;
 
   @override
-  User? get currentUser => _authRepository.currentUser;
-
-  @override
-  bool get isAnonymous => _authRepository.isAnonymous;
-
-  @override
   Future<void> signInWithGoogle({required void Function() onFailure}) async {
     try {
       _ref.read(loadingProvider.notifier).setTrue();

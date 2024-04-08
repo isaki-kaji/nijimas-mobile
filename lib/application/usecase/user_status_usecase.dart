@@ -1,27 +1,26 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nijimas/application/usecase/abstract_auth_usecase.dart';
+import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/usecase/abstract_user_status_usecase.dart';
-import 'package:nijimas/application/usecase/auth_usecase.dart';
 import 'package:nijimas/repository/abstract_user_status_repository.dart';
 import 'package:nijimas/repository/user_status_repository.dart';
 
 final userStatusUseCaseProvider = Provider<UserStatusUseCase>((ref) {
   final userStatusRepository = ref.read(userStatusRepositoryProvider);
-  final authUsecase = ref.read(authUsecaseProvider);
-  return UserStatusUseCase(userStatusRepository, authUsecase);
+  return UserStatusUseCase(userStatusRepository, ref);
 });
 
 class UserStatusUseCase extends AbstractUserStatusUsecase {
   final AbstractUserStatusRepository _userStatusRepository;
-  final AbstractAuthUsecase _authUsecase;
+  final Ref _ref;
 
-  UserStatusUseCase(this._userStatusRepository, this._authUsecase);
+  UserStatusUseCase(this._userStatusRepository, this._ref);
 
   @override
   Future<bool> isFirstSignIn() async {
-    final user = _authUsecase.currentUser!;
-    final userStatus = await _userStatusRepository.getUserStatus(user);
+    final asyncValue = _ref.read(authStateProvider);
+    final user = asyncValue.value;
+    final userStatus = await _userStatusRepository.getUserStatus(user!);
     if (userStatus == null) {
       return true;
     }
