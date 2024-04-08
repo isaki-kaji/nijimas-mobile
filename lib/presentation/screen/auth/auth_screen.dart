@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nijimas/application/state/auth_provider.dart';
+import 'package:nijimas/application/state/loading_provider.dart';
+import 'package:nijimas/application/usecase/auth_usecase.dart';
 import 'package:nijimas/gen/assets.gen.dart';
 import 'package:nijimas/presentation/widget/auth/signin_button.dart';
 import 'package:nijimas/presentation/widget/common/loader.dart';
@@ -11,14 +12,14 @@ class AuthScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isLoading = ref.watch(authProvider);
+    final isLoading = ref.watch(loadingProvider);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
           TextButton(
-              onPressed: () => ref.read(authProvider.notifier).signInAsGuest(),
+              onPressed: () => ref.read(authUsecaseProvider).signInAsGuest(),
               child: const Text("skip"))
         ],
       ),

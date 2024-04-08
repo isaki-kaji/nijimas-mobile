@@ -1,10 +1,11 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
-import 'package:nijimas/application/state/user_status_provider.dart';
+import 'package:nijimas/application/usecase/user_status_usecase.dart';
 import 'package:nijimas/presentation/screen/auth/auth_screen.dart';
 import 'package:nijimas/presentation/screen/home/home_screen.dart';
 import 'package:nijimas/presentation/screen/user/register_user_scree.dart';
+import 'package:nijimas/presentation/screen/user/user_profile_screen.dart';
 
 final routerProvider = Provider((ref) => GoRouter(
       initialLocation: "/",
@@ -18,21 +19,29 @@ final routerProvider = Provider((ref) => GoRouter(
           builder: (context, state) => const AuthScreen(),
         ),
         GoRoute(
-            path: '/register-user',
-            builder: (context, state) => const RegisterUserScreen())
+            path: '/user/register',
+            builder: (context, state) => const RegisterUserScreen()),
+        GoRoute(
+            path: '/user/profile',
+            builder: (context, state) => const UserProfileScreen())
       ],
       redirect: (context, state) async {
-        final isSignedIn = ref.read(authStateProvider.notifier).isSignedIn;
-
-        //未ログインかつサインイン画面にいない場合はサインイン画面にリダイレクト
-        if (!isSignedIn) {
+        final signedInUser = ref.read(authStateProvider).value;
+        final isAnonymous = signedInUser?.isAnonymous ?? true;
+        if (signedInUser == null) {
           return state.matchedLocation == '/signin' ? null : '/signin';
         }
         final isFirstSignIn =
-            await ref.read(userStatusProvider.notifier).isFirstSignIn();
-        if (isFirstSignIn) {
-          return '/register-user';
+            await ref.read(userStatusUseCaseProvider).isFirstSignIn();
+        if (isFirstSignIn && !isAnonymous) {
+          return '/user/register';
         }
-        return '/';
+        if (isAnonymous) {
+          return '/';
+        }
+        if (state.matchedLocation == '/signin') {
+          return '/';
+        }
+        return null;
       },
     ));

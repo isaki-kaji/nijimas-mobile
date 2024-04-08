@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class AbstractUserStatusUsecase {
-  Future<bool> isFirstSignIn(User user);
+  Future<bool> isFirstSignIn();
+  Future<void> toggleIsFirstSignIn(User user);
 }

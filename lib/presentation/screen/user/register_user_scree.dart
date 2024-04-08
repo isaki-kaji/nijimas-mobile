@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_gen/gen_l10n//app_localizations.dart';
-import 'package:nijimas/application/state/app_user_provider.dart';
 import 'package:nijimas/core/theme/my_color.dart';
 import 'package:nijimas/core/theme/text_style.dart';
-import 'package:nijimas/domain/request/create_user_request.dart';
 import 'package:nijimas/presentation/widget/common/custom_wave.dart';
+import 'package:nijimas/repository/auth_repository.dart';
+import 'package:nijimas/repository/user_status_repository.dart';
 import 'package:nijimas/util/sizing.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:nijimas/util/snack_bar.dart';
 
 class RegisterUserScreen extends HookConsumerWidget {
   const RegisterUserScreen({super.key});
@@ -66,22 +66,12 @@ class RegisterUserScreen extends HookConsumerWidget {
                     return;
                   }
                   if (nameValue.length < 3 || nameValue.length > 15) {
-                    showTopSnackBar(
-                        Overlay.of(context),
-                        CustomSnackBar.error(
-                          message: l10n.enterNameCaption,
-                          backgroundColor: Theme.of(context).colorScheme.error,
-                        ));
+                    showTopErrorSnackBar(context, l10n.enterNameCaption);
                     return;
                   }
-                  ref.read(appUserProvider.notifier).createUser(
-                      CreateUserRequest(
-                          uid: ref
-                              .read(appUserProvider.notifier)
-                              .getCurrentUser()!
-                              .uid,
-                          username: nameValue,
-                          country: locale.toString()));
+                  ref.read(userStatusRepositoryProvider).toggleIsFirstSignIn(
+                      ref.read(authRepositoryProvider).currentUser!);
+                  GoRouter.of(context).go('/user/profile');
                 },
                 style: ElevatedButton.styleFrom(
                   shape: const CircleBorder(),
