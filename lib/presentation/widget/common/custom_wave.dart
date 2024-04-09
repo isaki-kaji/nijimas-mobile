@@ -19,7 +19,7 @@ class CustomWave extends StatelessWidget {
       config: CustomConfig(
         gradients: waveColor,
         durations: [10000, 8000],
-        heightPercentages: [0.05, 0.1],
+        heightPercentages: [0.005, 0.01],
       ),
       waveAmplitude: 0,
       size: Size(

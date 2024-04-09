@@ -6,7 +6,7 @@ part of 'is_first_signin_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$isFirstSigninHash() => r'546bed265407c0c27eb5f37d71e1839d4335383d';
+String _$isFirstSigninHash() => r'2270fa198fb59f7e9473303f696f7609a222e947';
 
 /// See also [isFirstSignin].
 @ProviderFor(isFirstSignin)
