@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nijimas/core/constant/animation_constant.dart';
 import 'package:nijimas/core/theme/my_color.dart';
 import 'package:nijimas/presentation/widget/common/custom_wave.dart';
-import 'package:nijimas/util/sizing.dart';
+import 'package:nijimas/core/util/sizing.dart';
 
 class HomeScreen extends HookConsumerWidget {
   final bool isShowAnimation;
@@ -14,9 +15,9 @@ class HomeScreen extends HookConsumerWidget {
     final useIsVisible = useState(isShowAnimation ? true : false);
     final animationController = useAnimationController(
         duration: const Duration(seconds: 1),
-        initialValue: 0.95,
-        upperBound: 0.95,
-        lowerBound: 0.01);
+        initialValue: AnimationConstants.upperWaveHeight,
+        upperBound: AnimationConstants.upperWaveHeight,
+        lowerBound: AnimationConstants.lowerWaveHeight);
     animationController.addStatusListener((status) {
       if (status == AnimationStatus.dismissed) {
         useIsVisible.value = false;

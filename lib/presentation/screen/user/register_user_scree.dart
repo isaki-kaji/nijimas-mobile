@@ -4,13 +4,14 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_gen/gen_l10n//app_localizations.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
+import 'package:nijimas/core/constant/animation_constant.dart';
 import 'package:nijimas/core/provider/usecase/user_usecase_provider.dart';
 import 'package:nijimas/core/theme/my_color.dart';
 import 'package:nijimas/core/theme/text_style.dart';
 import 'package:nijimas/domain/request/create_user_request.dart';
 import 'package:nijimas/presentation/widget/common/custom_wave.dart';
-import 'package:nijimas/util/sizing.dart';
-import 'package:nijimas/util/snack_bar.dart';
+import 'package:nijimas/core/util/sizing.dart';
+import 'package:nijimas/core/util/snack_bar.dart';
 
 class RegisterUserScreen extends HookConsumerWidget {
   const RegisterUserScreen({super.key});
@@ -21,8 +22,8 @@ class RegisterUserScreen extends HookConsumerWidget {
     final usernameController = useTextEditingController();
     final animationController = useAnimationController(
         duration: const Duration(milliseconds: 500),
-        initialValue: 0.3,
-        upperBound: 0.95);
+        initialValue: AnimationConstants.defaultWaveHeight,
+        upperBound: AnimationConstants.upperWaveHeight);
     animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         GoRouter.of(context).go('/', extra: true);
