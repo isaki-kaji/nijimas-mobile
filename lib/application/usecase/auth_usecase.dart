@@ -3,17 +3,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/loading_provider.dart';
 import 'package:nijimas/application/usecase/abstract_auth_usecase.dart';
 import 'package:nijimas/repository/abstract_auth_repository.dart';
-import 'package:nijimas/repository/auth_repository.dart';
-
-final authUsecaseProvider = Provider<AbstractAuthUsecase>((ref) {
-  return AuthUsecase(ref.read(authRepositoryProvider), ref);
-});
 
 class AuthUsecase extends AbstractAuthUsecase {
   final AbstractAuthRepository _authRepository;
   final Ref _ref;
 
-  AuthUsecase(this._authRepository, this._ref);
+  AuthUsecase(
+      {required AbstractAuthRepository authRepository, required Ref ref})
+      : _authRepository = authRepository,
+        _ref = ref;
 
   @override
   Stream<User?> get authStateChanges => _authRepository.authStateChanges;

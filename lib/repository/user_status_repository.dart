@@ -1,21 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:logger/web.dart';
 import 'package:nijimas/core/constant/firebase_constant.dart';
-import 'package:nijimas/core/provider/firebase_provider.dart';
 import 'package:nijimas/domain/model/user_status.dart';
 import 'package:nijimas/repository/abstract_user_status_repository.dart';
 
-final userStatusRepositoryProvider =
-    Provider<AbstractUserStatusRepository>((ref) {
-  return UserStatusRepository(firestore: ref.read(firestoreProvider));
-});
-
 class UserStatusRepository extends AbstractUserStatusRepository {
   final FirebaseFirestore _firestore;
+  final Logger _logger;
 
-  UserStatusRepository({required FirebaseFirestore firestore})
-      : _firestore = firestore;
+  UserStatusRepository(
+      {required FirebaseFirestore firestore, required Logger logger})
+      : _firestore = firestore,
+        _logger = logger;
 
   CollectionReference get _userStatus =>
       _firestore.collection(FirebaseConstants.userStatusCollection);
@@ -43,6 +40,7 @@ class UserStatusRepository extends AbstractUserStatusRepository {
   Future<void> toggleIsFirstSignIn(User user) async {
     final userStatus = await getUserStatus(user);
     if (userStatus == null) {
+      _logger.w('UserStatus is not found');
       throw Exception('UserStatus is not found');
     }
     await _userStatus.doc(user.uid).update({

@@ -1,15 +1,14 @@
 import 'dart:convert';
 
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/web.dart';
 import 'package:nijimas/domain/request/create_user_request.dart';
 import 'package:nijimas/repository/abstract_user_repository.dart';
 
-final userRepositoryProvider = Provider<AbstractUserRepository>((ref) {
-  return UserRepository();
-});
-
 class UserRepository extends AbstractUserRepository {
+  final Logger _logger;
+  UserRepository({required Logger logger}) : _logger = logger;
+
   final String baseUrl = "http://localhost:8080/user/create";
 
   @override
@@ -26,7 +25,8 @@ class UserRepository extends AbstractUserRepository {
         throw Exception("Failed to create user");
       }
     } catch (e) {
-      print(e);
+      _logger.w('Failed to create user: $e');
+      throw Exception("Failed to create user");
     }
   }
 }

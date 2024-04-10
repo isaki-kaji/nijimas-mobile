@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_gen/gen_l10n//app_localizations.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
-import 'package:nijimas/application/usecase/user_usecase.dart';
+import 'package:nijimas/core/provider/usecase/user_usecase_provider.dart';
 import 'package:nijimas/core/theme/my_color.dart';
 import 'package:nijimas/core/theme/text_style.dart';
 import 'package:nijimas/domain/request/create_user_request.dart';
@@ -20,7 +20,7 @@ class RegisterUserScreen extends HookConsumerWidget {
     Locale locale = Localizations.localeOf(context);
     final usernameController = useTextEditingController();
     final animationController = useAnimationController(
-        duration: const Duration(seconds: 1),
+        duration: const Duration(milliseconds: 500),
         initialValue: 0.3,
         upperBound: 0.95);
     animationController.addStatusListener((status) {

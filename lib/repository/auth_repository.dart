@@ -1,18 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/web.dart';
-import 'package:nijimas/core/provider/firebase_provider.dart';
-import 'package:nijimas/core/provider/logger_provider.dart';
 import 'package:nijimas/repository/abstract_auth_repository.dart';
-
-final authRepositoryProvider = Provider<AbstractAuthRepository>((ref) {
-  return AuthRepository(
-    firebaseAuth: ref.read(firebaseAuthProvider),
-    googleSignIn: ref.read(googleSignInProvider),
-    logger: ref.read(loggerProvider),
-  );
-});
 
 final class AuthRepository extends AbstractAuthRepository {
   final FirebaseAuth _firebaseAuth;
