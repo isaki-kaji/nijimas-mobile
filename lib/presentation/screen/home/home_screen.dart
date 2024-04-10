@@ -28,7 +28,7 @@ class HomeScreen extends HookConsumerWidget {
         animationController.reverse();
       }
       return null;
-    }, []);
+    }, [isShowAnimation]);
     return Scaffold(
         body: Center(
           child: Text(isShowAnimation.toString()),
