@@ -31,69 +31,72 @@ class RegisterUserScreen extends HookConsumerWidget {
     });
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Column(
-        children: [
-          SizedBox(
-            height: Sizing.heightByMQ(context, 0.18),
-          ),
-          Text(l10n.welcome,
-              style: MyTextStyle.bigTitle(
-                  context, Theme.of(context).colorScheme.secondary)),
-          SizedBox(
-            height: Sizing.heightByMQ(context, 0.15),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: TextFormField(
-              controller: usernameController,
-              decoration: InputDecoration(
-                hintText: l10n.enterYourName,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: Sizing.heightByMQ(context, 0.18),
+            ),
+            Text(l10n.welcome,
+                style: MyTextStyle.bigTitle(
+                    context, Theme.of(context).colorScheme.secondary)),
+            SizedBox(
+              height: Sizing.heightByMQ(context, 0.15),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: TextFormField(
+                controller: usernameController,
+                decoration: InputDecoration(
+                  hintText: l10n.enterYourName,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                l10n.nameCanBeChanged,
-                style: MyTextStyle.caption
-                    .copyWith(color: Theme.of(context).colorScheme.secondary),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  l10n.nameCanBeChanged,
+                  style: MyTextStyle.caption
+                      .copyWith(color: Theme.of(context).colorScheme.secondary),
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ElevatedButton(
-              onPressed: () {
-                print(locale.toString());
-                final nameValue = usernameController.text;
-                if (nameValue.length < 3 || nameValue.length > 15) {
-                  showTopErrorSnackBar(context, l10n.enterNameCaption);
-                  return;
-                }
-                ref.read(userUsecaseProvider).createUser(
-                    request: CreateUserRequest(
-                        uid: ref.read(authStateProvider).valueOrNull!.uid,
-                        username: nameValue,
-                        country: locale.toString()),
-                    onSuccess: () {
-                      animationController.forward();
-                    },
-                    onFailure: () {});
-              },
-              style: ElevatedButton.styleFrom(
-                shape: const CircleBorder(),
-                padding: const EdgeInsets.all(20),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  final nameValue = usernameController.text;
+                  if (nameValue.length < 3 || nameValue.length > 15) {
+                    showTopErrorSnackBar(context, l10n.enterNameCaption);
+                    return;
+                  }
+                  ref.read(userUsecaseProvider).createUser(
+                      request: CreateUserRequest(
+                          uid: ref.read(authStateProvider).valueOrNull!.uid,
+                          username: nameValue,
+                          country: locale.toString()),
+                      onSuccess: () {
+                        animationController.forward();
+                      },
+                      onFailure: () {
+                        showTopErrorSnackBar(context, l10n.failedToCreateUser);
+                      });
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: const CircleBorder(),
+                  padding: const EdgeInsets.all(20),
+                ),
+                child: const Icon(Icons.check),
               ),
-              child: const Icon(Icons.check),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       bottomSheet: AnimatedBuilder(
         animation: animationController,

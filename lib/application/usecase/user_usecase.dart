@@ -22,7 +22,7 @@ class UserUsecase extends AbstractUserUsecase {
       required void Function() onSuccess,
       required void Function() onFailure}) async {
     try {
-      //await _userRepository.createUser(request);
+      await _userRepository.createUser(request);
       await _userStatusRepository
           .toggleIsFirstSignIn(_authRepository.currentUser!);
       onSuccess();
