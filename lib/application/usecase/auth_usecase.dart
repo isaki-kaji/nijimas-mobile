@@ -18,14 +18,12 @@ class AuthUsecase extends AbstractAuthUsecase {
 
   @override
   Future<void> signInWithGoogle({required void Function() onFailure}) async {
-    try {
-      _ref.read(loadingProvider.notifier).setTrue();
-      await _authRepository.signInWithGoogle();
-    } catch (e) {
+    _ref.read(loadingProvider.notifier).setTrue();
+    final user = await _authRepository.signInWithGoogle();
+    if (user == null) {
       onFailure();
-    } finally {
-      _ref.read(loadingProvider.notifier).setFalse();
     }
+    _ref.read(loadingProvider.notifier).setFalse();
   }
 
   @override

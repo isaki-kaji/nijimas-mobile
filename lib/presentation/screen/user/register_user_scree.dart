@@ -18,7 +18,6 @@ class RegisterUserScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = L10n.of(context);
-    Locale locale = Localizations.localeOf(context);
     final usernameController = useTextEditingController();
     final animationController = useAnimationController(
         duration: const Duration(milliseconds: 500),
@@ -76,11 +75,12 @@ class RegisterUserScreen extends HookConsumerWidget {
                     showTopErrorSnackBar(context, l10n.enterNameCaption);
                     return;
                   }
+                  final locale = Localizations.localeOf(context);
                   ref.read(userUsecaseProvider).createUser(
                       request: CreateUserRequest(
                           uid: ref.read(authStateProvider).valueOrNull!.uid,
                           username: nameValue,
-                          country: locale.toString()),
+                          country: locale.countryCode),
                       onSuccess: () {
                         animationController.forward();
                       },

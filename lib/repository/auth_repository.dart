@@ -27,40 +27,31 @@ final class AuthRepository extends AbstractAuthRepository {
 
   @override
   Future<User?> signInWithGoogle() async {
-    try {
-      final googleUser = await _googleSignIn.signIn();
-      if (googleUser == null) {
-        return null;
-      }
-
-      final googleAuth = await googleUser.authentication;
-      if (googleAuth.accessToken == null || googleAuth.idToken == null) {
-        return null;
-      }
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-
-      final userCredential =
-          await _firebaseAuth.signInWithCredential(credential);
-
-      return userCredential.user;
-    } catch (e) {
-      _logger.w('Failed to sign in with Google: $e');
+    final googleUser = await _googleSignIn.signIn();
+    if (googleUser == null) {
+      _logger.w("Failed to sign in with Google");
       return null;
     }
+
+    final googleAuth = await googleUser.authentication;
+    if (googleAuth.accessToken == null || googleAuth.idToken == null) {
+      _logger.w("Failed to sign in with Google");
+      return null;
+    }
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    final userCredential = await _firebaseAuth.signInWithCredential(credential);
+
+    return userCredential.user;
   }
 
   @override
   Future<User?> signInAsGuest() async {
-    try {
-      final userCredential = await _firebaseAuth.signInAnonymously();
-      return userCredential.user;
-    } catch (e) {
-      _logger.w('Failed to sign in as a guest: $e');
-      return null;
-    }
+    final userCredential = await _firebaseAuth.signInAnonymously();
+    return userCredential.user;
   }
 
   @override

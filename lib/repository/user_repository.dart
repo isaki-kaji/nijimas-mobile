@@ -12,19 +12,15 @@ class UserRepository extends AbstractUserRepository {
 
   @override
   Future<dynamic> createUser(CreateUserRequest request) async {
-    try {
-      final response = await http.post(Uri.parse("${Env.baseUrl}/users"),
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: jsonEncode(request.toJson()));
-      if (response.statusCode == 200) {
-        return jsonDecode(response.body);
-      } else {
-        throw Exception("Failed to create user");
-      }
-    } catch (e) {
-      _logger.w('Failed to create user: $e');
+    final response = await http.post(Uri.parse("${Env.baseUrl}/users"),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: jsonEncode(request.toJson()));
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      _logger.w("Failed to create user");
       throw Exception("Failed to create user");
     }
   }
