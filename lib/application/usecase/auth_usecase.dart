@@ -1,16 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nijimas/application/state/user_status_provider.dart';
 import 'package:nijimas/application/state/loading_provider.dart';
 import 'package:nijimas/application/usecase/abstract_auth_usecase.dart';
 import 'package:nijimas/repository/abstract_auth_repository.dart';
+import 'package:nijimas/repository/abstract_user_status_repository.dart';
 
 class AuthUsecase extends AbstractAuthUsecase {
   final AbstractAuthRepository _authRepository;
+  final AbstractUserStatusRepository _userStatusRepository;
   final Ref _ref;
 
   AuthUsecase(
-      {required AbstractAuthRepository authRepository, required Ref ref})
+      {required AbstractAuthRepository authRepository,
+      required AbstractUserStatusRepository userStatusRepository,
+      required Ref ref})
       : _authRepository = authRepository,
+        _userStatusRepository = userStatusRepository,
         _ref = ref;
 
   @override
@@ -18,12 +24,24 @@ class AuthUsecase extends AbstractAuthUsecase {
 
   @override
   Future<void> signInWithGoogle({required void Function() onFailure}) async {
-    _ref.read(loadingProvider.notifier).setTrue();
-    final user = await _authRepository.signInWithGoogle();
-    if (user == null) {
+    try {
+      _ref.read(loadingProvider.notifier).setTrue();
+      final user = await _authRepository.signInWithGoogle();
+      if (user == null) {
+        onFailure();
+      }
+      final userStatus = await _ref.read(currentUserStatusProvider.future);
+      if (userStatus == null) {
+        await _userStatusRepository.createUserStatus(user!);
+        final currentUserStatus =
+            await _userStatusRepository.getUserStatus(user);
+        _ref.read(currentUserStatusProvider.notifier).set(currentUserStatus!);
+      }
+    } catch (e) {
       onFailure();
+    } finally {
+      _ref.read(loadingProvider.notifier).setFalse();
     }
-    _ref.read(loadingProvider.notifier).setFalse();
   }
 
   @override

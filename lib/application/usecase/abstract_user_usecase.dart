@@ -5,5 +5,6 @@ abstract class AbstractUserUsecase {
     required CreateUserRequest request,
     required void Function() onSuccess,
     required void Function() onFailure,
+    required void Function() onUserAlreadyExists,
   });
 }

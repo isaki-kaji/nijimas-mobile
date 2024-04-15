@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/core/constant/animation_constant.dart';
+import 'package:nijimas/core/provider/usecase/auth_usecase_provider.dart';
 import 'package:nijimas/core/theme/my_color.dart';
 import 'package:nijimas/presentation/widget/common/custom_wave.dart';
 import 'package:nijimas/core/util/sizing.dart';
@@ -50,7 +50,8 @@ class HomeScreen extends HookConsumerWidget {
             ? null
             : FloatingActionButton(
                 onPressed: () {
-                  GoRouter.of(context).go('/user/profile');
+                  ref.read(authUsecaseProvider).signOut();
+                  //GoRouter.of(context).go('/user/profile');
                 },
                 child: const Icon(Icons.add),
               ));

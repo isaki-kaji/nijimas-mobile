@@ -6,7 +6,7 @@ part of 'user_usecase_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$userUsecaseHash() => r'0caccdcc8a079f0cdbb3f22ff9c966d5f745b36e';
+String _$userUsecaseHash() => r'd2ba0f2896d08cd8e375da3c37f4fc2cef4e2a0d';
 
 /// See also [userUsecase].
 @ProviderFor(userUsecase)

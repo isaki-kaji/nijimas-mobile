@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/loading_provider.dart';
 import 'package:nijimas/core/provider/usecase/auth_usecase_provider.dart';
+import 'package:nijimas/core/util/snack_bar.dart';
 import 'package:nijimas/gen/assets.gen.dart';
 import 'package:nijimas/presentation/widget/auth/signin_button.dart';
 import 'package:nijimas/presentation/widget/common/loader.dart';
@@ -37,17 +38,22 @@ class AuthScreen extends HookConsumerWidget {
                     ),
                   ),
                   SignInButton(
-                      labelText: "Continue With Google",
-                      type: "google",
-                      logo: Assets.google.image(width: 35)),
-                  const SignInButton(
+                    labelText: "Continue With Google",
+                    type: "google",
+                    logo: Assets.google.image(width: 35),
+                    onFailure: () =>
+                        showTopErrorSnackBar(context, "Google認証に失敗しました"),
+                  ),
+                  SignInButton(
                     labelText: "Continue with Apple",
                     type: "apple",
-                    logo: Icon(
+                    logo: const Icon(
                       Icons.apple,
                       color: Colors.black,
                       size: 35,
                     ),
+                    onFailure: () =>
+                        showTopErrorSnackBar(context, "Google認証に失敗しました"),
                   ),
                   SizedBox(height: Sizing.heightByMQ(context, 0.05)),
                 ],

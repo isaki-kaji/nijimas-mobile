@@ -26,6 +26,9 @@ class MyApp extends HookConsumerWidget {
     ref.listen(authStateProvider, (_, __) {
       router.refresh();
     });
+    // ref.listen(currentUserStatusProvider, (_, __) {
+    //   router.refresh();
+    // });
     return MaterialApp.router(
       title: 'Nijimas',
       debugShowCheckedModeBanner: false,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
-import 'package:nijimas/application/state/is_first_signin_provider.dart';
+import 'package:nijimas/application/state/user_status_provider.dart';
 import 'package:nijimas/presentation/screen/auth/auth_screen.dart';
 import 'package:nijimas/presentation/screen/home/home_screen.dart';
-import 'package:nijimas/presentation/screen/user/register_user_scree.dart';
+import 'package:nijimas/presentation/screen/user/register_user_screen.dart';
 import 'package:nijimas/presentation/screen/user/user_profile_screen.dart';
 import 'package:nijimas/core/util/build_transition_page.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -46,12 +46,16 @@ GoRouter router(RouterRef ref) {
         return state.matchedLocation == '/signin' ? null : '/signin';
       }
       final isAnonymous = signedInUser.isAnonymous;
-      final isFirstSignIn = await ref.read(isFirstSigninProvider.future);
-      if (isFirstSignIn && !isAnonymous) {
-        return '/user/register';
-      }
       if (isAnonymous) {
         return '/';
+      }
+      final userStatus = await ref.read(currentUserStatusProvider.future);
+      if (userStatus == null) {
+        return '/user/register';
+      }
+      final isFirstSignIn = userStatus.isFirstSignIn;
+      if (isFirstSignIn) {
+        return '/user/register';
       }
       if (state.matchedLocation == '/signin') {
         return '/';

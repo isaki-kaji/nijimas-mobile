@@ -11,5 +11,6 @@ UserUsecase userUsecase(UserUsecaseRef ref) {
   return UserUsecase(
       userRepository: ref.read(userRepositoryProvider),
       userStatusRepository: ref.read(userStatusRepositoryProvider),
-      authRepository: ref.read(authRepositoryProvider));
+      authRepository: ref.read(authRepositoryProvider),
+      ref: ref);
 }
