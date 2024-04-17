@@ -9,4 +9,7 @@ class MyColor {
       [baseColor, baseColor.shade300],
     ];
   }
+
+  static const pink = Color(0xFFFF6969);
+  static const white = Colors.white;
 }

@@ -29,11 +29,11 @@ dependencies:
   cloud_firestore: ^4.15.8
   google_fonts: 6.1.0
   wave: ^0.2.2
-  http: ^1.2.0
   json_annotation: ^4.8.1
   top_snackbar_flutter: ^3.1.0
   flutter_dotenv: ^5.1.0
   dio: ^5.4.3+1
+  stylish_bottom_bar: ^1.1.0
 
 dev_dependencies:
   flutter_test:

@@ -36,6 +36,7 @@ class UserRepository extends AbstractUserRepository {
     if (response.statusCode == 200) {
       return UserResponse.fromJson(response.data);
     } else {
+      _logger.e(response.data);
       throw Exception(
           "Failed to get user with status code: ${response.statusCode}");
     }
