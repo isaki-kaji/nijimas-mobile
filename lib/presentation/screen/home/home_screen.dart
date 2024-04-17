@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nijimas/application/state/auth_state_provider.dart';
+import 'package:nijimas/application/state/user_response_provider.dart';
 import 'package:nijimas/core/constant/animation_constant.dart';
 import 'package:nijimas/core/provider/usecase/auth_usecase_provider.dart';
 import 'package:nijimas/core/theme/my_color.dart';
@@ -31,6 +35,14 @@ class HomeScreen extends HookConsumerWidget {
       return null;
     }, [isShowAnimation]);
     return Scaffold(
+        appBar: useIsVisible.value
+            ? null
+            : AppBar(
+                actions: [
+                  IconButton(
+                      onPressed: () async {}, icon: const Icon(Icons.star))
+                ],
+              ),
         body: Center(
           child: Text(isShowAnimation.toString()),
         ),

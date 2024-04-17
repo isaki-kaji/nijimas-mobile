@@ -9,11 +9,11 @@ part 'user_status_provider.g.dart';
 class CurrentUserStatus extends _$CurrentUserStatus {
   @override
   Future<UserStatus?> build() async {
-    final user = ref.read(authStateProvider).valueOrNull;
+    final user = ref.watch(authStateProvider).valueOrNull;
     if (user == null) {
       return null;
     }
-    return await ref.read(userStatusRepositoryProvider).getUserStatus(user);
+    return await ref.watch(userStatusRepositoryProvider).getUserStatus(user);
   }
 
   void set(UserStatus userStatus) {
