@@ -37,6 +37,7 @@ class UserUsecase extends AbstractUserUsecase {
     } on UserAlreadyExistsException {
       onUserAlreadyExists();
     } catch (e) {
+      print(e);
       onFailure();
     } finally {
       _ref.read(loadingProvider.notifier).setFalse();

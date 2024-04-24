@@ -61,5 +61,7 @@
 		<string>en</string>
 		<string>ja</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>投稿する写真を選択します。</string>
 </dict>
 </plist>
