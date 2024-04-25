@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 import 'package:image/image.dart' as image_lib;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:nijimas/core/constant/main_category_constant.dart';
 import 'package:nijimas/core/theme/my_color.dart';
 import 'package:nijimas/core/util/show_picker.dart';
 import 'package:nijimas/core/util/sizing.dart';
@@ -22,7 +23,7 @@ class AddPostScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final imageHeight = Sizing.heightByMQ(context, 0.2);
     final imageWidth = Sizing.widthByMQ(context, 0.6);
-    final useMainCategory = useState<String>("その他");
+    final useMainCategory = useState<String>(MainCategoryName.food.name);
     final useSelectedSubCategories =
         useState<List<String>>(["かつおぶし", "たつの落とし子のおかげでした。"]);
     final picker = ImagePicker();
