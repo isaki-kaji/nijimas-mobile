@@ -3,13 +3,17 @@ import 'dart:typed_data';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image/image.dart' as image_lib;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nijimas/core/theme/my_color.dart';
+import 'package:nijimas/core/util/show_picker.dart';
 import 'package:nijimas/core/util/sizing.dart';
+import 'package:nijimas/presentation/widget/post/main_category_chip.dart';
+import 'package:nijimas/presentation/widget/post/sub_category_chip.dart';
 
 class AddPostScreen extends HookConsumerWidget {
   const AddPostScreen({super.key});
@@ -18,9 +22,12 @@ class AddPostScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final imageHeight = Sizing.heightByMQ(context, 0.2);
     final imageWidth = Sizing.widthByMQ(context, 0.6);
+    final useMainCategory = useState<String>("その他");
+    final useSelectedSubCategories =
+        useState<List<String>>(["かつおぶし", "たつの落とし子のおかげでした。"]);
     final picker = ImagePicker();
     final useImageBitmap = useState<List<Uint8List?>>([]);
-    Future<void> selectImage() async {
+    Future<void> selectImages() async {
       final List<XFile?> imageFiles = await picker.pickMultiImage(limit: 4);
       final List<Uint8List> resizeImages = [];
       if (imageFiles.isEmpty) {
@@ -48,6 +55,12 @@ class AddPostScreen extends HookConsumerWidget {
       useImageBitmap.value = resizeImages;
     }
 
+    void removeSubCategory(String subCategory) {
+      useSelectedSubCategories.value = useSelectedSubCategories.value
+          .where((s) => s != subCategory)
+          .toList();
+    }
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -61,9 +74,38 @@ class AddPostScreen extends HookConsumerWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0, vertical: 12.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          MainCategoryChip(
+                              categoryName: useMainCategory.value,
+                              tapEvent: (s) => showPicker(context, (s) {
+                                    useMainCategory.value = s;
+                                  })),
+                          ...useSelectedSubCategories.value.map((s) {
+                            return SubCategoryChip(
+                                categoryName: s,
+                                tapEvent: (s) => removeSubCategory(s));
+                          }),
+                          if (useSelectedSubCategories.value.length < 2)
+                            IconButton(
+                                onPressed: () {},
+                                icon: const Icon(Icons.add_circle_outline))
+                        ],
+                      ),
+                    ),
+                  )),
               if (useImageBitmap.value.isNotEmpty)
                 GestureDetector(
-                  onTap: () => selectImage(),
+                  onTap: () => selectImages(),
                   child: CarouselSlider(
                       items: useImageBitmap.value.map((i) {
                         return Padding(
@@ -83,7 +125,7 @@ class AddPostScreen extends HookConsumerWidget {
                 )
               else
                 GestureDetector(
-                  onTap: () => selectImage(),
+                  onTap: () => selectImages(),
                   child: DottedBorder(
                     color: Theme.of(context).colorScheme.secondary,
                     dashPattern: const [6, 6],
@@ -92,7 +134,7 @@ class AddPostScreen extends HookConsumerWidget {
                     radius: const Radius.circular(12.0),
                     child: SizedBox(
                       height: imageHeight,
-                      width: imageWidth,
+                      width: Sizing.widthByMQ(context, 0.8),
                       child: Icon(
                         Icons.camera_alt,
                         size: 50.0,

@@ -38,6 +38,7 @@ dependencies:
   image: ^4.1.7
   carousel_slider: ^4.2.1
   dotted_border: ^2.1.0
+  flutter_picker: ^2.1.0
 
 dev_dependencies:
   flutter_test:
@@ -63,3 +64,4 @@ flutter:
     - assets/nijimas.png
     - assets/title.png
     - assets/google.png
+    - assets/placeholder.png

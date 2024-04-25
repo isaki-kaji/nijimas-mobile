@@ -12,7 +12,7 @@ import 'package:nijimas/core/theme/text_style.dart';
 import 'package:nijimas/domain/request/create_user_request.dart';
 import 'package:nijimas/presentation/widget/common/custom_wave.dart';
 import 'package:nijimas/core/util/sizing.dart';
-import 'package:nijimas/core/util/snack_bar.dart';
+import 'package:nijimas/core/util/show_snack_bar.dart';
 import 'package:nijimas/presentation/widget/common/loader.dart';
 
 class RegisterUserScreen extends HookConsumerWidget {
