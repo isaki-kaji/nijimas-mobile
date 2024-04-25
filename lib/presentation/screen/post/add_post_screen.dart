@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
@@ -15,6 +16,8 @@ class AddPostScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final imageHeight = Sizing.heightByMQ(context, 0.2);
+    final imageWidth = Sizing.widthByMQ(context, 0.6);
     final picker = ImagePicker();
     final useImageBitmap = useState<List<Uint8List?>>([]);
     Future<void> selectImage() async {
@@ -54,30 +57,52 @@ class AddPostScreen extends HookConsumerWidget {
         ),
       ),
       body: Form(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (useImageBitmap.value.isNotEmpty)
-              CarouselSlider(
-                  items: useImageBitmap.value.map((i) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 3.0),
-                      child: SizedBox(
-                        height: Sizing.heightByMQ(context, 0.3),
-                        width: Sizing.widthByMQ(context, 0.8),
-                        child: Image.memory(i!, fit: BoxFit.cover),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (useImageBitmap.value.isNotEmpty)
+                GestureDetector(
+                  onTap: () => selectImage(),
+                  child: CarouselSlider(
+                      items: useImageBitmap.value.map((i) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 3.0),
+                          child: SizedBox(
+                            height: imageHeight,
+                            width: imageWidth,
+                            child: Image.memory(i!, fit: BoxFit.cover),
+                          ),
+                        );
+                      }).toList(),
+                      options: CarouselOptions(
+                        enableInfiniteScroll: false,
+                        height: imageHeight,
+                        viewportFraction: 0.6,
+                      )),
+                )
+              else
+                GestureDetector(
+                  onTap: () => selectImage(),
+                  child: DottedBorder(
+                    color: Theme.of(context).colorScheme.secondary,
+                    dashPattern: const [6, 6],
+                    strokeWidth: 2.0,
+                    borderType: BorderType.RRect,
+                    radius: const Radius.circular(12.0),
+                    child: SizedBox(
+                      height: imageHeight,
+                      width: imageWidth,
+                      child: Icon(
+                        Icons.camera_alt,
+                        size: 50.0,
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
-                    );
-                  }).toList(),
-                  options: CarouselOptions(
-                    height: Sizing.heightByMQ(context, 0.3),
-                    viewportFraction: 0.8,
-                  )),
-            ElevatedButton(
-              onPressed: () => selectImage(),
-              child: const Text("画像を選択"),
-            ),
-          ],
+                    ),
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
