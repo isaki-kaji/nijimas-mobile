@@ -13,27 +13,30 @@ class MainCategoryChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => tapEvent(categoryName),
-      child: Card(
-        color: Colors.lightGreen,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.horizontal(
-            left: Radius.circular(30),
-            right: Radius.circular(30),
+      child: SizedBox(
+        height: 50,
+        child: Card(
+          color: Colors.lightGreen,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.horizontal(
+              left: Radius.circular(30),
+              right: Radius.circular(30),
+            ),
           ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
-          child: IntrinsicWidth(
-            child: Row(
-              children: [
-                Text(
-                  categoryName,
-                  style: const TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-                const Icon(Icons.arrow_drop_down,
-                    size: 18, color: Colors.white),
-              ],
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
+            child: IntrinsicWidth(
+              child: Row(
+                children: [
+                  Text(
+                    categoryName,
+                    style: const TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                  const Icon(Icons.arrow_drop_down,
+                      size: 18, color: Colors.white),
+                ],
+              ),
             ),
           ),
         ),

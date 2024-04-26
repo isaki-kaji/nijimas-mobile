@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/flutter_picker.dart';
-import 'package:nijimas/core/constant/main_category_constant.dart';
+import 'package:nijimas/core/enum/main_category.dart';
 
 void showPicker(BuildContext context, void Function(String) tapEvent) {
   Picker picker = Picker(
