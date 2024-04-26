@@ -217,7 +217,7 @@ class AddPostScreen extends HookConsumerWidget {
                     child: TextFormField(
                       controller: useTextController,
                       maxLines: 6,
-                      maxLength: 150,
+                      maxLength: 200,
                       decoration: const InputDecoration(
                         filled: true,
                         hintText: "メモを入力",
@@ -260,6 +260,10 @@ class AddPostScreen extends HookConsumerWidget {
           ),
         ),
       ),
+
+      /////////////////
+      //登録パート
+      /////////////////
       floatingActionButton: isKeyboardShown
           ? null
           : FloatingActionButton(

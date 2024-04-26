@@ -26,6 +26,7 @@ class UserRepository extends AbstractUserRepository {
     if (response.statusCode == 409) {
       throw UserAlreadyExistsException();
     }
+    _logger.e(response.data);
     throw Exception(
         "Failed to create user with status code: ${response.statusCode}");
   }
