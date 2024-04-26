@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nijimas/core/theme/my_color.dart';
 
 class MainCategoryChip extends StatelessWidget {
   final String categoryName;
@@ -16,7 +17,7 @@ class MainCategoryChip extends StatelessWidget {
       child: SizedBox(
         height: 50,
         child: Card(
-          color: Colors.lightGreen,
+          color: MyColors.lightGreen,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.horizontal(
               left: Radius.circular(30),
@@ -31,10 +32,10 @@ class MainCategoryChip extends StatelessWidget {
                   Text(
                     categoryName,
                     style: const TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
+                        color: MyColors.white, fontWeight: FontWeight.bold),
                   ),
                   const Icon(Icons.arrow_drop_down,
-                      size: 18, color: Colors.white),
+                      size: 18, color: MyColors.white),
                 ],
               ),
             ),

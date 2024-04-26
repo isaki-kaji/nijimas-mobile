@@ -16,6 +16,7 @@ import 'package:nijimas/presentation/widget/common/trailing_icon_button.dart';
 import 'package:nijimas/presentation/widget/post/main_category_chip.dart';
 import 'package:nijimas/presentation/widget/post/sub_category_chip.dart';
 import 'package:nijimas/presentation/widget/post/text_field_chip.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 class AddPostScreen extends HookConsumerWidget {
   const AddPostScreen({super.key});
@@ -28,6 +29,7 @@ class AddPostScreen extends HookConsumerWidget {
     final useMainCategory = useState<String>(MainCategory.food.name);
     final useSelectedSubCategories = useState<List<String>>([]);
     final useIsVisibleTextFieldChip = useState<bool>(false);
+    final usePublicTypeNo = useState<int>(0);
     final subCategoryTextController = useTextEditingController();
     final useTextController = useTextEditingController();
     final picker = ImagePicker();
@@ -225,6 +227,34 @@ class AddPostScreen extends HookConsumerWidget {
                     ),
                   ),
                 ),
+
+                /////////////////
+                //公開設定パート
+                /////////////////
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Scrollbar(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: ToggleSwitch(
+                        initialLabelIndex: usePublicTypeNo.value,
+                        totalSwitches: 3,
+                        customWidths: const [80, 200, 80],
+                        customTextStyles: const [
+                          TextStyle(fontWeight: FontWeight.w500)
+                        ],
+                        activeBgColor: const [MyColors.lightGreen],
+                        inactiveBgColor:
+                            Theme.of(context).colorScheme.surfaceVariant,
+                        labels: const ["公開", "フォロワーにのみ公開", "非公開"],
+                        onToggle: (i) {
+                          usePublicTypeNo.value = i!;
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 150),
               ],
             ),
           ),
@@ -234,10 +264,10 @@ class AddPostScreen extends HookConsumerWidget {
           ? null
           : FloatingActionButton(
               onPressed: () {},
-              backgroundColor: MyColor.pink,
+              backgroundColor: MyColors.pink,
               child: const Icon(
                 Icons.done,
-                color: MyColor.white,
+                color: MyColors.white,
               ),
             ),
     );

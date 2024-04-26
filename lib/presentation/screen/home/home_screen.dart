@@ -78,7 +78,7 @@ class HomeScreen extends HookConsumerWidget {
               animation: animationController,
               builder: (context, child) {
                 return CustomWave(
-                  waveColor: MyColor.getWaveColors(),
+                  waveColor: MyColors.getWaveColors(),
                   waveHeight:
                       Sizing.heightByMQ(context, animationController.value),
                 );
@@ -90,10 +90,10 @@ class HomeScreen extends HookConsumerWidget {
           ? null
           : FloatingActionButton(
               onPressed: () => GoRouter.of(context).push('/post/add'),
-              backgroundColor: MyColor.pink,
+              backgroundColor: MyColors.pink,
               child: const Icon(
                 Icons.add,
-                color: MyColor.white,
+                color: MyColors.white,
               ),
             ),
       bottomNavigationBar: useIsVisible.value

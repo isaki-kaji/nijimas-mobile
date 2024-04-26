@@ -115,7 +115,7 @@ class RegisterUserScreen extends HookConsumerWidget {
         animation: animationController,
         builder: (context, child) {
           return CustomWave(
-            waveColor: MyColor.getWaveColors(),
+            waveColor: MyColors.getWaveColors(),
             waveHeight: Sizing.heightByMQ(context, animationController.value),
           );
         },
