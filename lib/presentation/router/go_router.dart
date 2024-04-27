@@ -4,6 +4,7 @@ import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/user_status_provider.dart';
 import 'package:nijimas/presentation/screen/auth/auth_screen.dart';
 import 'package:nijimas/presentation/screen/home/home_screen.dart';
+import 'package:nijimas/presentation/screen/post/add_post_screen.dart';
 import 'package:nijimas/presentation/screen/user/register_user_screen.dart';
 import 'package:nijimas/presentation/screen/user/user_profile_screen.dart';
 import 'package:nijimas/core/util/build_transition_page.dart';
@@ -28,6 +29,11 @@ GoRouter router(RouterRef ref) {
             }
             return const MaterialPage(
                 child: HomeScreen(isShowAnimation: false));
+          }),
+      GoRoute(
+          path: '/post/add',
+          pageBuilder: (context, state) {
+            return MaterialPage(child: AddPostScreen(), fullscreenDialog: true);
           }),
       GoRoute(
         path: '/signin',

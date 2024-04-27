@@ -19,12 +19,17 @@ class UserStatusRepository extends AbstractUserStatusRepository {
 
   @override
   Future<UserStatus?> getUserStatus(User user) async {
-    final snapshot = await _userStatus.doc(user.uid).get();
-    if (!snapshot.exists) {
+    try {
+      final snapshot = await _userStatus.doc(user.uid).get();
+      if (!snapshot.exists) {
+        return null;
+      }
+      final data = snapshot.data() as Map<String, dynamic>;
+      return UserStatus.fromJson(data);
+    } on FirebaseException catch (e) {
+      _logger.e(e);
       return null;
     }
-    final data = snapshot.data() as Map<String, dynamic>;
-    return UserStatus.fromJson(data);
   }
 
   @override

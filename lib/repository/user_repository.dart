@@ -22,12 +22,13 @@ class UserRepository extends AbstractUserRepository {
         await _dio.post("${Env.baseUrl}/users", data: request.toJson());
     if (response.statusCode == 201) {
       return response.data;
-    } else if (response.statusCode == 409) {
-      throw UserAlreadyExistsException();
-    } else {
-      throw Exception(
-          "Failed to create user with status code: ${response.statusCode}");
     }
+    if (response.statusCode == 409) {
+      throw UserAlreadyExistsException();
+    }
+    _logger.e(response.data);
+    throw Exception(
+        "Failed to create user with status code: ${response.statusCode}");
   }
 
   @override
@@ -35,10 +36,9 @@ class UserRepository extends AbstractUserRepository {
     final response = await _dio.get("${Env.baseUrl}/users/$uid");
     if (response.statusCode == 200) {
       return UserResponse.fromJson(response.data);
-    } else {
-      _logger.e(response.data);
-      throw Exception(
-          "Failed to get user with status code: ${response.statusCode}");
     }
+    _logger.e(response.data);
+    throw Exception(
+        "Failed to get user with status code: ${response.statusCode}");
   }
 }

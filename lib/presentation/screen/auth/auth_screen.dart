@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/loading_provider.dart';
 import 'package:nijimas/core/provider/usecase/auth_usecase_provider.dart';
-import 'package:nijimas/core/util/snack_bar.dart';
+import 'package:nijimas/core/util/show_snack_bar.dart';
 import 'package:nijimas/gen/assets.gen.dart';
 import 'package:nijimas/presentation/widget/auth/signin_button.dart';
 import 'package:nijimas/presentation/widget/common/loader.dart';

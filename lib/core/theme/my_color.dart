@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class MyColor {
+class MyColors {
   static List<List<Color>> getWaveColors() {
     const baseColor = Colors.teal;
     const subColor = Colors.tealAccent;
@@ -12,4 +12,5 @@ class MyColor {
 
   static const pink = Color(0xFFFF6969);
   static const white = Colors.white;
+  static const lightGreen = Colors.lightGreen;
 }
