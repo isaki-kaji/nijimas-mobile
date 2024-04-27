@@ -12,7 +12,20 @@
           "package_name": "com.example.nijimas"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "347460974318-8f5j9ghe3k517b1epi2hom9mcrgmhl39.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nijimas",
+            "certificate_hash": "8f5208d55a5655f4aadfb8efd6ae20318b88938c"
+          }
+        },
+        {
+          "client_id": "347460974318-5lcrq5bcrkof7o2rg1cvd9vi4hkpo0hp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCSGGDIf7_AxRKYzOb5xGlWiAE7VaboWYI"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "347460974318-5lcrq5bcrkof7o2rg1cvd9vi4hkpo0hp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "347460974318-eh96e0k65fkicknnn2iqqpsmo6jvpenp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.nijimas"
+              }
+            }
+          ]
         }
       }
     }
