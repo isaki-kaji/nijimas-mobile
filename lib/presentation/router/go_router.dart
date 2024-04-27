@@ -33,8 +33,7 @@ GoRouter router(RouterRef ref) {
       GoRoute(
           path: '/post/add',
           pageBuilder: (context, state) {
-            return const MaterialPage(
-                child: AddPostScreen(), fullscreenDialog: true);
+            return MaterialPage(child: AddPostScreen(), fullscreenDialog: true);
           }),
       GoRoute(
         path: '/signin',

@@ -29,6 +29,9 @@ class PostUsecase extends AbstractPostUsecase {
       String? subCategory2;
       final uid = _ref.read(authStateProvider).valueOrNull!.uid;
 
+      print(uid);
+      print(postId);
+
       if (formData.subCategories.length == 1) {
         subCategory1 = formData.subCategories[0];
         subCategory2 = null;
@@ -38,7 +41,11 @@ class PostUsecase extends AbstractPostUsecase {
         subCategory2 = formData.subCategories[1];
       }
 
+      final int? expense =
+          formData.expense != null ? int.parse(formData.expense!) : null;
+
       //postTextからlocationを取得する処理を追加
+      //imagesをS3にアップロードし、そのURLを取得する処理を追加
 
       final request = CreatePostRequest(
           postId: postId,
@@ -47,7 +54,7 @@ class PostUsecase extends AbstractPostUsecase {
           subCategory1: subCategory1,
           subCategory2: subCategory2,
           postText: formData.postText,
-          expense: formData.expense,
+          expense: expense,
           location: null,
           publicTypeNo: formData.publicTypeNo);
 

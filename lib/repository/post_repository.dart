@@ -15,7 +15,7 @@ class PostRepository extends AbstractPostRepository {
   }
 
   @override
-  Future<void> createPost(CreatePostRequest request) async {
+  Future<dynamic> createPost(CreatePostRequest request) async {
     final response =
         await _dio.post("${Env.baseUrl}/posts", data: request.toJson());
     if (response.statusCode == 201) {
