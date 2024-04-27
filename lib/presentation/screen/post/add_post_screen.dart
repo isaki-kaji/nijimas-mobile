@@ -314,6 +314,7 @@ class AddPostScreen extends HookConsumerWidget {
                 await postUsecase.createPost(
                   formData: formData,
                   onSuccess: () {
+                    showSuccessSnackBar(context, "成功しました");
                     GoRouter.of(context).pop();
                   },
                   onFailure: () {

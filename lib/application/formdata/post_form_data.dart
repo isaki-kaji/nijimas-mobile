@@ -10,8 +10,8 @@ class PostFormData {
   const PostFormData(
       {required this.mainCategory,
       required this.subCategories,
-      this.postText,
+      required this.postText,
       required this.images,
-      this.expense,
+      required this.expense,
       required this.publicTypeNo});
 }

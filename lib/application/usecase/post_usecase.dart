@@ -29,9 +29,6 @@ class PostUsecase extends AbstractPostUsecase {
       String? subCategory2;
       final uid = _ref.read(authStateProvider).valueOrNull!.uid;
 
-      print(uid);
-      print(postId);
-
       if (formData.subCategories.length == 1) {
         subCategory1 = formData.subCategories[0];
         subCategory2 = null;
