@@ -47,7 +47,6 @@ class PostUsecase extends AbstractPostUsecase {
           formData.expense != null ? int.parse(formData.expense!) : null;
 
       //postTextからlocationを取得する処理を追加
-      //アプロードした画像のURLを取得、連結して保存する処理
 
       final photoUrl = await _imageUsecase.uploadImage(
           formData.images, 'posts/$uid/$postId');
