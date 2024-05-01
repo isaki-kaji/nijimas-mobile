@@ -2,6 +2,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/formdata/post_form_data.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/loading_provider.dart';
+import 'package:nijimas/application/usecase/abstract_image_usecase.dart';
 import 'package:nijimas/application/usecase/abstract_post_usecase.dart';
 import 'package:nijimas/domain/request/create_post_request.dart';
 import 'package:nijimas/repository/abstract_post_repository.dart';
@@ -9,10 +10,14 @@ import 'package:uuid/uuid.dart';
 
 class PostUsecase extends AbstractPostUsecase {
   final AbstractPostRepository _postRepository;
+  final AbstractImageUsecase _imageUsecase;
   final Ref _ref;
   PostUsecase(
-      {required AbstractPostRepository postRepository, required Ref ref})
+      {required AbstractPostRepository postRepository,
+      required AbstractImageUsecase imageUsecase,
+      required Ref ref})
       : _postRepository = postRepository,
+        _imageUsecase = imageUsecase,
         _ref = ref;
 
   @override
@@ -42,7 +47,7 @@ class PostUsecase extends AbstractPostUsecase {
           formData.expense != null ? int.parse(formData.expense!) : null;
 
       //postTextからlocationを取得する処理を追加
-      //imagesをS3にアップロードし、そのURLを取得する処理を追加
+      //アプロードした画像のURLを取得、連結して保存する処理
 
       final request = CreatePostRequest(
           postId: postId,
@@ -56,6 +61,7 @@ class PostUsecase extends AbstractPostUsecase {
           publicTypeNo: formData.publicTypeNo);
 
       await _postRepository.createPost(request);
+      await _imageUsecase.uploadImage(formData.images, 'posts/$uid/$postId');
       onSuccess();
     } catch (e) {
       onFailure();

@@ -5,6 +5,11 @@ class FeedScreen extends HookConsumerWidget {
   const FeedScreen({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const Center(child: Text("Feed Screen"));
+    return const Center(
+        child: Column(
+      children: [
+        Text("Feed Screen"),
+      ],
+    ));
   }
 }

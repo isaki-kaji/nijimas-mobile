@@ -27,6 +27,9 @@ class ExpenseInputField extends StatelessWidget {
               if (!RegExp(r'^[1-9][0-9]*$').hasMatch(value)) {
                 return "金額を正しく入力してください";
               }
+              if (int.parse(value) > 100000000) {
+                return "お金持ちすぎます";
+              }
               return null;
             },
             controller: useExpenseController,
