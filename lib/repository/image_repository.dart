@@ -14,11 +14,12 @@ class ImageRepository extends AbstractImageRepository {
         _logger = logger;
 
   @override
-  Future<void> uploadImage(Uint8List imageData, String path) async {
+  Future<String> uploadImage(Uint8List imageData, String path) async {
     Reference ref = _firebaseStorage.ref().child(path);
-    print(ref);
     try {
       await ref.putData(imageData);
+      final downloadURL = await ref.getDownloadURL();
+      return downloadURL;
     } catch (e) {
       _logger.e('Failed to upload image: $e');
       throw Exception('Failed to upload image: $e');

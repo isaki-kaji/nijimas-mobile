@@ -49,6 +49,9 @@ class PostUsecase extends AbstractPostUsecase {
       //postTextからlocationを取得する処理を追加
       //アプロードした画像のURLを取得、連結して保存する処理
 
+      final photoUrl = await _imageUsecase.uploadImage(
+          formData.images, 'posts/$uid/$postId');
+
       final request = CreatePostRequest(
           postId: postId,
           uid: uid,
@@ -56,12 +59,12 @@ class PostUsecase extends AbstractPostUsecase {
           subCategory1: subCategory1,
           subCategory2: subCategory2,
           postText: formData.postText,
+          photoUrl: photoUrl,
           expense: expense,
           location: null,
           publicTypeNo: formData.publicTypeNo);
 
       await _postRepository.createPost(request);
-      await _imageUsecase.uploadImage(formData.images, 'posts/$uid/$postId');
       onSuccess();
     } catch (e) {
       onFailure();
