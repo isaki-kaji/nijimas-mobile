@@ -32,7 +32,7 @@ class UserRepository extends AbstractUserRepository {
   }
 
   @override
-  Future<dynamic> getUser(String uid) async {
+  Future<UserResponse> getUser(String uid) async {
     final response = await _dio.get("${Env.baseUrl}/users/$uid");
     if (response.statusCode == 200) {
       return UserResponse.fromJson(response.data);

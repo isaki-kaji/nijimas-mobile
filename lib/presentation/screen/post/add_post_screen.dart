@@ -25,6 +25,7 @@ class AddPostScreen extends HookConsumerWidget {
   AddPostScreen({super.key});
 
   final _formKey = GlobalKey<FormState>();
+  final picker = ImagePicker();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -35,9 +36,8 @@ class AddPostScreen extends HookConsumerWidget {
     final useIsVisibleTextFieldChip = useState<bool>(false);
     final usePublicTypeNo = useState<int>(0);
     final subCategoryTextController = useTextEditingController();
-    final useTextController = useTextEditingController();
+    final useMemoController = useTextEditingController();
     final useExpenseController = useTextEditingController();
-    final picker = ImagePicker();
     final useImageBitmap = useState<List<Uint8List?>>([]);
 
     Future<void> selectImages() async {
@@ -89,7 +89,7 @@ class AddPostScreen extends HookConsumerWidget {
                         ImageSelectDetector(
                             isKeyboardShown: isKeyboardShown,
                             selectImages: selectImages),
-                      MemoInputField(useTextController: useTextController),
+                      MemoInputField(useTextController: useMemoController),
                       PublicTypeSwitch(usePublicTypeNo: usePublicTypeNo),
                       const SizedBox(height: 150),
                     ],
@@ -109,7 +109,7 @@ class AddPostScreen extends HookConsumerWidget {
                   return;
                 }
                 if (useExpenseController.text.isEmpty &&
-                    useTextController.text.isEmpty &&
+                    useMemoController.text.isEmpty &&
                     useImageBitmap.value.isEmpty) {
                   showTopErrorSnackBar(context, "金額、メモ、画像のいずれかを入力してください");
                   return;
@@ -117,7 +117,7 @@ class AddPostScreen extends HookConsumerWidget {
                 final formData = PostFormData(
                   mainCategory: useMainCategory.value,
                   subCategories: useSubCategories.value,
-                  postText: useTextController.text,
+                  postText: useMemoController.text,
                   expense: useExpenseController.text,
                   images: useImageBitmap.value,
                   publicTypeNo: (usePublicTypeNo.value + 1).toString(),
@@ -136,7 +136,7 @@ class AddPostScreen extends HookConsumerWidget {
               },
               backgroundColor: MyColors.pink,
               child: const Icon(
-                Icons.done,
+                Icons.post_add_rounded,
                 color: MyColors.white,
               ),
             ),

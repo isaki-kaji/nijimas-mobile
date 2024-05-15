@@ -7,4 +7,7 @@ assets:
 generate:
 	flutter packages pub run build_runner build
 
-.PHONY: l10n assets generate
+pubupgrade:
+	flutter pub upgrade
+
+.PHONY: l10n assets generate pubupgrade

@@ -1,17 +1,17 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'create_post_request.dart';
+part of 'post_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-CreatePostRequest _$CreatePostRequestFromJson(Map<String, dynamic> json) =>
-    CreatePostRequest(
+PostResponse _$PostResponseFromJson(Map<String, dynamic> json) => PostResponse(
       postId: json['postId'] as String,
       uid: json['uid'] as String,
+      username: json['username'] as String,
       mainCategory: json['mainCategory'] as String,
-      subCategory1: json['subCategory1'] as String?,
+      subCategory: json['subCategory'] as String?,
       subCategory2: json['subCategory2'] as String?,
       postText: json['postText'] as String?,
       photoUrl: json['photoUrl'] as String?,
@@ -20,12 +20,13 @@ CreatePostRequest _$CreatePostRequestFromJson(Map<String, dynamic> json) =>
       publicTypeNo: json['publicTypeNo'] as String,
     );
 
-Map<String, dynamic> _$CreatePostRequestToJson(CreatePostRequest instance) =>
+Map<String, dynamic> _$PostResponseToJson(PostResponse instance) =>
     <String, dynamic>{
       'postId': instance.postId,
       'uid': instance.uid,
+      'username': instance.username,
       'mainCategory': instance.mainCategory,
-      'subCategory1': instance.subCategory1,
+      'subCategory': instance.subCategory,
       'subCategory2': instance.subCategory2,
       'postText': instance.postText,
       'photoUrl': instance.photoUrl,
