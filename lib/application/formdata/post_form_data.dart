@@ -14,4 +14,9 @@ class PostFormData {
       required this.images,
       required this.expense,
       required this.publicTypeNo});
+
+  @override
+  String toString() {
+    return 'PostFormData(mainCategory: $mainCategory, subCategories: $subCategories, postText: $postText, expense: $expense, publicTypeNo: $publicTypeNo)';
+  }
 }

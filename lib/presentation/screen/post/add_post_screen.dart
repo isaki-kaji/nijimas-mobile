@@ -122,6 +122,7 @@ class AddPostScreen extends HookConsumerWidget {
                   images: useImageBitmap.value,
                   publicTypeNo: (usePublicTypeNo.value + 1).toString(),
                 );
+                print(formData.toString());
                 final postUsecase = ref.read(postUsecaseProvider);
                 await postUsecase.createPost(
                   formData: formData,

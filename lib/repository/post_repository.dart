@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:logger/web.dart';
 import 'package:nijimas/core/constant/env_constant.dart';
@@ -22,6 +24,7 @@ class PostRepository extends AbstractPostRepository {
     if (response.statusCode == 201) {
       return response.data;
     }
+    log(response.data);
     _logger.e(response.data);
     throw Exception(
         "Failed to create post with status code: ${response.statusCode}");
