@@ -1,0 +1,36 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'post_response.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+PostResponse _$PostResponseFromJson(Map<String, dynamic> json) => PostResponse(
+      postId: json['post_id'] as String,
+      uid: json['uid'] as String,
+      username: json['username'] as String,
+      mainCategory: json['main_category'] as String,
+      subCategory: json['sub_category'] as String?,
+      subCategory2: json['sub_category2'] as String?,
+      postText: json['post_text'] as String?,
+      photoUrl: json['photo_url'] as String?,
+      expense: json['expense'] as int?,
+      location: json['location'] as String?,
+      publicTypeNo: json['public_type_no'] as String,
+    );
+
+Map<String, dynamic> _$PostResponseToJson(PostResponse instance) =>
+    <String, dynamic>{
+      'post_id': instance.postId,
+      'uid': instance.uid,
+      'username': instance.username,
+      'main_category': instance.mainCategory,
+      'sub_category': instance.subCategory,
+      'sub_category2': instance.subCategory2,
+      'post_text': instance.postText,
+      'photo_url': instance.photoUrl,
+      'expense': instance.expense,
+      'location': instance.location,
+      'public_type_no': instance.publicTypeNo,
+    };
