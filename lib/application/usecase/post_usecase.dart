@@ -5,6 +5,7 @@ import 'package:nijimas/application/state/loading_provider.dart';
 import 'package:nijimas/application/usecase/abstract_image_usecase.dart';
 import 'package:nijimas/application/usecase/abstract_post_usecase.dart';
 import 'package:nijimas/domain/request/create_post_request.dart';
+import 'package:nijimas/domain/response/post_response.dart';
 import 'package:nijimas/repository/abstract_post_repository.dart';
 import 'package:uuid/uuid.dart';
 
@@ -69,6 +70,16 @@ class PostUsecase extends AbstractPostUsecase {
       onFailure();
     } finally {
       _ref.read(loadingProvider.notifier).setFalse();
+    }
+  }
+
+  @override
+  Future<List<PostResponse>> getPostsByUid({required String uid}) async {
+    try {
+      final posts = await _postRepository.getPostsByUid(uid);
+      return posts;
+    } catch (e) {
+      throw Exception('Failed to get posts by uid');
     }
   }
 }

@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'create_post_request.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake)
 class CreatePostRequest {
   final String postId;
   final String uid;
