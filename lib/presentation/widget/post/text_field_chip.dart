@@ -21,9 +21,9 @@ class TextFieldChip extends StatelessWidget {
           ),
         ),
         child: Align(
-          alignment: Alignment.bottomCenter,
+          alignment: Alignment.topCenter,
           child: Padding(
-            padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
+            padding: const EdgeInsets.only(left: 15, right: 15, bottom: 4),
             child: IntrinsicWidth(
                 child: TextFormField(
               maxLength: 50,

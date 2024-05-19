@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:logger/web.dart';
 import 'package:nijimas/core/constant/env_constant.dart';
@@ -31,6 +33,7 @@ class PostRepository extends AbstractPostRepository {
   Future<List<PostResponse>> getPostsByUid(String uid) async {
     final response = await _dio.get("${Env.baseUrl}/posts/?uid=$uid");
     if (response.statusCode == 200) {
+      print(response.data);
       List<PostResponse> posts = (response.data as List)
           .map((post) => PostResponse.fromJson(post))
           .toList();

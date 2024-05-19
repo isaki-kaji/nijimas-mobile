@@ -8,10 +8,10 @@ class PostResponse {
   final String uid;
   final String username;
   final String mainCategory;
-  final String? subCategory;
+  final String? subCategory1;
   final String? subCategory2;
   final String? postText;
-  final String? photoUrl;
+  final List<String> photoUrl;
   final int? expense;
   final String? location;
   final String publicTypeNo;
@@ -21,10 +21,10 @@ class PostResponse {
     required this.uid,
     required this.username,
     required this.mainCategory,
-    this.subCategory,
+    this.subCategory1,
     this.subCategory2,
     this.postText,
-    this.photoUrl,
+    required this.photoUrl,
     this.expense,
     this.location,
     required this.publicTypeNo,
