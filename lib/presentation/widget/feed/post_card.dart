@@ -11,10 +11,10 @@ class PostCard extends StatelessWidget {
       children: [
         Text(postResponse.username),
         Text(postResponse.mainCategory),
-        Text(postResponse.subCategory ?? ''),
+        Text(postResponse.subCategory1 ?? ''),
         Text(postResponse.subCategory2 ?? ''),
         Text(postResponse.postText ?? ''),
-        Text(postResponse.photoUrl ?? ''),
+        Text(postResponse.photoUrl.toString()),
         Text(postResponse.expense?.toString() ?? ''),
         Text(postResponse.location ?? ''),
         Text(postResponse.publicTypeNo),

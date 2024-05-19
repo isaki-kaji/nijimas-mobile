@@ -53,6 +53,14 @@ class CategoryInputField extends StatelessWidget {
                             useIsVisibleTextFieldChip.value = false;
                             return;
                           }
+                          if (useSubCategories.value.length == 1) {
+                            if (useSubCategories.value[0] ==
+                                subCategoryTextController.text) {
+                              useIsVisibleTextFieldChip.value = false;
+                              subCategoryTextController.clear();
+                              return;
+                            }
+                          }
                           useSubCategories.value
                               .add(subCategoryTextController.text);
                           useIsVisibleTextFieldChip.value = false;

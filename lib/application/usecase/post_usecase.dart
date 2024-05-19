@@ -79,7 +79,7 @@ class PostUsecase extends AbstractPostUsecase {
       final posts = await _postRepository.getPostsByUid(uid);
       return posts;
     } catch (e) {
-      throw Exception('Failed to get posts by uid');
+      throw Exception(e);
     }
   }
 }
