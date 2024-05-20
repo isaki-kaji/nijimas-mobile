@@ -14,7 +14,13 @@ class FeedScreen extends HookConsumerWidget {
       return Text("");
     }
     return ref.watch(postsByUidResponseProvider(uid)).when(data: (data) {
-      return PostCard(postResponse: data[0]);
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            PostCard(postResponse: data[0]),
+          ],
+        ),
+      );
     }, error: (error, _) {
       return Text(error.toString());
     }, loading: () {

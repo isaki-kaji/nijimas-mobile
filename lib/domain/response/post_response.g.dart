@@ -19,6 +19,7 @@ PostResponse _$PostResponseFromJson(Map<String, dynamic> json) => PostResponse(
       expense: json['expense'] as int?,
       location: json['location'] as String?,
       publicTypeNo: json['public_type_no'] as String,
+      createdAt: DateTime.parse(json['created_at'] as String),
     );
 
 Map<String, dynamic> _$PostResponseToJson(PostResponse instance) =>
@@ -34,4 +35,5 @@ Map<String, dynamic> _$PostResponseToJson(PostResponse instance) =>
       'expense': instance.expense,
       'location': instance.location,
       'public_type_no': instance.publicTypeNo,
+      'created_at': instance.createdAt.toIso8601String(),
     };

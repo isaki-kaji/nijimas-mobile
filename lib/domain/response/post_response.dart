@@ -15,6 +15,7 @@ class PostResponse {
   final int? expense;
   final String? location;
   final String publicTypeNo;
+  final DateTime createdAt;
 
   const PostResponse({
     required this.postId,
@@ -28,6 +29,7 @@ class PostResponse {
     this.expense,
     this.location,
     required this.publicTypeNo,
+    required this.createdAt,
   });
 
   factory PostResponse.fromJson(Map<String, dynamic> json) =>

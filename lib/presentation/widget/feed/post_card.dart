@@ -18,6 +18,7 @@ class PostCard extends StatelessWidget {
         Text(postResponse.expense?.toString() ?? ''),
         Text(postResponse.location ?? ''),
         Text(postResponse.publicTypeNo),
+        Text(postResponse.createdAt.toString()),
       ],
     );
   }
