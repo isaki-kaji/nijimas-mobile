@@ -5,9 +5,8 @@ import 'package:nijimas/core/util/auth_interceptor.dart';
 import 'package:nijimas/core/util/exception.dart';
 import 'package:nijimas/domain/request/create_user_request.dart';
 import 'package:nijimas/domain/response/user_response.dart';
-import 'package:nijimas/repository/abstract_user_repository.dart';
 
-class UserRepository extends AbstractUserRepository {
+class UserRepository {
   final Dio _dio;
   final Logger _logger;
   UserRepository({required Logger logger})
@@ -16,7 +15,6 @@ class UserRepository extends AbstractUserRepository {
     _dio.interceptors.add(AuthInterceptor());
   }
 
-  @override
   Future<dynamic> createUser(CreateUserRequest request) async {
     final response =
         await _dio.post("${Env.baseUrl}/users", data: request.toJson());
@@ -31,7 +29,6 @@ class UserRepository extends AbstractUserRepository {
         "Failed to create user with status code: ${response.statusCode}");
   }
 
-  @override
   Future<dynamic> getUser(String uid) async {
     final response = await _dio.get("${Env.baseUrl}/users/$uid");
     if (response.statusCode == 200) {

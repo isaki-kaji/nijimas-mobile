@@ -3,9 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:logger/web.dart';
 import 'package:nijimas/core/constant/firebase_constant.dart';
 import 'package:nijimas/domain/model/user_status.dart';
-import 'package:nijimas/repository/abstract_user_status_repository.dart';
 
-class UserStatusRepository extends AbstractUserStatusRepository {
+class UserStatusRepository {
   final FirebaseFirestore _firestore;
   final Logger _logger;
 
@@ -17,7 +16,6 @@ class UserStatusRepository extends AbstractUserStatusRepository {
   CollectionReference get _userStatus =>
       _firestore.collection(FirebaseConstants.userStatusCollection);
 
-  @override
   Future<UserStatus?> getUserStatus(User user) async {
     try {
       final snapshot = await _userStatus.doc(user.uid).get();
@@ -32,7 +30,6 @@ class UserStatusRepository extends AbstractUserStatusRepository {
     }
   }
 
-  @override
   Future<void> createUserStatus(User user) async {
     final userStatus = UserStatus(
         uid: user.uid,
@@ -41,7 +38,6 @@ class UserStatusRepository extends AbstractUserStatusRepository {
     await _userStatus.doc(user.uid).set(userStatus.toJson());
   }
 
-  @override
   Future<void> toggleIsFirstSignIn(User user) async {
     final userStatus = await getUserStatus(user);
     if (userStatus == null) {
