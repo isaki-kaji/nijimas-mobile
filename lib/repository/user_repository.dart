@@ -15,11 +15,11 @@ class UserRepository {
     _dio.interceptors.add(AuthInterceptor());
   }
 
-  Future<dynamic> createUser(CreateUserRequest request) async {
+  Future<UserResponse> createUser(CreateUserRequest request) async {
     final response =
         await _dio.post("${Env.baseUrl}/users", data: request.toJson());
     if (response.statusCode == 201) {
-      return response.data;
+      return UserResponse.fromJson(response.data);
     }
     if (response.statusCode == 409) {
       throw UserAlreadyExistsException();
@@ -29,7 +29,7 @@ class UserRepository {
         "Failed to create user with status code: ${response.statusCode}");
   }
 
-  Future<dynamic> getUser(String uid) async {
+  Future<UserResponse> getUser(String uid) async {
     final response = await _dio.get("${Env.baseUrl}/users/$uid");
     if (response.statusCode == 200) {
       return UserResponse.fromJson(response.data);
