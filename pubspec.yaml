@@ -44,6 +44,8 @@ dependencies:
   firebase_storage: ^11.7.4
   bottom_picker: ^2.7.0
   freezed: ^2.5.2
+  cached_network_image: ^3.3.1
+  timezone: ^0.9.3
 
 dev_dependencies:
   flutter_test:

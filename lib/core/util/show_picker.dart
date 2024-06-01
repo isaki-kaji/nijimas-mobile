@@ -1,7 +1,7 @@
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:nijimas/core/enum/main_category.dart';
-import 'package:nijimas/core/theme/my_color.dart';
+import 'package:nijimas/core/theme/color.dart';
 
 void showPicker(BuildContext context, void Function(String) tapEvent) {
   BottomPicker(

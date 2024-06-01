@@ -9,7 +9,7 @@ import 'package:nijimas/application/formdata/post_form_data.dart';
 import 'package:nijimas/application/state/loading_provider.dart';
 import 'package:nijimas/core/enum/main_category.dart';
 import 'package:nijimas/core/provider/usecase/post_usecase_provider.dart';
-import 'package:nijimas/core/theme/my_color.dart';
+import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/core/util/resize_image.dart';
 import 'package:nijimas/core/util/show_snack_bar.dart';
 import 'package:nijimas/presentation/widget/common/loader.dart';

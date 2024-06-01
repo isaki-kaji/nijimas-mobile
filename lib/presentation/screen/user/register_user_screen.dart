@@ -6,7 +6,7 @@ import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/loading_provider.dart';
 import 'package:nijimas/core/constant/animation_constant.dart';
 import 'package:nijimas/core/provider/usecase/user_usecase_provider.dart';
-import 'package:nijimas/core/theme/my_color.dart';
+import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/core/theme/text_style.dart';
 import 'package:nijimas/domain/request/create_user_request.dart';
 import 'package:nijimas/l10n/gen_l10n/app_localizations.dart';
@@ -42,7 +42,7 @@ class RegisterUserScreen extends HookConsumerWidget {
                     height: Sizing.heightByMQ(context, 0.18),
                   ),
                   Text(l10n.welcome,
-                      style: MyTextStyle.bigTitle(
+                      style: MyTextStyles.bigTitle(
                           context, Theme.of(context).colorScheme.secondary)),
                   SizedBox(
                     height: Sizing.heightByMQ(context, 0.15),
@@ -66,7 +66,7 @@ class RegisterUserScreen extends HookConsumerWidget {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         l10n.nameCanBeChanged,
-                        style: MyTextStyle.caption.copyWith(
+                        style: MyTextStyles.caption.copyWith(
                             color: Theme.of(context).colorScheme.secondary),
                       ),
                     ),
