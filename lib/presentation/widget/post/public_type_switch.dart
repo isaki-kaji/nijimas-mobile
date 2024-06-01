@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nijimas/core/theme/my_color.dart';
+import 'package:nijimas/core/theme/color.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 class PublicTypeSwitch extends StatelessWidget {

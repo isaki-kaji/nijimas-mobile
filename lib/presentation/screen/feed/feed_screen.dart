@@ -16,9 +16,8 @@ class FeedScreen extends HookConsumerWidget {
     return ref.watch(postsByUidResponseProvider(uid)).when(data: (data) {
       return SingleChildScrollView(
         child: Column(
-          children: [
-            PostCard(postResponse: data[0]),
-          ],
+          children:
+              data.map((post) => PostCard(post: post)).toList(growable: false),
         ),
       );
     }, error: (error, _) {

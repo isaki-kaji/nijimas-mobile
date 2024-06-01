@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class MyTextStyle {
+class MyTextStyles {
   static TextStyle bigTitle(BuildContext context, Color color) {
     return TextStyle(
       fontSize: MediaQuery.of(context).size.width / 8,
@@ -19,8 +19,13 @@ class MyTextStyle {
     fontWeight: FontWeight.bold,
   );
 
-  static const TextStyle body = TextStyle(
+  static const TextStyle category = TextStyle(
     fontSize: 16,
+    fontWeight: FontWeight.bold,
+  );
+
+  static const TextStyle body = TextStyle(
+    fontSize: 14,
   );
 
   static const TextStyle caption = TextStyle(

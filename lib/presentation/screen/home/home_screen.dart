@@ -7,7 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/core/constant/animation_constant.dart';
 import 'package:nijimas/core/constant/page_constant.dart';
-import 'package:nijimas/core/theme/my_color.dart';
+import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/presentation/widget/common/custom_wave.dart';
 import 'package:nijimas/core/util/sizing.dart';
 import 'package:nijimas/presentation/widget/common/trailing_icon_button.dart';
