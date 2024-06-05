@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:nijimas/application/state/user_response_provider.dart';
+import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/core/theme/text_style.dart';
 import 'package:nijimas/core/util/sizing.dart';
 import 'package:nijimas/core/util/timezone.dart';
@@ -111,7 +112,12 @@ class PostCard extends ConsumerWidget {
               Text(formatter.format(changeTZ(post.createdAt, "Asia/Tokyo")),
                   style: MyTextStyles.caption.copyWith(color: Colors.grey)),
               const SizedBox(width: 8.0),
-              const Icon(Icons.favorite_border)
+              GestureDetector(
+                child: post.isFavorite
+                    ? const Icon(Icons.favorite, color: MyColors.pink)
+                    : const Icon(Icons.favorite_border),
+                onTap: () {},
+              )
             ],
           ),
         ),

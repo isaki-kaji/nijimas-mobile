@@ -15,6 +15,7 @@ class PostResponse {
   final int? expense;
   final String? location;
   final String publicTypeNo;
+  final bool isFavorite;
   final DateTime createdAt;
 
   const PostResponse({
@@ -29,6 +30,7 @@ class PostResponse {
     this.expense,
     this.location,
     required this.publicTypeNo,
+    required this.isFavorite,
     required this.createdAt,
   });
 
