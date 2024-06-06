@@ -3,11 +3,14 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:nijimas/application/state/own_user_detail_provider.dart';
 import 'package:nijimas/application/state/user_response_provider.dart';
+import 'package:nijimas/core/provider/usecase/favorite_usecase_provider.dart';
 import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/core/theme/text_style.dart';
 import 'package:nijimas/core/util/sizing.dart';
 import 'package:nijimas/core/util/timezone.dart';
+import 'package:nijimas/domain/request/toggle_favorite_request.dart';
 import 'package:nijimas/domain/response/post_response.dart';
 import 'package:nijimas/presentation/widget/common/switch_circle_avatar.dart';
 import 'package:nijimas/presentation/widget/post/main_category_chip.dart';
@@ -116,7 +119,12 @@ class PostCard extends ConsumerWidget {
                 child: post.isFavorite
                     ? const Icon(Icons.favorite, color: MyColors.pink)
                     : const Icon(Icons.favorite_border),
-                onTap: () {},
+                onTap: () {
+                  final myUid =
+                      ref.watch(ownUserDetailProvider).valueOrNull?.uid;
+                  ref.read(favoriteUsecaseProvider).toggleFavorite(
+                      ToggleFavoriteRequest(postId: post.postId, uid: myUid!));
+                },
               )
             ],
           ),
