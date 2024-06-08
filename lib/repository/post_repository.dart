@@ -29,15 +29,21 @@ class PostRepository extends AbstractPostRepository {
 
   @override
   Future<List<PostResponse>> getPostsByUid(String uid) async {
-    final response = await _dio.get("${Env.baseUrl}/posts/?uid=$uid");
-    if (response.statusCode == 200) {
-      List<PostResponse> posts = (response.data as List)
-          .map((post) => PostResponse.fromJson(post))
-          .toList();
-      return posts;
+    try {
+      final response = await _dio.get("${Env.baseUrl}/posts/?uid=$uid");
+      if (response.statusCode == 200) {
+        List<PostResponse> posts = (response.data as List)
+            .map((post) => PostResponse.fromJson(post))
+            .toList();
+        return posts;
+      } else {
+        _logger.e("Error response: ${response.data}");
+        throw Exception(
+            "Failed to get posts by uid with status code: ${response.statusCode}");
+      }
+    } catch (e) {
+      _logger.e("Exception: $e");
+      throw Exception("Failed to get posts by uid: $e");
     }
-    _logger.e(response.data);
-    throw Exception(
-        "Failed to get posts by uid with status code: ${response.statusCode}");
   }
 }

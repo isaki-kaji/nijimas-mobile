@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:nijimas/application/state/own_user_detail_provider.dart';
+import 'package:nijimas/application/state/posts_by_uid_provider.dart';
 import 'package:nijimas/application/state/user_response_provider.dart';
 import 'package:nijimas/core/provider/usecase/favorite_usecase_provider.dart';
 import 'package:nijimas/core/theme/color.dart';
@@ -122,8 +123,14 @@ class PostCard extends ConsumerWidget {
                 onTap: () {
                   final myUid =
                       ref.watch(ownUserDetailProvider).valueOrNull?.uid;
-                  ref.read(favoriteUsecaseProvider).toggleFavorite(
-                      ToggleFavoriteRequest(postId: post.postId, uid: myUid!));
+                  final postsNotifier =
+                      ref.read(postsByUidNotifierProvider(myUid!).notifier);
+                  postsNotifier.toggleFavorite(
+                    ToggleFavoriteRequest(
+                      postId: post.postId,
+                      uid: myUid,
+                    ),
+                  );
                 },
               )
             ],

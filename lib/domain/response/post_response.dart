@@ -38,4 +38,36 @@ class PostResponse {
       _$PostResponseFromJson(json);
 
   Map<String, dynamic> toJson() => _$PostResponseToJson(this);
+
+  PostResponse copyWith({
+    String? postId,
+    String? uid,
+    String? username,
+    String? mainCategory,
+    String? subCategory1,
+    String? subCategory2,
+    String? postText,
+    List<String>? photoUrl,
+    int? expense,
+    String? location,
+    String? publicTypeNo,
+    bool? isFavorite,
+    DateTime? createdAt,
+  }) {
+    return PostResponse(
+      postId: postId ?? this.postId,
+      uid: uid ?? this.uid,
+      username: username ?? this.username,
+      mainCategory: mainCategory ?? this.mainCategory,
+      subCategory1: subCategory1 ?? this.subCategory1,
+      subCategory2: subCategory2 ?? this.subCategory2,
+      postText: postText ?? this.postText,
+      photoUrl: photoUrl ?? this.photoUrl,
+      expense: expense ?? this.expense,
+      location: location ?? this.location,
+      publicTypeNo: publicTypeNo ?? this.publicTypeNo,
+      isFavorite: isFavorite ?? this.isFavorite,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
 }

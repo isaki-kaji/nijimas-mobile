@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'posts_by_uid_response.dart';
+part of 'posts_by_uid_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$postsByUidResponseHash() =>
-    r'bddd64678c57a85b73fbc20066ae00ecc0fa7bb1';
+String _$postsByUidNotifierHash() =>
+    r'c5798d3f8fdc85010a0f664515487138dbf550ff';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -30,27 +30,36 @@ class _SystemHash {
   }
 }
 
-/// See also [postsByUidResponse].
-@ProviderFor(postsByUidResponse)
-const postsByUidResponseProvider = PostsByUidResponseFamily();
+abstract class _$PostsByUidNotifier
+    extends BuildlessAutoDisposeAsyncNotifier<List<PostResponse>> {
+  late final String uid;
 
-/// See also [postsByUidResponse].
-class PostsByUidResponseFamily extends Family<AsyncValue<List<PostResponse>>> {
-  /// See also [postsByUidResponse].
-  const PostsByUidResponseFamily();
+  FutureOr<List<PostResponse>> build(
+    String uid,
+  );
+}
 
-  /// See also [postsByUidResponse].
-  PostsByUidResponseProvider call(
+/// See also [PostsByUidNotifier].
+@ProviderFor(PostsByUidNotifier)
+const postsByUidNotifierProvider = PostsByUidNotifierFamily();
+
+/// See also [PostsByUidNotifier].
+class PostsByUidNotifierFamily extends Family<AsyncValue<List<PostResponse>>> {
+  /// See also [PostsByUidNotifier].
+  const PostsByUidNotifierFamily();
+
+  /// See also [PostsByUidNotifier].
+  PostsByUidNotifierProvider call(
     String uid,
   ) {
-    return PostsByUidResponseProvider(
+    return PostsByUidNotifierProvider(
       uid,
     );
   }
 
   @override
-  PostsByUidResponseProvider getProviderOverride(
-    covariant PostsByUidResponseProvider provider,
+  PostsByUidNotifierProvider getProviderOverride(
+    covariant PostsByUidNotifierProvider provider,
   ) {
     return call(
       provider.uid,
@@ -69,33 +78,30 @@ class PostsByUidResponseFamily extends Family<AsyncValue<List<PostResponse>>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'postsByUidResponseProvider';
+  String? get name => r'postsByUidNotifierProvider';
 }
 
-/// See also [postsByUidResponse].
-class PostsByUidResponseProvider
-    extends AutoDisposeFutureProvider<List<PostResponse>> {
-  /// See also [postsByUidResponse].
-  PostsByUidResponseProvider(
+/// See also [PostsByUidNotifier].
+class PostsByUidNotifierProvider extends AutoDisposeAsyncNotifierProviderImpl<
+    PostsByUidNotifier, List<PostResponse>> {
+  /// See also [PostsByUidNotifier].
+  PostsByUidNotifierProvider(
     String uid,
   ) : this._internal(
-          (ref) => postsByUidResponse(
-            ref as PostsByUidResponseRef,
-            uid,
-          ),
-          from: postsByUidResponseProvider,
-          name: r'postsByUidResponseProvider',
+          () => PostsByUidNotifier()..uid = uid,
+          from: postsByUidNotifierProvider,
+          name: r'postsByUidNotifierProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$postsByUidResponseHash,
-          dependencies: PostsByUidResponseFamily._dependencies,
+                  : _$postsByUidNotifierHash,
+          dependencies: PostsByUidNotifierFamily._dependencies,
           allTransitiveDependencies:
-              PostsByUidResponseFamily._allTransitiveDependencies,
+              PostsByUidNotifierFamily._allTransitiveDependencies,
           uid: uid,
         );
 
-  PostsByUidResponseProvider._internal(
+  PostsByUidNotifierProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -108,14 +114,20 @@ class PostsByUidResponseProvider
   final String uid;
 
   @override
-  Override overrideWith(
-    FutureOr<List<PostResponse>> Function(PostsByUidResponseRef provider)
-        create,
+  FutureOr<List<PostResponse>> runNotifierBuild(
+    covariant PostsByUidNotifier notifier,
   ) {
+    return notifier.build(
+      uid,
+    );
+  }
+
+  @override
+  Override overrideWith(PostsByUidNotifier Function() create) {
     return ProviderOverride(
       origin: this,
-      override: PostsByUidResponseProvider._internal(
-        (ref) => create(ref as PostsByUidResponseRef),
+      override: PostsByUidNotifierProvider._internal(
+        () => create()..uid = uid,
         from: from,
         name: null,
         dependencies: null,
@@ -127,13 +139,14 @@ class PostsByUidResponseProvider
   }
 
   @override
-  AutoDisposeFutureProviderElement<List<PostResponse>> createElement() {
-    return _PostsByUidResponseProviderElement(this);
+  AutoDisposeAsyncNotifierProviderElement<PostsByUidNotifier,
+      List<PostResponse>> createElement() {
+    return _PostsByUidNotifierProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is PostsByUidResponseProvider && other.uid == uid;
+    return other is PostsByUidNotifierProvider && other.uid == uid;
   }
 
   @override
@@ -145,19 +158,19 @@ class PostsByUidResponseProvider
   }
 }
 
-mixin PostsByUidResponseRef
-    on AutoDisposeFutureProviderRef<List<PostResponse>> {
+mixin PostsByUidNotifierRef
+    on AutoDisposeAsyncNotifierProviderRef<List<PostResponse>> {
   /// The parameter `uid` of this provider.
   String get uid;
 }
 
-class _PostsByUidResponseProviderElement
-    extends AutoDisposeFutureProviderElement<List<PostResponse>>
-    with PostsByUidResponseRef {
-  _PostsByUidResponseProviderElement(super.provider);
+class _PostsByUidNotifierProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<PostsByUidNotifier,
+        List<PostResponse>> with PostsByUidNotifierRef {
+  _PostsByUidNotifierProviderElement(super.provider);
 
   @override
-  String get uid => (origin as PostsByUidResponseProvider).uid;
+  String get uid => (origin as PostsByUidNotifierProvider).uid;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
