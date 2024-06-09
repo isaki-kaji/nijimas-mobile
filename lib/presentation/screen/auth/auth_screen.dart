@@ -42,7 +42,7 @@ class AuthScreen extends HookConsumerWidget {
                     type: "google",
                     logo: Assets.google.image(width: 35),
                     onFailure: () =>
-                        showTopErrorSnackBar(context, "Google認証に失敗しました"),
+                        showErrorSnackBar(context, "Google認証に失敗しました"),
                   ),
                   SignInButton(
                     labelText: "Continue with Apple",
@@ -53,7 +53,7 @@ class AuthScreen extends HookConsumerWidget {
                       size: 35,
                     ),
                     onFailure: () =>
-                        showTopErrorSnackBar(context, "Google認証に失敗しました"),
+                        showErrorSnackBar(context, "Google認証に失敗しました"),
                   ),
                   SizedBox(height: Sizing.heightByMQ(context, 0.05)),
                 ],

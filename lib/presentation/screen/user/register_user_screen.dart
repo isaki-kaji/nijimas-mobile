@@ -77,7 +77,7 @@ class RegisterUserScreen extends HookConsumerWidget {
                       onPressed: () {
                         final nameValue = usernameController.text;
                         if (nameValue.length < 3 || nameValue.length > 15) {
-                          showTopErrorSnackBar(context, l10n.enterNameCaption);
+                          showErrorSnackBar(context, l10n.enterNameCaption);
                           return;
                         }
                         final locale = Localizations.localeOf(context);
@@ -93,11 +93,11 @@ class RegisterUserScreen extends HookConsumerWidget {
                               animationController.forward();
                             },
                             onFailure: () {
-                              showTopErrorSnackBar(
+                              showErrorSnackBar(
                                   context, l10n.failedToCreateUser);
                             },
                             onUserAlreadyExists: () {
-                              showTopErrorSnackBar(
+                              showErrorSnackBar(
                                   context, l10n.userAlreadyExists);
                             });
                       },

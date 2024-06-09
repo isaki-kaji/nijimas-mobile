@@ -111,7 +111,7 @@ class AddPostScreen extends HookConsumerWidget {
                 if (useExpenseController.text.isEmpty &&
                     useTextController.text.isEmpty &&
                     useImageBitmap.value.isEmpty) {
-                  showTopErrorSnackBar(context, "金額、メモ、画像のいずれかを入力してください");
+                  showErrorSnackBar(context, "金額、メモ、画像のいずれかを入力してください");
                   return;
                 }
                 final formData = PostFormData(
@@ -130,7 +130,7 @@ class AddPostScreen extends HookConsumerWidget {
                     GoRouter.of(context).pop();
                   },
                   onFailure: () {
-                    showTopErrorSnackBar(context, "投稿に失敗しました");
+                    showErrorSnackBar(context, "投稿に失敗しました");
                   },
                 );
               },

@@ -1,4 +1,5 @@
 import 'package:nijimas/application/formdata/post_form_data.dart';
+import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/domain/response/post_response.dart';
 
 abstract class AbstractPostUsecase {
@@ -8,5 +9,5 @@ abstract class AbstractPostUsecase {
     required void Function() onFailure,
   });
 
-  Future<List<PostResponse>> getPostsByUid({required String uid});
+  Future<List<PostResponse>> getPostsByQuery(PostQuery query);
 }

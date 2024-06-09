@@ -4,6 +4,7 @@ import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/loading_provider.dart';
 import 'package:nijimas/application/usecase/abstract_image_usecase.dart';
 import 'package:nijimas/application/usecase/abstract_post_usecase.dart';
+import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/domain/request/create_post_request.dart';
 import 'package:nijimas/domain/response/post_response.dart';
 import 'package:nijimas/repository/abstract_post_repository.dart';
@@ -74,10 +75,16 @@ class PostUsecase extends AbstractPostUsecase {
   }
 
   @override
-  Future<List<PostResponse>> getPostsByUid({required String uid}) async {
+  Future<List<PostResponse>> getPostsByQuery(PostQuery query) async {
     try {
-      final posts = await _postRepository.getPostsByUid(uid);
-      return posts;
+      final params = query.params;
+      switch (query.type) {
+        case PostQueryType.uid:
+          return await _postRepository.getPostsByUid(
+              uid: params[PostQueryKey.uid]);
+        default:
+          throw Exception('Query type not found');
+      }
     } catch (e) {
       throw Exception(e);
     }
