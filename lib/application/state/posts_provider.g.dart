@@ -1,13 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'posts_by_uid_provider.dart';
+part of 'posts_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$postsByUidNotifierHash() =>
-    r'c5798d3f8fdc85010a0f664515487138dbf550ff';
+String _$postsNotifierHash() => r'5ea684298dfd8c529cd5885151adb7a6f24c0a66';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -30,39 +29,39 @@ class _SystemHash {
   }
 }
 
-abstract class _$PostsByUidNotifier
+abstract class _$PostsNotifier
     extends BuildlessAutoDisposeAsyncNotifier<List<PostResponse>> {
-  late final String uid;
+  late final PostQuery query;
 
   FutureOr<List<PostResponse>> build(
-    String uid,
+    PostQuery query,
   );
 }
 
-/// See also [PostsByUidNotifier].
-@ProviderFor(PostsByUidNotifier)
-const postsByUidNotifierProvider = PostsByUidNotifierFamily();
+/// See also [PostsNotifier].
+@ProviderFor(PostsNotifier)
+const postsNotifierProvider = PostsNotifierFamily();
 
-/// See also [PostsByUidNotifier].
-class PostsByUidNotifierFamily extends Family<AsyncValue<List<PostResponse>>> {
-  /// See also [PostsByUidNotifier].
-  const PostsByUidNotifierFamily();
+/// See also [PostsNotifier].
+class PostsNotifierFamily extends Family<AsyncValue<List<PostResponse>>> {
+  /// See also [PostsNotifier].
+  const PostsNotifierFamily();
 
-  /// See also [PostsByUidNotifier].
-  PostsByUidNotifierProvider call(
-    String uid,
+  /// See also [PostsNotifier].
+  PostsNotifierProvider call(
+    PostQuery query,
   ) {
-    return PostsByUidNotifierProvider(
-      uid,
+    return PostsNotifierProvider(
+      query,
     );
   }
 
   @override
-  PostsByUidNotifierProvider getProviderOverride(
-    covariant PostsByUidNotifierProvider provider,
+  PostsNotifierProvider getProviderOverride(
+    covariant PostsNotifierProvider provider,
   ) {
     return call(
-      provider.uid,
+      provider.query,
     );
   }
 
@@ -78,99 +77,99 @@ class PostsByUidNotifierFamily extends Family<AsyncValue<List<PostResponse>>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'postsByUidNotifierProvider';
+  String? get name => r'postsNotifierProvider';
 }
 
-/// See also [PostsByUidNotifier].
-class PostsByUidNotifierProvider extends AutoDisposeAsyncNotifierProviderImpl<
-    PostsByUidNotifier, List<PostResponse>> {
-  /// See also [PostsByUidNotifier].
-  PostsByUidNotifierProvider(
-    String uid,
+/// See also [PostsNotifier].
+class PostsNotifierProvider extends AutoDisposeAsyncNotifierProviderImpl<
+    PostsNotifier, List<PostResponse>> {
+  /// See also [PostsNotifier].
+  PostsNotifierProvider(
+    PostQuery query,
   ) : this._internal(
-          () => PostsByUidNotifier()..uid = uid,
-          from: postsByUidNotifierProvider,
-          name: r'postsByUidNotifierProvider',
+          () => PostsNotifier()..query = query,
+          from: postsNotifierProvider,
+          name: r'postsNotifierProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$postsByUidNotifierHash,
-          dependencies: PostsByUidNotifierFamily._dependencies,
+                  : _$postsNotifierHash,
+          dependencies: PostsNotifierFamily._dependencies,
           allTransitiveDependencies:
-              PostsByUidNotifierFamily._allTransitiveDependencies,
-          uid: uid,
+              PostsNotifierFamily._allTransitiveDependencies,
+          query: query,
         );
 
-  PostsByUidNotifierProvider._internal(
+  PostsNotifierProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.uid,
+    required this.query,
   }) : super.internal();
 
-  final String uid;
+  final PostQuery query;
 
   @override
   FutureOr<List<PostResponse>> runNotifierBuild(
-    covariant PostsByUidNotifier notifier,
+    covariant PostsNotifier notifier,
   ) {
     return notifier.build(
-      uid,
+      query,
     );
   }
 
   @override
-  Override overrideWith(PostsByUidNotifier Function() create) {
+  Override overrideWith(PostsNotifier Function() create) {
     return ProviderOverride(
       origin: this,
-      override: PostsByUidNotifierProvider._internal(
-        () => create()..uid = uid,
+      override: PostsNotifierProvider._internal(
+        () => create()..query = query,
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        uid: uid,
+        query: query,
       ),
     );
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<PostsByUidNotifier,
-      List<PostResponse>> createElement() {
-    return _PostsByUidNotifierProviderElement(this);
+  AutoDisposeAsyncNotifierProviderElement<PostsNotifier, List<PostResponse>>
+      createElement() {
+    return _PostsNotifierProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is PostsByUidNotifierProvider && other.uid == uid;
+    return other is PostsNotifierProvider && other.query == query;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, uid.hashCode);
+    hash = _SystemHash.combine(hash, query.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
-mixin PostsByUidNotifierRef
+mixin PostsNotifierRef
     on AutoDisposeAsyncNotifierProviderRef<List<PostResponse>> {
-  /// The parameter `uid` of this provider.
-  String get uid;
+  /// The parameter `query` of this provider.
+  PostQuery get query;
 }
 
-class _PostsByUidNotifierProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<PostsByUidNotifier,
-        List<PostResponse>> with PostsByUidNotifierRef {
-  _PostsByUidNotifierProviderElement(super.provider);
+class _PostsNotifierProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<PostsNotifier,
+        List<PostResponse>> with PostsNotifierRef {
+  _PostsNotifierProviderElement(super.provider);
 
   @override
-  String get uid => (origin as PostsByUidNotifierProvider).uid;
+  PostQuery get query => (origin as PostsNotifierProvider).query;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

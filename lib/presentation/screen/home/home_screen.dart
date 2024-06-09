@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/core/constant/animation_constant.dart';
 import 'package:nijimas/core/constant/page_constant.dart';
+import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/presentation/widget/common/custom_wave.dart';
 import 'package:nijimas/core/util/sizing.dart';
@@ -25,7 +26,19 @@ class HomeScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final useIsVisible = useState(isShowAnimation ? true : false);
+    final user = ref.watch(authStateProvider).valueOrNull;
+    if (user == null) {
+      GoRouter.of(context).go('/login');
+      return const SizedBox();
+    }
+
+    final uid = user.uid;
     final usePage = useState(0);
+    final query = PostQuery(
+      type: PostQueryType.uid,
+      params: {PostQueryKey.uid: uid},
+    );
+
     void onPageChanged(int index) {
       usePage.value = index;
     }
@@ -47,6 +60,7 @@ class HomeScreen extends HookConsumerWidget {
       }
       return null;
     }, [isShowAnimation]);
+
     return Scaffold(
       appBar: useIsVisible.value
           ? null
@@ -72,7 +86,7 @@ class HomeScreen extends HookConsumerWidget {
               ],
             ),
       endDrawer: const MenuDrawer(),
-      body: PageConstant.tabPages[usePage.value],
+      body: PageConstant.getTabPage(usePage.value, query),
       bottomSheet: useIsVisible.value
           ? AnimatedBuilder(
               animation: animationController,
