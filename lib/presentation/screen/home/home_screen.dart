@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/core/constant/animation_constant.dart';
 import 'package:nijimas/core/constant/page_constant.dart';
+import 'package:nijimas/core/enum/main_category.dart';
 import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/presentation/widget/common/custom_wave.dart';
@@ -34,10 +35,11 @@ class HomeScreen extends HookConsumerWidget {
 
     final uid = user.uid;
     final usePage = useState(0);
-    final query = PostQuery(
+    final initialQuery = PostQuery(
       type: PostQueryType.uid,
       params: {PostQueryKey.uid: uid},
     );
+    final usePostQuery = useState(initialQuery);
 
     void onPageChanged(int index) {
       usePage.value = index;
@@ -65,6 +67,21 @@ class HomeScreen extends HookConsumerWidget {
       appBar: useIsVisible.value
           ? null
           : AppBar(
+              leading: usePage.value == 0
+                  ? IconButton(
+                      icon: const Icon(Icons.search),
+                      onPressed: () {
+                        final query = PostQuery(
+                          type: PostQueryType.mainCategory,
+                          params: {
+                            PostQueryKey.mainCategory:
+                                MainCategory.fashion.name,
+                          },
+                        );
+                        usePostQuery.value = query;
+                      },
+                    )
+                  : null,
               actions: [
                 Builder(
                   builder: (context) {
@@ -86,7 +103,7 @@ class HomeScreen extends HookConsumerWidget {
               ],
             ),
       endDrawer: const MenuDrawer(),
-      body: PageConstant.getTabPage(usePage.value, query),
+      body: PageConstant.getTabPage(usePage.value, usePostQuery.value),
       bottomSheet: useIsVisible.value
           ? AnimatedBuilder(
               animation: animationController,

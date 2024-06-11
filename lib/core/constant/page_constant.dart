@@ -7,7 +7,7 @@ class PageConstant {
   static Widget getTabPage(int index, PostQuery query) {
     switch (index) {
       case 0:
-        return FeedScreen(initialQuery: query);
+        return FeedScreen(query: query);
       case 1:
         return const DataScreen();
       default:

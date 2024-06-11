@@ -82,6 +82,9 @@ class PostUsecase extends AbstractPostUsecase {
         case PostQueryType.uid:
           return await _postRepository.getPostsByUid(
               uid: params[PostQueryKey.uid]);
+        case PostQueryType.mainCategory:
+          return await _postRepository.getPostsByMainCategory(
+              mainCategory: params[PostQueryKey.mainCategory]);
         default:
           throw Exception('Query type not found');
       }
