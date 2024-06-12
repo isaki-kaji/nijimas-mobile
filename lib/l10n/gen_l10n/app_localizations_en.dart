@@ -21,4 +21,31 @@ class L10nEn extends L10n {
 
   @override
   String get userAlreadyExists => 'User already exists';
+
+  @override
+  String get food => 'Food';
+
+  @override
+  String get hobbies => 'Hobbies';
+
+  @override
+  String get fashion => 'Fashion';
+
+  @override
+  String get goods => 'Miscellaneous Goods';
+
+  @override
+  String get essentials => 'Daily Necessities';
+
+  @override
+  String get travel => 'Travel';
+
+  @override
+  String get entertainment => 'Entertainment Expenses';
+
+  @override
+  String get transport => 'Transportation Expenses';
+
+  @override
+  String get other => 'Others';
 }

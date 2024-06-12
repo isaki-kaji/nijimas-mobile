@@ -4,5 +4,14 @@
     "nameCanBeChanged": "※名前は後から変更できます。",
     "enterNameCaption": "3〜15文字で入力してください",
     "failedToCreateUser": "ユーザー登録に失敗しました",
-    "userAlreadyExists": "ユーザーはすでに存在します"
+    "userAlreadyExists": "ユーザーはすでに存在します",
+    "food": "食事",
+    "hobbies": "趣味",
+    "fashion": "ファッション",
+    "goods": "雑貨",
+    "essentials": "日用品",
+    "travel": "旅行",
+    "entertainment": "交際費",
+    "transport": "交通費",
+    "other": "その他"
 }

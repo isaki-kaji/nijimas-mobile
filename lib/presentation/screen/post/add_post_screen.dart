@@ -30,7 +30,7 @@ class AddPostScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     bool isKeyboardShown = 0 < MediaQuery.of(context).viewInsets.bottom;
     final isLoading = ref.watch(loadingProvider);
-    final useMainCategory = useState<String>(MainCategory.food.name);
+    final useMainCategory = useState<MainCategory>(MainCategory.food);
     final useSubCategories = useState<List<String>>([]);
     final useIsVisibleTextFieldChip = useState<bool>(false);
     final usePublicTypeNo = useState<int>(0);
@@ -115,7 +115,7 @@ class AddPostScreen extends HookConsumerWidget {
                   return;
                 }
                 final formData = PostFormData(
-                  mainCategory: useMainCategory.value,
+                  mainCategory: useMainCategory.value.name,
                   subCategories: useSubCategories.value,
                   postText: useTextController.text,
                   expense: useExpenseController.text,

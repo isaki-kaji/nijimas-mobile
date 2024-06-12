@@ -7,6 +7,7 @@ import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/own_user_detail_provider.dart';
 import 'package:nijimas/application/state/posts_provider.dart';
 import 'package:nijimas/application/state/user_response_provider.dart';
+import 'package:nijimas/core/enum/main_category.dart';
 import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/core/theme/text_style.dart';
@@ -96,7 +97,8 @@ class PostCard extends ConsumerWidget {
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-              MainCategoryChip(categoryName: post.mainCategory),
+              MainCategoryChip(
+                  category: MainCategory.fromName(post.mainCategory)),
               post.subCategory1 != null
                   ? SubCategoryChip(categoryName: post.subCategory1!)
                   : const SizedBox(),

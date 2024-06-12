@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:nijimas/core/enum/main_category.dart';
 import 'package:nijimas/core/theme/color.dart';
 
 class MainCategoryChip extends StatelessWidget {
-  final String categoryName;
-  final void Function(String)? tapEvent;
+  final MainCategory category;
+  final void Function(MainCategory)? tapEvent;
   const MainCategoryChip({
     super.key,
-    required this.categoryName,
+    required this.category,
     this.tapEvent,
   });
 
@@ -14,13 +15,13 @@ class MainCategoryChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return tapEvent != null
         ? GestureDetector(
-            onTap: () => tapEvent!(categoryName),
-            child: _buildCard(),
+            onTap: () => tapEvent!(category),
+            child: _buildCard(context),
           )
-        : _buildCard();
+        : _buildCard(context);
   }
 
-  Widget _buildCard() {
+  Widget _buildCard(BuildContext context) {
     return SizedBox(
       height: 50,
       child: Card(
@@ -37,7 +38,7 @@ class MainCategoryChip extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  categoryName,
+                  category.getDisplayName(context),
                   style: const TextStyle(
                       color: MyColors.white, fontWeight: FontWeight.bold),
                 ),
