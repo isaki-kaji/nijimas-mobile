@@ -128,6 +128,60 @@ abstract class L10n {
   /// In ja, this message translates to:
   /// **'ユーザーはすでに存在します'**
   String get userAlreadyExists;
+
+  /// No description provided for @food.
+  ///
+  /// In ja, this message translates to:
+  /// **'食事'**
+  String get food;
+
+  /// No description provided for @hobbies.
+  ///
+  /// In ja, this message translates to:
+  /// **'趣味'**
+  String get hobbies;
+
+  /// No description provided for @fashion.
+  ///
+  /// In ja, this message translates to:
+  /// **'ファッション'**
+  String get fashion;
+
+  /// No description provided for @goods.
+  ///
+  /// In ja, this message translates to:
+  /// **'雑貨'**
+  String get goods;
+
+  /// No description provided for @essentials.
+  ///
+  /// In ja, this message translates to:
+  /// **'日用品'**
+  String get essentials;
+
+  /// No description provided for @travel.
+  ///
+  /// In ja, this message translates to:
+  /// **'旅行'**
+  String get travel;
+
+  /// No description provided for @entertainment.
+  ///
+  /// In ja, this message translates to:
+  /// **'交際費'**
+  String get entertainment;
+
+  /// No description provided for @transport.
+  ///
+  /// In ja, this message translates to:
+  /// **'交通費'**
+  String get transport;
+
+  /// No description provided for @other.
+  ///
+  /// In ja, this message translates to:
+  /// **'その他'**
+  String get other;
 }
 
 class _L10nDelegate extends LocalizationsDelegate<L10n> {

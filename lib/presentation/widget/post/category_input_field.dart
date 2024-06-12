@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nijimas/core/enum/main_category.dart';
 import 'package:nijimas/core/util/show_picker.dart';
 import 'package:nijimas/presentation/widget/post/main_category_chip.dart';
 import 'package:nijimas/presentation/widget/post/sub_category_chip.dart';
@@ -13,7 +14,7 @@ class CategoryInputField extends StatelessWidget {
     required this.subCategoryTextController,
   });
 
-  final ValueNotifier<String> useMainCategory;
+  final ValueNotifier<MainCategory> useMainCategory;
   final ValueNotifier<List<String>> useSubCategories;
   final ValueNotifier<bool> useIsVisibleTextFieldChip;
   final TextEditingController subCategoryTextController;
@@ -36,7 +37,7 @@ class CategoryInputField extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               MainCategoryChip(
-                  categoryName: useMainCategory.value,
+                  category: useMainCategory.value,
                   tapEvent: (s) => showPicker(context, (s) {
                         useMainCategory.value = s;
                       })),

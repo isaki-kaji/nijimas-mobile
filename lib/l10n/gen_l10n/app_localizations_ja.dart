@@ -21,4 +21,31 @@ class L10nJa extends L10n {
 
   @override
   String get userAlreadyExists => 'ユーザーはすでに存在します';
+
+  @override
+  String get food => '食事';
+
+  @override
+  String get hobbies => '趣味';
+
+  @override
+  String get fashion => 'ファッション';
+
+  @override
+  String get goods => '雑貨';
+
+  @override
+  String get essentials => '日用品';
+
+  @override
+  String get travel => '旅行';
+
+  @override
+  String get entertainment => '交際費';
+
+  @override
+  String get transport => '交通費';
+
+  @override
+  String get other => 'その他';
 }
