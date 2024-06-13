@@ -42,6 +42,10 @@ class HomeScreen extends HookConsumerWidget {
     final usePostQuery = useState(initialQuery);
 
     void onPageChanged(int index) {
+      //FeedScreenでHomeを押した場合、usePostQueryを初期化する
+      if (usePage.value == 0 && index == 0) {
+        usePostQuery.value = initialQuery;
+      }
       usePage.value = index;
     }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 enum PostQueryType {
   uid,
@@ -27,4 +28,8 @@ class PostQuery {
         other.type == type &&
         mapEquals(other.params, params);
   }
+
+  @override
+  int get hashCode =>
+      type.hashCode ^ const DeepCollectionEquality().hash(params);
 }
