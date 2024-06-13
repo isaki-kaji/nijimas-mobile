@@ -42,14 +42,18 @@ class AddPostScreen extends HookConsumerWidget {
     final useExpenseController = useTextEditingController();
     final picker = ImagePicker();
     final useImageBitmap = useState<List<Uint8List?>>([]);
+    final useIsSelectingImage = useState<bool>(false);
 
     Future<void> selectImages() async {
+      useIsSelectingImage.value = true;
       final List<XFile?> imageFiles = await picker.pickMultiImage(limit: 4);
       if (imageFiles.isEmpty) {
+        useIsSelectingImage.value = false;
         return;
       }
       final result = await compute(resizeImages, imageFiles);
       useImageBitmap.value = result;
+      useIsSelectingImage.value = false;
     }
 
     return Scaffold(
@@ -104,7 +108,7 @@ class AddPostScreen extends HookConsumerWidget {
       /////////////////
       //登録パート
       /////////////////
-      floatingActionButton: isKeyboardShown
+      floatingActionButton: (isKeyboardShown || useIsSelectingImage.value)
           ? null
           : FloatingActionButton(
               onPressed: () async {
