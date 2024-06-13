@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
-import 'package:nijimas/application/state/own_user_detail_provider.dart';
 import 'package:nijimas/application/state/posts_provider.dart';
 import 'package:nijimas/application/state/user_response_provider.dart';
 import 'package:nijimas/core/enum/main_category.dart';
