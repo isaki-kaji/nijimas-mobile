@@ -7,6 +7,7 @@ class PostResponse {
   final String postId;
   final String uid;
   final String username;
+  final String? profileImageUrl;
   final String mainCategory;
   final String? subCategory1;
   final String? subCategory2;
@@ -22,6 +23,7 @@ class PostResponse {
     required this.postId,
     required this.uid,
     required this.username,
+    this.profileImageUrl,
     required this.mainCategory,
     this.subCategory1,
     this.subCategory2,
@@ -43,6 +45,7 @@ class PostResponse {
     String? postId,
     String? uid,
     String? username,
+    String? profileImageUrl,
     String? mainCategory,
     String? subCategory1,
     String? subCategory2,
@@ -58,6 +61,7 @@ class PostResponse {
       postId: postId ?? this.postId,
       uid: uid ?? this.uid,
       username: username ?? this.username,
+      profileImageUrl: profileImageUrl ?? this.profileImageUrl,
       mainCategory: mainCategory ?? this.mainCategory,
       subCategory1: subCategory1 ?? this.subCategory1,
       subCategory2: subCategory2 ?? this.subCategory2,
