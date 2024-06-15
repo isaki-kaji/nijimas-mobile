@@ -1,17 +1,16 @@
-import 'dart:typed_data';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-class PostFormData {
-  final String mainCategory;
-  final List<String> subCategories;
-  final String? postText;
-  final List<Uint8List?> images;
-  final String? expense;
-  final String publicTypeNo;
-  const PostFormData(
-      {required this.mainCategory,
-      required this.subCategories,
-      required this.postText,
-      required this.images,
-      required this.expense,
-      required this.publicTypeNo});
+part 'post_form_data.freezed.dart';
+
+@freezed
+class PostFormData with _$PostFormData {
+  const factory PostFormData({
+    required String mainCategory,
+    required List<String> subCategories,
+    required String? postText,
+    required List<Uint8List?> images,
+    required String? expense,
+    required String publicTypeNo,
+  }) = _PostFormData;
 }
