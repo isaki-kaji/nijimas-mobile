@@ -5,7 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/posts_provider.dart';
-import 'package:nijimas/application/state/user_response_provider.dart';
 import 'package:nijimas/core/enum/main_category.dart';
 import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/core/theme/color.dart';
@@ -26,9 +25,6 @@ class PostCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(userResponseProvider(post.uid)).valueOrNull;
-
-    if (user == null) return const SizedBox();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -40,7 +36,7 @@ class PostCard extends ConsumerWidget {
               Row(
                 children: [
                   SwitchCircleAvatar(
-                    imageUrl: user.profileImageUrl,
+                    imageUrl: post.profileImageUrl,
                   ),
                   const SizedBox(
                     width: 8.0,
