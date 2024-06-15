@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:nijimas/application/formdata/post_form_data.dart';
 import 'package:nijimas/core/util/sizing.dart';
 
 class MemoInputField extends StatelessWidget {
-  const MemoInputField({
+  MemoInputField({
     super.key,
-    required this.useTextController,
+    required this.usePostFormData,
   });
 
-  final TextEditingController useTextController;
+  final ValueNotifier<PostFormData> usePostFormData;
+  final useTextController = useTextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +28,10 @@ class MemoInputField extends StatelessWidget {
             border: InputBorder.none,
             contentPadding: EdgeInsets.all(18),
           ),
+          onChanged: (value) {
+            usePostFormData.value =
+                usePostFormData.value.copyWith(postText: value);
+          },
         ),
       ),
     );

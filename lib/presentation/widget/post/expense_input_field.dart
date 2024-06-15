@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:nijimas/application/formdata/post_form_data.dart';
 
 class ExpenseInputField extends StatelessWidget {
-  const ExpenseInputField({
+  ExpenseInputField({
     super.key,
-    required this.useExpenseController,
+    required this.usePostFormData,
   });
 
-  final TextEditingController useExpenseController;
+  final ValueNotifier<PostFormData> usePostFormData;
+  final useExpenseController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,15 @@ class ExpenseInputField extends StatelessWidget {
             decoration: const InputDecoration(
               hintText: '00',
             ),
+            onChanged: (value) {
+              if (value.isNotEmpty &&
+                  RegExp(r'^[1-9][0-9]*$').hasMatch(value)) {
+                if (int.parse(value) <= 100000000) {
+                  usePostFormData.value =
+                      usePostFormData.value.copyWith(expense: value);
+                }
+              }
+            },
           ),
         ),
         const Expanded(

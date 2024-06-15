@@ -8,12 +8,12 @@ class ImageCarouselSlider extends StatelessWidget {
   const ImageCarouselSlider({
     super.key,
     required this.isKeyboardShown,
-    required this.useImageBitmap,
+    required this.images,
     required this.selectImages,
   });
 
   final bool isKeyboardShown;
-  final ValueNotifier<List<Uint8List?>> useImageBitmap;
+  final List<Uint8List?> images;
   final Future<void> Function() selectImages;
 
   @override
@@ -27,7 +27,7 @@ class ImageCarouselSlider extends StatelessWidget {
         await selectImages();
       },
       child: CarouselSlider(
-          items: useImageBitmap.value.map((i) {
+          items: images.map((i) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 3.0),
               child: SizedBox(

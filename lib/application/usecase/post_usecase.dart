@@ -46,7 +46,7 @@ class PostUsecase extends AbstractPostUsecase {
       }
 
       final int? expense =
-          formData.expense != null ? int.parse(formData.expense!) : null;
+          formData.expense.isEmpty ? int.parse(formData.expense) : null;
 
       //postTextからlocationを取得する処理を追加
 
@@ -56,7 +56,7 @@ class PostUsecase extends AbstractPostUsecase {
       final request = CreatePostRequest(
           postId: postId,
           uid: uid,
-          mainCategory: formData.mainCategory,
+          mainCategory: formData.mainCategory.name,
           subCategory1: subCategory1,
           subCategory2: subCategory2,
           postText: formData.postText,

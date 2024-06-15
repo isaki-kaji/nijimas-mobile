@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:nijimas/application/formdata/post_form_data.dart';
 import 'package:nijimas/core/theme/color.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 class PublicTypeSwitch extends StatelessWidget {
   const PublicTypeSwitch({
     super.key,
-    required this.usePublicTypeNo,
+    required this.usePostFormData,
   });
 
-  final ValueNotifier<int> usePublicTypeNo;
+  final ValueNotifier<PostFormData> usePostFormData;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class PublicTypeSwitch extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: ToggleSwitch(
-            initialLabelIndex: usePublicTypeNo.value,
+            initialLabelIndex: int.parse(usePostFormData.value.publicTypeNo),
             totalSwitches: 3,
             customWidths: const [80, 200, 80],
             customTextStyles: const [TextStyle(fontWeight: FontWeight.w500)],
@@ -26,7 +27,9 @@ class PublicTypeSwitch extends StatelessWidget {
             inactiveBgColor: Theme.of(context).colorScheme.surfaceVariant,
             labels: const ["公開", "フォロワーにのみ公開", "非公開"],
             onToggle: (i) {
-              usePublicTypeNo.value = i!;
+              usePostFormData.value = usePostFormData.value.copyWith(
+                publicTypeNo: i.toString(),
+              );
             },
           ),
         ),

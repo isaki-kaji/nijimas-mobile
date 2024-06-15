@@ -33,16 +33,19 @@ class AddPostScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     bool isKeyboardShown = 0 < MediaQuery.of(context).viewInsets.bottom;
     final isLoading = ref.watch(loadingProvider);
-    final useMainCategory = useState<MainCategory>(MainCategory.food);
-    final useSubCategories = useState<List<String>>([]);
     final useIsVisibleTextFieldChip = useState<bool>(false);
-    final usePublicTypeNo = useState<int>(0);
-    final subCategoryTextController = useTextEditingController();
-    final useTextController = useTextEditingController();
-    final useExpenseController = useTextEditingController();
     final picker = ImagePicker();
-    final useImageBitmap = useState<List<Uint8List?>>([]);
-    final useIsSelectingImage = useState<bool>(false);
+    final useIsSelectingImage = useState(false);
+    PostFormData initialFormData = PostFormData(
+      mainCategory: MainCategory.food,
+      subCategories: [],
+      postText: "",
+      images: [],
+      expense: "",
+      publicTypeNo: 0.toString(),
+    );
+    final usePostFormData = useState(initialFormData);
+    PostFormData formData = usePostFormData.value;
 
     Future<void> selectImages() async {
       useIsSelectingImage.value = true;
@@ -52,7 +55,7 @@ class AddPostScreen extends HookConsumerWidget {
         return;
       }
       final result = await compute(resizeImages, imageFiles);
-      useImageBitmap.value = result;
+      formData = formData.copyWith(images: result);
       useIsSelectingImage.value = false;
     }
 
@@ -79,25 +82,23 @@ class AddPostScreen extends HookConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      ExpenseInputField(
-                          useExpenseController: useExpenseController),
+                      ExpenseInputField(usePostFormData: usePostFormData),
                       CategoryInputField(
-                          useMainCategory: useMainCategory,
-                          useSubCategories: useSubCategories,
-                          useIsVisibleTextFieldChip: useIsVisibleTextFieldChip,
-                          subCategoryTextController: subCategoryTextController),
-                      if (useImageBitmap.value.isNotEmpty)
+                        usePostFormData: usePostFormData,
+                        useIsVisibleTextFieldChip: useIsVisibleTextFieldChip,
+                      ),
+                      if (formData.images.isNotEmpty)
                         ImageCarouselSlider(
                           isKeyboardShown: isKeyboardShown,
-                          useImageBitmap: useImageBitmap,
+                          images: formData.images,
                           selectImages: selectImages,
                         )
                       else
                         ImageSelectDetector(
                             isKeyboardShown: isKeyboardShown,
                             selectImages: selectImages),
-                      MemoInputField(useTextController: useTextController),
-                      PublicTypeSwitch(usePublicTypeNo: usePublicTypeNo),
+                      MemoInputField(usePostFormData: usePostFormData),
+                      PublicTypeSwitch(usePostFormData: usePostFormData),
                       const SizedBox(height: 150),
                     ],
                   ),
@@ -115,20 +116,12 @@ class AddPostScreen extends HookConsumerWidget {
                 if (!_formKey.currentState!.validate()) {
                   return;
                 }
-                if (useExpenseController.text.isEmpty &&
-                    useTextController.text.isEmpty &&
-                    useImageBitmap.value.isEmpty) {
+                if (formData.expense.isEmpty &&
+                    formData.postText.isEmpty &&
+                    formData.images.isEmpty) {
                   showErrorSnackBar(context, "金額、メモ、画像のいずれかを入力してください");
                   return;
                 }
-                final formData = PostFormData(
-                  mainCategory: useMainCategory.value.name,
-                  subCategories: useSubCategories.value,
-                  postText: useTextController.text,
-                  expense: useExpenseController.text,
-                  images: useImageBitmap.value,
-                  publicTypeNo: (usePublicTypeNo.value + 1).toString(),
-                );
                 final postUsecase = ref.read(postUsecaseProvider);
                 await postUsecase.createPost(
                   formData: formData,

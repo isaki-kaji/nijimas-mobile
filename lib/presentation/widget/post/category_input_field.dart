@@ -1,29 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:nijimas/core/enum/main_category.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:nijimas/application/formdata/post_form_data.dart';
 import 'package:nijimas/core/util/show_picker.dart';
 import 'package:nijimas/presentation/widget/post/main_category_chip.dart';
 import 'package:nijimas/presentation/widget/post/sub_category_chip.dart';
 import 'package:nijimas/presentation/widget/post/text_field_chip.dart';
 
 class CategoryInputField extends StatelessWidget {
-  const CategoryInputField({
+  CategoryInputField({
     super.key,
-    required this.useMainCategory,
-    required this.useSubCategories,
+    required this.usePostFormData,
     required this.useIsVisibleTextFieldChip,
-    required this.subCategoryTextController,
   });
 
-  final ValueNotifier<MainCategory> useMainCategory;
-  final ValueNotifier<List<String>> useSubCategories;
+  final ValueNotifier<PostFormData> usePostFormData;
   final ValueNotifier<bool> useIsVisibleTextFieldChip;
-  final TextEditingController subCategoryTextController;
+  final subCategoryTextController = useTextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    PostFormData formData = usePostFormData.value;
+
     void removeSubCategory(String subCategory) {
-      useSubCategories.value =
-          useSubCategories.value.where((s) => s != subCategory).toList();
+      usePostFormData.value = usePostFormData.value.copyWith(
+        subCategories: usePostFormData.value.subCategories
+            .where((s) => s != subCategory)
+            .toList(),
+      );
     }
 
     return Padding(
@@ -37,15 +40,19 @@ class CategoryInputField extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               MainCategoryChip(
-                  category: useMainCategory.value,
-                  tapEvent: (s) => showPicker(context, (s) {
-                        useMainCategory.value = s;
-                      })),
-              ...useSubCategories.value.map((s) {
+                category: formData.mainCategory,
+                tapEvent: (s) => showPicker(context, (s) {
+                  usePostFormData.value =
+                      usePostFormData.value.copyWith(mainCategory: s);
+                }),
+              ),
+              ...formData.subCategories.map((s) {
                 return SubCategoryChip(
-                    categoryName: s, tapEvent: (s) => removeSubCategory(s));
+                  categoryName: s,
+                  tapEvent: (s) => removeSubCategory(s),
+                );
               }),
-              if (useSubCategories.value.length < 2)
+              if (formData.subCategories.length < 2)
                 useIsVisibleTextFieldChip.value
                     ? TextFieldChip(
                         controller: subCategoryTextController,
@@ -54,16 +61,20 @@ class CategoryInputField extends StatelessWidget {
                             useIsVisibleTextFieldChip.value = false;
                             return;
                           }
-                          if (useSubCategories.value.length == 1) {
-                            if (useSubCategories.value[0] ==
-                                subCategoryTextController.text) {
-                              useIsVisibleTextFieldChip.value = false;
-                              subCategoryTextController.clear();
-                              return;
-                            }
+                          final newSubCategory = subCategoryTextController.text;
+
+                          if (formData.subCategories.contains(newSubCategory)) {
+                            useIsVisibleTextFieldChip.value = false;
+                            subCategoryTextController.clear();
+                            return;
                           }
-                          useSubCategories.value
-                              .add(subCategoryTextController.text);
+
+                          usePostFormData.value =
+                              usePostFormData.value.copyWith(
+                            subCategories: List.from(formData.subCategories)
+                              ..add(newSubCategory),
+                          );
+
                           useIsVisibleTextFieldChip.value = false;
                           subCategoryTextController.clear();
                         },
@@ -73,7 +84,7 @@ class CategoryInputField extends StatelessWidget {
                           useIsVisibleTextFieldChip.value = true;
                         },
                         icon: const Icon(Icons.add_circle_outline),
-                      )
+                      ),
             ],
           ),
         ),

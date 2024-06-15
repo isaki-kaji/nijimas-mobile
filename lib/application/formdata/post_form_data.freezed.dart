@@ -16,11 +16,11 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$PostFormData {
-  String get mainCategory => throw _privateConstructorUsedError;
+  MainCategory get mainCategory => throw _privateConstructorUsedError;
   List<String> get subCategories => throw _privateConstructorUsedError;
-  String? get postText => throw _privateConstructorUsedError;
+  String get postText => throw _privateConstructorUsedError;
   List<Uint8List?> get images => throw _privateConstructorUsedError;
-  String? get expense => throw _privateConstructorUsedError;
+  String get expense => throw _privateConstructorUsedError;
   String get publicTypeNo => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -35,11 +35,11 @@ abstract class $PostFormDataCopyWith<$Res> {
       _$PostFormDataCopyWithImpl<$Res, PostFormData>;
   @useResult
   $Res call(
-      {String mainCategory,
+      {MainCategory mainCategory,
       List<String> subCategories,
-      String? postText,
+      String postText,
       List<Uint8List?> images,
-      String? expense,
+      String expense,
       String publicTypeNo});
 }
 
@@ -58,32 +58,32 @@ class _$PostFormDataCopyWithImpl<$Res, $Val extends PostFormData>
   $Res call({
     Object? mainCategory = null,
     Object? subCategories = null,
-    Object? postText = freezed,
+    Object? postText = null,
     Object? images = null,
-    Object? expense = freezed,
+    Object? expense = null,
     Object? publicTypeNo = null,
   }) {
     return _then(_value.copyWith(
       mainCategory: null == mainCategory
           ? _value.mainCategory
           : mainCategory // ignore: cast_nullable_to_non_nullable
-              as String,
+              as MainCategory,
       subCategories: null == subCategories
           ? _value.subCategories
           : subCategories // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      postText: freezed == postText
+      postText: null == postText
           ? _value.postText
           : postText // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       images: null == images
           ? _value.images
           : images // ignore: cast_nullable_to_non_nullable
               as List<Uint8List?>,
-      expense: freezed == expense
+      expense: null == expense
           ? _value.expense
           : expense // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       publicTypeNo: null == publicTypeNo
           ? _value.publicTypeNo
           : publicTypeNo // ignore: cast_nullable_to_non_nullable
@@ -101,11 +101,11 @@ abstract class _$$PostFormDataImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String mainCategory,
+      {MainCategory mainCategory,
       List<String> subCategories,
-      String? postText,
+      String postText,
       List<Uint8List?> images,
-      String? expense,
+      String expense,
       String publicTypeNo});
 }
 
@@ -122,32 +122,32 @@ class __$$PostFormDataImplCopyWithImpl<$Res>
   $Res call({
     Object? mainCategory = null,
     Object? subCategories = null,
-    Object? postText = freezed,
+    Object? postText = null,
     Object? images = null,
-    Object? expense = freezed,
+    Object? expense = null,
     Object? publicTypeNo = null,
   }) {
     return _then(_$PostFormDataImpl(
       mainCategory: null == mainCategory
           ? _value.mainCategory
           : mainCategory // ignore: cast_nullable_to_non_nullable
-              as String,
+              as MainCategory,
       subCategories: null == subCategories
           ? _value._subCategories
           : subCategories // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      postText: freezed == postText
+      postText: null == postText
           ? _value.postText
           : postText // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       images: null == images
           ? _value._images
           : images // ignore: cast_nullable_to_non_nullable
               as List<Uint8List?>,
-      expense: freezed == expense
+      expense: null == expense
           ? _value.expense
           : expense // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       publicTypeNo: null == publicTypeNo
           ? _value.publicTypeNo
           : publicTypeNo // ignore: cast_nullable_to_non_nullable
@@ -170,7 +170,7 @@ class _$PostFormDataImpl with DiagnosticableTreeMixin implements _PostFormData {
         _images = images;
 
   @override
-  final String mainCategory;
+  final MainCategory mainCategory;
   final List<String> _subCategories;
   @override
   List<String> get subCategories {
@@ -180,7 +180,7 @@ class _$PostFormDataImpl with DiagnosticableTreeMixin implements _PostFormData {
   }
 
   @override
-  final String? postText;
+  final String postText;
   final List<Uint8List?> _images;
   @override
   List<Uint8List?> get images {
@@ -190,7 +190,7 @@ class _$PostFormDataImpl with DiagnosticableTreeMixin implements _PostFormData {
   }
 
   @override
-  final String? expense;
+  final String expense;
   @override
   final String publicTypeNo;
 
@@ -248,23 +248,23 @@ class _$PostFormDataImpl with DiagnosticableTreeMixin implements _PostFormData {
 
 abstract class _PostFormData implements PostFormData {
   const factory _PostFormData(
-      {required final String mainCategory,
+      {required final MainCategory mainCategory,
       required final List<String> subCategories,
-      required final String? postText,
+      required final String postText,
       required final List<Uint8List?> images,
-      required final String? expense,
+      required final String expense,
       required final String publicTypeNo}) = _$PostFormDataImpl;
 
   @override
-  String get mainCategory;
+  MainCategory get mainCategory;
   @override
   List<String> get subCategories;
   @override
-  String? get postText;
+  String get postText;
   @override
   List<Uint8List?> get images;
   @override
-  String? get expense;
+  String get expense;
   @override
   String get publicTypeNo;
   @override
