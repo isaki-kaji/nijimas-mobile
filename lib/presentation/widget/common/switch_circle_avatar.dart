@@ -3,15 +3,19 @@ import 'package:flutter/material.dart';
 
 class SwitchCircleAvatar extends StatelessWidget {
   final String? imageUrl;
-  const SwitchCircleAvatar({super.key, required this.imageUrl});
+  final double radius;
+  const SwitchCircleAvatar(
+      {super.key, required this.imageUrl, this.radius = 20});
 
   @override
   Widget build(BuildContext context) {
     return imageUrl == null
-        ? const CircleAvatar(
-            child: Icon(Icons.person),
+        ? CircleAvatar(
+            radius: radius,
+            child: Icon(Icons.person, size: radius * 0.9),
           )
         : CircleAvatar(
+            radius: radius,
             backgroundImage: CachedNetworkImageProvider(
               imageUrl!,
             ),
