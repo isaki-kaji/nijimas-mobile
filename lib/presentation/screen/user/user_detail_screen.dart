@@ -32,57 +32,63 @@ class UserDetailScreen extends ConsumerWidget {
     return SliverList(
       delegate: SliverChildListDelegate(
         [
-          Container(
-            height: 500,
-            color: Colors.red,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: Column(
-                children: [
-                  Row(
+          Column(
+            children: [
+              SizedBox(
+                height: 500,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  child: Column(
                     children: [
-                      SwitchCircleAvatar(
-                        radius: 50,
-                        imageUrl: user.profileImageUrl,
-                      ),
-                      const Spacer(flex: 2),
-                      const Column(
+                      Row(
                         children: [
-                          Text("100", style: MyTextStyles.body16),
-                          Text("投稿", style: MyTextStyles.body16),
+                          SwitchCircleAvatar(
+                            radius: 50,
+                            imageUrl: user.profileImageUrl,
+                          ),
+                          const Spacer(flex: 2),
+                          const Column(
+                            children: [
+                              Text("100", style: MyTextStyles.body16),
+                              Text("投稿", style: MyTextStyles.body16),
+                            ],
+                          ),
+                          const Spacer(),
+                          const Column(
+                            children: [
+                              Text("100", style: MyTextStyles.body16),
+                              Text("フォロワー", style: MyTextStyles.body16),
+                            ],
+                          ),
+                          const Spacer(),
+                          const Column(
+                            children: [
+                              Text("100", style: MyTextStyles.body16),
+                              Text("フォロー", style: MyTextStyles.body16),
+                            ],
+                          ),
                         ],
                       ),
-                      const Spacer(),
-                      const Column(
+                      const SizedBox(height: 10),
+                      Row(
                         children: [
-                          Text("100", style: MyTextStyles.body16),
-                          Text("フォロワー", style: MyTextStyles.body16),
+                          const SizedBox(width: 20),
+                          Text(
+                            user.username,
+                            style: MyTextStyles.subtitle,
+                          ),
                         ],
                       ),
-                      const Spacer(),
-                      const Column(
-                        children: [
-                          Text("100", style: MyTextStyles.body16),
-                          Text("フォロー", style: MyTextStyles.body16),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      const SizedBox(width: 20),
+                      const SizedBox(height: 5),
                       Text(
-                        user.username,
-                        style: MyTextStyles.subtitle,
-                      ),
+                          user.selfIntro ?? '彼女の笑顔はまるで春の陽射しのように温かく、心を和ませてくれる。'),
                     ],
                   ),
-                  const SizedBox(height: 5),
-                  Text(user.selfIntro ?? '彼女の笑顔はまるで春の陽射しのように温かく、心を和ませてくれる。'),
-                ],
+                ),
               ),
-            ),
+              const Divider(),
+            ],
           ),
         ],
       ),
