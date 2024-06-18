@@ -6,7 +6,7 @@ import 'package:nijimas/presentation/screen/auth/auth_screen.dart';
 import 'package:nijimas/presentation/screen/home/home_screen.dart';
 import 'package:nijimas/presentation/screen/post/add_post_screen.dart';
 import 'package:nijimas/presentation/screen/user/register_user_screen.dart';
-import 'package:nijimas/presentation/screen/user/user_profile_screen.dart';
+import 'package:nijimas/presentation/screen/user/user_detail_screen.dart';
 import 'package:nijimas/core/util/build_transition_page.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -43,8 +43,8 @@ GoRouter router(RouterRef ref) {
           path: '/user/register',
           builder: (context, state) => const RegisterUserScreen()),
       GoRoute(
-          path: '/user/profile',
-          builder: (context, state) => const UserProfileScreen())
+          path: '/profile',
+          builder: (context, state) => const UserDetailScreen())
     ],
     redirect: (context, state) async {
       final signedInUser = ref.read(authStateProvider).valueOrNull;

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/own_user_detail_provider.dart';
 import 'package:nijimas/core/provider/usecase/auth_usecase_provider.dart';
 import 'package:nijimas/presentation/widget/common/switch_circle_avatar.dart';
+import 'package:nijimas/presentation/widget/home/drawer_list_tile.dart';
 
 class MenuDrawer extends ConsumerWidget {
   const MenuDrawer({super.key});
@@ -19,12 +21,21 @@ class MenuDrawer extends ConsumerWidget {
               imageUrl: data.profileImageUrl,
               radius: 50,
             ),
-            TextButton(
-                onPressed: () => ref.read(authUsecaseProvider).signOut(),
-                child: const Text(
-                  "ログアウト",
-                  style: TextStyle(color: Colors.black),
-                ))
+            const SizedBox(height: 30),
+            ListView(
+              //ListViewがアイテム数に合わせて高さを変える
+              shrinkWrap: true,
+              children: [
+                DrawerListTile(
+                  title: "ユーザー情報",
+                  onTap: () => GoRouter.of(context).push("/profile"),
+                ),
+                DrawerListTile(
+                  title: "ログアウト",
+                  onTap: () => ref.read(authUsecaseProvider).signOut(),
+                )
+              ],
+            ),
           ],
         )),
       );
