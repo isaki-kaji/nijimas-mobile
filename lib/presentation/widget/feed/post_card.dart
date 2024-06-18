@@ -53,7 +53,7 @@ class PostCard extends ConsumerWidget {
                   const SizedBox(
                     width: 4.0,
                   ),
-                  const Text("円", style: MyTextStyles.body),
+                  const Text("円", style: MyTextStyles.body14),
                 ],
               ),
             ],
@@ -105,7 +105,7 @@ class PostCard extends ConsumerWidget {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 8.0),
-          child: Text(post.postText ?? "", style: MyTextStyles.body),
+          child: Text(post.postText ?? "", style: MyTextStyles.body14),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),

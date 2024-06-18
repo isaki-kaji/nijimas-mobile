@@ -16,12 +16,12 @@ class MainCategoryChip extends StatelessWidget {
     return tapEvent != null
         ? GestureDetector(
             onTap: () => tapEvent!(category),
-            child: _buildCard(context),
+            child: _buildWidget(context),
           )
-        : _buildCard(context);
+        : _buildWidget(context);
   }
 
-  Widget _buildCard(BuildContext context) {
+  Widget _buildWidget(BuildContext context) {
     return SizedBox(
       height: 50,
       child: Card(
