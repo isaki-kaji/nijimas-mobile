@@ -3,7 +3,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/own_user_detail_provider.dart';
 import 'package:nijimas/core/theme/text_style.dart';
 import 'package:nijimas/domain/response/user_response.dart';
-import 'package:nijimas/presentation/widget/common/switch_circle_avatar.dart';
+import 'package:nijimas/presentation/widget/user/spending_rates_card.dart';
+import 'package:nijimas/presentation/widget/user/switch_circle_avatar.dart';
 
 class UserDetailScreen extends ConsumerWidget {
   const UserDetailScreen({super.key});
@@ -35,7 +36,6 @@ class UserDetailScreen extends ConsumerWidget {
           Column(
             children: [
               SizedBox(
-                height: 500,
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -83,6 +83,17 @@ class UserDetailScreen extends ConsumerWidget {
                       const SizedBox(height: 5),
                       Text(
                           user.selfIntro ?? '彼女の笑顔はまるで春の陽射しのように温かく、心を和ませてくれる。'),
+                      const SizedBox(height: 20),
+                      const SpendingRatesCard(
+                        title: "費目別の支出の割合",
+                        spendingRates: {
+                          "食費": 20.0,
+                          "交通費": 20.0,
+                          "交際費": 20.0,
+                          "趣味": 20.0,
+                          "その他": 20.0,
+                        },
+                      ),
                     ],
                   ),
                 ),

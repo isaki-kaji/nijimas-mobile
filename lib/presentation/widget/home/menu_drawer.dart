@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/own_user_detail_provider.dart';
 import 'package:nijimas/core/provider/usecase/auth_usecase_provider.dart';
-import 'package:nijimas/presentation/widget/common/switch_circle_avatar.dart';
+import 'package:nijimas/presentation/widget/user/switch_circle_avatar.dart';
 import 'package:nijimas/presentation/widget/home/drawer_list_tile.dart';
 
 class MenuDrawer extends ConsumerWidget {

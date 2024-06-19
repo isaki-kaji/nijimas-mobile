@@ -13,7 +13,7 @@ import 'package:nijimas/core/util/sizing.dart';
 import 'package:nijimas/core/util/timezone.dart';
 import 'package:nijimas/domain/request/toggle_favorite_request.dart';
 import 'package:nijimas/domain/response/post_response.dart';
-import 'package:nijimas/presentation/widget/common/switch_circle_avatar.dart';
+import 'package:nijimas/presentation/widget/user/switch_circle_avatar.dart';
 import 'package:nijimas/presentation/widget/post/main_category_chip.dart';
 import 'package:nijimas/presentation/widget/post/sub_category_chip.dart';
 
