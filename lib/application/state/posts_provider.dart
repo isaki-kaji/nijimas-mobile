@@ -1,8 +1,8 @@
 import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/core/provider/usecase/favorite_usecase_provider.dart';
 import 'package:nijimas/core/provider/usecase/post_usecase_provider.dart';
+import 'package:nijimas/domain/model/post.dart';
 import 'package:nijimas/domain/request/toggle_favorite_request.dart';
-import 'package:nijimas/domain/response/post_response.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'posts_provider.g.dart';
@@ -10,7 +10,7 @@ part 'posts_provider.g.dart';
 @riverpod
 class PostsNotifier extends _$PostsNotifier {
   @override
-  Future<List<PostResponse>> build(PostQuery query) async {
+  Future<List<Post>> build(PostQuery query) async {
     try {
       final postUsecase = ref.read(postUsecaseProvider);
       return await postUsecase.getPostsByQuery(query);

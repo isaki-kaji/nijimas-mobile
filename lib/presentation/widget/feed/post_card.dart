@@ -11,14 +11,14 @@ import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/core/theme/text_style.dart';
 import 'package:nijimas/core/util/sizing.dart';
 import 'package:nijimas/core/util/timezone.dart';
+import 'package:nijimas/domain/model/post.dart';
 import 'package:nijimas/domain/request/toggle_favorite_request.dart';
-import 'package:nijimas/domain/response/post_response.dart';
 import 'package:nijimas/presentation/widget/user/switch_circle_avatar.dart';
 import 'package:nijimas/presentation/widget/post/main_category_chip.dart';
 import 'package:nijimas/presentation/widget/post/sub_category_chip.dart';
 
 class PostCard extends ConsumerWidget {
-  final PostResponse post;
+  final Post post;
   final PostQuery query;
   final formatter = DateFormat('yyyy-MM-dd HH:mm');
   PostCard({super.key, required this.post, required this.query});

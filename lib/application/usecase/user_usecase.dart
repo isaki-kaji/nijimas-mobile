@@ -2,8 +2,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/loading_provider.dart';
 import 'package:nijimas/application/usecase/abstract_user_usecase.dart';
 import 'package:nijimas/core/util/exception.dart';
+import 'package:nijimas/domain/model/user_profile.dart';
 import 'package:nijimas/domain/request/create_user_request.dart';
-import 'package:nijimas/domain/response/user_response.dart';
 import 'package:nijimas/repository/abstract_auth_repository.dart';
 import 'package:nijimas/repository/abstract_user_repository.dart';
 import 'package:nijimas/repository/abstract_user_status_repository.dart';
@@ -45,7 +45,7 @@ class UserUsecase extends AbstractUserUsecase {
   }
 
   @override
-  Future<UserResponse> getUser({required String uid}) async {
+  Future<UserProfile> getUser({required String uid}) async {
     try {
       return await _userRepository.getUser(uid);
     } catch (e) {

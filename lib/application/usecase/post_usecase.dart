@@ -5,8 +5,8 @@ import 'package:nijimas/application/state/loading_provider.dart';
 import 'package:nijimas/application/usecase/abstract_image_usecase.dart';
 import 'package:nijimas/application/usecase/abstract_post_usecase.dart';
 import 'package:nijimas/core/enum/post_query.dart';
+import 'package:nijimas/domain/model/post.dart';
 import 'package:nijimas/domain/request/create_post_request.dart';
-import 'package:nijimas/domain/response/post_response.dart';
 import 'package:nijimas/repository/abstract_post_repository.dart';
 import 'package:uuid/uuid.dart';
 
@@ -75,7 +75,7 @@ class PostUsecase extends AbstractPostUsecase {
   }
 
   @override
-  Future<List<PostResponse>> getPostsByQuery(PostQuery query) async {
+  Future<List<Post>> getPostsByQuery(PostQuery query) async {
     try {
       final params = query.params;
       switch (query.type) {

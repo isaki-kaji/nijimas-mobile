@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:logger/web.dart';
 import 'package:nijimas/core/constant/env_constant.dart';
 import 'package:nijimas/core/util/auth_interceptor.dart';
+import 'package:nijimas/domain/model/post.dart';
 import 'package:nijimas/domain/request/create_post_request.dart';
-import 'package:nijimas/domain/response/post_response.dart';
 import 'package:nijimas/repository/abstract_post_repository.dart';
 
 class PostRepository extends AbstractPostRepository {
@@ -28,13 +28,12 @@ class PostRepository extends AbstractPostRepository {
   }
 
   @override
-  Future<List<PostResponse>> getPostsByUid({required String uid}) async {
+  Future<List<Post>> getPostsByUid({required String uid}) async {
     try {
       final response = await _dio.get("${Env.baseUrl}/posts/?uid=$uid");
       if (response.statusCode == 200) {
-        List<PostResponse> posts = (response.data as List)
-            .map((post) => PostResponse.fromJson(post))
-            .toList();
+        List<Post> posts =
+            (response.data as List).map((post) => Post.fromJson(post)).toList();
         return posts;
       } else {
         _logger.e("Error response: ${response.data}");
@@ -48,15 +47,14 @@ class PostRepository extends AbstractPostRepository {
   }
 
   @override
-  Future<List<PostResponse>> getPostsByMainCategory(
+  Future<List<Post>> getPostsByMainCategory(
       {required String mainCategory}) async {
     try {
       final response =
           await _dio.get("${Env.baseUrl}/posts/?main-category=$mainCategory");
       if (response.statusCode == 200) {
-        List<PostResponse> posts = (response.data as List)
-            .map((post) => PostResponse.fromJson(post))
-            .toList();
+        List<Post> posts =
+            (response.data as List).map((post) => Post.fromJson(post)).toList();
         return posts;
       } else {
         _logger.e("Error response: ${response.data}");

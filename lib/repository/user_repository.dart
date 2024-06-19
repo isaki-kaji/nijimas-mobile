@@ -3,8 +3,8 @@ import 'package:logger/web.dart';
 import 'package:nijimas/core/constant/env_constant.dart';
 import 'package:nijimas/core/util/auth_interceptor.dart';
 import 'package:nijimas/core/util/exception.dart';
+import 'package:nijimas/domain/model/user_profile.dart';
 import 'package:nijimas/domain/request/create_user_request.dart';
-import 'package:nijimas/domain/response/user_response.dart';
 import 'package:nijimas/repository/abstract_user_repository.dart';
 
 class UserRepository extends AbstractUserRepository {
@@ -35,7 +35,7 @@ class UserRepository extends AbstractUserRepository {
   Future<dynamic> getUser(String uid) async {
     final response = await _dio.get("${Env.baseUrl}/users/$uid");
     if (response.statusCode == 200) {
-      return UserResponse.fromJson(response.data);
+      return UserProfile.fromJson(response.data);
     }
     _logger.e(response.data);
     throw Exception(

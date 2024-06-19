@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/posts_provider.dart';
 import 'package:nijimas/application/state/user_response_provider.dart';
 import 'package:nijimas/core/enum/post_query.dart';
@@ -13,11 +15,24 @@ class UserDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final myUid = ref.watch(authStateProvider).valueOrNull!.uid;
     final query =
         PostQuery(type: PostQueryType.uid, params: {PostQueryKey.uid: uid});
     return Scaffold(
-      appBar: AppBar(),
-      body: ref.watch(userResponseProvider(uid)).when(data: (data) {
+      appBar: AppBar(
+        actions: [
+          if (myUid == uid)
+            PopupMenuButton(itemBuilder: (context) {
+              return [
+                PopupMenuItem(
+                  child: const Text("ユーザ情報の編集"),
+                  onTap: () => GoRouter.of(context).push("/profile/$uid/edit"),
+                ),
+              ];
+            })
+        ],
+      ),
+      body: ref.watch(userProfileInfoProvider(uid)).when(data: (data) {
         return NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return [

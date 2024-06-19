@@ -1,9 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'user_response.g.dart';
+part 'user_profile.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class UserResponse {
+class UserProfile {
   final String uid;
   final String username;
   final String? selfIntro;
@@ -11,7 +11,7 @@ class UserResponse {
   final String? bannerImageUrl;
   final String? countryCode;
 
-  const UserResponse(
+  const UserProfile(
       {required this.uid,
       required this.username,
       this.selfIntro,
@@ -19,8 +19,8 @@ class UserResponse {
       this.bannerImageUrl,
       this.countryCode});
 
-  factory UserResponse.fromJson(Map<String, dynamic> json) =>
-      _$UserResponseFromJson(json);
+  factory UserProfile.fromJson(Map<String, dynamic> json) =>
+      _$UserProfileFromJson(json);
 
-  Map<String, dynamic> toJson() => _$UserResponseToJson(this);
+  Map<String, dynamic> toJson() => _$UserProfileToJson(this);
 }
