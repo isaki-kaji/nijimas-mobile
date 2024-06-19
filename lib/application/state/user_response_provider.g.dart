@@ -6,7 +6,7 @@ part of 'user_response_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$userResponseHash() => r'a597e2671c9d035fe0bfda2359a6bcdf5c8179ab';
+String _$userProfileInfoHash() => r'8435ca63b7f3818f2ac6b7de64ae060f9e92f5f4';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,27 +29,27 @@ class _SystemHash {
   }
 }
 
-/// See also [userResponse].
-@ProviderFor(userResponse)
-const userResponseProvider = UserResponseFamily();
+/// See also [UserProfileInfo].
+@ProviderFor(UserProfileInfo)
+const userProfileInfoProvider = UserProfileInfoFamily();
 
-/// See also [userResponse].
-class UserResponseFamily extends Family<AsyncValue<UserResponse?>> {
-  /// See also [userResponse].
-  const UserResponseFamily();
+/// See also [UserProfileInfo].
+class UserProfileInfoFamily extends Family<AsyncValue<UserProfile?>> {
+  /// See also [UserProfileInfo].
+  const UserProfileInfoFamily();
 
-  /// See also [userResponse].
-  UserResponseProvider call(
+  /// See also [UserProfileInfo].
+  UserProfileInfoProvider call(
     String uid,
   ) {
-    return UserResponseProvider(
+    return UserProfileInfoProvider(
       uid,
     );
   }
 
   @override
-  UserResponseProvider getProviderOverride(
-    covariant UserResponseProvider provider,
+  UserProfileInfoProvider getProviderOverride(
+    covariant UserProfileInfoProvider provider,
   ) {
     return call(
       provider.uid,
@@ -68,32 +68,32 @@ class UserResponseFamily extends Family<AsyncValue<UserResponse?>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'userResponseProvider';
+  String? get name => r'userProfileInfoProvider';
 }
 
-/// See also [userResponse].
-class UserResponseProvider extends AutoDisposeFutureProvider<UserResponse?> {
-  /// See also [userResponse].
-  UserResponseProvider(
+/// See also [UserProfileInfo].
+class UserProfileInfoProvider extends AutoDisposeFutureProvider<UserProfile?> {
+  /// See also [UserProfileInfo].
+  UserProfileInfoProvider(
     String uid,
   ) : this._internal(
-          (ref) => userResponse(
-            ref as UserResponseRef,
+          (ref) => UserProfileInfo(
+            ref as UserProfileInfoRef,
             uid,
           ),
-          from: userResponseProvider,
-          name: r'userResponseProvider',
+          from: userProfileInfoProvider,
+          name: r'userProfileInfoProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$userResponseHash,
-          dependencies: UserResponseFamily._dependencies,
+                  : _$userProfileInfoHash,
+          dependencies: UserProfileInfoFamily._dependencies,
           allTransitiveDependencies:
-              UserResponseFamily._allTransitiveDependencies,
+              UserProfileInfoFamily._allTransitiveDependencies,
           uid: uid,
         );
 
-  UserResponseProvider._internal(
+  UserProfileInfoProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -107,12 +107,12 @@ class UserResponseProvider extends AutoDisposeFutureProvider<UserResponse?> {
 
   @override
   Override overrideWith(
-    FutureOr<UserResponse?> Function(UserResponseRef provider) create,
+    FutureOr<UserProfile?> Function(UserProfileInfoRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: UserResponseProvider._internal(
-        (ref) => create(ref as UserResponseRef),
+      override: UserProfileInfoProvider._internal(
+        (ref) => create(ref as UserProfileInfoRef),
         from: from,
         name: null,
         dependencies: null,
@@ -124,13 +124,13 @@ class UserResponseProvider extends AutoDisposeFutureProvider<UserResponse?> {
   }
 
   @override
-  AutoDisposeFutureProviderElement<UserResponse?> createElement() {
-    return _UserResponseProviderElement(this);
+  AutoDisposeFutureProviderElement<UserProfile?> createElement() {
+    return _UserProfileInfoProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is UserResponseProvider && other.uid == uid;
+    return other is UserProfileInfoProvider && other.uid == uid;
   }
 
   @override
@@ -142,18 +142,18 @@ class UserResponseProvider extends AutoDisposeFutureProvider<UserResponse?> {
   }
 }
 
-mixin UserResponseRef on AutoDisposeFutureProviderRef<UserResponse?> {
+mixin UserProfileInfoRef on AutoDisposeFutureProviderRef<UserProfile?> {
   /// The parameter `uid` of this provider.
   String get uid;
 }
 
-class _UserResponseProviderElement
-    extends AutoDisposeFutureProviderElement<UserResponse?>
-    with UserResponseRef {
-  _UserResponseProviderElement(super.provider);
+class _UserProfileInfoProviderElement
+    extends AutoDisposeFutureProviderElement<UserProfile?>
+    with UserProfileInfoRef {
+  _UserProfileInfoProviderElement(super.provider);
 
   @override
-  String get uid => (origin as UserResponseProvider).uid;
+  String get uid => (origin as UserProfileInfoProvider).uid;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

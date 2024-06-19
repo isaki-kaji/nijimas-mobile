@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_response.dart';
+part of 'user_profile.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-UserResponse _$UserResponseFromJson(Map<String, dynamic> json) => UserResponse(
+UserProfile _$UserProfileFromJson(Map<String, dynamic> json) => UserProfile(
       uid: json['uid'] as String,
       username: json['username'] as String,
       selfIntro: json['self_intro'] as String?,
@@ -15,7 +15,7 @@ UserResponse _$UserResponseFromJson(Map<String, dynamic> json) => UserResponse(
       countryCode: json['country_code'] as String?,
     );
 
-Map<String, dynamic> _$UserResponseToJson(UserResponse instance) =>
+Map<String, dynamic> _$UserProfileToJson(UserProfile instance) =>
     <String, dynamic>{
       'uid': instance.uid,
       'username': instance.username,

@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'post_response.dart';
+part of 'post.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-PostResponse _$PostResponseFromJson(Map<String, dynamic> json) => PostResponse(
+Post _$PostFromJson(Map<String, dynamic> json) => Post(
       postId: json['post_id'] as String,
       uid: json['uid'] as String,
       username: json['username'] as String,
@@ -24,8 +24,7 @@ PostResponse _$PostResponseFromJson(Map<String, dynamic> json) => PostResponse(
       createdAt: DateTime.parse(json['created_at'] as String),
     );
 
-Map<String, dynamic> _$PostResponseToJson(PostResponse instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$PostToJson(Post instance) => <String, dynamic>{
       'post_id': instance.postId,
       'uid': instance.uid,
       'username': instance.username,
