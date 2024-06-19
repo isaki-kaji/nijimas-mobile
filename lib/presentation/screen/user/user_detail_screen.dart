@@ -19,33 +19,35 @@ class UserDetailScreen extends ConsumerWidget {
       appBar: AppBar(),
       body: ref.watch(userResponseProvider(uid)).when(data: (data) {
         return NestedScrollView(
-            headerSliverBuilder: (BuildContext context, bool innerBoxIsScroll) {
-              return [
-                ProfileHeader(user: data!),
-                ref.watch(postsNotifierProvider(query)).when(
-                  data: (data) {
-                    return ListView.builder(
-                      itemCount: data.length,
-                      itemBuilder: (context, index) {
-                        final post = data[index];
-                        return PostCard(post: post, query: query);
-                      },
-                    );
-                  },
-                  error: (error, _) {
-                    return Text(error.toString());
-                  },
-                  loading: () {
-                    return const Loader();
-                  },
-                )
-              ];
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return [
+              SliverToBoxAdapter(
+                child: ProfileHeader(user: data!),
+              ),
+            ];
+          },
+          body: ref.watch(postsNotifierProvider(query)).when(
+            data: (data) {
+              return ListView.builder(
+                itemCount: data.length,
+                itemBuilder: (context, index) {
+                  final post = data[index];
+                  return PostCard(post: post, query: query);
+                },
+              );
             },
-            body: Container());
+            error: (error, _) {
+              return Center(child: Text(error.toString()));
+            },
+            loading: () {
+              return const Center(child: Loader());
+            },
+          ),
+        );
       }, error: (error, _) {
-        return Text(error.toString());
+        return Center(child: Text(error.toString()));
       }, loading: () {
-        return const SizedBox();
+        return const Center(child: SizedBox());
       }),
     );
   }
