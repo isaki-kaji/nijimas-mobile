@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nijimas/application/state/own_user_detail_provider.dart';
+import 'package:nijimas/application/state/user_response_provider.dart';
 import 'package:nijimas/core/enum/main_category.dart';
 import 'package:nijimas/core/theme/text_style.dart';
 import 'package:nijimas/domain/response/user_response.dart';
@@ -9,17 +9,18 @@ import 'package:nijimas/presentation/widget/data/top_sub_categories_card.dart';
 import 'package:nijimas/presentation/widget/user/switch_circle_avatar.dart';
 
 class UserDetailScreen extends ConsumerWidget {
-  const UserDetailScreen({super.key});
+  const UserDetailScreen({super.key, required this.uid});
+  final String uid;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(),
-      body: ref.watch(ownUserDetailProvider).when(data: (data) {
+      body: ref.watch(userResponseProvider(uid)).when(data: (data) {
         return NestedScrollView(
             headerSliverBuilder: (BuildContext context, bool innerBoxIsScroll) {
               return [
-                _headerSection(data),
+                _headerSection(data!),
               ];
             },
             body: Container());
@@ -96,6 +97,7 @@ class UserDetailScreen extends ConsumerWidget {
                           MainCategory.entertainment: 0.2,
                         },
                       ),
+                      const SizedBox(height: 10.0),
                       const TopSubCategoriesCard(
                           subCategories: ["ラマ", "タスマニアデビル", "ゴールデンターキン"])
                     ],

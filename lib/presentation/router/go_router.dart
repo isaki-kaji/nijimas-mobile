@@ -43,8 +43,12 @@ GoRouter router(RouterRef ref) {
           path: '/user/register',
           builder: (context, state) => const RegisterUserScreen()),
       GoRoute(
-          path: '/profile',
-          builder: (context, state) => const UserDetailScreen())
+        path: '/profile/:uid',
+        builder: (context, state) {
+          final uid = state.pathParameters['uid'];
+          return UserDetailScreen(uid: uid!);
+        },
+      )
     ],
     redirect: (context, state) async {
       final signedInUser = ref.read(authStateProvider).valueOrNull;

@@ -28,7 +28,8 @@ class MenuDrawer extends ConsumerWidget {
               children: [
                 DrawerListTile(
                   title: "ユーザー情報",
-                  onTap: () => GoRouter.of(context).push("/profile"),
+                  onTap: () =>
+                      GoRouter.of(context).push("/profile/${data.uid}"),
                 ),
                 DrawerListTile(
                   title: "ログアウト",
