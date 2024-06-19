@@ -4,7 +4,8 @@ import 'package:nijimas/application/state/own_user_detail_provider.dart';
 import 'package:nijimas/core/enum/main_category.dart';
 import 'package:nijimas/core/theme/text_style.dart';
 import 'package:nijimas/domain/response/user_response.dart';
-import 'package:nijimas/presentation/widget/user/spending_distribution_card.dart';
+import 'package:nijimas/presentation/widget/data/spending_distribution_card.dart';
+import 'package:nijimas/presentation/widget/data/top_sub_categories_card.dart';
 import 'package:nijimas/presentation/widget/user/switch_circle_avatar.dart';
 
 class UserDetailScreen extends ConsumerWidget {
@@ -83,10 +84,11 @@ class UserDetailScreen extends ConsumerWidget {
                       ),
                       const SizedBox(height: 5),
                       Text(
-                          user.selfIntro ?? '彼女の笑顔はまるで春の陽射しのように温かく、心を和ませてくれる。'),
+                        user.selfIntro ??
+                            '彼女の笑顔はまるで春の陽射しのように温かく、心を和ませてくれる。なつかしい記憶がよみがえるような、そんな笑顔を持っている。',
+                      ),
                       const SizedBox(height: 20),
                       const SpendingDistributionCard(
-                        title: "支出の割合",
                         spendingDistribution: {
                           MainCategory.hobbies: 0.4,
                           MainCategory.food: 0.2,
@@ -94,6 +96,8 @@ class UserDetailScreen extends ConsumerWidget {
                           MainCategory.entertainment: 0.2,
                         },
                       ),
+                      const TopSubCategoriesCard(
+                          subCategories: ["ラマ", "タスマニアデビル", "ゴールデンターキン"])
                     ],
                   ),
                 ),

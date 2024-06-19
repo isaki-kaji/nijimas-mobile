@@ -4,11 +4,10 @@ import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/core/theme/text_style.dart';
 
 class SpendingDistributionCard extends StatelessWidget {
-  final String title;
   final Map<MainCategory, double> spendingDistribution;
 
   const SpendingDistributionCard(
-      {super.key, required this.title, required this.spendingDistribution});
+      {super.key, required this.spendingDistribution});
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +17,9 @@ class SpendingDistributionCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              title,
-              style: MyTextStyles.subtitle,
+            const Text(
+              "支出の割合",
+              style: MyTextStyles.body16,
             ),
             const SizedBox(height: 16.0),
             DistributionBarGraph(spendingDistribution: spendingDistribution),
