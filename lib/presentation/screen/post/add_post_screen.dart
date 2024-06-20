@@ -133,7 +133,7 @@ class AddPostScreen extends HookConsumerWidget {
                 await postUsecase.createPost(
                   formData: formData,
                   onSuccess: () {
-                    showSuccessSnackBar(context, "成功しました");
+                    showSuccessSnackBar(context, "投稿しました");
                     final uid = ref.read(authStateProvider).value!.uid;
                     ref.invalidate(postsNotifierProvider(PostQuery(
                         type: PostQueryType.uid,

@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/posts_provider.dart';
-import 'package:nijimas/application/state/user_response_provider.dart';
+import 'package:nijimas/application/state/user_profile_info_provider.dart';
 import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/presentation/widget/common/loader.dart';
 import 'package:nijimas/presentation/widget/feed/post_card.dart';

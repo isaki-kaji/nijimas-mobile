@@ -5,6 +5,7 @@ import 'package:nijimas/core/util/auth_interceptor.dart';
 import 'package:nijimas/core/util/exception.dart';
 import 'package:nijimas/domain/model/user_profile.dart';
 import 'package:nijimas/domain/request/create_user_request.dart';
+import 'package:nijimas/domain/request/update_user_request.dart';
 import 'package:nijimas/repository/abstract_user_repository.dart';
 
 class UserRepository extends AbstractUserRepository {
@@ -40,5 +41,17 @@ class UserRepository extends AbstractUserRepository {
     _logger.e(response.data);
     throw Exception(
         "Failed to get user with status code: ${response.statusCode}");
+  }
+
+  @override
+  Future<void> updateUser(UpdateUserRequest request) async {
+    final response =
+        await _dio.put("${Env.baseUrl}/users", data: request.toJson());
+    if (response.statusCode == 200) {
+      return;
+    }
+    _logger.e(response.data);
+    throw Exception(
+        "Failed to update user with status code: ${response.statusCode}");
   }
 }

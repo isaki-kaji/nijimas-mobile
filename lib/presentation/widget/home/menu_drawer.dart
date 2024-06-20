@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/own_user_detail_provider.dart';
 import 'package:nijimas/core/provider/usecase/auth_usecase_provider.dart';
-import 'package:nijimas/presentation/widget/user/switch_circle_avatar.dart';
 import 'package:nijimas/presentation/widget/home/drawer_list_tile.dart';
 
 class MenuDrawer extends ConsumerWidget {
@@ -16,11 +15,11 @@ class MenuDrawer extends ConsumerWidget {
         child: SafeArea(
             child: Column(
           children: [
-            const SizedBox(height: 30),
-            SwitchCircleAvatar(
-              imageUrl: data.profileImageUrl,
-              radius: 50,
-            ),
+            // const SizedBox(height: 30),
+            // SwitchCircleAvatar(
+            //   imageUrl: data.profileImageUrl,
+            //   radius: 50,
+            // ),
             const SizedBox(height: 30),
             ListView(
               //ListViewがアイテム数に合わせて高さを変える

@@ -11,16 +11,35 @@ class ImageUsecase extends AbstractImageUsecase {
       : _imageRepository = imageRepository;
 
   @override
-  Future<String> uploadImage(List<Uint8List?> imagesData, String path) async {
+  Future<String> uploadPostImages(
+      List<Uint8List?> imagesData, String path) async {
     final List<String> downloadUrls = [];
-    for (var imageData in imagesData) {
+    try {
+      for (var imageData in imagesData) {
+        const uuid = Uuid();
+        final imageId = uuid.v4();
+        String fullPath = 'posts/$path/$imageId';
+        final downloadUrl =
+            await _imageRepository.uploadImage(imageData!, fullPath);
+        downloadUrls.add(downloadUrl);
+      }
+      return downloadUrls.join(',');
+    } catch (e) {
+      throw Exception('Failed to upload image: $e');
+    }
+  }
+
+  @override
+  Future<String> uploadProfileImage(Uint8List imageData, String path) async {
+    try {
       const uuid = Uuid();
       final imageId = uuid.v4();
-      String fullPath = '$path/$imageId';
+      String fullPath = 'users/$path/profile-image/$imageId';
       final downloadUrl =
-          await _imageRepository.uploadImage(imageData!, fullPath);
-      downloadUrls.add(downloadUrl);
+          await _imageRepository.uploadImage(imageData, fullPath);
+      return downloadUrl;
+    } catch (e) {
+      throw Exception('Failed to upload image: $e');
     }
-    return downloadUrls.join(',');
   }
 }
