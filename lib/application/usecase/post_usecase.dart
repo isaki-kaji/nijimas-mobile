@@ -50,8 +50,8 @@ class PostUsecase extends AbstractPostUsecase {
 
       //postTextからlocationを取得する処理を追加
 
-      final photoUrl = await _imageUsecase.uploadPostImages(
-          formData.images, 'posts/$uid/$postId');
+      final photoUrl =
+          await _imageUsecase.uploadPostImages(formData.images, '$uid/$postId');
 
       final request = CreatePostRequest(
           postId: postId,

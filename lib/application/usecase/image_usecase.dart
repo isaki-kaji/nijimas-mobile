@@ -18,12 +18,24 @@ class ImageUsecase extends AbstractImageUsecase {
       for (var imageData in imagesData) {
         const uuid = Uuid();
         final imageId = uuid.v4();
-        String fullPath = '$path/$imageId';
+        String fullPath = 'posts/$path/$imageId';
         final downloadUrl =
             await _imageRepository.uploadImage(imageData!, fullPath);
         downloadUrls.add(downloadUrl);
       }
       return downloadUrls.join(',');
+    } catch (e) {
+      throw Exception('Failed to upload image: $e');
+    }
+  }
+
+  @override
+  Future<void> uploadProfileImage(Uint8List imageData, String uid) async {
+    try {
+      const uuid = Uuid();
+      final imageId = uuid.v4();
+      String fullPath = 'users/$uid/profile-image/$imageId';
+      await _imageRepository.uploadImage(imageData, fullPath);
     } catch (e) {
       throw Exception('Failed to upload image: $e');
     }
