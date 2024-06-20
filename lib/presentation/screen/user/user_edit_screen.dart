@@ -1,8 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:nijimas/application/state/user_response_provider.dart';
 import 'package:nijimas/core/theme/color.dart';
+import 'package:nijimas/core/util/resize_image.dart';
 import 'package:nijimas/core/util/sizing.dart';
 import 'package:nijimas/presentation/widget/common/loader.dart';
 import 'package:nijimas/presentation/widget/user/switch_circle_avatar.dart';
@@ -19,6 +22,23 @@ class UserEditScreen extends HookConsumerWidget {
         useTextEditingController(text: user.valueOrNull!.username);
     final useSelfIntroController =
         useTextEditingController(text: user.valueOrNull!.selfIntro);
+    final useIsSelectingImage = useState(false);
+    final picker = ImagePicker();
+    final useImageBitmap = useState<List<Uint8List>>([]);
+
+    Future<void> selectProfileImage() async {
+      useIsSelectingImage.value = true;
+      final XFile? imageFile =
+          await picker.pickImage(source: ImageSource.gallery);
+      if (imageFile == null) {
+        useIsSelectingImage.value = false;
+        return;
+      }
+      final result = await compute(resizeImages, [imageFile]);
+      useImageBitmap.value = result;
+      useIsSelectingImage.value = false;
+    }
+
     return Scaffold(
       appBar: AppBar(),
       body: user.when(
@@ -29,11 +49,20 @@ class UserEditScreen extends HookConsumerWidget {
               child: Column(
                 children: [
                   const Spacer(flex: 2),
-                  SwitchCircleAvatar(
-                    imageUrl: data!.profileImageUrl,
-                    radius: Sizing.widthByMQ(context, 0.2),
-                    onTap: () {},
-                  ),
+                  useImageBitmap.value.isEmpty
+                      ? SwitchCircleAvatar(
+                          imageUrl: data!.profileImageUrl,
+                          radius: Sizing.widthByMQ(context, 0.2),
+                          onTap: () => selectProfileImage(),
+                        )
+                      : GestureDetector(
+                          onTap: () => selectProfileImage(),
+                          child: CircleAvatar(
+                            radius: Sizing.widthByMQ(context, 0.2),
+                            backgroundImage:
+                                MemoryImage(useImageBitmap.value[0]),
+                          ),
+                        ),
                   const SizedBox(height: 20),
                   SizedBox(
                     height: 80,
@@ -85,17 +114,19 @@ class UserEditScreen extends HookConsumerWidget {
           return const Center(child: Loader());
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: MyColors.pink,
-        child: const Icon(
-          Icons.done,
-          color: MyColors.white,
-        ),
-        onPressed: () {
-          final formState = _formKey.currentState!;
-          formState.validate();
-        },
-      ),
+      floatingActionButton: useIsSelectingImage.value
+          ? null
+          : FloatingActionButton(
+              backgroundColor: MyColors.pink,
+              child: const Icon(
+                Icons.done,
+                color: MyColors.white,
+              ),
+              onPressed: () {
+                final formState = _formKey.currentState!;
+                formState.validate();
+              },
+            ),
     );
   }
 }

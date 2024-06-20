@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -5,8 +7,12 @@ class SwitchCircleAvatar extends StatelessWidget {
   final String? imageUrl;
   final double radius;
   final void Function()? onTap;
-  const SwitchCircleAvatar(
-      {super.key, required this.imageUrl, this.radius = 20, this.onTap});
+  const SwitchCircleAvatar({
+    super.key,
+    required this.imageUrl,
+    this.radius = 20,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
