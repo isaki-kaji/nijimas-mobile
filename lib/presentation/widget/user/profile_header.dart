@@ -62,11 +62,16 @@ class ProfileHeader extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 5),
-                Text(
-                  user.selfIntro ??
-                      '彼女の笑顔はまるで春の陽射しのように温かく、心を和ませてくれる。なつかしい記憶がよみがえるような、そんな笑顔を持っている。',
-                ),
+                const SizedBox(height: 10),
+                user.selfIntro != null
+                    ? Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                          child: Text(user.selfIntro ?? ""),
+                        ),
+                      )
+                    : const SizedBox.shrink(),
                 const SizedBox(height: 20),
                 const SpendingDistributionCard(
                   spendingDistribution: {

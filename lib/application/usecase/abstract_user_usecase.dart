@@ -1,3 +1,4 @@
+import 'package:nijimas/application/formdata/user_form_data.dart';
 import 'package:nijimas/domain/model/user_profile.dart';
 import 'package:nijimas/domain/request/create_user_request.dart';
 
@@ -10,4 +11,9 @@ abstract class AbstractUserUsecase {
   });
 
   Future<UserProfile> getUser({required String uid});
+
+  Future<void> updateUser(
+      {required UserFormData formData,
+      required void Function() onSuccess,
+      required void Function() onFailure});
 }
