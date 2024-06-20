@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:nijimas/application/state/user_response_provider.dart';
+import 'package:nijimas/application/state/user_profile_info_provider.dart';
 import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/core/util/resize_image.dart';
 import 'package:nijimas/core/util/sizing.dart';

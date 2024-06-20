@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_response_provider.dart';
+part of 'user_profile_info_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$userProfileInfoHash() => r'8435ca63b7f3818f2ac6b7de64ae060f9e92f5f4';
+String _$userProfileInfoHash() => r'81ab8a9f97ce7258e5c34559614943907bd78a24';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,16 +29,16 @@ class _SystemHash {
   }
 }
 
-/// See also [UserProfileInfo].
-@ProviderFor(UserProfileInfo)
+/// See also [userProfileInfo].
+@ProviderFor(userProfileInfo)
 const userProfileInfoProvider = UserProfileInfoFamily();
 
-/// See also [UserProfileInfo].
+/// See also [userProfileInfo].
 class UserProfileInfoFamily extends Family<AsyncValue<UserProfile?>> {
-  /// See also [UserProfileInfo].
+  /// See also [userProfileInfo].
   const UserProfileInfoFamily();
 
-  /// See also [UserProfileInfo].
+  /// See also [userProfileInfo].
   UserProfileInfoProvider call(
     String uid,
   ) {
@@ -71,13 +71,13 @@ class UserProfileInfoFamily extends Family<AsyncValue<UserProfile?>> {
   String? get name => r'userProfileInfoProvider';
 }
 
-/// See also [UserProfileInfo].
+/// See also [userProfileInfo].
 class UserProfileInfoProvider extends AutoDisposeFutureProvider<UserProfile?> {
-  /// See also [UserProfileInfo].
+  /// See also [userProfileInfo].
   UserProfileInfoProvider(
     String uid,
   ) : this._internal(
-          (ref) => UserProfileInfo(
+          (ref) => userProfileInfo(
             ref as UserProfileInfoRef,
             uid,
           ),
