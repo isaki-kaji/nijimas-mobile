@@ -55,64 +55,69 @@ class UserEditScreen extends HookConsumerWidget {
               data: (data) {
                 return Form(
                   key: _formKey,
-                  child: Center(
-                    child: Column(
-                      children: [
-                        const Spacer(flex: 2),
-                        useImageBitmap.value.isEmpty
-                            ? SwitchCircleAvatar(
-                                imageUrl: data!.profileImageUrl,
-                                radius: Sizing.widthByMQ(context, 0.2),
-                                onTap: () => selectProfileImage(),
-                              )
-                            : GestureDetector(
-                                onTap: () => selectProfileImage(),
-                                child: CircleAvatar(
-                                  radius: Sizing.widthByMQ(context, 0.2),
-                                  backgroundImage:
-                                      MemoryImage(useImageBitmap.value[0]),
+                  child: GestureDetector(
+                    onTap: () => FocusScope.of(context).unfocus(),
+                    child: Center(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            useImageBitmap.value.isEmpty
+                                ? SwitchCircleAvatar(
+                                    imageUrl: data!.profileImageUrl,
+                                    radius: Sizing.widthByMQ(context, 0.2),
+                                    onTap: () => selectProfileImage(),
+                                  )
+                                : GestureDetector(
+                                    onTap: () => selectProfileImage(),
+                                    child: CircleAvatar(
+                                      radius: Sizing.widthByMQ(context, 0.2),
+                                      backgroundImage:
+                                          MemoryImage(useImageBitmap.value[0]),
+                                    ),
+                                  ),
+                            const SizedBox(height: 20),
+                            SizedBox(
+                              height: 80,
+                              width: Sizing.widthByMQ(context, 0.6),
+                              child: TextFormField(
+                                controller: useNameController,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8.0)),
+                                ),
+                                validator: (name) {
+                                  if (name!.isEmpty) {
+                                    return "名前を入力してください";
+                                  }
+                                  if (name.length < 2 || name.length > 15) {
+                                    return "2文字以上15文字以下で入力してください";
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 16.0),
+                              child: SizedBox(
+                                width: Sizing.widthByMQ(context, 0.9),
+                                child: TextFormField(
+                                  controller: useSelfIntroController,
+                                  maxLines: 6,
+                                  maxLength: 200,
+                                  decoration: const InputDecoration(
+                                    filled: true,
+                                    hintText: "自己紹介を入力してください",
+                                    border: InputBorder.none,
+                                    contentPadding: EdgeInsets.all(18),
+                                  ),
                                 ),
                               ),
-                        const SizedBox(height: 20),
-                        SizedBox(
-                          height: 80,
-                          width: Sizing.widthByMQ(context, 0.6),
-                          child: TextFormField(
-                            controller: useNameController,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8.0)),
                             ),
-                            validator: (name) {
-                              if (name!.isEmpty) {
-                                return "名前を入力してください";
-                              }
-                              if (name.length < 2 || name.length > 15) {
-                                return "2文字以上15文字以下で入力してください";
-                              }
-                              return null;
-                            },
-                          ),
+                            const SizedBox(height: 50),
+                          ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16.0),
-                          child: SizedBox(
-                            width: Sizing.widthByMQ(context, 0.9),
-                            child: TextFormField(
-                              controller: useSelfIntroController,
-                              maxLines: 6,
-                              maxLength: 200,
-                              decoration: const InputDecoration(
-                                filled: true,
-                                hintText: "自己紹介を入力してください",
-                                border: InputBorder.none,
-                                contentPadding: EdgeInsets.all(18),
-                              ),
-                            ),
-                          ),
-                        ),
-                        const Spacer(flex: 3),
-                      ],
+                      ),
                     ),
                   ),
                 );
