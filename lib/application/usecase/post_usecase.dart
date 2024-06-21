@@ -36,18 +36,10 @@ class PostUsecase extends AbstractPostUsecase {
       _ref.read(loadingProvider.notifier).setTrue();
       const uuid = Uuid();
       final postId = uuid.v4();
-      String? subCategory1;
-      String? subCategory2;
       final uid = _ref.read(authStateProvider).valueOrNull!.uid;
 
-      if (formData.subCategories.length == 1) {
-        subCategory1 = formData.subCategories[0];
-        subCategory2 = null;
-      }
-      if (formData.subCategories.length == 2) {
-        subCategory1 = formData.subCategories[0];
-        subCategory2 = formData.subCategories[1];
-      }
+      (String?, String?) subCategories =
+          _parseSubCategories(formData.subCategories);
 
       final expense = _parseExpense(formData.expense);
 
@@ -60,8 +52,8 @@ class PostUsecase extends AbstractPostUsecase {
           postId: postId,
           uid: uid,
           mainCategory: formData.mainCategory,
-          subCategory1: subCategory1,
-          subCategory2: subCategory2,
+          subCategory1: subCategories.$1,
+          subCategory2: subCategories.$2,
           postText: formData.postText,
           photoUrl: photoUrl,
           expense: expense,
@@ -96,6 +88,20 @@ class PostUsecase extends AbstractPostUsecase {
       throw Exception(e);
     }
   }
+}
+
+(String?, String?) _parseSubCategories(List<String> subCategories) {
+  String? subCategory1;
+  String? subCategory2;
+
+  if (subCategories.isNotEmpty) {
+    subCategory1 = subCategories[0];
+  }
+  if (subCategories.length > 1) {
+    subCategory2 = subCategories[1];
+  }
+
+  return (subCategory1, subCategory2);
 }
 
 int _parseExpense(String? expense) {
