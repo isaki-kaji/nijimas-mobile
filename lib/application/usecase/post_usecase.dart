@@ -1,4 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:logger/web.dart';
 import 'package:nijimas/application/formdata/post_form_data.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/loading_provider.dart';
@@ -13,13 +14,16 @@ import 'package:uuid/uuid.dart';
 class PostUsecase extends AbstractPostUsecase {
   final AbstractPostRepository _postRepository;
   final AbstractImageUsecase _imageUsecase;
+  final Logger _logger;
   final Ref _ref;
   PostUsecase(
       {required AbstractPostRepository postRepository,
       required AbstractImageUsecase imageUsecase,
+      required Logger logger,
       required Ref ref})
       : _postRepository = postRepository,
         _imageUsecase = imageUsecase,
+        _logger = logger,
         _ref = ref;
 
   @override
@@ -45,8 +49,16 @@ class PostUsecase extends AbstractPostUsecase {
         subCategory2 = formData.subCategories[1];
       }
 
-      final int? expense =
-          formData.expense != null ? int.parse(formData.expense!) : null;
+      final int expense;
+      if (formData.expense != null && formData.expense!.isNotEmpty) {
+        if (_isNumeric(formData.expense!)) {
+          expense = int.parse(formData.expense!);
+        } else {
+          throw const FormatException('Invalid number format');
+        }
+      } else {
+        expense = 0;
+      }
 
       //postTextからlocationを取得する処理を追加
 
@@ -68,6 +80,7 @@ class PostUsecase extends AbstractPostUsecase {
       await _postRepository.createPost(request);
       onSuccess();
     } catch (e) {
+      _logger.e('Failed to create post: $e');
       onFailure();
     } finally {
       _ref.read(loadingProvider.notifier).setFalse();
@@ -92,4 +105,9 @@ class PostUsecase extends AbstractPostUsecase {
       throw Exception(e);
     }
   }
+}
+
+bool _isNumeric(String str) {
+  final number = num.tryParse(str);
+  return number != null;
 }
