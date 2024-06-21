@@ -49,16 +49,7 @@ class PostUsecase extends AbstractPostUsecase {
         subCategory2 = formData.subCategories[1];
       }
 
-      final int expense;
-      if (formData.expense != null && formData.expense!.isNotEmpty) {
-        if (_isNumeric(formData.expense!)) {
-          expense = int.parse(formData.expense!);
-        } else {
-          throw const FormatException('Invalid number format');
-        }
-      } else {
-        expense = 0;
-      }
+      final expense = _parseExpense(formData.expense);
 
       //postTextからlocationを取得する処理を追加
 
@@ -104,6 +95,18 @@ class PostUsecase extends AbstractPostUsecase {
     } catch (e) {
       throw Exception(e);
     }
+  }
+}
+
+int _parseExpense(String? expense) {
+  if (expense != null && expense.isNotEmpty) {
+    if (_isNumeric(expense)) {
+      return int.parse(expense);
+    } else {
+      throw const FormatException('Invalid number format');
+    }
+  } else {
+    return 0;
   }
 }
 
