@@ -48,4 +48,40 @@ class L10nJa extends L10n {
 
   @override
   String get other => 'その他';
+
+  @override
+  String get continueWithGoogle => 'Continue with Google';
+
+  @override
+  String get googleAuthFailed => 'Google認証に失敗しました';
+
+  @override
+  String get continueWithApple => 'Continue with Apple';
+
+  @override
+  String get appleAuthFailed => 'Apple認証に失敗しました';
+
+  @override
+  String get pleaseEnterPostInfo => '金額、メモ、画像のいずれかを入力してください';
+
+  @override
+  String get postSuccess => '投稿しました';
+
+  @override
+  String get postFailed => '投稿に失敗しました';
+
+  @override
+  String get editProfile => 'プロフィールの編集';
+
+  @override
+  String get enterName => '名前を入力してください';
+
+  @override
+  String get enterSelfIntro => '自己紹介を入力してください';
+
+  @override
+  String get updatedProfile => 'プロフィールを変更しました';
+
+  @override
+  String get failedUpdateProfile => 'プロフィールの変更に失敗しました';
 }

@@ -4,6 +4,7 @@ import 'package:nijimas/application/state/loading_provider.dart';
 import 'package:nijimas/core/provider/usecase/auth_usecase_provider.dart';
 import 'package:nijimas/core/util/show_snack_bar.dart';
 import 'package:nijimas/gen/assets.gen.dart';
+import 'package:nijimas/l10n/gen_l10n/app_localizations.dart';
 import 'package:nijimas/presentation/widget/auth/signin_button.dart';
 import 'package:nijimas/presentation/widget/common/loader.dart';
 import 'package:nijimas/core/util/sizing.dart';
@@ -13,6 +14,7 @@ class AuthScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = L10n.of(context);
     final isLoading = ref.watch(loadingProvider);
     return Scaffold(
       appBar: AppBar(
@@ -38,14 +40,14 @@ class AuthScreen extends HookConsumerWidget {
                     ),
                   ),
                   SignInButton(
-                    labelText: "Continue With Google",
+                    labelText: l10n.continueWithGoogle,
                     type: "google",
                     logo: Assets.google.image(width: 35),
                     onFailure: () =>
-                        showErrorSnackBar(context, "Google認証に失敗しました"),
+                        showErrorSnackBar(context, l10n.googleAuthFailed),
                   ),
                   SignInButton(
-                    labelText: "Continue with Apple",
+                    labelText: l10n.continueWithApple,
                     type: "apple",
                     logo: const Icon(
                       Icons.apple,
@@ -53,7 +55,7 @@ class AuthScreen extends HookConsumerWidget {
                       size: 35,
                     ),
                     onFailure: () =>
-                        showErrorSnackBar(context, "Google認証に失敗しました"),
+                        showErrorSnackBar(context, l10n.appleAuthFailed),
                   ),
                   SizedBox(height: Sizing.heightByMQ(context, 0.05)),
                 ],

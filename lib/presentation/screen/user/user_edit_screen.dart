@@ -14,6 +14,7 @@ import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/core/util/resize_image.dart';
 import 'package:nijimas/core/util/show_snack_bar.dart';
 import 'package:nijimas/core/util/sizing.dart';
+import 'package:nijimas/l10n/gen_l10n/app_localizations.dart';
 import 'package:nijimas/presentation/widget/common/loader.dart';
 import 'package:nijimas/presentation/widget/user/switch_circle_avatar.dart';
 
@@ -24,6 +25,7 @@ class UserEditScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = L10n.of(context);
     final isLoading = ref.watch(loadingProvider);
     final user = ref.watch(userProfileInfoProvider(uid));
     final useNameController =
@@ -87,10 +89,10 @@ class UserEditScreen extends HookConsumerWidget {
                                 ),
                                 validator: (name) {
                                   if (name!.isEmpty) {
-                                    return "名前を入力してください";
+                                    return l10n.enterName;
                                   }
                                   if (name.length < 2 || name.length > 15) {
-                                    return "2文字以上15文字以下で入力してください";
+                                    return l10n.enterNameCaption;
                                   }
                                   return null;
                                 },
@@ -105,11 +107,11 @@ class UserEditScreen extends HookConsumerWidget {
                                   controller: useSelfIntroController,
                                   maxLines: 6,
                                   maxLength: 200,
-                                  decoration: const InputDecoration(
+                                  decoration: InputDecoration(
                                     filled: true,
-                                    hintText: "自己紹介を入力してください",
+                                    hintText: l10n.enterSelfIntro,
                                     border: InputBorder.none,
-                                    contentPadding: EdgeInsets.all(18),
+                                    contentPadding: const EdgeInsets.all(18),
                                   ),
                                 ),
                               ),
@@ -151,7 +153,7 @@ class UserEditScreen extends HookConsumerWidget {
                 await userUsecase.updateUser(
                     formData: formData,
                     onSuccess: () {
-                      showSuccessSnackBar(context, "ユーザ情報を変更しました");
+                      showSuccessSnackBar(context, l10n.updatedProfile);
                       ref.invalidate(userProfileInfoProvider(uid));
                       ref.invalidate(postsNotifierProvider(PostQuery(
                           type: PostQueryType.uid,
@@ -159,7 +161,7 @@ class UserEditScreen extends HookConsumerWidget {
                       GoRouter.of(context).pop();
                     },
                     onFailure: () =>
-                        showErrorSnackBar(context, "ユーザ情報の変更に失敗しました"));
+                        showErrorSnackBar(context, l10n.failedUpdateProfile));
               },
             ),
     );

@@ -48,4 +48,40 @@ class L10nEn extends L10n {
 
   @override
   String get other => 'Others';
+
+  @override
+  String get continueWithGoogle => 'Continue with Google';
+
+  @override
+  String get googleAuthFailed => 'Google authentication failed';
+
+  @override
+  String get continueWithApple => 'Continue with Apple';
+
+  @override
+  String get appleAuthFailed => 'Apple authentication failed';
+
+  @override
+  String get pleaseEnterPostInfo => 'Please enter an expense, a memo, or at least one image';
+
+  @override
+  String get postSuccess => 'Posted!!';
+
+  @override
+  String get postFailed => 'Post Failed';
+
+  @override
+  String get editProfile => 'Edit Profile';
+
+  @override
+  String get enterName => 'Please enter your name';
+
+  @override
+  String get enterSelfIntro => 'Pleas enter your self-introduction';
+
+  @override
+  String get updatedProfile => 'Profile updated!!';
+
+  @override
+  String get failedUpdateProfile => 'Profile update failed';
 }

@@ -13,5 +13,17 @@
     "travel": "旅行",
     "entertainment": "交際費",
     "transport": "交通費",
-    "other": "その他"
+    "other": "その他",
+    "continueWithGoogle": "Continue with Google",
+    "googleAuthFailed": "Google認証に失敗しました",
+    "continueWithApple": "Continue with Apple",
+    "appleAuthFailed": "Apple認証に失敗しました",
+    "pleaseEnterPostInfo": "金額、メモ、画像のいずれかを入力してください",
+    "postSuccess": "投稿しました",
+    "postFailed": "投稿に失敗しました",
+    "editProfile": "プロフィールの編集",
+    "enterName": "名前を入力してください",
+    "enterSelfIntro": "自己紹介を入力してください",
+    "updatedProfile": "プロフィールを変更しました",
+    "failedUpdateProfile": "プロフィールの変更に失敗しました"
 }

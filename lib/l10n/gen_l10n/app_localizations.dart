@@ -182,6 +182,78 @@ abstract class L10n {
   /// In ja, this message translates to:
   /// **'その他'**
   String get other;
+
+  /// No description provided for @continueWithGoogle.
+  ///
+  /// In ja, this message translates to:
+  /// **'Continue with Google'**
+  String get continueWithGoogle;
+
+  /// No description provided for @googleAuthFailed.
+  ///
+  /// In ja, this message translates to:
+  /// **'Google認証に失敗しました'**
+  String get googleAuthFailed;
+
+  /// No description provided for @continueWithApple.
+  ///
+  /// In ja, this message translates to:
+  /// **'Continue with Apple'**
+  String get continueWithApple;
+
+  /// No description provided for @appleAuthFailed.
+  ///
+  /// In ja, this message translates to:
+  /// **'Apple認証に失敗しました'**
+  String get appleAuthFailed;
+
+  /// No description provided for @pleaseEnterPostInfo.
+  ///
+  /// In ja, this message translates to:
+  /// **'金額、メモ、画像のいずれかを入力してください'**
+  String get pleaseEnterPostInfo;
+
+  /// No description provided for @postSuccess.
+  ///
+  /// In ja, this message translates to:
+  /// **'投稿しました'**
+  String get postSuccess;
+
+  /// No description provided for @postFailed.
+  ///
+  /// In ja, this message translates to:
+  /// **'投稿に失敗しました'**
+  String get postFailed;
+
+  /// No description provided for @editProfile.
+  ///
+  /// In ja, this message translates to:
+  /// **'プロフィールの編集'**
+  String get editProfile;
+
+  /// No description provided for @enterName.
+  ///
+  /// In ja, this message translates to:
+  /// **'名前を入力してください'**
+  String get enterName;
+
+  /// No description provided for @enterSelfIntro.
+  ///
+  /// In ja, this message translates to:
+  /// **'自己紹介を入力してください'**
+  String get enterSelfIntro;
+
+  /// No description provided for @updatedProfile.
+  ///
+  /// In ja, this message translates to:
+  /// **'プロフィールを変更しました'**
+  String get updatedProfile;
+
+  /// No description provided for @failedUpdateProfile.
+  ///
+  /// In ja, this message translates to:
+  /// **'プロフィールの変更に失敗しました'**
+  String get failedUpdateProfile;
 }
 
 class _L10nDelegate extends LocalizationsDelegate<L10n> {

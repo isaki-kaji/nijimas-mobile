@@ -15,6 +15,7 @@ import 'package:nijimas/core/provider/usecase/post_usecase_provider.dart';
 import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/core/util/resize_image.dart';
 import 'package:nijimas/core/util/show_snack_bar.dart';
+import 'package:nijimas/l10n/gen_l10n/app_localizations.dart';
 import 'package:nijimas/presentation/widget/common/loader.dart';
 import 'package:nijimas/presentation/widget/common/trailing_icon_button.dart';
 import 'package:nijimas/presentation/widget/post/category_input_field.dart';
@@ -31,6 +32,7 @@ class AddPostScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = L10n.of(context);
     bool isKeyboardShown = 0 < MediaQuery.of(context).viewInsets.bottom;
     final isLoading = ref.watch(loadingProvider);
     final useMainCategory = useState<MainCategory>(MainCategory.food);
@@ -118,7 +120,7 @@ class AddPostScreen extends HookConsumerWidget {
                 if (useExpenseController.text.isEmpty &&
                     useTextController.text.isEmpty &&
                     useImageBitmap.value.isEmpty) {
-                  showErrorSnackBar(context, "金額、メモ、画像のいずれかを入力してください");
+                  showErrorSnackBar(context, l10n.pleaseEnterPostInfo);
                   return;
                 }
                 final formData = PostFormData(
@@ -133,7 +135,7 @@ class AddPostScreen extends HookConsumerWidget {
                 await postUsecase.createPost(
                   formData: formData,
                   onSuccess: () {
-                    showSuccessSnackBar(context, "投稿しました");
+                    showSuccessSnackBar(context, l10n.postSuccess);
                     final uid = ref.read(authStateProvider).value!.uid;
                     ref.invalidate(postsNotifierProvider(PostQuery(
                         type: PostQueryType.uid,
@@ -141,7 +143,7 @@ class AddPostScreen extends HookConsumerWidget {
                     GoRouter.of(context).pop();
                   },
                   onFailure: () {
-                    showErrorSnackBar(context, "投稿に失敗しました");
+                    showErrorSnackBar(context, l10n.postFailed);
                   },
                 );
               },

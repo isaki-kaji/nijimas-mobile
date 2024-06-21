@@ -13,5 +13,17 @@
     "travel": "Travel",
     "entertainment": "Entertainment Expenses",
     "transport": "Transportation Expenses",
-    "other": "Others"
+    "other": "Others",
+    "continueWithGoogle": "Continue with Google",
+    "googleAuthFailed": "Google authentication failed",
+    "continueWithApple": "Continue with Apple",
+    "appleAuthFailed": "Apple authentication failed",
+    "pleaseEnterPostInfo": "Please enter an expense, a memo, or at least one image",
+    "postSuccess": "Posted!!",
+    "postFailed": "Post Failed",
+    "editProfile": "Edit Profile",
+    "enterName": "Please enter your name",
+    "enterSelfIntro": "Pleas enter your self-introduction",
+    "updatedProfile": "Profile updated!!",
+    "failedUpdateProfile": "Profile update failed"
 }
