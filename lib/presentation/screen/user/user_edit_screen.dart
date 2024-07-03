@@ -63,20 +63,31 @@ class UserEditScreen extends HookConsumerWidget {
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
-                            useImageBitmap.value.isEmpty
-                                ? SwitchCircleAvatar(
-                                    imageUrl: data!.profileImageUrl,
-                                    radius: Sizing.widthByMQ(context, 0.2),
-                                    onTap: () => selectProfileImage(),
-                                  )
-                                : GestureDetector(
-                                    onTap: () => selectProfileImage(),
-                                    child: CircleAvatar(
-                                      radius: Sizing.widthByMQ(context, 0.2),
-                                      backgroundImage:
-                                          MemoryImage(useImageBitmap.value[0]),
-                                    ),
-                                  ),
+                            Stack(
+                              children: [
+                                useImageBitmap.value.isEmpty
+                                    ? SwitchCircleAvatar(
+                                        imageUrl: data!.profileImageUrl,
+                                        radius: Sizing.widthByMQ(context, 0.2),
+                                        onTap: () => selectProfileImage(),
+                                      )
+                                    : GestureDetector(
+                                        onTap: () => selectProfileImage(),
+                                        child: CircleAvatar(
+                                          radius:
+                                              Sizing.widthByMQ(context, 0.2),
+                                          backgroundImage: MemoryImage(
+                                              useImageBitmap.value[0]),
+                                        ),
+                                      ),
+                                const Stack(children: [
+                                  Icon(Icons.circle,
+                                      color: MyColors.white, size: 50),
+                                  Icon(Icons.change_circle,
+                                      color: MyColors.lightGreen, size: 50),
+                                ]),
+                              ],
+                            ),
                             const SizedBox(height: 20),
                             SizedBox(
                               height: 80,
