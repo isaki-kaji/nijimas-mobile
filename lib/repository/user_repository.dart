@@ -47,7 +47,7 @@ class UserRepository extends AbstractUserRepository {
   Future<void> updateUser(UpdateUserRequest request) async {
     final response =
         await _dio.put("${Env.baseUrl}/users", data: request.toJson());
-    if (response.statusCode == 200) {
+    if (response.statusCode == 204) {
       return;
     }
     _logger.e(response.data);
