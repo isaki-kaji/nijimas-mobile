@@ -152,27 +152,28 @@ class UserEditScreen extends HookConsumerWidget {
               ),
               onPressed: () async {
                 final formState = _formKey.currentState!;
-                formState.validate();
-                final formData = UserFormData(
-                  username: useNameController.text,
-                  selfIntro: useSelfIntroController.text,
-                  profileImage: useImageBitmap.value.isNotEmpty
-                      ? useImageBitmap.value[0]
-                      : null,
-                );
-                final userUsecase = ref.read(userUsecaseProvider);
-                await userUsecase.updateUser(
-                    formData: formData,
-                    onSuccess: () {
-                      showSuccessSnackBar(context, l10n.updatedProfile);
-                      ref.invalidate(userProfileInfoProvider(uid));
-                      ref.invalidate(postsNotifierProvider(PostQuery(
-                          type: PostQueryType.uid,
-                          params: {PostQueryKey.uid: uid})));
-                      GoRouter.of(context).pop();
-                    },
-                    onFailure: () =>
-                        showErrorSnackBar(context, l10n.failedUpdateProfile));
+                if (formState.validate()) {
+                  final formData = UserFormData(
+                    username: useNameController.text,
+                    selfIntro: useSelfIntroController.text,
+                    profileImage: useImageBitmap.value.isNotEmpty
+                        ? useImageBitmap.value[0]
+                        : null,
+                  );
+                  final userUsecase = ref.read(userUsecaseProvider);
+                  await userUsecase.updateUser(
+                      formData: formData,
+                      onSuccess: () {
+                        showSuccessSnackBar(context, l10n.updatedProfile);
+                        ref.invalidate(userProfileInfoProvider(uid));
+                        ref.invalidate(postsNotifierProvider(PostQuery(
+                            type: PostQueryType.uid,
+                            params: {PostQueryKey.uid: uid})));
+                        GoRouter.of(context).pop();
+                      },
+                      onFailure: () =>
+                          showErrorSnackBar(context, l10n.failedUpdateProfile));
+                }
               },
             ),
     );
