@@ -8,7 +8,7 @@ import 'package:nijimas/core/constant/animation_constant.dart';
 import 'package:nijimas/core/provider/usecase/user_usecase_provider.dart';
 import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/core/theme/text_style.dart';
-import 'package:nijimas/domain/request/create_user_request.dart';
+import 'package:nijimas/core/request/create_user_request.dart';
 import 'package:nijimas/l10n/gen_l10n/app_localizations.dart';
 import 'package:nijimas/presentation/widget/common/custom_wave.dart';
 import 'package:nijimas/core/util/sizing.dart';

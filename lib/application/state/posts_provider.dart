@@ -1,8 +1,8 @@
 import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/core/provider/usecase/favorite_usecase_provider.dart';
 import 'package:nijimas/core/provider/usecase/post_usecase_provider.dart';
-import 'package:nijimas/domain/model/post.dart';
-import 'package:nijimas/domain/request/toggle_favorite_request.dart';
+import 'package:nijimas/core/model/post.dart';
+import 'package:nijimas/core/request/toggle_favorite_request.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'posts_provider.g.dart';

@@ -1,4 +1,4 @@
-import 'package:nijimas/domain/request/toggle_favorite_request.dart';
+import 'package:nijimas/core/request/toggle_favorite_request.dart';
 import 'package:nijimas/repository/abstract_favorite_repository.dart';
 
 class FavoriteUsecase {

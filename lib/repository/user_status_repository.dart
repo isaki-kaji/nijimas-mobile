@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:logger/web.dart';
 import 'package:nijimas/core/constant/firebase_constant.dart';
-import 'package:nijimas/domain/model/user_status.dart';
+import 'package:nijimas/core/model/user_status.dart';
 import 'package:nijimas/repository/abstract_user_status_repository.dart';
 
 class UserStatusRepository extends AbstractUserStatusRepository {

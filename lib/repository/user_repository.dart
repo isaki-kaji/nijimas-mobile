@@ -3,9 +3,9 @@ import 'package:logger/web.dart';
 import 'package:nijimas/core/constant/env_constant.dart';
 import 'package:nijimas/core/util/auth_interceptor.dart';
 import 'package:nijimas/core/util/exception.dart';
-import 'package:nijimas/domain/model/user_profile.dart';
-import 'package:nijimas/domain/request/create_user_request.dart';
-import 'package:nijimas/domain/request/update_user_request.dart';
+import 'package:nijimas/core/model/user_profile.dart';
+import 'package:nijimas/core/request/create_user_request.dart';
+import 'package:nijimas/core/request/update_user_request.dart';
 import 'package:nijimas/repository/abstract_user_repository.dart';
 
 class UserRepository extends AbstractUserRepository {

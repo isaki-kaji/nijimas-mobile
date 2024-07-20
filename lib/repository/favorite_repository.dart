@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 import 'package:nijimas/core/constant/env_constant.dart';
 import 'package:nijimas/core/util/auth_interceptor.dart';
-import 'package:nijimas/domain/request/toggle_favorite_request.dart';
+import 'package:nijimas/core/request/toggle_favorite_request.dart';
 import 'package:nijimas/repository/abstract_favorite_repository.dart';
 
 class FavoriteRepository extends AbstractFavoriteRepository {

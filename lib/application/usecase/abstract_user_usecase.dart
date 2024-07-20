@@ -1,6 +1,6 @@
 import 'package:nijimas/application/formdata/user_form_data.dart';
-import 'package:nijimas/domain/model/user_profile.dart';
-import 'package:nijimas/domain/request/create_user_request.dart';
+import 'package:nijimas/core/model/user_profile.dart';
+import 'package:nijimas/core/request/create_user_request.dart';
 
 abstract class AbstractUserUsecase {
   Future<void> createUser({

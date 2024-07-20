@@ -1,6 +1,6 @@
 import 'package:nijimas/application/formdata/post_form_data.dart';
 import 'package:nijimas/core/enum/post_query.dart';
-import 'package:nijimas/domain/model/post.dart';
+import 'package:nijimas/core/model/post.dart';
 
 abstract class AbstractPostUsecase {
   Future<void> createPost({

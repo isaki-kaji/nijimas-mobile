@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nijimas/core/enum/main_category.dart';
 import 'package:nijimas/core/theme/text_style.dart';
-import 'package:nijimas/domain/model/user_profile.dart';
+import 'package:nijimas/core/model/user_profile.dart';
 import 'package:nijimas/presentation/widget/data/spending_distribution_card.dart';
 import 'package:nijimas/presentation/widget/data/top_sub_categories_card.dart';
 import 'package:nijimas/presentation/widget/user/switch_circle_avatar.dart';

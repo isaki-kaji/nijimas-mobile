@@ -1,5 +1,5 @@
-import 'package:nijimas/domain/model/post.dart';
-import 'package:nijimas/domain/request/create_post_request.dart';
+import 'package:nijimas/core/model/post.dart';
+import 'package:nijimas/core/request/create_post_request.dart';
 
 abstract class AbstractPostRepository {
   Future<void> createPost(CreatePostRequest request);
