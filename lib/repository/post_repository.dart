@@ -30,7 +30,8 @@ class PostRepository extends AbstractPostRepository {
   @override
   Future<List<Post>> getPostsByUid({required String uid}) async {
     try {
-      final response = await _dio.get("${Env.baseUrl}/posts/?uid=$uid");
+      final response =
+          await _dio.get("${Env.baseUrl}/posts", queryParameters: {"uid": uid});
       if (response.statusCode == 200) {
         List<Post> posts =
             (response.data as List).map((post) => Post.fromJson(post)).toList();
@@ -50,8 +51,8 @@ class PostRepository extends AbstractPostRepository {
   Future<List<Post>> getPostsByMainCategory(
       {required String mainCategory}) async {
     try {
-      final response =
-          await _dio.get("${Env.baseUrl}/posts/?main-category=$mainCategory");
+      final response = await _dio.get("${Env.baseUrl}/posts",
+          queryParameters: {"main-category": mainCategory});
       if (response.statusCode == 200) {
         List<Post> posts =
             (response.data as List).map((post) => Post.fromJson(post)).toList();
