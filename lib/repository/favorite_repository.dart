@@ -17,7 +17,7 @@ class FavoriteRepository extends AbstractFavoriteRepository {
   @override
   Future<void> toggleFavorite(ToggleFavoriteRequest request) async {
     final response =
-        await _dio.post("${Env.baseUrl}/favorite", data: request.toJson());
+        await _dio.post("${Env.baseUrl}/favorites", data: request.toJson());
     if (response.statusCode == 201 || response.statusCode == 204) {
       return;
     }
