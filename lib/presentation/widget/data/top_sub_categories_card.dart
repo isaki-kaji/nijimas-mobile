@@ -18,7 +18,7 @@ class TopSubCategoriesCard extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "よく使うサブカテゴリ",
+                  "支出の多いサブカテゴリ",
                   style: MyTextStyles.body16,
                 ),
               ),
