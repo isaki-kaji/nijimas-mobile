@@ -18,8 +18,7 @@ class UserDetailScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = L10n.of(context);
     final myUid = ref.watch(authStateProvider).valueOrNull!.uid;
-    final query =
-        PostQuery(type: PostQueryType.uid, params: {PostQueryKey.uid: uid});
+    final query = PostQuery(type: PostQueryType.own, params: {});
     return Scaffold(
       appBar: AppBar(
         actions: [

@@ -9,5 +9,6 @@ abstract class AbstractPostUsecase {
     required void Function() onFailure,
   });
 
+  Future<List<Post>> getOwnPosts();
   Future<List<Post>> getPostsByQuery(PostQuery query);
 }

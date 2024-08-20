@@ -71,6 +71,15 @@ class PostUsecase extends AbstractPostUsecase {
   }
 
   @override
+  Future<List<Post>> getOwnPosts() async {
+    try {
+      return await _postRepository.getOwnPosts();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
   Future<List<Post>> getPostsByQuery(PostQuery query) async {
     try {
       final params = query.params;
@@ -85,7 +94,7 @@ class PostUsecase extends AbstractPostUsecase {
           throw Exception('Query type not found');
       }
     } catch (e) {
-      throw Exception(e);
+      rethrow;
     }
   }
 }
