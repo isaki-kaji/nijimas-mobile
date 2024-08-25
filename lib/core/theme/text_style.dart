@@ -24,6 +24,9 @@ class MyTextStyles {
     fontWeight: FontWeight.bold,
   );
 
+  static const TextStyle body36 =
+      TextStyle(fontSize: 36, fontWeight: FontWeight.w400);
+
   static const TextStyle body16 =
       TextStyle(fontSize: 16, fontWeight: FontWeight.w600);
 
