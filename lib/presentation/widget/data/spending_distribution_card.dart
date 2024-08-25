@@ -13,7 +13,8 @@ class SpendingDistributionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
+        padding: const EdgeInsets.only(
+            top: 16.0, left: 16.0, right: 16.0, bottom: 10.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -31,7 +32,7 @@ class SpendingDistributionCard extends StatelessWidget {
                 crossAxisCount: 2,
                 childAspectRatio: 5,
                 mainAxisSpacing: 2.0,
-                crossAxisSpacing: 60.0,
+                crossAxisSpacing: 30.0,
               ),
               itemCount: spendingDistribution.length,
               itemBuilder: (context, index) {
@@ -43,12 +44,12 @@ class SpendingDistributionCard extends StatelessWidget {
                 }
                 final entry = spendingDistribution.entries.elementAt(newIndex);
                 return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Row(
                       children: [
                         Container(
-                          width: 10,
+                          width: 15,
                           height: 10,
                           decoration: BoxDecoration(
                             color: MyColors.getMainCategoryColor(
@@ -60,7 +61,7 @@ class SpendingDistributionCard extends StatelessWidget {
                         Text(entry.key.getDisplayName(context)),
                       ],
                     ),
-                    Text('${(entry.value * 100).toStringAsFixed(1)}%'),
+                    Text('${(entry.value).toStringAsFixed(1)}%'),
                   ],
                 );
               },
@@ -78,13 +79,14 @@ class DistributionBarGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //LayoutBuilderを使って、親Widgetのサイズを取得
+    // LayoutBuilderを使って、親Widgetのサイズを取得
     return LayoutBuilder(builder: (context, constrains) {
       final width = constrains.maxWidth;
       return Row(
         children: spendingDistribution.entries.map((entry) {
+          final normalizedWidth = width * (entry.value / 100);
           return Container(
-            width: width * entry.value,
+            width: normalizedWidth,
             height: 10,
             color: MyColors.getMainCategoryColor(entry.key),
           );
