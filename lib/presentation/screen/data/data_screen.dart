@@ -9,10 +9,12 @@ import 'package:nijimas/presentation/widget/data/list_data_view.dart';
 import 'package:nijimas/presentation/widget/data/spending_percentage_card.dart';
 
 class DataScreen extends HookConsumerWidget {
-  const DataScreen({super.key});
+  final String year;
+  final String month;
+  const DataScreen({super.key, required this.year, required this.month});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ref.watch(monthlySummaryPresentationProvider("2024", "8")).when(
+    return ref.watch(monthlySummaryPresentationProvider(year, month)).when(
           data: (data) {
             final Map<MainCategory, double> expensePercentages =
                 data.expenseSummary.map((key, value) =>

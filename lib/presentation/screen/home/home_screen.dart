@@ -34,6 +34,8 @@ class HomeScreen extends HookConsumerWidget {
     }
 
     final uid = user.uid;
+    String year = DateTime.now().year.toString();
+    String month = DateTime.now().month.toString();
     final usePage = useState(0);
     final initialQuery = PostQuery(
       type: PostQueryType.uid,
@@ -71,6 +73,7 @@ class HomeScreen extends HookConsumerWidget {
       appBar: useIsVisible.value
           ? null
           : AppBar(
+              centerTitle: false,
               leading: usePage.value == 0
                   ? IconButton(
                       icon: const Icon(Icons.search),
@@ -86,28 +89,57 @@ class HomeScreen extends HookConsumerWidget {
                       },
                     )
                   : null,
+              title: usePage.value == 1
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: IconButton(
+                                onPressed: () {},
+                                icon: const Icon(Icons.arrow_left),
+                                iconSize: 40),
+                          ),
+                        ),
+                        Text("$year / $month"),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: IconButton(
+                                onPressed: () {},
+                                icon: const Icon(Icons.arrow_right),
+                                iconSize: 40),
+                          ),
+                        ),
+                      ],
+                    )
+                  : const SizedBox.shrink(),
               actions: [
-                Builder(
-                  builder: (context) {
-                    return TrailingIconButton(
-                        onPressed: () async {
-                          showEndDrawer(context);
-                          final user = ref.read(authStateProvider).value!;
-                          final token = await user.getIdToken();
-                          final uuid = user.uid;
-                          if (token == null) {
-                            return;
-                          }
-                          log(token);
-                          log(uuid);
+                usePage.value == 0
+                    ? Builder(
+                        builder: (context) {
+                          return TrailingIconButton(
+                              onPressed: () async {
+                                showEndDrawer(context);
+                                final user = ref.read(authStateProvider).value!;
+                                final token = await user.getIdToken();
+                                final uuid = user.uid;
+                                if (token == null) {
+                                  return;
+                                }
+                                log(token);
+                                log(uuid);
+                              },
+                              icon: Icons.account_circle);
                         },
-                        icon: Icons.account_circle);
-                  },
-                )
+                      )
+                    : const SizedBox.shrink(),
               ],
             ),
       endDrawer: const MenuDrawer(),
-      body: PageConstant.getTabPage(usePage.value, usePostQuery.value),
+      body: PageConstant.getTabPage(
+          usePage.value, usePostQuery.value, year, month),
       bottomSheet: useIsVisible.value
           ? AnimatedBuilder(
               animation: animationController,
