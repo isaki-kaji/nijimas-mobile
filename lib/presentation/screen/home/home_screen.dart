@@ -9,6 +9,7 @@ import 'package:nijimas/core/constant/animation_constant.dart';
 import 'package:nijimas/core/constant/page_constant.dart';
 import 'package:nijimas/core/enum/main_category.dart';
 import 'package:nijimas/core/enum/post_query.dart';
+import 'package:nijimas/core/model/year_month.dart';
 import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/presentation/widget/common/custom_wave.dart';
 import 'package:nijimas/core/util/sizing.dart';
@@ -34,8 +35,8 @@ class HomeScreen extends HookConsumerWidget {
     }
 
     final uid = user.uid;
-    String year = DateTime.now().year.toString();
-    String month = DateTime.now().month.toString();
+
+    final useYearMonth = useState(YearMonth.now());
     final usePage = useState(0);
     final initialQuery = PostQuery(
       type: PostQueryType.uid,
@@ -97,19 +98,35 @@ class HomeScreen extends HookConsumerWidget {
                           child: Align(
                             alignment: Alignment.centerRight,
                             child: IconButton(
-                                onPressed: () {},
-                                icon: const Icon(Icons.arrow_left),
-                                iconSize: 40),
+                              onPressed: () {
+                                useYearMonth.value =
+                                    useYearMonth.value.subtractMonth();
+                              },
+                              icon: const Icon(Icons.arrow_left),
+                              iconSize: 40,
+                              color: useYearMonth.value.canSubtract()
+                                  ? MyColors.black
+                                  : MyColors.white,
+                            ),
                           ),
                         ),
-                        Text("$year / $month"),
+                        Text(
+                          "${useYearMonth.value.year} / ${useYearMonth.value.month}",
+                          style: const TextStyle(fontSize: 20),
+                        ),
                         Expanded(
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  useYearMonth.value =
+                                      useYearMonth.value.addMonth();
+                                },
                                 icon: const Icon(Icons.arrow_right),
-                                iconSize: 40),
+                                iconSize: 40,
+                                color: useYearMonth.value.isCurrent()
+                                    ? MyColors.white
+                                    : MyColors.black),
                           ),
                         ),
                       ],
@@ -139,7 +156,7 @@ class HomeScreen extends HookConsumerWidget {
             ),
       endDrawer: const MenuDrawer(),
       body: PageConstant.getTabPage(
-          usePage.value, usePostQuery.value, year, month),
+          usePage.value, usePostQuery.value, useYearMonth.value),
       bottomSheet: useIsVisible.value
           ? AnimatedBuilder(
               animation: animationController,

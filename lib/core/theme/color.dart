@@ -13,6 +13,7 @@ class MyColors {
 
   static const pink = Color(0xFFFF6969);
   static const white = Colors.white;
+  static const grey = Colors.grey;
   static const black = Colors.black;
   static const lightGreen = Colors.lightGreen;
 

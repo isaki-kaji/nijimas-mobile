@@ -22,8 +22,10 @@ class DataScreen extends HookConsumerWidget {
             final Map<MainCategory, double> expenseAmounts = data.expenseSummary
                 .map((key, value) =>
                     MapEntry(MainCategory.fromName(key), value.amount));
-            final int totalAmounts =
-                expenseAmounts.values.reduce((a, b) => a + b).toInt();
+            final int totalAmounts = expenseAmounts.values.isNotEmpty
+                ? expenseAmounts.values.reduce((a, b) => a + b).toInt()
+                : 0;
+
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: SingleChildScrollView(
@@ -53,7 +55,7 @@ class DataScreen extends HookConsumerWidget {
                     ),
                     const SizedBox(height: 10),
                     SpendingPercentageCard(
-                      title: '',
+                      title: '支出の割合',
                       spendingPercentages: expensePercentages,
                       chart: PercentagePieChart(
                         spendingPercentages: expensePercentages,

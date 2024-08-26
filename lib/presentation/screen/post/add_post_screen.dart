@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:nijimas/application/formdata/post_form_data.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/loading_provider.dart';
+import 'package:nijimas/application/state/monthly_summary_provider.dart';
 import 'package:nijimas/application/state/posts_provider.dart';
 import 'package:nijimas/core/enum/main_category.dart';
 import 'package:nijimas/core/enum/post_query.dart';
@@ -140,6 +141,9 @@ class AddPostScreen extends HookConsumerWidget {
                     ref.invalidate(postsNotifierProvider(PostQuery(
                         type: PostQueryType.uid,
                         params: {PostQueryKey.uid: uid})));
+                    ref.invalidate(monthlySummaryPresentationProvider(
+                        DateTime.now().year.toString(),
+                        DateTime.now().month.toString()));
                     GoRouter.of(context).pop();
                   },
                   onFailure: () {

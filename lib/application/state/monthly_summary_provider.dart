@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'monthly_summary_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 Future<MonthlySummaryPresentation> monthlySummaryPresentation(
     MonthlySummaryPresentationRef ref, String year, String month) async {
   final summaryUsecase = ref.read(summaryUsecaseProvider);

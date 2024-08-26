@@ -7,7 +7,7 @@ part of 'monthly_summary_provider.dart';
 // **************************************************************************
 
 String _$monthlySummaryPresentationHash() =>
-    r'c3ae751e5e0197028d9e93a2054b31433676f011';
+    r'ba7bc9467954b6630341fee354e949475d04b63e';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -78,7 +78,7 @@ class MonthlySummaryPresentationFamily
 
 /// See also [monthlySummaryPresentation].
 class MonthlySummaryPresentationProvider
-    extends AutoDisposeFutureProvider<MonthlySummaryPresentation> {
+    extends FutureProvider<MonthlySummaryPresentation> {
   /// See also [monthlySummaryPresentation].
   MonthlySummaryPresentationProvider(
     String year,
@@ -138,7 +138,7 @@ class MonthlySummaryPresentationProvider
   }
 
   @override
-  AutoDisposeFutureProviderElement<MonthlySummaryPresentation> createElement() {
+  FutureProviderElement<MonthlySummaryPresentation> createElement() {
     return _MonthlySummaryPresentationProviderElement(this);
   }
 
@@ -160,7 +160,7 @@ class MonthlySummaryPresentationProvider
 }
 
 mixin MonthlySummaryPresentationRef
-    on AutoDisposeFutureProviderRef<MonthlySummaryPresentation> {
+    on FutureProviderRef<MonthlySummaryPresentation> {
   /// The parameter `year` of this provider.
   String get year;
 
@@ -169,7 +169,7 @@ mixin MonthlySummaryPresentationRef
 }
 
 class _MonthlySummaryPresentationProviderElement
-    extends AutoDisposeFutureProviderElement<MonthlySummaryPresentation>
+    extends FutureProviderElement<MonthlySummaryPresentation>
     with MonthlySummaryPresentationRef {
   _MonthlySummaryPresentationProviderElement(super.provider);
 

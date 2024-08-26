@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/core/model/monthly_summary_presentation.dart';
-import 'package:nijimas/repository/summary_presentation.dart';
+import 'package:nijimas/repository/summary_repository.dart';
 
 class SummaryUsecase {
   final SummaryRepository _summaryRepository;

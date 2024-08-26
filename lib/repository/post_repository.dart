@@ -49,6 +49,7 @@ class PostRepository extends AbstractPostRepository {
   @override
   Future<List<Post>> getPostsByUid({required String uid}) async {
     try {
+      print("ポストを取得します");
       final response = await _dio.get("${Env.baseUrl}/users/$uid/posts");
       if (response.statusCode == 200) {
         List<Post> posts =
