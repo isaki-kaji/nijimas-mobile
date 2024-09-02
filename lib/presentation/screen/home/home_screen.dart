@@ -106,7 +106,7 @@ class HomeScreen extends HookConsumerWidget {
                               iconSize: 40,
                               color: useYearMonth.value.canSubtract()
                                   ? MyColors.black
-                                  : MyColors.white,
+                                  : MyColors.lightGrey,
                             ),
                           ),
                         ),
@@ -125,7 +125,7 @@ class HomeScreen extends HookConsumerWidget {
                                 icon: const Icon(Icons.arrow_right),
                                 iconSize: 40,
                                 color: useYearMonth.value.isCurrent()
-                                    ? MyColors.white
+                                    ? MyColors.lightGrey
                                     : MyColors.black),
                           ),
                         ),

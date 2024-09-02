@@ -4,9 +4,11 @@ import 'package:nijimas/application/state/monthly_summary_provider.dart';
 import 'package:nijimas/core/enum/main_category.dart';
 import 'package:nijimas/core/theme/text_style.dart';
 import 'package:nijimas/presentation/widget/common/loader.dart';
+import 'package:nijimas/presentation/widget/data/bar_chart.dart';
 import 'package:nijimas/presentation/widget/data/percentage_pie_chart.dart';
 import 'package:nijimas/presentation/widget/data/list_data_view.dart';
 import 'package:nijimas/presentation/widget/data/spending_percentage_card.dart';
+import 'package:nijimas/presentation/widget/data/sub_categories_card.dart';
 
 class DataScreen extends HookConsumerWidget {
   final String year;
@@ -19,12 +21,18 @@ class DataScreen extends HookConsumerWidget {
             final Map<MainCategory, double> expensePercentages =
                 data.expenseSummary.map((key, value) =>
                     MapEntry(MainCategory.fromName(key), value.percentage));
+
             final Map<MainCategory, double> expenseAmounts = data.expenseSummary
                 .map((key, value) =>
                     MapEntry(MainCategory.fromName(key), value.amount));
+
             final int totalAmounts = expenseAmounts.values.isNotEmpty
                 ? expenseAmounts.values.reduce((a, b) => a + b).toInt()
                 : 0;
+
+            final Map<String, double> subCategoryAmounts = data
+                .subcategorySummary
+                .map((key, value) => MapEntry(key, value.amount));
 
             return Padding(
               padding: const EdgeInsets.all(8.0),
@@ -56,13 +64,16 @@ class DataScreen extends HookConsumerWidget {
                     const SizedBox(height: 10),
                     SpendingPercentageCard(
                       title: '支出の割合',
-                      spendingPercentages: expensePercentages,
                       chart: PercentagePieChart(
                         spendingPercentages: expensePercentages,
                       ),
                       dataView: ListDataView(spendingAmounts: expenseAmounts),
                     ),
                     const SizedBox(height: 10),
+                    SpendingPercentageCard(
+                        title: "サブカテゴリの支出額",
+                        chart: SummaryBarChart(data: subCategoryAmounts)),
+                    SubCategoryCards(subCategories: subCategoryAmounts),
                   ],
                 ),
               ),
