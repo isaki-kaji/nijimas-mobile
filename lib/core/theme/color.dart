@@ -11,10 +11,46 @@ class MyColors {
     ];
   }
 
+  static const teal = Colors.teal;
+  static const tealAccent = Colors.tealAccent;
   static const pink = Color(0xFFFF6969);
   static const white = Colors.white;
+  static const grey = Colors.grey;
+  static const lightGrey = Color(0xFFe6e6e6);
   static const black = Colors.black;
   static const lightGreen = Colors.lightGreen;
+
+  static Color getActivityNumbersColor(int numbers) {
+    if (numbers == 0) {
+      return Colors.transparent;
+    } else if (numbers == 1) {
+      return teal.withOpacity(0.1);
+    } else if (numbers <= 3) {
+      return teal.withOpacity(0.3);
+    } else if (numbers <= 5) {
+      return teal.withOpacity(0.5);
+    } else if (numbers <= 8) {
+      return teal.withOpacity(0.8);
+    } else {
+      return teal;
+    }
+  }
+
+  static Color getActivityAmountsColor(double amount) {
+    if (amount == 0) {
+      return Colors.transparent;
+    } else if (amount < 1000) {
+      return teal.withOpacity(0.1);
+    } else if (amount < 3000) {
+      return teal.withOpacity(0.3);
+    } else if (amount < 10000) {
+      return teal.withOpacity(0.5);
+    } else if (amount < 50000) {
+      return teal.withOpacity(0.8);
+    } else {
+      return teal;
+    }
+  }
 
   static Color getMainCategoryColor(MainCategory category) {
     switch (category) {

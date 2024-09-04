@@ -9,6 +9,7 @@ import 'package:nijimas/core/constant/animation_constant.dart';
 import 'package:nijimas/core/constant/page_constant.dart';
 import 'package:nijimas/core/enum/main_category.dart';
 import 'package:nijimas/core/enum/post_query.dart';
+import 'package:nijimas/core/model/year_month.dart';
 import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/presentation/widget/common/custom_wave.dart';
 import 'package:nijimas/core/util/sizing.dart';
@@ -34,6 +35,8 @@ class HomeScreen extends HookConsumerWidget {
     }
 
     final uid = user.uid;
+
+    final useYearMonth = useState(YearMonth.now());
     final usePage = useState(0);
     final initialQuery = PostQuery(
       type: PostQueryType.uid,
@@ -71,6 +74,7 @@ class HomeScreen extends HookConsumerWidget {
       appBar: useIsVisible.value
           ? null
           : AppBar(
+              centerTitle: false,
               leading: usePage.value == 0
                   ? IconButton(
                       icon: const Icon(Icons.search),
@@ -86,28 +90,73 @@ class HomeScreen extends HookConsumerWidget {
                       },
                     )
                   : null,
+              title: usePage.value == 1
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: IconButton(
+                              onPressed: () {
+                                useYearMonth.value =
+                                    useYearMonth.value.subtractMonth();
+                              },
+                              icon: const Icon(Icons.arrow_left),
+                              iconSize: 40,
+                              color: useYearMonth.value.canSubtract()
+                                  ? MyColors.black
+                                  : MyColors.lightGrey,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          "${useYearMonth.value.year} / ${useYearMonth.value.month}",
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: IconButton(
+                                onPressed: () {
+                                  useYearMonth.value =
+                                      useYearMonth.value.addMonth();
+                                },
+                                icon: const Icon(Icons.arrow_right),
+                                iconSize: 40,
+                                color: useYearMonth.value.isCurrent()
+                                    ? MyColors.lightGrey
+                                    : MyColors.black),
+                          ),
+                        ),
+                      ],
+                    )
+                  : const SizedBox.shrink(),
               actions: [
-                Builder(
-                  builder: (context) {
-                    return TrailingIconButton(
-                        onPressed: () async {
-                          showEndDrawer(context);
-                          final user = ref.read(authStateProvider).value!;
-                          final token = await user.getIdToken();
-                          final uuid = user.uid;
-                          if (token == null) {
-                            return;
-                          }
-                          log(token);
-                          log(uuid);
+                usePage.value == 0
+                    ? Builder(
+                        builder: (context) {
+                          return TrailingIconButton(
+                              onPressed: () async {
+                                showEndDrawer(context);
+                                final user = ref.read(authStateProvider).value!;
+                                final token = await user.getIdToken();
+                                final uuid = user.uid;
+                                if (token == null) {
+                                  return;
+                                }
+                                log(token);
+                                log(uuid);
+                              },
+                              icon: Icons.account_circle);
                         },
-                        icon: Icons.account_circle);
-                  },
-                )
+                      )
+                    : const SizedBox.shrink(),
               ],
             ),
       endDrawer: const MenuDrawer(),
-      body: PageConstant.getTabPage(usePage.value, usePostQuery.value),
+      body: PageConstant.getTabPage(
+          usePage.value, usePostQuery.value, useYearMonth.value),
       bottomSheet: useIsVisible.value
           ? AnimatedBuilder(
               animation: animationController,

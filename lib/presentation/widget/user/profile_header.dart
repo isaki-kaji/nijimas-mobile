@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:nijimas/core/enum/main_category.dart';
 import 'package:nijimas/core/theme/text_style.dart';
 import 'package:nijimas/core/model/user_profile.dart';
-import 'package:nijimas/presentation/widget/data/spending_distribution_card.dart';
-import 'package:nijimas/presentation/widget/data/top_sub_categories_card.dart';
+import 'package:nijimas/presentation/widget/data/data_card.dart';
+import 'package:nijimas/presentation/widget/data/sub_category_cards.dart';
 import 'package:nijimas/presentation/widget/user/switch_circle_avatar.dart';
 
 class ProfileHeader extends StatelessWidget {
@@ -73,17 +73,15 @@ class ProfileHeader extends StatelessWidget {
                       )
                     : const SizedBox.shrink(),
                 const SizedBox(height: 20),
-                const SpendingDistributionCard(
-                  spendingDistribution: {
-                    MainCategory.hobbies: 0.4,
-                    MainCategory.food: 0.2,
-                    MainCategory.transport: 0.2,
-                    MainCategory.entertainment: 0.2,
-                  },
-                ),
+                // const SpendingPercentageCard(
+                //   spendingPercentages: {
+                //     MainCategory.hobbies: 0.4,
+                //     MainCategory.food: 0.2,
+                //     MainCategory.transport: 0.2,
+                //     MainCategory.entertainment: 0.2,
+                //   },
+                // ),
                 const SizedBox(height: 10.0),
-                const TopSubCategoriesCard(
-                    subCategories: ["ラマ", "タスマニアデビル", "ゴールデンターキン"])
               ],
             ),
           ),
