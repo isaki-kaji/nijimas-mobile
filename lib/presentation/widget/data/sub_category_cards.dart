@@ -6,17 +6,14 @@ class SubCategoryCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Align(
-          alignment: Alignment.centerLeft,
-          child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                  children: subCategories.entries.map((e) {
-                return _buildCard(e.key, e.value);
-              }).toList()))),
-    );
+    return Align(
+        alignment: Alignment.centerLeft,
+        child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+                children: subCategories.entries.map((e) {
+              return _buildCard(e.key, e.value);
+            }).toList())));
   }
 
   Widget _buildCard(String categoryName, double amount) {

@@ -1,14 +1,16 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/monthly_summary_provider.dart';
 import 'package:nijimas/core/enum/main_category.dart';
 import 'package:nijimas/core/theme/text_style.dart';
 import 'package:nijimas/presentation/widget/common/loader.dart';
+import 'package:nijimas/presentation/widget/data/activity_heat_map.dart';
 import 'package:nijimas/presentation/widget/data/bar_chart.dart';
 import 'package:nijimas/presentation/widget/data/percentage_pie_chart.dart';
 import 'package:nijimas/presentation/widget/data/list_data_view.dart';
-import 'package:nijimas/presentation/widget/data/spending_percentage_card.dart';
-import 'package:nijimas/presentation/widget/data/sub_categories_card.dart';
+import 'package:nijimas/presentation/widget/data/data_card.dart';
+import 'package:nijimas/presentation/widget/data/sub_category_cards.dart';
 
 class DataScreen extends HookConsumerWidget {
   final String year;
@@ -35,7 +37,8 @@ class DataScreen extends HookConsumerWidget {
                 .map((key, value) => MapEntry(key, value.amount));
 
             return Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(
+                  left: 8.0, right: 8.0, top: 8.0, bottom: 50.0),
               child: SingleChildScrollView(
                 child: Column(
                   children: [
@@ -62,18 +65,44 @@ class DataScreen extends HookConsumerWidget {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    SpendingPercentageCard(
-                      title: '支出の割合',
+                    DataCard(
+                      title: '費目ごとの支出額',
                       chart: PercentagePieChart(
                         spendingPercentages: expensePercentages,
                       ),
                       dataView: ListDataView(spendingAmounts: expenseAmounts),
                     ),
-                    const SizedBox(height: 10),
-                    SpendingPercentageCard(
-                        title: "サブカテゴリの支出額",
+                    const SizedBox(height: 20),
+                    DataCard(
+                        title: "サブカテゴリごとの支出額",
                         chart: SummaryBarChart(data: subCategoryAmounts)),
                     SubCategoryCards(subCategories: subCategoryAmounts),
+                    const SizedBox(height: 20),
+                    CarouselSlider(
+                        options: CarouselOptions(
+                          enlargeCenterPage: false,
+                          enableInfiniteScroll: false,
+                          height: 370,
+                          viewportFraction: 0.9,
+                        ),
+                        items: [
+                          DataCard(
+                            title: '日ごとの投稿数',
+                            chart: ActivityHeatMap(
+                                activities: data.dailyNumbers,
+                                year: year,
+                                month: month,
+                                isNumbers: true),
+                          ),
+                          DataCard(
+                            title: '日ごとの支出額',
+                            chart: ActivityHeatMap(
+                                activities: data.dailyAmounts,
+                                year: year,
+                                month: month,
+                                isNumbers: false),
+                          ),
+                        ]),
                   ],
                 ),
               ),

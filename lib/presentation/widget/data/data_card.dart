@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:nijimas/core/theme/text_style.dart';
 
-class SpendingPercentageCard extends StatelessWidget {
+class DataCard extends StatelessWidget {
   final String title;
   final Widget chart;
   final Widget? dataView;
 
-  const SpendingPercentageCard(
+  const DataCard(
       {super.key, required this.title, required this.chart, this.dataView});
 
   @override
