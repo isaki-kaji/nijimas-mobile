@@ -35,7 +35,7 @@ class PostUsecase extends AbstractPostUsecase {
     try {
       _ref.read(loadingProvider.notifier).setTrue();
       const uuid = Uuid();
-      final postId = uuid.v4();
+      final postId = uuid.v7();
       final uid = _ref.read(authStateProvider).valueOrNull!.uid;
 
       (String?, String?) subCategories =

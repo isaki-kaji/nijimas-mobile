@@ -82,7 +82,7 @@ class DataScreen extends HookConsumerWidget {
                         options: CarouselOptions(
                           enlargeCenterPage: false,
                           enableInfiniteScroll: false,
-                          height: 370,
+                          height: 350,
                           viewportFraction: 0.9,
                         ),
                         items: [
