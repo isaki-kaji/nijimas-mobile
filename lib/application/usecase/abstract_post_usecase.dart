@@ -10,5 +10,5 @@ abstract class AbstractPostUsecase {
   });
 
   Future<List<Post>> getOwnPosts();
-  Future<List<Post>> getPostsByQuery(PostQuery query);
+  // Future<List<Post>> getPostsByQuery(PostQuery query);
 }

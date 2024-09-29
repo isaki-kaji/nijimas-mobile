@@ -16,7 +16,8 @@ class PostsNotifier extends _$PostsNotifier {
       if (query.type == PostQueryType.own) {
         return await postUsecase.getOwnPosts();
       }
-      return await postUsecase.getPostsByQuery(query);
+      return // await postUsecase.getPostsByQuery(query);
+          await postUsecase.getOwnPosts();
     } catch (e) {
       rethrow;
     }
