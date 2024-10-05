@@ -20,21 +20,15 @@ class DataScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ref.watch(monthlySummaryPresentationProvider(year, month)).when(
           data: (data) {
-            final Map<MainCategory, double> expensePercentages =
-                data.expenseSummary.map((key, value) =>
-                    MapEntry(MainCategory.fromName(key), value.percentage));
-
-            final Map<MainCategory, double> expenseAmounts = data.expenseSummary
-                .map((key, value) =>
-                    MapEntry(MainCategory.fromName(key), value.amount));
-
-            final int totalAmounts = expenseAmounts.values.isNotEmpty
-                ? expenseAmounts.values.reduce((a, b) => a + b).toInt()
+            final calculatedExpenseSummary = data.expenseSummary;
+            final int totalAmounts = calculatedExpenseSummary.isNotEmpty
+                ? calculatedExpenseSummary
+                    .map((e) => e.amount)
+                    .reduce((value, element) => value + element)
+                    .toInt()
                 : 0;
 
-            final Map<String, double> subCategoryAmounts = data
-                .subcategorySummary
-                .map((key, value) => MapEntry(key, value.amount));
+            final calculatedSubCategorySummary = data.subcategorySummary;
 
             return Padding(
               padding: const EdgeInsets.only(
@@ -67,16 +61,19 @@ class DataScreen extends HookConsumerWidget {
                     const SizedBox(height: 10),
                     DataCard(
                       title: '費目ごとの支出額',
-                      chart: PercentagePieChart(
-                        spendingPercentages: expensePercentages,
+                      chart:
+                          PercentagePieChart(summary: calculatedExpenseSummary),
+                      dataView: ListDataView(
+                        summary: calculatedExpenseSummary,
                       ),
-                      dataView: ListDataView(spendingAmounts: expenseAmounts),
                     ),
                     const SizedBox(height: 20),
                     DataCard(
-                        title: "サブカテゴリごとの支出額",
-                        chart: SummaryBarChart(data: subCategoryAmounts)),
-                    SubCategoryCards(subCategories: subCategoryAmounts),
+                      title: "サブカテゴリごとの支出額",
+                      chart: SummaryBarChart(
+                          summary: calculatedSubCategorySummary),
+                    ),
+                    SubCategoryCards(summary: calculatedSubCategorySummary),
                     const SizedBox(height: 20),
                     CarouselSlider(
                         options: CarouselOptions(
@@ -89,7 +86,7 @@ class DataScreen extends HookConsumerWidget {
                           DataCard(
                             title: '日ごとの投稿数',
                             chart: ActivityHeatMap(
-                                activities: data.dailyNumbers,
+                                activities: data.dailyCount,
                                 year: year,
                                 month: month,
                                 isNumbers: true),
@@ -97,7 +94,7 @@ class DataScreen extends HookConsumerWidget {
                           DataCard(
                             title: '日ごとの支出額',
                             chart: ActivityHeatMap(
-                                activities: data.dailyAmounts,
+                                activities: data.dailyAmount,
                                 year: year,
                                 month: month,
                                 isNumbers: false),

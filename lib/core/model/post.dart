@@ -13,7 +13,7 @@ class Post {
   final String? subCategory2;
   final String? postText;
   final List<String> photoUrl;
-  final int? expense;
+  final String expense;
   final String? location;
   final String publicTypeNo;
   final bool isFavorite;
@@ -29,7 +29,7 @@ class Post {
     this.subCategory2,
     this.postText,
     required this.photoUrl,
-    this.expense,
+    required this.expense,
     this.location,
     required this.publicTypeNo,
     required this.isFavorite,
@@ -50,7 +50,7 @@ class Post {
     String? subCategory2,
     String? postText,
     List<String>? photoUrl,
-    int? expense,
+    String? expense,
     String? location,
     String? publicTypeNo,
     bool? isFavorite,

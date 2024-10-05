@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:nijimas/core/model/calculated_summary.dart';
 
 class SubCategoryCards extends StatelessWidget {
-  const SubCategoryCards({super.key, required this.subCategories});
-  final Map<String, double> subCategories;
+  const SubCategoryCards({super.key, required this.summary});
+  final List<CalculatedSummary> summary;
 
   @override
   Widget build(BuildContext context) {
@@ -11,8 +12,8 @@ class SubCategoryCards extends StatelessWidget {
         child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
-                children: subCategories.entries.map((e) {
-              return _buildCard(e.key, e.value);
+                children: summary.map((e) {
+              return _buildCard(e.categoryName, e.amount);
             }).toList())));
   }
 

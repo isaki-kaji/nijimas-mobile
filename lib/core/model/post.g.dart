@@ -17,7 +17,7 @@ Post _$PostFromJson(Map<String, dynamic> json) => Post(
       postText: json['post_text'] as String?,
       photoUrl:
           (json['photo_url'] as List<dynamic>).map((e) => e as String).toList(),
-      expense: json['expense'] as int?,
+      expense: json['expense'] as String,
       location: json['location'] as String?,
       publicTypeNo: json['public_type_no'] as String,
       isFavorite: json['is_favorite'] as bool,

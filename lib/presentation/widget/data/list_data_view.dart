@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nijimas/core/enum/main_category.dart';
+import 'package:nijimas/core/model/calculated_summary.dart';
 import 'package:nijimas/core/theme/color.dart';
 
 class ListDataView extends StatelessWidget {
-  final Map<MainCategory, double> spendingAmounts;
-  const ListDataView({super.key, required this.spendingAmounts});
+  final List<CalculatedSummary> summary;
+  const ListDataView({super.key, required this.summary});
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +14,8 @@ class ListDataView extends StatelessWidget {
     const double maxHeight = 200.0; // 最大の高さ
 
     // リストの高さを計算
-    double calculatedHeight = spendingAmounts.length >= 4
-        ? maxHeight
-        : spendingAmounts.length * itemHeight;
+    double calculatedHeight =
+        summary.length >= 4 ? maxHeight : summary.length * itemHeight;
 
     return Column(
       children: [
@@ -23,13 +23,13 @@ class ListDataView extends StatelessWidget {
           height: calculatedHeight,
           child: ListView.separated(
             shrinkWrap: true,
-            physics: spendingAmounts.length >= 4
+            physics: summary.length >= 4
                 ? const AlwaysScrollableScrollPhysics()
                 : const NeverScrollableScrollPhysics(), // 要素数が4つ以上の場合にのみスクロール可能
-            itemCount: spendingAmounts.length,
+            itemCount: summary.length,
             separatorBuilder: (context, index) => const Divider(),
             itemBuilder: (context, index) {
-              final entry = spendingAmounts.entries.elementAt(index);
+              final entry = MainCategory.fromName(summary[index].categoryName);
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
@@ -41,16 +41,16 @@ class ListDataView extends StatelessWidget {
                           width: 15,
                           height: 10,
                           decoration: BoxDecoration(
-                            color: MyColors.getMainCategoryColor(
-                                entry.key), // 背景色を設定
+                            color:
+                                MyColors.getMainCategoryColor(entry), // 背景色を設定
                             shape: BoxShape.circle, // 形状を円に設定
                           ),
                         ),
                         const SizedBox(width: 5.0),
-                        Text(entry.key.getDisplayName(context)),
+                        Text(entry.getDisplayName(context)),
                       ],
                     ),
-                    Text('${entry.value.toInt()} 円'),
+                    Text('${summary[index].amount} 円'),
                   ],
                 ),
               );

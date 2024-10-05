@@ -1,10 +1,11 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:nijimas/core/model/calculated_summary.dart';
 import 'package:nijimas/core/theme/color.dart';
 
 class SummaryBarChart extends StatelessWidget {
-  final Map<String, double> data;
-  const SummaryBarChart({super.key, required this.data});
+  final List<CalculatedSummary> summary;
+  const SummaryBarChart({super.key, required this.summary});
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +19,9 @@ class SummaryBarChart extends StatelessWidget {
             child: BarChart(
               BarChartData(
                 alignment: BarChartAlignment.start,
-                maxY: data.values.isEmpty
+                maxY: summary.isEmpty
                     ? 0
-                    : data.values.reduce((a, b) => a > b ? a : b),
+                    : summary.map((e) => e.amount).reduce((a, b) => a + b),
                 minY: 0,
                 groupsSpace: width * 0.1,
                 titlesData: const FlTitlesData(
@@ -32,12 +33,12 @@ class SummaryBarChart extends StatelessWidget {
                 borderData: FlBorderData(
                   show: false, // 枠線を非表示にする
                 ),
-                barGroups: data.entries
+                barGroups: summary
                     .map((entry) => BarChartGroupData(
-                          x: data.keys.toList().indexOf(entry.key),
+                          x: summary.indexOf(entry),
                           barRods: [
                             BarChartRodData(
-                              toY: entry.value,
+                              toY: entry.amount,
                               gradient: const LinearGradient(
                                 // グラデーションの場合
                                 colors: [MyColors.teal, MyColors.tealAccent],
@@ -52,9 +53,9 @@ class SummaryBarChart extends StatelessWidget {
                   touchTooltipData: BarTouchTooltipData(
                     getTooltipColor: (group) => MyColors.teal,
                     getTooltipItem: (group, groupIndex, rod, rodIndex) {
-                      final key = data.keys.elementAt(group.x);
+                      final key = summary.elementAt(group.x);
                       return BarTooltipItem(
-                        key,
+                        '${key.categoryName}\n${key.amount} 円',
                         const TextStyle(
                           color: MyColors.white,
                           fontWeight: FontWeight.bold,

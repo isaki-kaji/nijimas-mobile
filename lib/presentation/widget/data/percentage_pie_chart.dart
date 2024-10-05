@@ -1,11 +1,12 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:nijimas/core/enum/main_category.dart';
+import 'package:nijimas/core/model/calculated_summary.dart';
 import 'package:nijimas/core/theme/color.dart';
 
 class PercentagePieChart extends StatelessWidget {
-  final Map<MainCategory, double> spendingPercentages;
-  const PercentagePieChart({super.key, required this.spendingPercentages});
+  final List<CalculatedSummary> summary;
+  const PercentagePieChart({super.key, required this.summary});
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +25,13 @@ class PercentagePieChart extends StatelessWidget {
               sectionsSpace: 0,
               centerSpaceRadius: 30,
               startDegreeOffset: 270,
-              sections: spendingPercentages.entries
+              sections: summary
                   .map((entry) => PieChartSectionData(
                         showTitle: false,
-                        color: MyColors.getMainCategoryColor(entry.key),
-                        value: entry.value,
-                        title: '${entry.value}%',
+                        color: MyColors.getMainCategoryColor(
+                            MainCategory.fromName(entry.categoryName)),
+                        value: entry.percentage,
+                        title: '${entry.percentage}%',
                         radius: 50,
                       ))
                   .toList(),

@@ -8,10 +8,10 @@ class MonthlySummaryPresentation {
   final String uid;
   final int year;
   final int month;
-  final Map<String, CalculatedSummary> expenseSummary;
-  final Map<String, CalculatedSummary> subcategorySummary;
-  final List<int> dailyNumbers;
-  final List<double> dailyAmounts;
+  final List<CalculatedSummary> expenseSummary;
+  final List<CalculatedSummary> subcategorySummary;
+  final List<int> dailyCount;
+  final List<double> dailyAmount;
 
   const MonthlySummaryPresentation({
     required this.uid,
@@ -19,8 +19,8 @@ class MonthlySummaryPresentation {
     required this.month,
     required this.expenseSummary,
     required this.subcategorySummary,
-    required this.dailyNumbers,
-    required this.dailyAmounts,
+    required this.dailyCount,
+    required this.dailyAmount,
   });
 
   factory MonthlySummaryPresentation.fromJson(Map<String, dynamic> json) =>

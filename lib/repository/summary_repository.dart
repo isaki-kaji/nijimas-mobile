@@ -21,7 +21,6 @@ class SummaryRepository extends AbstractSummaryRepository {
       final response =
           await _dio.get("${Env.baseUrl}/me/summaries/$year/$month");
       if (response.statusCode == 200) {
-        print("リクエストされました");
         return MonthlySummaryPresentation.fromJson(response.data);
       } else {
         _logger.e("Error response: ${response.data}");
