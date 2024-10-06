@@ -40,12 +40,12 @@ class PostUsecase extends AbstractPostUsecase {
       (String?, String?) subCategories =
           _parseSubCategories(formData.subCategories);
 
-      final expense = _parseExpense(formData.expense);
-
       //postTextからlocationを取得する処理を追加
 
       final photoUrl =
           await _imageUsecase.uploadPostImages(formData.images, '$uid/$postId');
+
+      final expense = _parseExpense(formData.expense);
 
       final request = CreatePostRequest(
           postId: postId,
@@ -112,15 +112,15 @@ class PostUsecase extends AbstractPostUsecase {
   return (subCategory1, subCategory2);
 }
 
-int _parseExpense(String? expense) {
-  if (expense != null && expense.isNotEmpty) {
+String _parseExpense(String? expense) {
+  if (expense != null && expense.isNotEmpty && expense != "") {
     if (_isNumeric(expense)) {
-      return int.parse(expense);
+      return expense;
     } else {
       throw const FormatException('Invalid number format');
     }
   } else {
-    return 0;
+    return "0";
   }
 }
 
