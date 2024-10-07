@@ -11,7 +11,7 @@ class CreatePostRequest {
   final String? subCategory2;
   final String? postText;
   final String? photoUrl;
-  final int? expense;
+  final String? expense;
   final String? location;
   final String publicTypeNo;
   const CreatePostRequest(

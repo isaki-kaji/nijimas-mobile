@@ -5,11 +5,13 @@ part 'calculated_summary.g.dart';
 @JsonSerializable()
 class CalculatedSummary {
   final String categoryName;
+  final int count;
   final double amount;
   final double percentage;
 
   CalculatedSummary({
     required this.categoryName,
+    required this.count,
     required this.amount,
     required this.percentage,
   });

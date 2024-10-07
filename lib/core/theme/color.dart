@@ -52,6 +52,22 @@ class MyColors {
     }
   }
 
+  static Color? getSubCategoryPercentColor(double percent) {
+    if (percent < 2) {
+      return null;
+    } else if (percent < 5) {
+      return Colors.pink[50]!;
+    } else if (percent < 10) {
+      return Colors.pink[100]!;
+    } else if (percent < 20) {
+      return Colors.pink[200]!;
+    } else if (percent < 30) {
+      return Colors.pink[300]!;
+    } else {
+      return Colors.pink[400]!;
+    }
+  }
+
   static Color getMainCategoryColor(MainCategory category) {
     switch (category) {
       case MainCategory.food:

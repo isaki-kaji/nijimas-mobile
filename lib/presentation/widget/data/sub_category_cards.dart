@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nijimas/core/model/calculated_summary.dart';
+import 'package:nijimas/core/theme/color.dart';
 
 class SubCategoryCards extends StatelessWidget {
   const SubCategoryCards({super.key, required this.summary});
@@ -7,29 +8,63 @@ class SubCategoryCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-        alignment: Alignment.centerLeft,
-        child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-                children: summary.map((e) {
-              return _buildCard(e.categoryName, e.amount);
-            }).toList())));
-  }
-
-  Widget _buildCard(String categoryName, double amount) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(25.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(categoryName),
-            const SizedBox(height: 10),
-            Text("${amount.toInt()} 円")
-          ],
+    return SizedBox(
+      height: 300,
+      child: SingleChildScrollView(
+        child: Wrap(
+          spacing: 2, // アイテム間のスペース
+          runSpacing: 5, // 縦方向のスペース
+          children: summary.map((item) {
+            return GestureDetector(
+              onTap: () => _showDetailDialog(context, item),
+              child: _buildCard(item.categoryName, item.percentage),
+            );
+          }).toList(),
         ),
       ),
+    );
+  }
+
+  // カード表示
+  Widget _buildCard(String categoryName, double percent) {
+    return Card(
+      color: MyColors.getSubCategoryPercentColor(percent),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.horizontal(
+          left: Radius.circular(30),
+          right: Radius.circular(30),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
+        child: Text(
+          categoryName,
+          style: const TextStyle(color: Colors.black),
+        ),
+      ),
+    );
+  }
+
+  // ダイアログを表示
+  void _showDetailDialog(BuildContext context, CalculatedSummary item) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(item.categoryName),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("支出額 : ${item.amount} 円"),
+              const SizedBox(height: 20),
+              Text("支出割合 : ${item.percentage} %"),
+              const SizedBox(height: 20),
+              Text("支出回数 : ${item.count} 回"),
+            ],
+          ),
+        );
+      },
     );
   }
 }

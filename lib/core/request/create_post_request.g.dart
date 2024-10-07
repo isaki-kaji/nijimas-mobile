@@ -15,7 +15,7 @@ CreatePostRequest _$CreatePostRequestFromJson(Map<String, dynamic> json) =>
       subCategory2: json['sub_category2'] as String?,
       postText: json['post_text'] as String?,
       photoUrl: json['photo_url'] as String?,
-      expense: json['expense'] as int?,
+      expense: json['expense'] as String?,
       location: json['location'] as String?,
       publicTypeNo: json['public_type_no'] as String,
     );
