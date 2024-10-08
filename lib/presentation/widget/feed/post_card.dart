@@ -47,7 +47,7 @@ class PostCard extends ConsumerWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(post.expense != null ? post.expense.toString() : "0",
+                  Text(post.expense,
                       style: MyTextStyles.subtitle
                           .copyWith(fontWeight: FontWeight.w500)),
                   const SizedBox(

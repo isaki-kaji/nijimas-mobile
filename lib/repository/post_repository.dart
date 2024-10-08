@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:logger/web.dart';
 import 'package:nijimas/core/constant/env_constant.dart';
-import 'package:nijimas/core/util/auth_interceptor.dart';
+import 'package:nijimas/repository/interceptor/auth_interceptor.dart';
 import 'package:nijimas/core/model/post.dart';
 import 'package:nijimas/core/request/create_post_request.dart';
 import 'package:nijimas/repository/abstract_post_repository.dart';
