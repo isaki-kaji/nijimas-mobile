@@ -3,10 +3,9 @@ import 'package:logger/web.dart';
 import 'package:nijimas/core/constant/env_constant.dart';
 import 'package:nijimas/core/model/monthly_summary_presentation.dart';
 import 'package:nijimas/repository/interceptor/auth_interceptor.dart';
-import 'package:nijimas/repository/abstract_summary_repository.dart';
 import 'package:nijimas/repository/interceptor/timezone_interecptor.dart';
 
-class SummaryRepository extends AbstractSummaryRepository {
+class SummaryRepository {
   final Dio _dio;
   final Logger _logger;
   SummaryRepository({required Logger logger})
@@ -16,7 +15,6 @@ class SummaryRepository extends AbstractSummaryRepository {
     _dio.interceptors.add(TimezoneInterceptor());
   }
 
-  @override
   Future<MonthlySummaryPresentation> getMonthlySummary(
       {required String year, required String month}) async {
     try {

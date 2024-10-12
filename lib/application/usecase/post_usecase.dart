@@ -3,21 +3,20 @@ import 'package:logger/web.dart';
 import 'package:nijimas/application/formdata/post_form_data.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/loading_provider.dart';
-import 'package:nijimas/application/usecase/abstract_image_usecase.dart';
-import 'package:nijimas/application/usecase/abstract_post_usecase.dart';
+import 'package:nijimas/application/usecase/image_usecase.dart';
 import 'package:nijimas/core/model/post.dart';
 import 'package:nijimas/core/request/create_post_request.dart';
-import 'package:nijimas/repository/abstract_post_repository.dart';
+import 'package:nijimas/repository/post_repository.dart';
 import 'package:uuid/uuid.dart';
 
-class PostUsecase extends AbstractPostUsecase {
-  final AbstractPostRepository _postRepository;
-  final AbstractImageUsecase _imageUsecase;
+class PostUsecase {
+  final PostRepository _postRepository;
+  final ImageUsecase _imageUsecase;
   final Logger _logger;
   final Ref _ref;
   PostUsecase(
-      {required AbstractPostRepository postRepository,
-      required AbstractImageUsecase imageUsecase,
+      {required PostRepository postRepository,
+      required ImageUsecase imageUsecase,
       required Logger logger,
       required Ref ref})
       : _postRepository = postRepository,
@@ -25,7 +24,6 @@ class PostUsecase extends AbstractPostUsecase {
         _logger = logger,
         _ref = ref;
 
-  @override
   Future<void> createPost({
     required PostFormData formData,
     required void Function() onSuccess,
@@ -69,7 +67,6 @@ class PostUsecase extends AbstractPostUsecase {
     }
   }
 
-  @override
   Future<List<Post>> getOwnPosts() async {
     try {
       return await _postRepository.getOwnPosts();

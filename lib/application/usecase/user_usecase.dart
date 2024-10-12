@@ -2,27 +2,26 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/formdata/user_form_data.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/loading_provider.dart';
-import 'package:nijimas/application/usecase/abstract_image_usecase.dart';
-import 'package:nijimas/application/usecase/abstract_user_usecase.dart';
+import 'package:nijimas/application/usecase/image_usecase.dart';
 import 'package:nijimas/core/util/exception.dart';
 import 'package:nijimas/core/model/user_profile.dart';
 import 'package:nijimas/core/request/create_user_request.dart';
 import 'package:nijimas/core/request/update_user_request.dart';
-import 'package:nijimas/repository/abstract_auth_repository.dart';
-import 'package:nijimas/repository/abstract_user_repository.dart';
-import 'package:nijimas/repository/abstract_user_status_repository.dart';
+import 'package:nijimas/repository/auth_repository.dart';
+import 'package:nijimas/repository/user_repository.dart';
+import 'package:nijimas/repository/user_status_repository.dart';
 
-class UserUsecase extends AbstractUserUsecase {
-  final AbstractUserRepository _userRepository;
-  final AbstractUserStatusRepository _userStatusRepository;
-  final AbstractAuthRepository _authRepository;
-  final AbstractImageUsecase _imageUsecase;
+class UserUsecase {
+  final UserRepository _userRepository;
+  final UserStatusRepository _userStatusRepository;
+  final AuthRepository _authRepository;
+  final ImageUsecase _imageUsecase;
   final Ref _ref;
   UserUsecase(
-      {required AbstractUserRepository userRepository,
-      required AbstractUserStatusRepository userStatusRepository,
-      required AbstractAuthRepository authRepository,
-      required AbstractImageUsecase imageUsecase,
+      {required UserRepository userRepository,
+      required UserStatusRepository userStatusRepository,
+      required AuthRepository authRepository,
+      required ImageUsecase imageUsecase,
       required Ref ref})
       : _userRepository = userRepository,
         _userStatusRepository = userStatusRepository,
@@ -30,7 +29,6 @@ class UserUsecase extends AbstractUserUsecase {
         _imageUsecase = imageUsecase,
         _ref = ref;
 
-  @override
   Future<void> createUser(
       {required CreateUserRequest request,
       required void Function() onSuccess,
@@ -51,7 +49,6 @@ class UserUsecase extends AbstractUserUsecase {
     }
   }
 
-  @override
   Future<UserProfile> getUser({required String uid}) async {
     try {
       return await _userRepository.getUser(uid);
@@ -60,7 +57,6 @@ class UserUsecase extends AbstractUserUsecase {
     }
   }
 
-  @override
   Future<void> updateUser(
       {required UserFormData formData,
       required void Function() onSuccess,

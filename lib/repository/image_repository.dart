@@ -2,9 +2,8 @@ import 'dart:typed_data';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:logger/web.dart';
-import 'package:nijimas/repository/abstract_image_repository.dart';
 
-class ImageRepository extends AbstractImageRepository {
+class ImageRepository {
   final FirebaseStorage _firebaseStorage;
   final Logger _logger;
 
@@ -13,7 +12,6 @@ class ImageRepository extends AbstractImageRepository {
       : _firebaseStorage = firebaseStorage,
         _logger = logger;
 
-  @override
   Future<String> uploadImage(Uint8List imageData, String path) async {
     Reference ref = _firebaseStorage.ref().child(path);
     try {

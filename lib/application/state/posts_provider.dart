@@ -13,11 +13,12 @@ class PostsNotifier extends _$PostsNotifier {
   Future<List<Post>> build(PostQuery query) async {
     try {
       final postUsecase = ref.read(postUsecaseProvider);
-      if (query.type == PostQueryType.own) {
-        return await postUsecase.getOwnPosts();
+      switch (query.type) {
+        case PostQueryType.own:
+          return await postUsecase.getOwnPosts();
+        default:
+          return await postUsecase.getOwnPosts();
       }
-      return // await postUsecase.getPostsByQuery(query);
-          await postUsecase.getOwnPosts();
     } catch (e) {
       rethrow;
     }

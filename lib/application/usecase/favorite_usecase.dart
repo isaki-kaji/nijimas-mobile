@@ -1,10 +1,10 @@
 import 'package:nijimas/core/request/toggle_favorite_request.dart';
-import 'package:nijimas/repository/abstract_favorite_repository.dart';
+import 'package:nijimas/repository/favorite_repository.dart';
 
 class FavoriteUsecase {
-  final AbstractFavoriteRepository _favoriteRepository;
+  final FavoriteRepository _favoriteRepository;
 
-  FavoriteUsecase({required AbstractFavoriteRepository favoriteRepository})
+  FavoriteUsecase({required FavoriteRepository favoriteRepository})
       : _favoriteRepository = favoriteRepository;
 
   Future<void> toggleFavorite(ToggleFavoriteRequest request) async =>

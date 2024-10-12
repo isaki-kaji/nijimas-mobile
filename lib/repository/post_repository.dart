@@ -4,9 +4,8 @@ import 'package:nijimas/core/constant/env_constant.dart';
 import 'package:nijimas/repository/interceptor/auth_interceptor.dart';
 import 'package:nijimas/core/model/post.dart';
 import 'package:nijimas/core/request/create_post_request.dart';
-import 'package:nijimas/repository/abstract_post_repository.dart';
 
-class PostRepository extends AbstractPostRepository {
+class PostRepository {
   final Dio _dio;
   final Logger _logger;
   PostRepository({required Logger logger})
@@ -15,7 +14,6 @@ class PostRepository extends AbstractPostRepository {
     _dio.interceptors.add(AuthInterceptor());
   }
 
-  @override
   Future<dynamic> createPost(CreatePostRequest request) async {
     final response =
         await _dio.post("${Env.baseUrl}/posts", data: request.toJson());
@@ -27,7 +25,6 @@ class PostRepository extends AbstractPostRepository {
         "Failed to create post with status code: ${response.statusCode}");
   }
 
-  @override
   Future<List<Post>> getOwnPosts() async {
     try {
       final response = await _dio.get("${Env.baseUrl}/me/posts");
@@ -46,7 +43,6 @@ class PostRepository extends AbstractPostRepository {
     }
   }
 
-  // @override
   // Future<List<Post>> getPostsByUid({required String uid}) async {
   //   try {
   //     print("ポストを取得します");
@@ -66,7 +62,6 @@ class PostRepository extends AbstractPostRepository {
   //   }
   // }
 
-  @override
   Future<List<Post>> getPostsByMainCategory(
       {required String mainCategory}) async {
     try {

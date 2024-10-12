@@ -3,9 +3,8 @@ import 'package:logger/logger.dart';
 import 'package:nijimas/core/constant/env_constant.dart';
 import 'package:nijimas/repository/interceptor/auth_interceptor.dart';
 import 'package:nijimas/core/request/toggle_favorite_request.dart';
-import 'package:nijimas/repository/abstract_favorite_repository.dart';
 
-class FavoriteRepository extends AbstractFavoriteRepository {
+class FavoriteRepository {
   final Dio _dio;
   final Logger _logger;
   FavoriteRepository({required Logger logger})
@@ -14,7 +13,6 @@ class FavoriteRepository extends AbstractFavoriteRepository {
     _dio.interceptors.add(AuthInterceptor());
   }
 
-  @override
   Future<void> toggleFavorite(ToggleFavoriteRequest request) async {
     final response =
         await _dio.post("${Env.baseUrl}/favorites", data: request.toJson());

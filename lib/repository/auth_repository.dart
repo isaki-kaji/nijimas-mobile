@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/web.dart';
-import 'package:nijimas/repository/abstract_auth_repository.dart';
 
-final class AuthRepository extends AbstractAuthRepository {
+final class AuthRepository {
   final FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
   final Logger _logger;
@@ -16,16 +15,12 @@ final class AuthRepository extends AbstractAuthRepository {
         _googleSignIn = googleSignIn,
         _logger = logger;
 
-  @override
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
-  @override
   User? get currentUser => _firebaseAuth.currentUser;
 
-  @override
   bool get isAnonymous => _firebaseAuth.currentUser?.isAnonymous ?? true;
 
-  @override
   Future<User?> signInWithGoogle() async {
     final googleUser = await _googleSignIn.signIn();
     if (googleUser == null) {
@@ -48,13 +43,11 @@ final class AuthRepository extends AbstractAuthRepository {
     return userCredential.user;
   }
 
-  @override
   Future<User?> signInAsGuest() async {
     final userCredential = await _firebaseAuth.signInAnonymously();
     return userCredential.user;
   }
 
-  @override
   Future<void> signOut() async {
     await _googleSignIn.signOut();
     await _firebaseAuth.signOut();

@@ -1,16 +1,14 @@
 import 'dart:typed_data';
 
-import 'package:nijimas/application/usecase/abstract_image_usecase.dart';
-import 'package:nijimas/repository/abstract_image_repository.dart';
+import 'package:nijimas/repository/image_repository.dart';
 import 'package:uuid/uuid.dart';
 
-class ImageUsecase extends AbstractImageUsecase {
-  final AbstractImageRepository _imageRepository;
+class ImageUsecase {
+  final ImageRepository _imageRepository;
 
-  ImageUsecase({required AbstractImageRepository imageRepository})
+  ImageUsecase({required ImageRepository imageRepository})
       : _imageRepository = imageRepository;
 
-  @override
   Future<String> uploadPostImages(
       List<Uint8List?> imagesData, String path) async {
     final List<String> downloadUrls = [];
@@ -29,7 +27,6 @@ class ImageUsecase extends AbstractImageUsecase {
     }
   }
 
-  @override
   Future<String> uploadProfileImage(Uint8List imageData, String path) async {
     try {
       const uuid = Uuid();

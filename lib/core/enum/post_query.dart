@@ -1,11 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-enum PostQueryType {
-  own,
-  uid,
-  mainCategory,
-}
+enum PostQueryType { own, uid, mainCategory, subCategory }
 
 enum PostQueryKey {
   uid,
