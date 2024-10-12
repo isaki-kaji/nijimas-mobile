@@ -1,6 +1,7 @@
 import 'package:nijimas/core/enum/post_query.dart';
+import 'package:nijimas/core/provider/repository/post_repository_provider.dart';
+import 'package:nijimas/core/provider/repository/post_search_repository_provider.dart';
 import 'package:nijimas/core/provider/usecase/favorite_usecase_provider.dart';
-import 'package:nijimas/core/provider/usecase/post_usecase_provider.dart';
 import 'package:nijimas/core/model/post.dart';
 import 'package:nijimas/core/request/toggle_favorite_request.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -12,12 +13,26 @@ class PostsNotifier extends _$PostsNotifier {
   @override
   Future<List<Post>> build(PostQuery query) async {
     try {
-      final postUsecase = ref.read(postUsecaseProvider);
+      final postRepository = ref.read(postRepositoryProvider);
+      final postSearchRepository = ref.read(postSearchRepositoryProvider);
       switch (query.type) {
         case PostQueryType.own:
-          return await postUsecase.getOwnPosts();
+          return await postRepository.getOwnPosts();
+        case PostQueryType.timeline:
+          return await postRepository.getTimelinePosts();
+        case PostQueryType.uid:
+          return await postSearchRepository.getPostsByUid(query.params);
+        case PostQueryType.mainCategory:
+          return await postSearchRepository
+              .getPostsByMainCategory(query.params);
+        case PostQueryType.subCategory:
+          return await postSearchRepository.getPostsBySubCategory(query.params);
+        case PostQueryType.ownAndMainCategory:
+          return await postRepository.getOwnPostsByMainCategory(query.params);
+        case PostQueryType.ownAndSubCategory:
+          return await postRepository.getOwnPostsBySubCategory(query.params);
         default:
-          return await postUsecase.getOwnPosts();
+          return await postRepository.getOwnPosts();
       }
     } catch (e) {
       rethrow;
