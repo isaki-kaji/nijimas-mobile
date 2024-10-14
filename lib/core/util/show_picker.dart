@@ -16,7 +16,7 @@ void showPicker(BuildContext context, void Function(MainCategory) tapEvent) {
     dismissable: true,
     itemExtent: 50.0,
     onSubmit: (index) {
-      tapEvent(getMainCategoryNames()[index]);
+      tapEvent(getMainCategories()[index]);
     },
   ).show(context);
 }

@@ -23,9 +23,14 @@ enum MainCategory {
     }
     return MainCategory.other;
   }
+
+  @override
+  String toString() {
+    return name;
+  }
 }
 
-List<MainCategory> getMainCategoryNames() {
+List<MainCategory> getMainCategories() {
   return MainCategory.values;
 }
 

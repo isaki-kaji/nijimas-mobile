@@ -19,7 +19,7 @@ enum PostQueryKey {
 
 class PostQuery {
   final PostQueryType type;
-  final Map<PostQueryKey, dynamic> params;
+  final Map<PostQueryKey, String> params;
 
   PostQuery({
     required this.type,
