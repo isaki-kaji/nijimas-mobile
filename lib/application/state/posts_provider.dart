@@ -8,7 +8,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'posts_provider.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 class PostsNotifier extends _$PostsNotifier {
   @override
   Future<List<Post>> build(PostQuery query) async {

@@ -38,4 +38,14 @@ class PostQuery {
   @override
   int get hashCode =>
       type.hashCode ^ const DeepCollectionEquality().hash(params);
+
+  PostQuery copyWith({
+    PostQueryType? type,
+    Map<PostQueryKey, String>? params,
+  }) {
+    return PostQuery(
+      type: type ?? this.type,
+      params: params ?? this.params,
+    );
+  }
 }

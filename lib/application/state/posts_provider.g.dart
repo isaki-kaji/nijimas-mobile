@@ -6,7 +6,7 @@ part of 'posts_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$postsNotifierHash() => r'e50384a41d166faac5e507d7932912d8c681fea5';
+String _$postsNotifierHash() => r'47a8ad5da500bd4d7d2aa7ab99ef95505696922d';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,7 +29,8 @@ class _SystemHash {
   }
 }
 
-abstract class _$PostsNotifier extends BuildlessAsyncNotifier<List<Post>> {
+abstract class _$PostsNotifier
+    extends BuildlessAutoDisposeAsyncNotifier<List<Post>> {
   late final PostQuery query;
 
   FutureOr<List<Post>> build(
@@ -81,7 +82,7 @@ class PostsNotifierFamily extends Family<AsyncValue<List<Post>>> {
 
 /// See also [PostsNotifier].
 class PostsNotifierProvider
-    extends AsyncNotifierProviderImpl<PostsNotifier, List<Post>> {
+    extends AutoDisposeAsyncNotifierProviderImpl<PostsNotifier, List<Post>> {
   /// See also [PostsNotifier].
   PostsNotifierProvider(
     PostQuery query,
@@ -137,7 +138,8 @@ class PostsNotifierProvider
   }
 
   @override
-  AsyncNotifierProviderElement<PostsNotifier, List<Post>> createElement() {
+  AutoDisposeAsyncNotifierProviderElement<PostsNotifier, List<Post>>
+      createElement() {
     return _PostsNotifierProviderElement(this);
   }
 
@@ -155,13 +157,13 @@ class PostsNotifierProvider
   }
 }
 
-mixin PostsNotifierRef on AsyncNotifierProviderRef<List<Post>> {
+mixin PostsNotifierRef on AutoDisposeAsyncNotifierProviderRef<List<Post>> {
   /// The parameter `query` of this provider.
   PostQuery get query;
 }
 
 class _PostsNotifierProviderElement
-    extends AsyncNotifierProviderElement<PostsNotifier, List<Post>>
+    extends AutoDisposeAsyncNotifierProviderElement<PostsNotifier, List<Post>>
     with PostsNotifierRef {
   _PostsNotifierProviderElement(super.provider);
 

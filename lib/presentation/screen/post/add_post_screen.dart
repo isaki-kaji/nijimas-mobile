@@ -6,12 +6,9 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nijimas/application/formdata/post_form_data.dart';
-import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/loading_provider.dart';
 import 'package:nijimas/application/state/monthly_summary_provider.dart';
-import 'package:nijimas/application/state/posts_provider.dart';
 import 'package:nijimas/core/enum/main_category.dart';
-import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/core/provider/usecase/post_usecase_provider.dart';
 import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/core/util/resize_image.dart';
@@ -137,10 +134,7 @@ class AddPostScreen extends HookConsumerWidget {
                   formData: formData,
                   onSuccess: () {
                     showSuccessSnackBar(context, l10n.postSuccess);
-                    final uid = ref.read(authStateProvider).value!.uid;
-                    ref.invalidate(postsNotifierProvider(PostQuery(
-                        type: PostQueryType.uid,
-                        params: {PostQueryKey.uid: uid})));
+                    // ref.invalidate(postsNotifierProvider);
                     ref.invalidate(monthlySummaryPresentationProvider(
                         DateTime.now().year.toString(),
                         DateTime.now().month.toString()));

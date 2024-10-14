@@ -14,7 +14,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(ProviderScope(observers: [MyProviderObserver()], child: MyApp()));
 }
 
 class MyApp extends HookConsumerWidget {
@@ -43,5 +43,13 @@ class MyApp extends HookConsumerWidget {
       ),
       routerConfig: ref.watch(routerProvider),
     );
+  }
+}
+
+class MyProviderObserver extends ProviderObserver {
+  @override
+  void didUpdateProvider(ProviderBase provider, Object? previousValue,
+      Object? newValue, ProviderContainer container) {
+    print('Provider updated: $provider');
   }
 }
