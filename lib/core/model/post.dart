@@ -15,7 +15,6 @@ class Post {
   final List<String> photoUrl;
   final String expense;
   final String? location;
-  final String publicTypeNo;
   final bool isFavorite;
   final DateTime createdAt;
 
@@ -31,7 +30,6 @@ class Post {
     required this.photoUrl,
     required this.expense,
     this.location,
-    required this.publicTypeNo,
     required this.isFavorite,
     required this.createdAt,
   });
@@ -68,7 +66,6 @@ class Post {
       photoUrl: photoUrl ?? this.photoUrl,
       expense: expense ?? this.expense,
       location: location ?? this.location,
-      publicTypeNo: publicTypeNo ?? this.publicTypeNo,
       isFavorite: isFavorite ?? this.isFavorite,
       createdAt: createdAt ?? this.createdAt,
     );

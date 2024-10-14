@@ -67,14 +67,6 @@ class PostUsecase {
     }
   }
 
-  Future<List<Post>> getOwnPosts() async {
-    try {
-      return await _postRepository.getOwnPosts();
-    } catch (e) {
-      rethrow;
-    }
-  }
-
   // @override
   // Future<List<Post>> getPostsByQuery(PostQuery query) async {
   //   try {

@@ -19,7 +19,6 @@ Post _$PostFromJson(Map<String, dynamic> json) => Post(
           (json['photo_url'] as List<dynamic>).map((e) => e as String).toList(),
       expense: json['expense'] as String,
       location: json['location'] as String?,
-      publicTypeNo: json['public_type_no'] as String,
       isFavorite: json['is_favorite'] as bool,
       createdAt: DateTime.parse(json['created_at'] as String),
     );
@@ -36,7 +35,6 @@ Map<String, dynamic> _$PostToJson(Post instance) => <String, dynamic>{
       'photo_url': instance.photoUrl,
       'expense': instance.expense,
       'location': instance.location,
-      'public_type_no': instance.publicTypeNo,
       'is_favorite': instance.isFavorite,
       'created_at': instance.createdAt.toIso8601String(),
     };

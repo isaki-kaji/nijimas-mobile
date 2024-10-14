@@ -5,9 +5,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
+import 'package:nijimas/application/state/monthly_summary_provider.dart';
 import 'package:nijimas/core/constant/animation_constant.dart';
 import 'package:nijimas/core/constant/page_constant.dart';
-import 'package:nijimas/core/enum/main_category.dart';
 import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/core/model/year_month.dart';
 import 'package:nijimas/core/theme/color.dart';
@@ -15,6 +15,7 @@ import 'package:nijimas/presentation/widget/common/custom_wave.dart';
 import 'package:nijimas/core/util/sizing.dart';
 import 'package:nijimas/presentation/widget/common/trailing_icon_button.dart';
 import 'package:nijimas/presentation/widget/home/menu_drawer.dart';
+import 'package:nijimas/presentation/widget/home/post_search_modal.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
 class HomeScreen extends HookConsumerWidget {
@@ -34,13 +35,11 @@ class HomeScreen extends HookConsumerWidget {
       return const SizedBox();
     }
 
-    final uid = user.uid;
-
     final useYearMonth = useState(YearMonth.now());
     final usePage = useState(0);
     final initialQuery = PostQuery(
-      type: PostQueryType.uid,
-      params: {PostQueryKey.uid: uid},
+      type: PostQueryType.own,
+      params: {},
     );
     final usePostQuery = useState(initialQuery);
 
@@ -49,6 +48,11 @@ class HomeScreen extends HookConsumerWidget {
       if (usePage.value == 0 && index == 0) {
         usePostQuery.value = initialQuery;
       }
+
+      if (usePage.value == 1) {
+        ref.invalidate(monthlySummaryPresentationProvider);
+      }
+
       usePage.value = index;
     }
 
@@ -79,14 +83,12 @@ class HomeScreen extends HookConsumerWidget {
                   ? IconButton(
                       icon: const Icon(Icons.search),
                       onPressed: () {
-                        final query = PostQuery(
-                          type: PostQueryType.mainCategory,
-                          params: {
-                            PostQueryKey.mainCategory:
-                                MainCategory.fashion.name,
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return PostSearchDialog(usePostQuery: usePostQuery);
                           },
                         );
-                        usePostQuery.value = query;
                       },
                     )
                   : null,

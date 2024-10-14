@@ -1,16 +1,26 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-enum PostQueryType { own, uid, mainCategory, subCategory }
+enum PostQueryType {
+  own,
+  timeline,
+  uid,
+  mainCategory,
+  subCategory,
+  mainCategoryAndSubCategory,
+  ownAndMainCategory,
+  ownAndSubCategory,
+}
 
 enum PostQueryKey {
   uid,
   mainCategory,
+  subCategory,
 }
 
 class PostQuery {
   final PostQueryType type;
-  final Map<PostQueryKey, dynamic> params;
+  final Map<PostQueryKey, String> params;
 
   PostQuery({
     required this.type,
@@ -29,4 +39,14 @@ class PostQuery {
   @override
   int get hashCode =>
       type.hashCode ^ const DeepCollectionEquality().hash(params);
+
+  PostQuery copyWith({
+    PostQueryType? type,
+    Map<PostQueryKey, String>? params,
+  }) {
+    return PostQuery(
+      type: type ?? this.type,
+      params: params ?? this.params,
+    );
+  }
 }
