@@ -27,6 +27,9 @@ class PostsNotifier extends _$PostsNotifier {
               .getPostsByMainCategory(query.params);
         case PostQueryType.subCategory:
           return await postSearchRepository.getPostsBySubCategory(query.params);
+        case PostQueryType.mainCategoryAndSubCategory:
+          return await postSearchRepository
+              .getPostsByMainCategoryAndSubCategory(query.params);
         case PostQueryType.ownAndMainCategory:
           return await postRepository.getOwnPostsByMainCategory(query.params);
         case PostQueryType.ownAndSubCategory:

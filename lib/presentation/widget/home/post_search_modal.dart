@@ -6,8 +6,8 @@ import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/core/util/sizing.dart';
 
-class PostSearchModal extends HookWidget {
-  const PostSearchModal({
+class PostSearchDialog extends HookWidget {
+  const PostSearchDialog({
     super.key,
     required this.usePostQuery,
   });
@@ -17,40 +17,56 @@ class PostSearchModal extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final searchedMainCategory = useState<MainCategory?>(null);
+    final searchedSubCategory = useState<String?>(null);
 
-    return Container(
-      height: Sizing.heightByMQ(context, 0.8),
-      margin: const EdgeInsets.only(top: 64),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
-        ),
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
       ),
-      child: Stack(
-        children: [
-          Align(
-            alignment: const Alignment(0.85, 0.85),
-            child: CustomRoundButton(
-              usePostQuery: usePostQuery,
-              searchedMainCategory: searchedMainCategory.value,
-            ),
+      child: Container(
+        height: Sizing.heightByMQ(context, 0.4),
+        padding: const EdgeInsets.all(16),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(
+            Radius.circular(20),
           ),
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SelectMainCategoryDropdown(
-                  searchedMainCategory: searchedMainCategory.value,
-                  onCategorySelected: (MainCategory? category) {
-                    searchedMainCategory.value = category;
-                  },
+        ),
+        child: Stack(
+          children: [
+            Align(
+              alignment: const Alignment(0.9, 0.9),
+              child: CustomRoundButton(
+                usePostQuery: usePostQuery,
+                searchedMainCategory: searchedMainCategory.value,
+                searchedSubCategory: searchedSubCategory.value,
+              ),
+            ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 50),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SelectMainCategoryDropdown(
+                      searchedMainCategory: searchedMainCategory.value,
+                      onCategorySelected: (MainCategory? category) {
+                        searchedMainCategory.value = category;
+                      },
+                    ),
+                    const SizedBox(height: 15),
+                    SelectSubCategoryField(
+                      searchedSubCategory: searchedMainCategory.value,
+                      onCategorySelected: (String? category) {
+                        searchedSubCategory.value = category;
+                      },
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -84,7 +100,7 @@ class SelectMainCategoryDropdown extends HookWidget {
           child: DropdownButton<MainCategory>(
             isExpanded: true,
             value: searchedMainCategory,
-            hint: const Text("費目で検索"),
+            hint: const Text("費目を選択"),
             onChanged: (MainCategory? value) {
               onCategorySelected(value);
             },
@@ -110,27 +126,93 @@ class SelectMainCategoryDropdown extends HookWidget {
   }
 }
 
+class SelectSubCategoryField extends HookWidget {
+  const SelectSubCategoryField({
+    super.key,
+    required this.searchedSubCategory,
+    required this.onCategorySelected,
+  });
+
+  final MainCategory? searchedSubCategory;
+  final Function(String?) onCategorySelected;
+
+  @override
+  Widget build(BuildContext context) {
+    final subCategoryTextController = useTextEditingController();
+
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: Colors.grey,
+          width: 1,
+        ),
+      ),
+      width: Sizing.widthByMQ(context, 0.8),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: TextField(
+          controller: subCategoryTextController,
+          onChanged: (value) => onCategorySelected(value),
+          decoration: const InputDecoration(
+            hintText: "サブカテゴリを入力",
+            border: InputBorder.none,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class CustomRoundButton extends HookConsumerWidget {
   const CustomRoundButton({
     super.key,
     required this.usePostQuery,
     required this.searchedMainCategory,
+    required this.searchedSubCategory,
   });
 
   final ValueNotifier<PostQuery> usePostQuery;
   final MainCategory? searchedMainCategory;
+  final String? searchedSubCategory;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: () {
-        if (searchedMainCategory == null) {
+        if ((searchedMainCategory == null) &&
+            (searchedSubCategory == null || searchedSubCategory!.isEmpty)) {
           return;
         }
+
+        if (searchedSubCategory!.isEmpty || searchedSubCategory == null) {
+          usePostQuery.value = PostQuery(
+            type: PostQueryType.mainCategory,
+            params: {
+              PostQueryKey.mainCategory: searchedMainCategory.toString(),
+            },
+          );
+          Navigator.of(context).pop();
+          return;
+        }
+
+        if (searchedMainCategory == null) {
+          usePostQuery.value = PostQuery(
+            type: PostQueryType.subCategory,
+            params: {
+              PostQueryKey.subCategory: searchedSubCategory!,
+            },
+          );
+          Navigator.of(context).pop();
+          return;
+        }
+
         usePostQuery.value = PostQuery(
-          type: PostQueryType.mainCategory,
+          type: PostQueryType.mainCategoryAndSubCategory,
           params: {
             PostQueryKey.mainCategory: searchedMainCategory.toString(),
+            PostQueryKey.subCategory: searchedSubCategory!,
           },
         );
         Navigator.of(context).pop();

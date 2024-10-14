@@ -73,4 +73,27 @@ class PostSearchRepository {
       throw Exception("Failed to get posts by sub category: $e");
     }
   }
+
+  Future<List<Post>> getPostsByMainCategoryAndSubCategory(
+      Map<PostQueryKey, dynamic> params) async {
+    try {
+      final response = await _dio.get("${Env.baseUrl}/posts", queryParameters: {
+        "main-category": params[PostQueryKey.mainCategory],
+        "sub-category": params[PostQueryKey.subCategory]
+      });
+      if (response.statusCode == 200) {
+        List<Post> posts =
+            (response.data as List).map((post) => Post.fromJson(post)).toList();
+        return posts;
+      } else {
+        _logger.e("Error response: ${response.data}");
+        throw Exception(
+            "Failed to get posts by main category and sub category with status code: ${response.statusCode}");
+      }
+    } catch (e) {
+      _logger.e("Exception: $e");
+      throw Exception(
+          "Failed to get posts by main category and sub category: $e");
+    }
+  }
 }

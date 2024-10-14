@@ -7,6 +7,7 @@ enum PostQueryType {
   uid,
   mainCategory,
   subCategory,
+  mainCategoryAndSubCategory,
   ownAndMainCategory,
   ownAndSubCategory,
 }

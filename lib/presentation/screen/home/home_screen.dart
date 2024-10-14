@@ -83,14 +83,12 @@ class HomeScreen extends HookConsumerWidget {
                   ? IconButton(
                       icon: const Icon(Icons.search),
                       onPressed: () {
-                        showModalBottomSheet(
-                            backgroundColor: Colors.transparent,
-                            isScrollControlled: true,
-                            context: context,
-                            builder: (BuildContext context) {
-                              return PostSearchModal(
-                                  usePostQuery: usePostQuery);
-                            });
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return PostSearchDialog(usePostQuery: usePostQuery);
+                          },
+                        );
                       },
                     )
                   : null,
