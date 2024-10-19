@@ -50,7 +50,7 @@ class ListDataView extends StatelessWidget {
                         Text(entry.getDisplayName(context)),
                       ],
                     ),
-                    Text('${summary[index].amount} 円'),
+                    Text('${summary[index].amount.toInt()} 円'),
                   ],
                 ),
               );

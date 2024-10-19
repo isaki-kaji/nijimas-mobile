@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:nijimas/core/theme/color.dart';
 
 class ActivityHeatMap extends StatelessWidget {
@@ -37,14 +38,21 @@ class ActivityHeatMap extends StatelessWidget {
                 crossAxisCount: 7,
                 crossAxisSpacing: 4,
                 mainAxisSpacing: 4,
-                childAspectRatio: 1.0, // 正方形のアイテム
+                childAspectRatio: 1.0,
               ),
               itemBuilder: (context, index) {
                 return (index < firstDayOfWeek - 1)
                     ? Container()
                     : GestureDetector(
                         onTap: () {
-                          print(activities[index - firstDayOfWeek + 1]);
+                          final day = index - firstDayOfWeek + 2;
+                          final date =
+                              DateTime(int.parse(year), int.parse(month), day);
+                          _showDetailDialog(
+                              context,
+                              date,
+                              activities[index - firstDayOfWeek + 1].toInt(),
+                              isNumbers);
                         },
                         child: Container(
                           decoration: BoxDecoration(
@@ -54,7 +62,7 @@ class ActivityHeatMap extends StatelessWidget {
                                 : MyColors.getActivityAmountsColor(
                                     activities[index - firstDayOfWeek + 1]),
                             border: Border.all(
-                              color: Colors.black, // ボーダーの色
+                              color: Colors.black,
                               width: 0.5,
                             ),
                             borderRadius: BorderRadius.circular(5.0),
@@ -64,6 +72,26 @@ class ActivityHeatMap extends StatelessWidget {
               }),
         ],
       ),
+    );
+  }
+
+  void _showDetailDialog(
+      BuildContext context, DateTime date, dynamic value, bool isNumber) {
+    final dayOfWeek = DateFormat.E('ja').format(date);
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("${date.month}月 ${date.day}日 ($dayOfWeek)"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(isNumber ? "支出回数 : $value 回" : "支出額 : $value 円"),
+            ],
+          ),
+        );
+      },
     );
   }
 }

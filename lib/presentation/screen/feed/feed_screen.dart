@@ -17,7 +17,7 @@ class FeedScreen extends HookConsumerWidget {
           itemCount: data.length,
           itemBuilder: (context, index) {
             final post = data[index];
-            return PostCard(post: post, query: query);
+            return PostCard(post: post, query: query, canGoDetail: true);
           },
         );
       },

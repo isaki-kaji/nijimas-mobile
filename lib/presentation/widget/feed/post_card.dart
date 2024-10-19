@@ -20,8 +20,13 @@ import 'package:nijimas/presentation/widget/post/sub_category_chip.dart';
 class PostCard extends ConsumerWidget {
   final Post post;
   final PostQuery query;
+  final bool canGoDetail;
   final formatter = DateFormat('yyyy-MM-dd HH:mm');
-  PostCard({super.key, required this.post, required this.query});
+  PostCard(
+      {super.key,
+      required this.post,
+      required this.query,
+      required this.canGoDetail});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -34,7 +39,11 @@ class PostCard extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               GestureDetector(
-                onTap: () => GoRouter.of(context).push("/profile/${post.uid}"),
+                onTap: () {
+                  if (canGoDetail) {
+                    GoRouter.of(context).push("/profile/${post.uid}");
+                  }
+                },
                 child: Row(
                   children: [
                     SwitchCircleAvatar(

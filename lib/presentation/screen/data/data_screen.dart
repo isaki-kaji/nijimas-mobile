@@ -56,7 +56,7 @@ class DataScreen extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 10),
                 DataCard(
-                  title: '費目ごとの支出額',
+                  title: '費目ごとの出費額',
                   chart: PercentagePieChart(summary: calculatedExpenseSummary),
                   dataView: ListDataView(
                     summary: calculatedExpenseSummary,
@@ -74,7 +74,7 @@ class DataScreen extends HookConsumerWidget {
                       isNumbers: true),
                 ),
                 DataCard(
-                  title: '日ごとの支出額',
+                  title: '日ごとの出費額',
                   chart: ActivityHeatMap(
                       activities: data.dailyAmount,
                       year: year,
