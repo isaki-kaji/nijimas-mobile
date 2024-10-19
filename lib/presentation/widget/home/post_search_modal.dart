@@ -24,7 +24,7 @@ class PostSearchDialog extends HookWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       child: Container(
-        height: Sizing.heightByMQ(context, 0.4),
+        height: Sizing.heightByMQ(context, 0.3),
         padding: const EdgeInsets.all(16),
         decoration: const BoxDecoration(
           color: Colors.white,
@@ -48,13 +48,13 @@ class PostSearchDialog extends HookWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SelectMainCategoryDropdown(
-                      searchedMainCategory: searchedMainCategory.value,
-                      onCategorySelected: (MainCategory? category) {
-                        searchedMainCategory.value = category;
-                      },
-                    ),
-                    const SizedBox(height: 15),
+                    // SelectMainCategoryDropdown(
+                    //   searchedMainCategory: searchedMainCategory.value,
+                    //   onCategorySelected: (MainCategory? category) {
+                    //     searchedMainCategory.value = category;
+                    //   },
+                    // ),
+                    //const SizedBox(height: 15),
                     SelectSubCategoryField(
                       searchedSubCategory: searchedMainCategory.value,
                       onCategorySelected: (String? category) {
@@ -186,7 +186,7 @@ class CustomRoundButton extends HookConsumerWidget {
           return;
         }
 
-        if (searchedSubCategory!.isEmpty || searchedSubCategory == null) {
+        if (searchedSubCategory == null || searchedSubCategory!.isEmpty) {
           usePostQuery.value = PostQuery(
             type: PostQueryType.mainCategory,
             params: {

@@ -4,7 +4,7 @@ import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/loading_provider.dart';
 import 'package:nijimas/application/usecase/image_usecase.dart';
 import 'package:nijimas/core/util/exception.dart';
-import 'package:nijimas/core/model/user_profile.dart';
+import 'package:nijimas/core/model/user_detail.dart';
 import 'package:nijimas/core/request/create_user_request.dart';
 import 'package:nijimas/core/request/update_user_request.dart';
 import 'package:nijimas/repository/auth_repository.dart';
@@ -49,7 +49,7 @@ class UserUsecase {
     }
   }
 
-  Future<UserProfile> getUser({required String uid}) async {
+  Future<UserDetail> getUser({required String uid}) async {
     try {
       return await _userRepository.getUser(uid);
     } catch (e) {

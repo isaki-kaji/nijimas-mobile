@@ -7,8 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:nijimas/application/formdata/user_form_data.dart';
 import 'package:nijimas/application/state/loading_provider.dart';
 import 'package:nijimas/application/state/posts_provider.dart';
-import 'package:nijimas/application/state/user_profile_info_provider.dart';
-import 'package:nijimas/core/enum/post_query.dart';
+import 'package:nijimas/application/state/user_detail_provider.dart';
 import 'package:nijimas/core/provider/usecase/user_usecase_provider.dart';
 import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/core/util/resize_image.dart';
@@ -27,7 +26,7 @@ class UserEditScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = L10n.of(context);
     final isLoading = ref.watch(loadingProvider);
-    final user = ref.watch(userProfileInfoProvider(uid));
+    final user = ref.watch(userDetailNotifierProvider(uid));
     final useNameController =
         useTextEditingController(text: user.valueOrNull!.username);
     final useSelfIntroController =
@@ -67,7 +66,7 @@ class UserEditScreen extends HookConsumerWidget {
                               children: [
                                 useImageBitmap.value.isEmpty
                                     ? SwitchCircleAvatar(
-                                        imageUrl: data!.profileImageUrl,
+                                        imageUrl: data.profileImageUrl,
                                         radius: Sizing.widthByMQ(context, 0.2),
                                         onTap: () => selectProfileImage(),
                                       )
@@ -165,10 +164,8 @@ class UserEditScreen extends HookConsumerWidget {
                       formData: formData,
                       onSuccess: () {
                         showSuccessSnackBar(context, l10n.updatedProfile);
-                        ref.invalidate(userProfileInfoProvider(uid));
-                        ref.invalidate(postsNotifierProvider(PostQuery(
-                            type: PostQueryType.uid,
-                            params: {PostQueryKey.uid: uid})));
+                        ref.invalidate(userDetailNotifierProvider(uid));
+                        ref.invalidate(postsNotifierProvider);
                         GoRouter.of(context).pop();
                       },
                       onFailure: () =>

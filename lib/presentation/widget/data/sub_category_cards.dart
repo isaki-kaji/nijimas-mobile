@@ -8,12 +8,16 @@ class SubCategoryCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 300,
+    return ConstrainedBox(
+      constraints: const BoxConstraints(
+        maxHeight: 300,
+        minWidth: double.infinity,
+      ),
       child: SingleChildScrollView(
         child: Wrap(
-          spacing: 2, // アイテム間のスペース
-          runSpacing: 5, // 縦方向のスペース
+          crossAxisAlignment: WrapCrossAlignment.start,
+          spacing: 2,
+          runSpacing: 5,
           children: summary.map((item) {
             return GestureDetector(
               onTap: () => _showDetailDialog(context, item),

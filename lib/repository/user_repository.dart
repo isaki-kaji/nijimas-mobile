@@ -3,7 +3,7 @@ import 'package:logger/web.dart';
 import 'package:nijimas/core/constant/env_constant.dart';
 import 'package:nijimas/repository/interceptor/auth_interceptor.dart';
 import 'package:nijimas/core/util/exception.dart';
-import 'package:nijimas/core/model/user_profile.dart';
+import 'package:nijimas/core/model/user_detail.dart';
 import 'package:nijimas/core/request/create_user_request.dart';
 import 'package:nijimas/core/request/update_user_request.dart';
 
@@ -33,7 +33,7 @@ class UserRepository {
   Future<dynamic> getUser(String uid) async {
     final response = await _dio.get("${Env.baseUrl}/users/$uid");
     if (response.statusCode == 200) {
-      return UserProfile.fromJson(response.data);
+      return UserDetail.fromJson(response.data);
     }
     _logger.e(response.data);
     throw Exception(

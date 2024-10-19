@@ -4,7 +4,6 @@ import 'package:nijimas/application/formdata/post_form_data.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/loading_provider.dart';
 import 'package:nijimas/application/usecase/image_usecase.dart';
-import 'package:nijimas/core/model/post.dart';
 import 'package:nijimas/core/request/create_post_request.dart';
 import 'package:nijimas/repository/post_repository.dart';
 import 'package:uuid/uuid.dart';

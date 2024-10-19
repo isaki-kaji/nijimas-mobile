@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nijimas/application/state/auth_state_provider.dart';
+import 'package:nijimas/application/state/user_detail_provider.dart';
+import 'package:nijimas/core/request/toggle_follow_request.dart';
+import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/core/theme/text_style.dart';
-import 'package:nijimas/core/model/user_profile.dart';
+import 'package:nijimas/core/model/user_detail.dart';
 import 'package:nijimas/presentation/widget/user/switch_circle_avatar.dart';
 
 class ProfileHeader extends StatelessWidget {
@@ -9,7 +14,7 @@ class ProfileHeader extends StatelessWidget {
     required this.user,
   });
 
-  final UserProfile user;
+  final UserDetail user;
 
   @override
   Widget build(BuildContext context) {
@@ -27,24 +32,27 @@ class ProfileHeader extends StatelessWidget {
                       imageUrl: user.profileImageUrl,
                     ),
                     const Spacer(flex: 2),
-                    const Column(
+                    Column(
                       children: [
-                        Text("100", style: MyTextStyles.body16),
-                        Text("投稿", style: MyTextStyles.body16),
+                        Text(user.postCount.toString(),
+                            style: MyTextStyles.body16),
+                        const Text("投稿", style: MyTextStyles.body16),
                       ],
                     ),
                     const Spacer(),
-                    const Column(
+                    Column(
                       children: [
-                        Text("100", style: MyTextStyles.body16),
-                        Text("フォロワー", style: MyTextStyles.body16),
+                        Text(user.followersCount.toString(),
+                            style: MyTextStyles.body16),
+                        const Text("フォロワー", style: MyTextStyles.body16),
                       ],
                     ),
                     const Spacer(),
-                    const Column(
+                    Column(
                       children: [
-                        Text("100", style: MyTextStyles.body16),
-                        Text("フォロー", style: MyTextStyles.body16),
+                        Text(user.followingCount.toString(),
+                            style: MyTextStyles.body16),
+                        const Text("フォロー", style: MyTextStyles.body16),
                       ],
                     ),
                   ],
@@ -53,10 +61,16 @@ class ProfileHeader extends StatelessWidget {
                 Row(
                   children: [
                     const SizedBox(width: 20),
-                    Text(
-                      user.username,
-                      style: MyTextStyles.subtitle,
+                    Expanded(
+                      child: Text(
+                        user.username,
+                        style: MyTextStyles.subtitle,
+                      ),
                     ),
+                    FollowButton(
+                      uid: user.uid,
+                      isFollowing: user.isFollowing,
+                    )
                   ],
                 ),
                 const SizedBox(height: 10),
@@ -86,5 +100,48 @@ class ProfileHeader extends StatelessWidget {
         const Divider(),
       ],
     );
+  }
+}
+
+class FollowButton extends ConsumerWidget {
+  const FollowButton({
+    super.key,
+    required this.uid,
+    required this.isFollowing,
+  });
+  final String uid;
+  final bool isFollowing;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final ownUid = ref.watch(authStateProvider).value!.uid;
+    return uid != ownUid
+        ? isFollowing
+            ? OutlinedButton(
+                onPressed: () {
+                  final userDetailNotifier =
+                      ref.read(userDetailNotifierProvider(uid).notifier);
+                  userDetailNotifier
+                      .toggleFollow(ToggleFollowRequest(followingUid: uid));
+                },
+                style: OutlinedButton.styleFrom(
+                  backgroundColor: MyColors.pink.withOpacity(0.8),
+                ),
+                child: const Text(
+                  'フォロー中',
+                  style: TextStyle(color: MyColors.white),
+                ))
+            : OutlinedButton(
+                onPressed: () {
+                  final userDetailNotifier =
+                      ref.read(userDetailNotifierProvider(uid).notifier);
+                  userDetailNotifier
+                      .toggleFollow(ToggleFollowRequest(followingUid: uid));
+                },
+                child: const Text(
+                  'フォロー',
+                ),
+              )
+        : const SizedBox.shrink();
   }
 }

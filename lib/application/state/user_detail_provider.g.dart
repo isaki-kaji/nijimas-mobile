@@ -1,12 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_profile_info_provider.dart';
+part of 'user_detail_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$userProfileInfoHash() => r'81ab8a9f97ce7258e5c34559614943907bd78a24';
+String _$userDetailNotifierHash() =>
+    r'cd9ea699f2dbe7cc169ed411d28168ed22383efd';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,27 +30,36 @@ class _SystemHash {
   }
 }
 
-/// See also [userProfileInfo].
-@ProviderFor(userProfileInfo)
-const userProfileInfoProvider = UserProfileInfoFamily();
+abstract class _$UserDetailNotifier
+    extends BuildlessAutoDisposeAsyncNotifier<UserDetail> {
+  late final String uid;
 
-/// See also [userProfileInfo].
-class UserProfileInfoFamily extends Family<AsyncValue<UserProfile?>> {
-  /// See also [userProfileInfo].
-  const UserProfileInfoFamily();
+  FutureOr<UserDetail> build(
+    String uid,
+  );
+}
 
-  /// See also [userProfileInfo].
-  UserProfileInfoProvider call(
+/// See also [UserDetailNotifier].
+@ProviderFor(UserDetailNotifier)
+const userDetailNotifierProvider = UserDetailNotifierFamily();
+
+/// See also [UserDetailNotifier].
+class UserDetailNotifierFamily extends Family<AsyncValue<UserDetail>> {
+  /// See also [UserDetailNotifier].
+  const UserDetailNotifierFamily();
+
+  /// See also [UserDetailNotifier].
+  UserDetailNotifierProvider call(
     String uid,
   ) {
-    return UserProfileInfoProvider(
+    return UserDetailNotifierProvider(
       uid,
     );
   }
 
   @override
-  UserProfileInfoProvider getProviderOverride(
-    covariant UserProfileInfoProvider provider,
+  UserDetailNotifierProvider getProviderOverride(
+    covariant UserDetailNotifierProvider provider,
   ) {
     return call(
       provider.uid,
@@ -68,32 +78,30 @@ class UserProfileInfoFamily extends Family<AsyncValue<UserProfile?>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'userProfileInfoProvider';
+  String? get name => r'userDetailNotifierProvider';
 }
 
-/// See also [userProfileInfo].
-class UserProfileInfoProvider extends AutoDisposeFutureProvider<UserProfile?> {
-  /// See also [userProfileInfo].
-  UserProfileInfoProvider(
+/// See also [UserDetailNotifier].
+class UserDetailNotifierProvider extends AutoDisposeAsyncNotifierProviderImpl<
+    UserDetailNotifier, UserDetail> {
+  /// See also [UserDetailNotifier].
+  UserDetailNotifierProvider(
     String uid,
   ) : this._internal(
-          (ref) => userProfileInfo(
-            ref as UserProfileInfoRef,
-            uid,
-          ),
-          from: userProfileInfoProvider,
-          name: r'userProfileInfoProvider',
+          () => UserDetailNotifier()..uid = uid,
+          from: userDetailNotifierProvider,
+          name: r'userDetailNotifierProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$userProfileInfoHash,
-          dependencies: UserProfileInfoFamily._dependencies,
+                  : _$userDetailNotifierHash,
+          dependencies: UserDetailNotifierFamily._dependencies,
           allTransitiveDependencies:
-              UserProfileInfoFamily._allTransitiveDependencies,
+              UserDetailNotifierFamily._allTransitiveDependencies,
           uid: uid,
         );
 
-  UserProfileInfoProvider._internal(
+  UserDetailNotifierProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -106,13 +114,20 @@ class UserProfileInfoProvider extends AutoDisposeFutureProvider<UserProfile?> {
   final String uid;
 
   @override
-  Override overrideWith(
-    FutureOr<UserProfile?> Function(UserProfileInfoRef provider) create,
+  FutureOr<UserDetail> runNotifierBuild(
+    covariant UserDetailNotifier notifier,
   ) {
+    return notifier.build(
+      uid,
+    );
+  }
+
+  @override
+  Override overrideWith(UserDetailNotifier Function() create) {
     return ProviderOverride(
       origin: this,
-      override: UserProfileInfoProvider._internal(
-        (ref) => create(ref as UserProfileInfoRef),
+      override: UserDetailNotifierProvider._internal(
+        () => create()..uid = uid,
         from: from,
         name: null,
         dependencies: null,
@@ -124,13 +139,14 @@ class UserProfileInfoProvider extends AutoDisposeFutureProvider<UserProfile?> {
   }
 
   @override
-  AutoDisposeFutureProviderElement<UserProfile?> createElement() {
-    return _UserProfileInfoProviderElement(this);
+  AutoDisposeAsyncNotifierProviderElement<UserDetailNotifier, UserDetail>
+      createElement() {
+    return _UserDetailNotifierProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is UserProfileInfoProvider && other.uid == uid;
+    return other is UserDetailNotifierProvider && other.uid == uid;
   }
 
   @override
@@ -142,18 +158,18 @@ class UserProfileInfoProvider extends AutoDisposeFutureProvider<UserProfile?> {
   }
 }
 
-mixin UserProfileInfoRef on AutoDisposeFutureProviderRef<UserProfile?> {
+mixin UserDetailNotifierRef on AutoDisposeAsyncNotifierProviderRef<UserDetail> {
   /// The parameter `uid` of this provider.
   String get uid;
 }
 
-class _UserProfileInfoProviderElement
-    extends AutoDisposeFutureProviderElement<UserProfile?>
-    with UserProfileInfoRef {
-  _UserProfileInfoProviderElement(super.provider);
+class _UserDetailNotifierProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<UserDetailNotifier,
+        UserDetail> with UserDetailNotifierRef {
+  _UserDetailNotifierProviderElement(super.provider);
 
   @override
-  String get uid => (origin as UserProfileInfoProvider).uid;
+  String get uid => (origin as UserDetailNotifierProvider).uid;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
