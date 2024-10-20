@@ -8,7 +8,7 @@ class PostQueryNotifier extends _$PostQueryNotifier {
   @override
   PostQuery build() {
     return PostQuery(
-      type: PostQueryType.own,
+      type: PostQueryType.timeline,
       params: {},
     );
   }
@@ -19,7 +19,7 @@ class PostQueryNotifier extends _$PostQueryNotifier {
 
   void reset() {
     state = PostQuery(
-      type: PostQueryType.own,
+      type: PostQueryType.timeline,
       params: {},
     );
   }
