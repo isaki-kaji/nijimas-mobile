@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/post_query_provider.dart';
 import 'package:nijimas/application/state/posts_provider.dart';
 import 'package:nijimas/core/enum/main_category.dart';
@@ -20,9 +21,9 @@ import 'package:nijimas/presentation/widget/post/sub_category_chip.dart';
 
 class PostCard extends ConsumerWidget {
   final Post post;
-  final bool canGoDetail;
+  final bool canTap;
   final formatter = DateFormat('yyyy-MM-dd HH:mm');
-  PostCard({super.key, required this.post, required this.canGoDetail});
+  PostCard({super.key, required this.post, required this.canTap});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,7 +37,14 @@ class PostCard extends ConsumerWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  if (canGoDetail) {
+                  if (canTap) {
+                    final myUid = ref.watch(authStateProvider).valueOrNull!.uid;
+                    final query = (post.uid == myUid)
+                        ? PostQuery(type: PostQueryType.own, params: {})
+                        : PostQuery(
+                            type: PostQueryType.uid,
+                            params: {PostQueryKey.uid: post.uid});
+                    ref.read(postQueryNotifierProvider.notifier).set(query);
                     GoRouter.of(context).push("/profile/${post.uid}");
                   }
                 },
@@ -106,12 +114,14 @@ class PostCard extends ConsumerWidget {
                   ? SubCategoryChip(
                       categoryName: post.subCategory1!,
                       tapEvent: (_) {
-                        ref.read(postQueryNotifierProvider.notifier).set(
-                                PostQuery(
-                                    type: PostQueryType.subCategory,
-                                    params: {
-                                  PostQueryKey.subCategory: post.subCategory1!
-                                }));
+                        if (canTap) {
+                          ref.read(postQueryNotifierProvider.notifier).set(
+                                  PostQuery(
+                                      type: PostQueryType.subCategory,
+                                      params: {
+                                    PostQueryKey.subCategory: post.subCategory1!
+                                  }));
+                        }
                       },
                     )
                   : const SizedBox(),
@@ -119,12 +129,14 @@ class PostCard extends ConsumerWidget {
                   ? SubCategoryChip(
                       categoryName: post.subCategory2!,
                       tapEvent: (_) {
-                        ref.read(postQueryNotifierProvider.notifier).set(
-                                PostQuery(
-                                    type: PostQueryType.subCategory,
-                                    params: {
-                                  PostQueryKey.subCategory: post.subCategory2!
-                                }));
+                        if (canTap) {
+                          ref.read(postQueryNotifierProvider.notifier).set(
+                                  PostQuery(
+                                      type: PostQueryType.subCategory,
+                                      params: {
+                                    PostQueryKey.subCategory: post.subCategory2!
+                                  }));
+                        }
                       })
                   : const SizedBox()
             ]),
@@ -149,7 +161,7 @@ class PostCard extends ConsumerWidget {
                 onTap: () {
                   final query = ref.watch(postQueryNotifierProvider);
                   final postsNotifier =
-                      ref.read(postsNotifierProvider(query).notifier);
+                      ref.watch(postsNotifierProvider(query).notifier);
                   postsNotifier.toggleFavorite(
                     ToggleFavoriteRequest(
                       postId: post.postId,
