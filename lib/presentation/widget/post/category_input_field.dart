@@ -43,7 +43,9 @@ class CategoryInputField extends StatelessWidget {
                       })),
               ...useSubCategories.value.map((s) {
                 return SubCategoryChip(
-                    categoryName: s, tapEvent: (s) => removeSubCategory(s));
+                    categoryName: s,
+                    tapEvent: (s) => removeSubCategory(s),
+                    showIcon: true);
               }),
               if (useSubCategories.value.length < 2)
                 useIsVisibleTextFieldChip.value

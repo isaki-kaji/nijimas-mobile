@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nijimas/application/state/post_query_provider.dart';
 import 'package:nijimas/core/enum/main_category.dart';
 import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/core/theme/color.dart';
@@ -9,10 +10,7 @@ import 'package:nijimas/core/util/sizing.dart';
 class PostSearchDialog extends HookWidget {
   const PostSearchDialog({
     super.key,
-    required this.usePostQuery,
   });
-
-  final ValueNotifier<PostQuery> usePostQuery;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +35,6 @@ class PostSearchDialog extends HookWidget {
             Align(
               alignment: const Alignment(0.9, 0.9),
               child: CustomRoundButton(
-                usePostQuery: usePostQuery,
                 searchedMainCategory: searchedMainCategory.value,
                 searchedSubCategory: searchedSubCategory.value,
               ),
@@ -168,12 +165,10 @@ class SelectSubCategoryField extends HookWidget {
 class CustomRoundButton extends HookConsumerWidget {
   const CustomRoundButton({
     super.key,
-    required this.usePostQuery,
     required this.searchedMainCategory,
     required this.searchedSubCategory,
   });
 
-  final ValueNotifier<PostQuery> usePostQuery;
   final MainCategory? searchedMainCategory;
   final String? searchedSubCategory;
 
@@ -187,34 +182,37 @@ class CustomRoundButton extends HookConsumerWidget {
         }
 
         if (searchedSubCategory == null || searchedSubCategory!.isEmpty) {
-          usePostQuery.value = PostQuery(
+          final query = PostQuery(
             type: PostQueryType.mainCategory,
             params: {
               PostQueryKey.mainCategory: searchedMainCategory.toString(),
             },
           );
+          ref.read(postQueryNotifierProvider.notifier).set(query);
           Navigator.of(context).pop();
           return;
         }
 
         if (searchedMainCategory == null) {
-          usePostQuery.value = PostQuery(
+          final query = PostQuery(
             type: PostQueryType.subCategory,
             params: {
               PostQueryKey.subCategory: searchedSubCategory!,
             },
           );
+          ref.read(postQueryNotifierProvider.notifier).set(query);
           Navigator.of(context).pop();
           return;
         }
 
-        usePostQuery.value = PostQuery(
+        final query = PostQuery(
           type: PostQueryType.mainCategoryAndSubCategory,
           params: {
             PostQueryKey.mainCategory: searchedMainCategory.toString(),
             PostQueryKey.subCategory: searchedSubCategory!,
           },
         );
+        ref.read(postQueryNotifierProvider.notifier).set(query);
         Navigator.of(context).pop();
       },
       child: Container(

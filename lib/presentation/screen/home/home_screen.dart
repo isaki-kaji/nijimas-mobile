@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/monthly_summary_provider.dart';
+import 'package:nijimas/application/state/post_query_provider.dart';
 import 'package:nijimas/core/constant/animation_constant.dart';
 import 'package:nijimas/core/constant/page_constant.dart';
 import 'package:nijimas/core/enum/post_query.dart';
@@ -15,7 +16,7 @@ import 'package:nijimas/presentation/widget/common/custom_wave.dart';
 import 'package:nijimas/core/util/sizing.dart';
 import 'package:nijimas/presentation/widget/common/trailing_icon_button.dart';
 import 'package:nijimas/presentation/widget/home/menu_drawer.dart';
-import 'package:nijimas/presentation/widget/home/post_search_modal.dart';
+import 'package:nijimas/presentation/widget/home/post_search_dialog.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
 class HomeScreen extends HookConsumerWidget {
@@ -37,16 +38,14 @@ class HomeScreen extends HookConsumerWidget {
 
     final useYearMonth = useState(YearMonth.now());
     final usePage = useState(0);
-    final initialQuery = PostQuery(
-      type: PostQueryType.own,
-      params: {},
-    );
-    final usePostQuery = useState(initialQuery);
 
     void onPageChanged(int index) {
       //FeedScreenでHomeを押した場合、usePostQueryを初期化する
       if (usePage.value == 0 && index == 0) {
-        usePostQuery.value = initialQuery;
+        final query = ref.read(postQueryNotifierProvider);
+        if (query.type != PostQueryType.own) {
+          ref.read(postQueryNotifierProvider.notifier).reset();
+        }
       }
 
       if (usePage.value == 1) {
@@ -86,7 +85,7 @@ class HomeScreen extends HookConsumerWidget {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return PostSearchDialog(usePostQuery: usePostQuery);
+                            return PostSearchDialog();
                           },
                         );
                       },
@@ -157,8 +156,7 @@ class HomeScreen extends HookConsumerWidget {
               ],
             ),
       endDrawer: const MenuDrawer(),
-      body: PageConstant.getTabPage(
-          usePage.value, usePostQuery.value, useYearMonth.value),
+      body: PageConstant.getTabPage(usePage.value, useYearMonth.value),
       bottomSheet: useIsVisible.value
           ? AnimatedBuilder(
               animation: animationController,

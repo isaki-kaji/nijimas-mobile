@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:nijimas/application/state/post_query_provider.dart';
 import 'package:nijimas/application/state/posts_provider.dart';
 import 'package:nijimas/core/enum/main_category.dart';
 import 'package:nijimas/core/enum/post_query.dart';
@@ -19,14 +20,9 @@ import 'package:nijimas/presentation/widget/post/sub_category_chip.dart';
 
 class PostCard extends ConsumerWidget {
   final Post post;
-  final PostQuery query;
   final bool canGoDetail;
   final formatter = DateFormat('yyyy-MM-dd HH:mm');
-  PostCard(
-      {super.key,
-      required this.post,
-      required this.query,
-      required this.canGoDetail});
+  PostCard({super.key, required this.post, required this.canGoDetail});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -107,10 +103,29 @@ class PostCard extends ConsumerWidget {
               MainCategoryChip(
                   category: MainCategory.fromName(post.mainCategory)),
               post.subCategory1 != null
-                  ? SubCategoryChip(categoryName: post.subCategory1!)
+                  ? SubCategoryChip(
+                      categoryName: post.subCategory1!,
+                      tapEvent: (_) {
+                        ref.read(postQueryNotifierProvider.notifier).set(
+                                PostQuery(
+                                    type: PostQueryType.subCategory,
+                                    params: {
+                                  PostQueryKey.subCategory: post.subCategory1!
+                                }));
+                      },
+                    )
                   : const SizedBox(),
               post.subCategory2 != null
-                  ? SubCategoryChip(categoryName: post.subCategory2!)
+                  ? SubCategoryChip(
+                      categoryName: post.subCategory2!,
+                      tapEvent: (_) {
+                        ref.read(postQueryNotifierProvider.notifier).set(
+                                PostQuery(
+                                    type: PostQueryType.subCategory,
+                                    params: {
+                                  PostQueryKey.subCategory: post.subCategory2!
+                                }));
+                      })
                   : const SizedBox()
             ]),
           ),
@@ -132,6 +147,7 @@ class PostCard extends ConsumerWidget {
                     ? const Icon(Icons.favorite, color: MyColors.pink)
                     : const Icon(Icons.favorite_border),
                 onTap: () {
+                  final query = ref.watch(postQueryNotifierProvider);
                   final postsNotifier =
                       ref.read(postsNotifierProvider(query).notifier);
                   postsNotifier.toggleFavorite(
