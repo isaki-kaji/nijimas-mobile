@@ -85,7 +85,7 @@ class HomeScreen extends HookConsumerWidget {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return PostSearchDialog();
+                            return const PostSearchDialog();
                           },
                         );
                       },
@@ -169,7 +169,6 @@ class HomeScreen extends HookConsumerWidget {
               },
             )
           : null,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: useIsVisible.value
           ? null
           : FloatingActionButton(
@@ -195,7 +194,10 @@ class HomeScreen extends HookConsumerWidget {
                     icon: const Icon(Icons.home), title: const Text("Home")),
                 BottomBarItem(
                     icon: const Icon(Icons.bar_chart),
-                    title: const Text("Data"))
+                    title: const Text("Data")),
+                BottomBarItem(
+                    icon: const Icon(Icons.notifications),
+                    title: const Text("Notification")),
               ],
             ),
     );

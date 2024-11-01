@@ -1,26 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'post_query_provider.dart';
+part of 'follow_request_usecase_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$postQueryNotifierHash() => r'fee64e0e5a92d8c24f01c1097c88335bb4921d4b';
+String _$followRequestUsecaseHash() =>
+    r'7c3ba105d010d3c5e5f941047b0a2632104c5a23';
 
-/// See also [PostQueryNotifier].
-@ProviderFor(PostQueryNotifier)
-final postQueryNotifierProvider =
-    AutoDisposeNotifierProvider<PostQueryNotifier, PostQuery>.internal(
-  PostQueryNotifier.new,
-  name: r'postQueryNotifierProvider',
+/// See also [followRequestUsecase].
+@ProviderFor(followRequestUsecase)
+final followRequestUsecaseProvider =
+    AutoDisposeProvider<FollowRequestUsecase>.internal(
+  followRequestUsecase,
+  name: r'followRequestUsecaseProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$postQueryNotifierHash,
+      : _$followRequestUsecaseHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$PostQueryNotifier = AutoDisposeNotifier<PostQuery>;
+typedef FollowRequestUsecaseRef = AutoDisposeProviderRef<FollowRequestUsecase>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -8,7 +8,7 @@ class UserDetail {
   final String username;
   final String? selfIntro;
   final String? profileImageUrl;
-  final bool isFollowing;
+  final String followingStatus;
   final int followingCount;
   final int followersCount;
   final int postCount;
@@ -18,7 +18,7 @@ class UserDetail {
       required this.username,
       this.selfIntro,
       this.profileImageUrl,
-      required this.isFollowing,
+      required this.followingStatus,
       required this.followingCount,
       required this.followersCount,
       required this.postCount});
@@ -33,7 +33,7 @@ class UserDetail {
     String? username,
     String? selfIntro,
     String? profileImageUrl,
-    bool? isFollowing,
+    String? followingStatus,
     int? followingCount,
     int? followersCount,
     int? postCount,
@@ -43,7 +43,7 @@ class UserDetail {
       username: username ?? this.username,
       selfIntro: selfIntro ?? this.selfIntro,
       profileImageUrl: profileImageUrl ?? this.profileImageUrl,
-      isFollowing: isFollowing ?? this.isFollowing,
+      followingStatus: followingStatus ?? this.followingStatus,
       followingCount: followingCount ?? this.followingCount,
       followersCount: followersCount ?? this.followersCount,
       postCount: postCount ?? this.postCount,

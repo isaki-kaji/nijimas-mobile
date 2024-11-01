@@ -13,7 +13,7 @@ class FollowRepository {
     _dio.interceptors.add(AuthInterceptor());
   }
 
-  Future<void> toggleFavorite(ToggleFollowRequest request) async {
+  Future<void> toggleFollow(ToggleFollowRequest request) async {
     final response =
         await _dio.post("${Env.baseUrl}/follows", data: request.toJson());
     if (response.statusCode == 201 || response.statusCode == 204) {
