@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:logger/web.dart';
 import 'package:nijimas/core/constant/env_constant.dart';
+import 'package:nijimas/core/model/follow_request.dart';
 import 'package:nijimas/core/request/toggle_follow_request.dart';
 import 'package:nijimas/repository/interceptor/auth_interceptor.dart';
 
@@ -14,7 +15,7 @@ class FollowRequestRepository {
   }
 
   Future<void> doFollowRequest(ToggleFollowRequest request) async {
-    final response = await _dio.post("${Env.baseUrl}/follow-request",
+    final response = await _dio.post("${Env.baseUrl}/follow-requests",
         data: request.toJson());
     if (response.statusCode == 200) {
       return;
@@ -25,7 +26,7 @@ class FollowRequestRepository {
   }
 
   Future<void> deleteFollowRequest(ToggleFollowRequest request) async {
-    final response = await _dio.delete("${Env.baseUrl}/follow-request",
+    final response = await _dio.delete("${Env.baseUrl}/follow-requests",
         data: request.toJson());
     if (response.statusCode == 204) {
       return;
@@ -33,5 +34,28 @@ class FollowRequestRepository {
     _logger.e(response.data);
     throw Exception(
         "Failed to delete follow request with status code: ${response.statusCode}");
+  }
+
+  Future<void> handleFollowRequest(String status) async {
+    final response = await _dio.put("${Env.baseUrl}/follow-requests",
+        queryParameters: {"status": status});
+    if (response.statusCode == 200) {
+      return;
+    }
+    _logger.e(response.data);
+    throw Exception(
+        "Failed to handle follow request with status code: ${response.statusCode}");
+  }
+
+  Future<List<FollowRequest>> getFollowRequests() async {
+    final response = await _dio.get("${Env.baseUrl}/me/follow-requests");
+    if (response.statusCode == 200) {
+      return (response.data as List)
+          .map((e) => FollowRequest.fromJson(e))
+          .toList();
+    }
+    _logger.e(response.data);
+    throw Exception(
+        "Failed to get follow requests with status code: ${response.statusCode}");
   }
 }
