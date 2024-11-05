@@ -4,7 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/post_query_provider.dart';
 import 'package:nijimas/application/state/posts_provider.dart';
-import 'package:nijimas/application/state/user_detail_provider.dart';
 import 'package:nijimas/l10n/gen_l10n/app_localizations.dart';
 import 'package:nijimas/presentation/widget/common/loader.dart';
 import 'package:nijimas/presentation/widget/feed/post_card.dart';
@@ -20,25 +19,25 @@ class UserDetailScreen extends ConsumerWidget {
     final myUid = ref.watch(authStateProvider).valueOrNull!.uid;
     final query = ref.watch(postQueryNotifierProvider);
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          if (myUid == uid)
-            PopupMenuButton(itemBuilder: (context) {
-              return [
-                PopupMenuItem(
-                  child: Text(l10n.editProfile),
-                  onTap: () => GoRouter.of(context).push("/profile/$uid/edit"),
-                ),
-              ];
-            })
-        ],
-      ),
-      body: ref.watch(userDetailNotifierProvider(uid)).when(data: (data) {
-        return NestedScrollView(
+        appBar: AppBar(
+          actions: [
+            if (myUid == uid)
+              PopupMenuButton(itemBuilder: (context) {
+                return [
+                  PopupMenuItem(
+                    child: Text(l10n.editProfile),
+                    onTap: () =>
+                        GoRouter.of(context).push("/profile/$myUid/edit"),
+                  ),
+                ];
+              })
+          ],
+        ),
+        body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return [
               SliverToBoxAdapter(
-                child: ProfileHeader(user: data),
+                child: ProfileHeader(uid: uid),
               ),
             ];
           },
@@ -59,12 +58,6 @@ class UserDetailScreen extends ConsumerWidget {
               return const Center(child: Loader());
             },
           ),
-        );
-      }, error: (error, _) {
-        return Center(child: Text(error.toString()));
-      }, loading: () {
-        return const Center(child: SizedBox());
-      }),
-    );
+        ));
   }
 }

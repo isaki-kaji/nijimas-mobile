@@ -1,4 +1,4 @@
-import 'package:nijimas/core/request/toggle_follow_request.dart';
+import 'package:nijimas/core/request/toggle_follow_request_request.dart';
 import 'package:nijimas/repository/follow_repository.dart';
 
 class FollowUsecase {
@@ -7,6 +7,6 @@ class FollowUsecase {
   FollowUsecase({required FollowRepository followRepository})
       : _followRepository = followRepository;
 
-  Future<void> toggleFollow(ToggleFollowRequest request) async =>
+  Future<void> toggleFollow(ToggleFollowRequestRequest request) async =>
       _followRepository.toggleFollow(request);
 }

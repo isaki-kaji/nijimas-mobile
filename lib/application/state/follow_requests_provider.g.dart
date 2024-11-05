@@ -6,7 +6,7 @@ part of 'follow_requests_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$followRequestsHash() => r'f0f9b4b52f9b15a7d8efb9cbd3ab48da10497ea5';
+String _$followRequestsHash() => r'b4684425cbcb519ea1e82a1991099141dd10219e';
 
 /// See also [FollowRequests].
 @ProviderFor(FollowRequests)

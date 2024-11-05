@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
-import 'package:nijimas/application/state/user_detail_provider.dart';
 import 'package:nijimas/core/constant/following_status_constant.dart';
-import 'package:nijimas/core/request/toggle_follow_request.dart';
+import 'package:nijimas/core/provider/usecase/follow_request_usecase_provider.dart';
 import 'package:nijimas/core/theme/color.dart';
 
 class FollowButton extends ConsumerWidget {
@@ -12,6 +11,7 @@ class FollowButton extends ConsumerWidget {
     required this.uid,
     required this.followingStatus,
   });
+
   final String uid;
   final String followingStatus;
 
@@ -24,46 +24,41 @@ class FollowButton extends ConsumerWidget {
   }
 
   Widget _buildFollowButton(BuildContext context, WidgetRef ref) {
-    final userDetailNotifier =
-        ref.read(userDetailNotifierProvider(uid).notifier);
-    final request = ToggleFollowRequest(followingUid: uid);
-    if (followingStatus == FollowingStatusConstant.notFollowing) {
-      return OutlinedButton(
-        onPressed: () {
-          userDetailNotifier.toggleFollowRequest(request);
-        },
-        child: const Text(
-          'フォロー',
-        ),
-      );
-    }
+    final usecase = ref.read(followRequestUsecaseProvider(uid));
 
-    if (followingStatus == FollowingStatusConstant.following) {
-      return OutlinedButton(
-        onPressed: () {
-          userDetailNotifier.toggleFollowRequest(request);
-        },
-        style: OutlinedButton.styleFrom(
+    // 状態に応じてテキストとスタイルを設定
+    String buttonText;
+    ButtonStyle buttonStyle;
+    switch (followingStatus) {
+      case FollowingStatusConstant.notFollowing:
+        buttonText = 'フォロー';
+        buttonStyle = OutlinedButton.styleFrom();
+        break;
+      case FollowingStatusConstant.following:
+        buttonText = 'フォロー中';
+        buttonStyle = OutlinedButton.styleFrom(
           backgroundColor: MyColors.pink.withOpacity(0.8),
-        ),
-        child: const Text(
-          'フォロー中',
-          style: TextStyle(color: MyColors.white),
-        ),
-      );
+          foregroundColor: MyColors.white,
+        );
+        break;
+      default:
+        buttonText = 'フォロー申請中';
+        buttonStyle = OutlinedButton.styleFrom(
+          foregroundColor: MyColors.pink,
+          side: const BorderSide(color: MyColors.pink, width: 1),
+        );
     }
 
     return OutlinedButton(
       onPressed: () {
-        userDetailNotifier.toggleFollowRequest(request);
+        usecase.toggleFollowRequest(
+          followingUid: uid,
+          followingStatus: followingStatus,
+          onFailure: () {},
+        );
       },
-      style: OutlinedButton.styleFrom(
-        foregroundColor: MyColors.pink,
-        side: const BorderSide(color: MyColors.pink, width: 1),
-      ),
-      child: const Text(
-        'フォロー申請中',
-      ),
+      style: buttonStyle,
+      child: Text(buttonText),
     );
   }
 }
