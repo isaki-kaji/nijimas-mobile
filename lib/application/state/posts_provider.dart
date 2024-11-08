@@ -1,9 +1,7 @@
 import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/core/provider/repository/post_repository_provider.dart';
 import 'package:nijimas/core/provider/repository/post_search_repository_provider.dart';
-import 'package:nijimas/core/provider/usecase/favorite_usecase_provider.dart';
 import 'package:nijimas/core/model/post.dart';
-import 'package:nijimas/core/request/toggle_favorite_request.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'posts_provider.g.dart';
@@ -42,24 +40,16 @@ class PostsNotifier extends _$PostsNotifier {
     }
   }
 
-  Future<void> toggleFavorite(ToggleFavoriteRequest request) async {
+  Future<void> toggleFavorite(String postId, bool isFavorite) async {
     final currentState = state.valueOrNull;
     if (currentState == null) return;
 
     final updatedPosts = currentState.map((post) {
-      if (post.postId == request.postId) {
-        return post.copyWith(isFavorite: !post.isFavorite);
+      if (post.postId == postId) {
+        return post.copyWith(isFavorite: isFavorite);
       }
       return post;
     }).toList();
     state = AsyncValue.data(updatedPosts);
-
-    try {
-      await ref.read(favoriteUsecaseProvider).toggleFavorite(request);
-    } catch (e) {
-      // 失敗した場合のロールバック
-      state = AsyncValue.data(currentState);
-      rethrow;
-    }
   }
 }

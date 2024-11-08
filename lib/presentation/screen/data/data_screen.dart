@@ -66,7 +66,7 @@ class DataScreen extends HookConsumerWidget {
                 SubCategoryCards(summary: calculatedSubCategorySummary),
                 const SizedBox(height: 20),
                 DataCard(
-                  title: '日ごとの投稿数',
+                  title: '日ごとの出費数',
                   chart: ActivityHeatMap(
                       activities: data.dailyCount,
                       year: year,
