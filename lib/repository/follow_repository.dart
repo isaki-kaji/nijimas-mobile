@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:logger/web.dart';
 import 'package:nijimas/core/constant/env_constant.dart';
-import 'package:nijimas/core/request/toggle_follow_request.dart';
+import 'package:nijimas/core/request/toggle_follow_request_request.dart';
 import 'package:nijimas/repository/interceptor/auth_interceptor.dart';
 
 class FollowRepository {
@@ -13,7 +13,7 @@ class FollowRepository {
     _dio.interceptors.add(AuthInterceptor());
   }
 
-  Future<void> toggleFollow(ToggleFollowRequest request) async {
+  Future<void> toggleFollow(ToggleFollowRequestRequest request) async {
     final response =
         await _dio.post("${Env.baseUrl}/follows", data: request.toJson());
     if (response.statusCode == 201 || response.statusCode == 204) {

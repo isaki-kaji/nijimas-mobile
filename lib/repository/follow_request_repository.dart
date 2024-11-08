@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:logger/web.dart';
 import 'package:nijimas/core/constant/env_constant.dart';
 import 'package:nijimas/core/model/follow_request.dart';
-import 'package:nijimas/core/request/toggle_follow_request.dart';
+import 'package:nijimas/core/request/toggle_follow_request_request.dart';
 import 'package:nijimas/repository/interceptor/auth_interceptor.dart';
 
 class FollowRequestRepository {
@@ -14,7 +14,7 @@ class FollowRequestRepository {
     _dio.interceptors.add(AuthInterceptor());
   }
 
-  Future<void> doFollowRequest(ToggleFollowRequest request) async {
+  Future<void> doFollowRequest(ToggleFollowRequestRequest request) async {
     final response = await _dio.post("${Env.baseUrl}/follow-requests",
         data: request.toJson());
     if (response.statusCode == 200) {
@@ -25,7 +25,7 @@ class FollowRequestRepository {
         "Failed to do follow request with status code: ${response.statusCode}");
   }
 
-  Future<void> deleteFollowRequest(ToggleFollowRequest request) async {
+  Future<void> deleteFollowRequest(ToggleFollowRequestRequest request) async {
     final response = await _dio.delete("${Env.baseUrl}/follow-requests",
         data: request.toJson());
     if (response.statusCode == 204) {

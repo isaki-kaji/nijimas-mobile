@@ -6,15 +6,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/post_query_provider.dart';
-import 'package:nijimas/application/state/posts_provider.dart';
 import 'package:nijimas/core/enum/main_category.dart';
 import 'package:nijimas/core/enum/post_query.dart';
+import 'package:nijimas/core/provider/usecase/favorite_usecase_provider.dart';
 import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/core/theme/text_style.dart';
 import 'package:nijimas/core/util/sizing.dart';
 import 'package:nijimas/core/util/timezone.dart';
 import 'package:nijimas/core/model/post.dart';
-import 'package:nijimas/core/request/toggle_favorite_request.dart';
 import 'package:nijimas/presentation/widget/user/switch_circle_avatar.dart';
 import 'package:nijimas/presentation/widget/post/main_category_chip.dart';
 import 'package:nijimas/presentation/widget/post/sub_category_chip.dart';
@@ -160,12 +159,10 @@ class PostCard extends ConsumerWidget {
                     : const Icon(Icons.favorite_border),
                 onTap: () {
                   final query = ref.watch(postQueryNotifierProvider);
-                  final postsNotifier =
-                      ref.watch(postsNotifierProvider(query).notifier);
-                  postsNotifier.toggleFavorite(
-                    ToggleFavoriteRequest(
-                      postId: post.postId,
-                    ),
+                  final usecase = ref.read(favoriteUsecaseProvider(query));
+                  usecase.toggleFavorite(
+                    postId: post.postId,
+                    onFailure: () {},
                   );
                 },
               )
