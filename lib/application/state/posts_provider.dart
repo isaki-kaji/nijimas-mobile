@@ -40,7 +40,7 @@ class PostsNotifier extends _$PostsNotifier {
     }
   }
 
-  Future<void> toggleFavorite(String postId, bool isFavorite) async {
+  void toggleFavorite(String postId, bool isFavorite) {
     final currentState = state.valueOrNull;
     if (currentState == null) return;
 

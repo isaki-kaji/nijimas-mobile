@@ -5,9 +5,14 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'follow_requests_provider.g.dart';
 
 @riverpod
-class FollowRequests extends _$FollowRequests {
+class FollowRequestsNotifier extends _$FollowRequestsNotifier {
   @override
   Future<List<FollowRequest>> build() async {
     return await ref.read(followRequestRepositoryProvider).getFollowRequests();
+  }
+
+  void remove(String uid) {
+    state = state.whenData(
+        (requests) => requests.where((element) => element.uid != uid).toList());
   }
 }

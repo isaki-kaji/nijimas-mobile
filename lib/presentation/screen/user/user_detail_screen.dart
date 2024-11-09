@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
-import 'package:nijimas/application/state/post_query_provider.dart';
 import 'package:nijimas/application/state/posts_provider.dart';
+import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/l10n/gen_l10n/app_localizations.dart';
 import 'package:nijimas/presentation/widget/common/loader.dart';
 import 'package:nijimas/presentation/widget/feed/post_card.dart';
 import 'package:nijimas/presentation/widget/user/profile_header.dart';
 
-class UserDetailScreen extends ConsumerWidget {
+class UserDetailScreen extends HookConsumerWidget {
   const UserDetailScreen({super.key, required this.uid});
   final String uid;
 
@@ -17,7 +18,13 @@ class UserDetailScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = L10n.of(context);
     final myUid = ref.watch(authStateProvider).valueOrNull!.uid;
-    final query = ref.watch(postQueryNotifierProvider);
+
+    final query = (uid == myUid)
+        ? PostQuery(type: PostQueryType.own, params: {})
+        : PostQuery(type: PostQueryType.uid, params: {PostQueryKey.uid: uid});
+
+    final useQuery = useState(query);
+
     return Scaffold(
         appBar: AppBar(
           actions: [
@@ -41,7 +48,7 @@ class UserDetailScreen extends ConsumerWidget {
               ),
             ];
           },
-          body: ref.watch(postsNotifierProvider(query)).when(
+          body: ref.watch(postsNotifierProvider(useQuery.value)).when(
             data: (data) {
               return ListView.builder(
                 itemCount: data.length,

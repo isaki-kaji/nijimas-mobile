@@ -1,6 +1,5 @@
 import 'package:nijimas/application/state/user_detail_provider.dart';
 import 'package:nijimas/core/constant/following_status_constant.dart';
-import 'package:nijimas/core/model/follow_request.dart';
 import 'package:nijimas/core/request/toggle_follow_request_request.dart';
 import 'package:nijimas/repository/follow_repository.dart';
 import 'package:nijimas/repository/follow_request_repository.dart';
@@ -42,10 +41,4 @@ class FollowRequestUsecase {
       onFailure();
     }
   }
-
-  Future<void> handleFollowRequest(String status) async =>
-      _followRequestRepository.handleFollowRequest(status);
-
-  Future<List<FollowRequest>> getFollowRequests() async =>
-      _followRequestRepository.getFollowRequests();
 }
