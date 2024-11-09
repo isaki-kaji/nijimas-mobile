@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/post_query_provider.dart';
 import 'package:nijimas/core/enum/main_category.dart';
 import 'package:nijimas/core/enum/post_query.dart';
@@ -37,13 +36,6 @@ class PostCard extends ConsumerWidget {
               GestureDetector(
                 onTap: () {
                   if (canTap) {
-                    final myUid = ref.watch(authStateProvider).valueOrNull!.uid;
-                    final query = (post.uid == myUid)
-                        ? PostQuery(type: PostQueryType.own, params: {})
-                        : PostQuery(
-                            type: PostQueryType.uid,
-                            params: {PostQueryKey.uid: post.uid});
-                    ref.read(postQueryNotifierProvider.notifier).set(query);
                     GoRouter.of(context).push("/profile/${post.uid}");
                   }
                 },
