@@ -19,9 +19,14 @@ import 'package:nijimas/presentation/widget/post/sub_category_chip.dart';
 
 class PostCard extends ConsumerWidget {
   final Post post;
+  final PostQuery query;
   final bool canTap;
   final formatter = DateFormat('yyyy-MM-dd HH:mm');
-  PostCard({super.key, required this.post, required this.canTap});
+  PostCard(
+      {super.key,
+      required this.post,
+      required this.query,
+      required this.canTap});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -150,7 +155,6 @@ class PostCard extends ConsumerWidget {
                     ? const Icon(Icons.favorite, color: MyColors.pink)
                     : const Icon(Icons.favorite_border),
                 onTap: () {
-                  final query = ref.watch(postQueryNotifierProvider);
                   final usecase = ref.read(favoriteUsecaseProvider(query));
                   usecase.toggleFavorite(
                     postId: post.postId,
