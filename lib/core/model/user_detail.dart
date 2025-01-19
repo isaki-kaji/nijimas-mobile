@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:nijimas/core/model/user_top_subcategory.dart';
 
 part 'user_detail.g.dart';
 
@@ -12,6 +13,7 @@ class UserDetail {
   final int followingCount;
   final int followersCount;
   final int postCount;
+  final List<UserTopSubCategory> userTopSubcategories;
 
   const UserDetail(
       {required this.uid,
@@ -21,7 +23,8 @@ class UserDetail {
       required this.followingStatus,
       required this.followingCount,
       required this.followersCount,
-      required this.postCount});
+      required this.postCount,
+      required this.userTopSubcategories});
 
   factory UserDetail.fromJson(Map<String, dynamic> json) =>
       _$UserDetailFromJson(json);
@@ -37,6 +40,7 @@ class UserDetail {
     int? followingCount,
     int? followersCount,
     int? postCount,
+    List<UserTopSubCategory>? userTopSubcategories,
   }) {
     return UserDetail(
       uid: uid ?? this.uid,
@@ -47,6 +51,7 @@ class UserDetail {
       followingCount: followingCount ?? this.followingCount,
       followersCount: followersCount ?? this.followersCount,
       postCount: postCount ?? this.postCount,
+      userTopSubcategories: userTopSubcategories ?? this.userTopSubcategories,
     );
   }
 }

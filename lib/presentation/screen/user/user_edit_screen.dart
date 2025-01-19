@@ -8,13 +8,16 @@ import 'package:nijimas/application/formdata/user_form_data.dart';
 import 'package:nijimas/application/state/loading_provider.dart';
 import 'package:nijimas/application/state/posts_provider.dart';
 import 'package:nijimas/application/state/user_detail_provider.dart';
+import 'package:nijimas/core/model/user_top_subcategory.dart';
 import 'package:nijimas/core/provider/usecase/user_usecase_provider.dart';
 import 'package:nijimas/core/theme/color.dart';
+import 'package:nijimas/core/theme/text_style.dart';
 import 'package:nijimas/core/util/resize_image.dart';
 import 'package:nijimas/core/util/show_snack_bar.dart';
 import 'package:nijimas/core/util/sizing.dart';
 import 'package:nijimas/l10n/gen_l10n/app_localizations.dart';
 import 'package:nijimas/presentation/widget/common/loader.dart';
+import 'package:nijimas/presentation/widget/user/add_used_subcategory_bottom_sheet.dart';
 import 'package:nijimas/presentation/widget/user/switch_circle_avatar.dart';
 
 class UserEditScreen extends HookConsumerWidget {
@@ -126,7 +129,53 @@ class UserEditScreen extends HookConsumerWidget {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 50),
+                            SizedBox(
+                              width: Sizing.widthByMQ(context, 0.9),
+                              child: GestureDetector(
+                                onTap: () => showSelectTopSubcategoriesModal(
+                                    context, data.userTopSubcategories),
+                                child: ConstrainedBox(
+                                  constraints:
+                                      const BoxConstraints(maxWidth: 250),
+                                  child: Card(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const Row(
+                                            children: [
+                                              Text(
+                                                "よく使うサブカテゴリ",
+                                                style: MyTextStyles.body14,
+                                              ),
+                                              Icon(Icons.add_circle_outline,
+                                                  size: 18),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 10),
+                                          Wrap(
+                                            crossAxisAlignment:
+                                                WrapCrossAlignment.start,
+                                            spacing: 2,
+                                            runSpacing: 5,
+                                            children: data.userTopSubcategories
+                                                .map((category) {
+                                              return ScrollableSubCategoryChip(
+                                                categoryName:
+                                                    category.categoryName,
+                                              );
+                                            }).toList(),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 100),
                           ],
                         ),
                       ),
@@ -158,6 +207,8 @@ class UserEditScreen extends HookConsumerWidget {
                     profileImage: useImageBitmap.value.isNotEmpty
                         ? useImageBitmap.value[0]
                         : null,
+                    userTopSubcategories:
+                        user.valueOrNull!.userTopSubcategories,
                   );
                   final userUsecase = ref.read(userUsecaseProvider);
                   await userUsecase.updateUser(
@@ -173,6 +224,75 @@ class UserEditScreen extends HookConsumerWidget {
                 }
               },
             ),
+    );
+  }
+
+  Future<dynamic> showSelectTopSubcategoriesModal(
+      BuildContext context, List<UserTopSubCategory> categories) {
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      builder: (BuildContext context) {
+        return Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(16),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
+          ),
+          child: AddUsedSubcategoryBottomSheet(
+            topSubCategories: categories,
+          ),
+        );
+      },
+    );
+  }
+}
+
+class ScrollableSubCategoryChip extends StatelessWidget {
+  const ScrollableSubCategoryChip({
+    super.key,
+    required this.categoryName,
+  });
+  final String categoryName;
+
+  @override
+  Widget build(BuildContext context) {
+    return IntrinsicWidth(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 250),
+        child: Card(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.horizontal(
+              left: Radius.circular(30),
+              right: Radius.circular(30),
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    categoryName,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

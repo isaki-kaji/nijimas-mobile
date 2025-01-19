@@ -31,19 +31,32 @@ class SubCategoryCards extends StatelessWidget {
 
   // カード表示
   Widget _buildCard(String categoryName, double percent) {
-    return Card(
-      color: MyColors.getSubCategoryPercentColor(percent),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.horizontal(
-          left: Radius.circular(30),
-          right: Radius.circular(30),
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
-        child: Text(
-          categoryName,
-          style: const TextStyle(color: Colors.black),
+    return IntrinsicWidth(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 250),
+        child: Card(
+          color: MyColors.getSubCategoryPercentColor(percent),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.horizontal(
+              left: Radius.circular(30),
+              right: Radius.circular(30),
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    categoryName,
+                    style: const TextStyle(color: Colors.black),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -62,7 +75,7 @@ class SubCategoryCards extends StatelessWidget {
             children: [
               Text("支出額 : ${item.amount.toInt()} 円"),
               const SizedBox(height: 20),
-              Text("支出割合 : ${item.percentage} %"),
+              Text("支出割合 : ${item.percentage.toStringAsFixed(1)} %"),
               const SizedBox(height: 20),
               Text("支出回数 : ${item.count} 回"),
             ],

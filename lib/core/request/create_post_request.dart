@@ -1,8 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:nijimas/core/util/transform_json.dart';
 
 part 'create_post_request.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable()
 class CreatePostRequest {
   final String postId;
   final String uid;
@@ -25,5 +26,9 @@ class CreatePostRequest {
       this.expense,
       this.location,
       required this.publicTypeNo});
-  Map<String, Object?> toJson() => _$CreatePostRequestToJson(this);
+
+  Map<String, dynamic> toJson() {
+    final data = _$CreatePostRequestToJson(this);
+    return data.map((key, value) => MapEntry(snakeToCamel(key), value));
+  }
 }

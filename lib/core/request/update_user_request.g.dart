@@ -12,7 +12,9 @@ UpdateUserRequest _$UpdateUserRequestFromJson(Map<String, dynamic> json) =>
       username: json['username'] as String?,
       selfIntro: json['self_intro'] as String?,
       profileImageUrl: json['profile_image_url'] as String?,
-      bannerImageUrl: json['banner_image_url'] as String?,
+      userTopSubcategories: (json['user_top_subcategories'] as List<dynamic>)
+          .map((e) => UserTopSubCategory.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$UpdateUserRequestToJson(UpdateUserRequest instance) =>
@@ -21,5 +23,5 @@ Map<String, dynamic> _$UpdateUserRequestToJson(UpdateUserRequest instance) =>
       'username': instance.username,
       'self_intro': instance.selfIntro,
       'profile_image_url': instance.profileImageUrl,
-      'banner_image_url': instance.bannerImageUrl,
+      'user_top_subcategories': instance.userTopSubcategories,
     };

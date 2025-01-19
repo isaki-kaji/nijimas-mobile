@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'post.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable()
 class Post {
   final String postId;
   final String uid;
@@ -34,7 +34,23 @@ class Post {
     required this.createdAt,
   });
 
-  factory Post.fromJson(Map<String, dynamic> json) => _$PostFromJson(json);
+  factory Post.fromJson(Map<String, dynamic> json) {
+    return Post(
+      postId: json['postId'] as String,
+      uid: json['uid'] as String,
+      username: json['username'] as String,
+      profileImageUrl: json['profileImageUrl'] as String?,
+      mainCategory: json['mainCategory'] as String,
+      subCategory1: json['subCategory1'] as String?,
+      subCategory2: json['subCategory2'] as String?,
+      postText: json['postText'] as String?,
+      photoUrl: List<String>.from(json['photoUrlList'] ?? []), // 空配列を保証
+      expense: json['expense'] as String,
+      location: json['location'] as String?,
+      isFavorite: json['isFavorite'] as bool,
+      createdAt: DateTime.parse(json['createdAt']), // DateTimeに変換
+    );
+  }
 
   Map<String, dynamic> toJson() => _$PostToJson(this);
 

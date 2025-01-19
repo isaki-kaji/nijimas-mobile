@@ -80,15 +80,11 @@ class RegisterUserScreen extends HookConsumerWidget {
                           showErrorSnackBar(context, l10n.enterNameCaption);
                           return;
                         }
-                        final locale = Localizations.localeOf(context);
                         ref.read(userUsecaseProvider).createUser(
                             request: CreateUserRequest(
-                                uid: ref
-                                    .read(authStateProvider)
-                                    .valueOrNull!
-                                    .uid,
-                                username: nameValue,
-                                countryCode: locale.countryCode),
+                              uid: ref.read(authStateProvider).valueOrNull!.uid,
+                              username: nameValue,
+                            ),
                             onSuccess: () {
                               animationController.forward();
                             },

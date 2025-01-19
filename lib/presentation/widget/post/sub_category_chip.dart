@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 
 class SubCategoryChip extends StatelessWidget {
   final String categoryName;
+  final String? categoryId;
   final void Function(String)? tapEvent;
   final bool showIcon;
   const SubCategoryChip({
     super.key,
     required this.categoryName,
+    this.categoryId,
     this.tapEvent,
     this.showIcon = false,
   });

@@ -87,15 +87,9 @@ class ProfileHeader extends ConsumerWidget {
                           )
                         : const SizedBox.shrink(),
                     const SizedBox(height: 20),
-                    // const SpendingPercentageCard(
-                    //   spendingPercentages: {
-                    //     MainCategory.hobbies: 0.4,
-                    //     MainCategory.food: 0.2,
-                    //     MainCategory.transport: 0.2,
-                    //     MainCategory.entertainment: 0.2,
-                    //   },
-                    // ),
-                    const SizedBox(height: 10.0),
+                    const SizedBox(
+                      width: double.infinity,
+                    ),
                   ],
                 ),
               ),

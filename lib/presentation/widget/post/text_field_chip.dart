@@ -26,7 +26,7 @@ class TextFieldChip extends StatelessWidget {
             padding: const EdgeInsets.only(left: 15, right: 15, bottom: 4),
             child: IntrinsicWidth(
                 child: TextFormField(
-              maxLength: 50,
+              maxLength: 30,
               onFieldSubmitted: onSubmit,
               controller: controller,
               decoration: const InputDecoration(

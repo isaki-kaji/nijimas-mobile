@@ -215,23 +215,33 @@ class CustomRoundButton extends HookConsumerWidget {
         ref.read(postQueryNotifierProvider.notifier).set(query);
         Navigator.of(context).pop();
       },
-      child: Container(
-        width: 56,
-        height: 56,
-        decoration: BoxDecoration(
-          color: MyColors.pink,
-          shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              spreadRadius: 1,
-              blurRadius: 6,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
-        child: const Icon(Icons.search, color: MyColors.white),
+      child: const SubButton(icon: Icons.search),
+    );
+  }
+}
+
+class SubButton extends StatelessWidget {
+  final IconData icon;
+  const SubButton({super.key, required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 56,
+      height: 56,
+      decoration: BoxDecoration(
+        color: MyColors.pink,
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            spreadRadius: 1,
+            blurRadius: 6,
+            offset: const Offset(0, 3),
+          ),
+        ],
       ),
+      child: Icon(icon, color: MyColors.white),
     );
   }
 }

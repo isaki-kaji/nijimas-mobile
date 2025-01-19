@@ -1,4 +1,6 @@
+import 'package:nijimas/core/model/sub_category.dart';
 import 'package:nijimas/core/model/user_detail.dart';
+import 'package:nijimas/core/model/user_top_subcategory.dart';
 import 'package:nijimas/core/provider/repository/user_repository_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -23,6 +25,29 @@ class UserDetailNotifier extends _$UserDetailNotifier {
     final updatedUserDetail = currentState.copyWith(
       followingStatus: followingStatus,
     );
+    state = AsyncValue.data(updatedUserDetail);
+  }
+
+  void setUserTopSubCategories(List<SubCategory> topSubCategories) {
+    final currentState = state.valueOrNull;
+    if (currentState == null) return;
+
+    final updatedTopSubcategories =
+        topSubCategories.asMap().entries.map((entry) {
+      final index = entry.key;
+      final subCategory = entry.value;
+
+      return UserTopSubCategory(
+        categoryName: subCategory.categoryName,
+        categoryId: subCategory.categoryId,
+        categoryNo: (index + 1).toString(),
+      );
+    }).toList();
+
+    final updatedUserDetail = currentState.copyWith(
+      userTopSubcategories: updatedTopSubcategories,
+    );
+
     state = AsyncValue.data(updatedUserDetail);
   }
 }

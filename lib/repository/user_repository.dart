@@ -17,6 +17,7 @@ class UserRepository {
   }
 
   Future<dynamic> createUser(CreateUserRequest request) async {
+    print(request.toJson());
     final response =
         await _dio.post("${Env.baseUrl}/users", data: request.toJson());
     if (response.statusCode == 201) {

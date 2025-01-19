@@ -16,6 +16,7 @@ class PostRepository {
   }
 
   Future<dynamic> createPost(CreatePostRequest request) async {
+    print(request.toJson());
     final response =
         await _dio.post("${Env.baseUrl}/posts", data: request.toJson());
     if (response.statusCode == 201) {
