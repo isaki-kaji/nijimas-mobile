@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:nijimas/core/util/transform_json.dart';
 
 part 'create_post_request.g.dart';
 
@@ -27,8 +26,5 @@ class CreatePostRequest {
       this.location,
       required this.publicTypeNo});
 
-  Map<String, dynamic> toJson() {
-    final data = _$CreatePostRequestToJson(this);
-    return data.map((key, value) => MapEntry(snakeToCamel(key), value));
-  }
+  Map<String, dynamic> toJson() => _$CreatePostRequestToJson(this);
 }

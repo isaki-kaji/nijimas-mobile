@@ -10,6 +10,7 @@ part 'posts_provider.g.dart';
 class PostsNotifier extends _$PostsNotifier {
   @override
   Future<List<Post>> build(PostQuery query) async {
+    print(query);
     try {
       final postRepository = ref.read(postRepositoryProvider);
       final postSearchRepository = ref.read(postSearchRepositoryProvider);

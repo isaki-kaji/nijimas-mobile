@@ -10,7 +10,11 @@ class PostRepository {
   final Dio _dio;
   final Logger _logger;
   PostRepository({required Logger logger})
-      : _dio = Dio(),
+      : _dio = Dio(BaseOptions(
+          headers: {
+            "Content-Type": "application/json",
+          },
+        )),
         _logger = logger {
     _dio.interceptors.add(AuthInterceptor());
   }

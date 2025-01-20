@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'toggle_favorite_request.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable()
 class ToggleFavoriteRequest {
   final String postId;
 

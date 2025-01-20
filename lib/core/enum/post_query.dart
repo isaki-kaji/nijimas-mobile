@@ -49,4 +49,7 @@ class PostQuery {
       params: params ?? this.params,
     );
   }
+
+  @override
+  String toString() => 'PostQuery(type: $type, params: $params)';
 }
