@@ -15,6 +15,7 @@ class PostsLine extends ConsumerWidget {
     return ref.watch(postsNotifierProvider(query)).when(
       data: (data) {
         return ListView.builder(
+          padding: const EdgeInsets.only(bottom: 80.0),
           itemCount: data.length,
           itemBuilder: (context, index) {
             final post = data[index];
