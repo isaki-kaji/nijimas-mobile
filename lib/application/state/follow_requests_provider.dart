@@ -11,8 +11,8 @@ class FollowRequestsNotifier extends _$FollowRequestsNotifier {
     return await ref.read(followRequestRepositoryProvider).getFollowRequests();
   }
 
-  void remove(String uid) {
-    state = state.whenData(
-        (requests) => requests.where((element) => element.uid != uid).toList());
+  void remove(String requestId) {
+    state = state.whenData((requests) =>
+        requests.where((element) => element.requestId != requestId).toList());
   }
 }

@@ -1,6 +1,5 @@
 import 'package:nijimas/application/state/follow_requests_provider.dart';
 import 'package:nijimas/core/constant/handle_follow_request_constant.dart';
-import 'package:nijimas/core/request/handle_follow_request_request.dart';
 import 'package:nijimas/repository/follow_request_repository.dart';
 
 class HandleFollowRequestUsecase {
@@ -14,26 +13,24 @@ class HandleFollowRequestUsecase {
         _followRequestsNotifier = followRequestsNotifier;
 
   Future<void> acceptFollowRequest(
-      {required String uid, required void Function() onFailure}) async {
-    final request = HandleFollowRequestRequest(requestingUid: uid);
+      {required String requestId, required void Function() onFailure}) async {
     try {
       await _followRequestRepository.handleFollowRequest(
-          HandleFollowRequestConstant.accept, request);
+          requestId, HandleFollowRequestConstant.accept);
     } catch (e) {
       onFailure();
     }
-    _followRequestsNotifier.remove(uid);
+    _followRequestsNotifier.remove(requestId);
   }
 
   Future<void> rejectFollowRequest(
-      {required String uid, required void Function() onFailure}) async {
-    final request = HandleFollowRequestRequest(requestingUid: uid);
+      {required String requestId, required void Function() onFailure}) async {
     try {
       await _followRequestRepository.handleFollowRequest(
-          HandleFollowRequestConstant.reject, request);
+          requestId, HandleFollowRequestConstant.reject);
     } catch (e) {
       onFailure();
     }
-    _followRequestsNotifier.remove(uid);
+    _followRequestsNotifier.remove(requestId);
   }
 }

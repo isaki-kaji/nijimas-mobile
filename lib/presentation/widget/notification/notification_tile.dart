@@ -41,7 +41,7 @@ class NotificationTile extends ConsumerWidget {
                 OutlinedButton(
                   onPressed: () async {
                     await usecase.acceptFollowRequest(
-                        uid: followRequest.uid, onFailure: () {});
+                        requestId: followRequest.requestId, onFailure: () {});
                   },
                   child: const Text("承認"),
                 ),
@@ -49,7 +49,7 @@ class NotificationTile extends ConsumerWidget {
                 OutlinedButton(
                   onPressed: () async {
                     await usecase.rejectFollowRequest(
-                        uid: followRequest.uid, onFailure: () {});
+                        requestId: followRequest.requestId, onFailure: () {});
                   },
                   style: OutlinedButton.styleFrom(
                     foregroundColor: MyColors.pink,

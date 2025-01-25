@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:logger/web.dart';
 import 'package:nijimas/core/constant/env_constant.dart';
 import 'package:nijimas/core/model/follow_request.dart';
-import 'package:nijimas/core/request/handle_follow_request_request.dart';
 import 'package:nijimas/core/request/toggle_follow_request_request.dart';
 import 'package:nijimas/repository/interceptor/auth_interceptor.dart';
 
@@ -38,12 +37,18 @@ class FollowRequestRepository {
   }
 
   Future<void> handleFollowRequest(
-      String status, HandleFollowRequestRequest request) async {
-    final response = await _dio.put("${Env.baseUrl}/follow-requests",
-        queryParameters: {"status": status}, data: request.toJson());
+    String requestId,
+    String status,
+  ) async {
+    final response = await _dio.put(
+      "${Env.baseUrl}/follow-requests/$requestId",
+      queryParameters: {"action": status},
+    );
+
     if (response.statusCode == 200) {
       return;
     }
+
     _logger.e(response.data);
     throw Exception(
         "Failed to handle follow request with status code: ${response.statusCode}");
@@ -57,6 +62,7 @@ class FollowRequestRepository {
           .toList();
     }
     _logger.e(response.data);
+
     throw Exception(
         "Failed to get follow requests with status code: ${response.statusCode}");
   }
