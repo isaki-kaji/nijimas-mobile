@@ -7,7 +7,7 @@ part of 'user_detail_provider.dart';
 // **************************************************************************
 
 String _$userDetailNotifierHash() =>
-    r'165a698e08b1267e26d5123b667529758f5eac02';
+    r'67b15d6bcab17c4dd02ef97cd63061416d853b98';
 
 /// Copied from Dart SDK
 class _SystemHash {

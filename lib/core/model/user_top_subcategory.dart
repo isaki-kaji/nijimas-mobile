@@ -3,7 +3,7 @@ import 'package:nijimas/core/model/sub_category.dart';
 
 part 'user_top_subcategory.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable()
 class UserTopSubCategory {
   final String categoryNo;
   final String categoryId;

@@ -45,7 +45,7 @@ class UserDetailNotifier extends _$UserDetailNotifier {
     }).toList();
 
     final updatedUserDetail = currentState.copyWith(
-      userTopSubcategories: updatedTopSubcategories,
+      userFavoriteSubcategories: updatedTopSubcategories,
     );
 
     state = AsyncValue.data(updatedUserDetail);

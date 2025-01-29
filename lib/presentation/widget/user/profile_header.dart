@@ -101,7 +101,9 @@ class ProfileHeader extends ConsumerWidget {
       loading: () {
         return const Center(child: Loader());
       },
-      error: (error, _) {
+      error: (error, stack) {
+        print(error);
+        print(stack);
         return Center(child: Text(error.toString()));
       },
     );

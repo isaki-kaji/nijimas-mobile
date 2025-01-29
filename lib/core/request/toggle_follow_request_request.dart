@@ -2,12 +2,12 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'toggle_follow_request_request.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable()
 class ToggleFollowRequestRequest {
-  final String followingUid;
+  final String requestedUid;
 
   const ToggleFollowRequestRequest({
-    required this.followingUid,
+    required this.requestedUid,
   });
   Map<String, Object?> toJson() => _$ToggleFollowRequestRequestToJson(this);
 }

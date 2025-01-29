@@ -1,5 +1,5 @@
 class FollowingStatusConstant {
-  static const following = 'following';
-  static const notFollowing = 'not_following';
-  static const requested = 'requested';
+  static const notFollowing = '0';
+  static const following = '1';
+  static const requested = '2';
 }

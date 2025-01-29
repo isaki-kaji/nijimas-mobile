@@ -133,7 +133,7 @@ class UserEditScreen extends HookConsumerWidget {
                               width: Sizing.widthByMQ(context, 0.9),
                               child: GestureDetector(
                                 onTap: () => showSelectTopSubcategoriesModal(
-                                    context, data.userTopSubcategories),
+                                    context, data.userFavoriteSubcategories),
                                 child: ConstrainedBox(
                                   constraints:
                                       const BoxConstraints(maxWidth: 250),
@@ -160,7 +160,8 @@ class UserEditScreen extends HookConsumerWidget {
                                                 WrapCrossAlignment.start,
                                             spacing: 2,
                                             runSpacing: 5,
-                                            children: data.userTopSubcategories
+                                            children: data
+                                                .userFavoriteSubcategories
                                                 .map((category) {
                                               return ScrollableSubCategoryChip(
                                                 categoryName:
@@ -208,7 +209,7 @@ class UserEditScreen extends HookConsumerWidget {
                         ? useImageBitmap.value[0]
                         : null,
                     userTopSubcategories:
-                        user.valueOrNull!.userTopSubcategories,
+                        user.valueOrNull!.userFavoriteSubcategories,
                   );
                   final userUsecase = ref.read(userUsecaseProvider);
                   await userUsecase.updateUser(

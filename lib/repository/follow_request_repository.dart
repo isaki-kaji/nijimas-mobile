@@ -17,7 +17,7 @@ class FollowRequestRepository {
   Future<void> doFollowRequest(ToggleFollowRequestRequest request) async {
     final response = await _dio.post("${Env.baseUrl}/follow-requests",
         data: request.toJson());
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       return;
     }
     _logger.e(response.data);
@@ -28,7 +28,7 @@ class FollowRequestRepository {
   Future<void> deleteFollowRequest(ToggleFollowRequestRequest request) async {
     final response = await _dio.delete("${Env.baseUrl}/follow-requests",
         data: request.toJson());
-    if (response.statusCode == 204) {
+    if (response.statusCode == 200) {
       return;
     }
     _logger.e(response.data);
@@ -55,7 +55,7 @@ class FollowRequestRepository {
   }
 
   Future<List<FollowRequest>> getFollowRequests() async {
-    final response = await _dio.get("${Env.baseUrl}/me/follow-requests");
+    final response = await _dio.get("${Env.baseUrl}/follow-requests");
     if (response.statusCode == 200) {
       return (response.data as List)
           .map((e) => FollowRequest.fromJson(e))

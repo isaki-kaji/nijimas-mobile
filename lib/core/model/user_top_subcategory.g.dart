@@ -8,14 +8,14 @@ part of 'user_top_subcategory.dart';
 
 UserTopSubCategory _$UserTopSubCategoryFromJson(Map<String, dynamic> json) =>
     UserTopSubCategory(
-      categoryNo: json['category_no'] as String,
-      categoryId: json['category_id'] as String,
-      categoryName: json['category_name'] as String,
+      categoryNo: json['categoryNo'] as String,
+      categoryId: json['categoryId'] as String,
+      categoryName: json['categoryName'] as String,
     );
 
 Map<String, dynamic> _$UserTopSubCategoryToJson(UserTopSubCategory instance) =>
     <String, dynamic>{
-      'category_no': instance.categoryNo,
-      'category_id': instance.categoryId,
-      'category_name': instance.categoryName,
+      'categoryNo': instance.categoryNo,
+      'categoryId': instance.categoryId,
+      'categoryName': instance.categoryName,
     };

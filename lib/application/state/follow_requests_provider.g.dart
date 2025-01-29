@@ -7,7 +7,7 @@ part of 'follow_requests_provider.dart';
 // **************************************************************************
 
 String _$followRequestsNotifierHash() =>
-    r'bf59f54e7629015e9909cf4a8fe55abeda2a5e9f';
+    r'9c771821c9484e11729a5b53e63a60d00e05607e';
 
 /// See also [FollowRequestsNotifier].
 @ProviderFor(FollowRequestsNotifier)

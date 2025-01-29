@@ -3,17 +3,17 @@ import 'package:nijimas/core/model/user_top_subcategory.dart';
 
 part 'user_detail.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable()
 class UserDetail {
   final String uid;
   final String username;
   final String? selfIntro;
   final String? profileImageUrl;
   final String followingStatus;
-  final int followingCount;
-  final int followersCount;
-  final int postCount;
-  final List<UserTopSubCategory> userTopSubcategories;
+  final String followingCount;
+  final String followersCount;
+  final String postCount;
+  final List<UserTopSubCategory> userFavoriteSubcategories;
 
   const UserDetail(
       {required this.uid,
@@ -24,7 +24,7 @@ class UserDetail {
       required this.followingCount,
       required this.followersCount,
       required this.postCount,
-      required this.userTopSubcategories});
+      required this.userFavoriteSubcategories});
 
   factory UserDetail.fromJson(Map<String, dynamic> json) =>
       _$UserDetailFromJson(json);
@@ -37,10 +37,10 @@ class UserDetail {
     String? selfIntro,
     String? profileImageUrl,
     String? followingStatus,
-    int? followingCount,
-    int? followersCount,
-    int? postCount,
-    List<UserTopSubCategory>? userTopSubcategories,
+    String? followingCount,
+    String? followersCount,
+    String? postCount,
+    List<UserTopSubCategory>? userFavoriteSubcategories,
   }) {
     return UserDetail(
       uid: uid ?? this.uid,
@@ -51,7 +51,8 @@ class UserDetail {
       followingCount: followingCount ?? this.followingCount,
       followersCount: followersCount ?? this.followersCount,
       postCount: postCount ?? this.postCount,
-      userTopSubcategories: userTopSubcategories ?? this.userTopSubcategories,
+      userFavoriteSubcategories:
+          userFavoriteSubcategories ?? this.userFavoriteSubcategories,
     );
   }
 }
