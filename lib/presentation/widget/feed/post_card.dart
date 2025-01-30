@@ -56,18 +56,35 @@ class PostCard extends ConsumerWidget {
                   ],
                 ),
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(post.expense,
-                      style: MyTextStyles.subtitle
-                          .copyWith(fontWeight: FontWeight.w500)),
-                  const SizedBox(
-                    width: 4.0,
-                  ),
-                  const Text("円", style: MyTextStyles.body14),
-                ],
-              ),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade200,
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      NumberFormat("#,###.##", "ja_JP")
+                          .format(double.parse(post.expense)),
+                      style: const TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const SizedBox(width: 4.0),
+                    const Text(
+                      "円",
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        color: Colors.black54,
+                      ),
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
         ),
