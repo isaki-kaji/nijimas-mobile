@@ -21,7 +21,7 @@ class FollowRequestUsecase {
       {required String followingUid,
       required String followingStatus,
       required void Function() onFailure}) async {
-    final request = ToggleFollowRequestRequest(requestedUid: followingUid);
+    final request = ToggleFollowRequestRequest(targetUid: followingUid);
 
     try {
       if (followingStatus == FollowingStatusConstant.notFollowing) {
@@ -33,7 +33,7 @@ class FollowRequestUsecase {
         _userDetailNotifier
             .setFollowingStatus(FollowingStatusConstant.notFollowing);
       } else {
-        await _followRepository.toggleFollow(request);
+        await _followRepository.cancelFollow(request);
         _userDetailNotifier
             .setFollowingStatus(FollowingStatusConstant.notFollowing);
       }

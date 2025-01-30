@@ -8,5 +8,5 @@ class FollowUsecase {
       : _followRepository = followRepository;
 
   Future<void> toggleFollow(ToggleFollowRequestRequest request) async =>
-      _followRepository.toggleFollow(request);
+      _followRepository.cancelFollow(request);
 }

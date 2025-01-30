@@ -9,11 +9,11 @@ part of 'toggle_follow_request_request.dart';
 ToggleFollowRequestRequest _$ToggleFollowRequestRequestFromJson(
         Map<String, dynamic> json) =>
     ToggleFollowRequestRequest(
-      requestedUid: json['requestedUid'] as String,
+      targetUid: json['targetUid'] as String,
     );
 
 Map<String, dynamic> _$ToggleFollowRequestRequestToJson(
         ToggleFollowRequestRequest instance) =>
     <String, dynamic>{
-      'requestedUid': instance.requestedUid,
+      'targetUid': instance.targetUid,
     };

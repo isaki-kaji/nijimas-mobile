@@ -13,10 +13,10 @@ class FollowRepository {
     _dio.interceptors.add(AuthInterceptor());
   }
 
-  Future<void> toggleFollow(ToggleFollowRequestRequest request) async {
+  Future<void> cancelFollow(ToggleFollowRequestRequest request) async {
     final response =
-        await _dio.post("${Env.baseUrl}/follows", data: request.toJson());
-    if (response.statusCode == 201 || response.statusCode == 204) {
+        await _dio.delete("${Env.baseUrl}/follows", data: request.toJson());
+    if (response.statusCode == 200) {
       return;
     }
     _logger.e(response.data);

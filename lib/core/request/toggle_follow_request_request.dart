@@ -4,10 +4,10 @@ part 'toggle_follow_request_request.g.dart';
 
 @JsonSerializable()
 class ToggleFollowRequestRequest {
-  final String requestedUid;
+  final String targetUid;
 
   const ToggleFollowRequestRequest({
-    required this.requestedUid,
+    required this.targetUid,
   });
   Map<String, Object?> toJson() => _$ToggleFollowRequestRequestToJson(this);
 }
