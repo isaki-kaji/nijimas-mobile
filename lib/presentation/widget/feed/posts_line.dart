@@ -6,9 +6,10 @@ import 'package:nijimas/presentation/widget/common/loader.dart';
 import 'package:nijimas/presentation/widget/feed/post_card.dart';
 
 class PostsLine extends ConsumerWidget {
-  const PostsLine({super.key, required this.query});
+  const PostsLine({super.key, required this.query, required this.canTap});
 
   final PostQuery query;
+  final bool canTap;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,7 +20,7 @@ class PostsLine extends ConsumerWidget {
           itemCount: data.length,
           itemBuilder: (context, index) {
             final post = data[index];
-            return PostCard(post: post, query: query, canTap: true);
+            return PostCard(post: post, query: query, canTap: canTap);
           },
         );
       },

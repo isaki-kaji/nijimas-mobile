@@ -46,7 +46,10 @@ class UserDetailScreen extends HookConsumerWidget {
               ),
             ];
           },
-          body: PostsLine(query: useQuery.value),
+          body: PostsLine(
+            query: useQuery.value,
+            canTap: false,
+          ),
         ));
   }
 }
