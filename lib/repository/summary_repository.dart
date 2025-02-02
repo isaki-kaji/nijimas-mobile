@@ -18,9 +18,9 @@ class SummaryRepository {
   Future<MonthlySummaryPresentation> getMonthlySummary(
       {required String year, required String month}) async {
     try {
-      final response =
-          await _dio.get("${Env.baseUrl}/me/summaries/$year/$month");
+      final response = await _dio.get("${Env.baseUrl}/summaries/$year/$month");
       if (response.statusCode == 200) {
+        _logger.d("📩 Response data: ${response.data}");
         return MonthlySummaryPresentation.fromJson(response.data);
       } else {
         _logger.e("Error response: ${response.data}");

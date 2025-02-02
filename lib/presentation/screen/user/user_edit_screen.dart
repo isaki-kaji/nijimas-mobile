@@ -11,7 +11,6 @@ import 'package:nijimas/application/state/user_detail_provider.dart';
 import 'package:nijimas/core/model/user_top_subcategory.dart';
 import 'package:nijimas/core/provider/usecase/user_usecase_provider.dart';
 import 'package:nijimas/core/theme/color.dart';
-import 'package:nijimas/core/theme/text_style.dart';
 import 'package:nijimas/core/util/resize_image.dart';
 import 'package:nijimas/core/util/show_snack_bar.dart';
 import 'package:nijimas/core/util/sizing.dart';
@@ -125,53 +124,6 @@ class UserEditScreen extends HookConsumerWidget {
                                     hintText: l10n.enterSelfIntro,
                                     border: InputBorder.none,
                                     contentPadding: const EdgeInsets.all(18),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: Sizing.widthByMQ(context, 0.9),
-                              child: GestureDetector(
-                                onTap: () => showSelectTopSubcategoriesModal(
-                                    context, data.userFavoriteSubcategories),
-                                child: ConstrainedBox(
-                                  constraints:
-                                      const BoxConstraints(maxWidth: 250),
-                                  child: Card(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          const Row(
-                                            children: [
-                                              Text(
-                                                "よく使うサブカテゴリ",
-                                                style: MyTextStyles.body14,
-                                              ),
-                                              Icon(Icons.add_circle_outline,
-                                                  size: 18),
-                                            ],
-                                          ),
-                                          const SizedBox(height: 10),
-                                          Wrap(
-                                            crossAxisAlignment:
-                                                WrapCrossAlignment.start,
-                                            spacing: 2,
-                                            runSpacing: 5,
-                                            children: data
-                                                .userFavoriteSubcategories
-                                                .map((category) {
-                                              return ScrollableSubCategoryChip(
-                                                categoryName:
-                                                    category.categoryName,
-                                              );
-                                            }).toList(),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
                                   ),
                                 ),
                               ),

@@ -17,7 +17,7 @@ class DataScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ref.watch(monthlySummaryPresentationProvider(year, month)).when(
           data: (data) {
-            final calculatedExpenseSummary = data.expenseSummary;
+            final calculatedExpenseSummary = data.mainCategorySummary;
             final int totalAmounts = calculatedExpenseSummary.isNotEmpty
                 ? calculatedExpenseSummary
                     .map((e) => e.amount)
@@ -25,7 +25,7 @@ class DataScreen extends HookConsumerWidget {
                     .toInt()
                 : 0;
 
-            final calculatedSubCategorySummary = data.subcategorySummary;
+            final calculatedSubCategorySummary = data.subCategorySummary;
 
             return Padding(
               padding: const EdgeInsets.only(
@@ -85,7 +85,9 @@ class DataScreen extends HookConsumerWidget {
             );
           },
           loading: () => const Center(child: Loader()),
-          error: (error, _) {
+          error: (error, s) {
+            print(error);
+            print(s);
             return Center(child: Text('Error: $error'));
           },
         );

@@ -74,7 +74,6 @@ class UserUsecase {
         username: formData.username,
         selfIntro: formData.selfIntro,
         profileImageUrl: profileImageUrl,
-        userTopSubcategories: formData.userTopSubcategories,
       );
       await _userRepository.updateUser(request);
       onSuccess();

@@ -12,15 +12,15 @@ MonthlySummaryPresentation _$MonthlySummaryPresentationFromJson(
       uid: json['uid'] as String,
       year: json['year'] as int,
       month: json['month'] as int,
-      expenseSummary: (json['expense_summary'] as List<dynamic>)
+      mainCategorySummary: (json['mainCategorySummary'] as List<dynamic>)
           .map((e) => CalculatedSummary.fromJson(e as Map<String, dynamic>))
           .toList(),
-      subcategorySummary: (json['subcategory_summary'] as List<dynamic>)
+      subCategorySummary: (json['subCategorySummary'] as List<dynamic>)
           .map((e) => CalculatedSummary.fromJson(e as Map<String, dynamic>))
           .toList(),
       dailyCount:
-          (json['daily_count'] as List<dynamic>).map((e) => e as int).toList(),
-      dailyAmount: (json['daily_amount'] as List<dynamic>)
+          (json['dailyCount'] as List<dynamic>).map((e) => e as int).toList(),
+      dailyAmount: (json['dailyAmount'] as List<dynamic>)
           .map((e) => (e as num).toDouble())
           .toList(),
     );
@@ -31,8 +31,8 @@ Map<String, dynamic> _$MonthlySummaryPresentationToJson(
       'uid': instance.uid,
       'year': instance.year,
       'month': instance.month,
-      'expense_summary': instance.expenseSummary,
-      'subcategory_summary': instance.subcategorySummary,
-      'daily_count': instance.dailyCount,
-      'daily_amount': instance.dailyAmount,
+      'mainCategorySummary': instance.mainCategorySummary,
+      'subCategorySummary': instance.subCategorySummary,
+      'dailyCount': instance.dailyCount,
+      'dailyAmount': instance.dailyAmount,
     };
