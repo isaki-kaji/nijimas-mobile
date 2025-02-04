@@ -77,7 +77,7 @@ class SubCategoryCards extends StatelessWidget {
               const SizedBox(height: 20),
               Text("支出割合 : ${item.percentage.toStringAsFixed(1)} %"),
               const SizedBox(height: 20),
-              Text("支出回数 : ${item.count} 回"),
+              Text("投稿数 : ${item.count} 回"),
             ],
           ),
         );
