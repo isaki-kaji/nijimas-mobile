@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:logger/web.dart';
 import 'package:nijimas/core/constant/env_constant.dart';
 import 'package:nijimas/core/enum/post_query.dart';
+import 'package:nijimas/core/request/update_post_request.dart';
 import 'package:nijimas/repository/interceptor/auth_interceptor.dart';
 import 'package:nijimas/core/model/post.dart';
 import 'package:nijimas/core/request/create_post_request.dart';
@@ -20,7 +21,6 @@ class PostRepository {
   }
 
   Future<dynamic> createPost(CreatePostRequest request) async {
-    print(request.toJson());
     final response =
         await _dio.post("${Env.baseUrl}/posts", data: request.toJson());
     if (response.statusCode == 201) {
@@ -31,9 +31,20 @@ class PostRepository {
         "Failed to create post with status code: ${response.statusCode}");
   }
 
+  Future<dynamic> updatePost(String postId, UpdatePostRequest request) async {
+    final response =
+        await _dio.put("${Env.baseUrl}/posts/$postId", data: request.toJson());
+    if (response.statusCode == 200) {
+      return response.data;
+    }
+    _logger.e(response.data);
+    throw Exception(
+        "Failed to update post with status code: ${response.statusCode}");
+  }
+
   Future<List<Post>> getOwnPosts() async {
     try {
-      final response = await _dio.get("${Env.baseUrl}/me/posts");
+      final response = await _dio.get("${Env.baseUrl}/posts/me");
       if (response.statusCode == 200) {
         List<Post> posts =
             (response.data as List).map((post) => Post.fromJson(post)).toList();
@@ -52,7 +63,7 @@ class PostRepository {
   Future<List<Post>> getOwnPostsByMainCategory(
       Map<PostQueryKey, dynamic> params) async {
     try {
-      final response = await _dio.get("${Env.baseUrl}/me/posts",
+      final response = await _dio.get("${Env.baseUrl}//posts/me",
           queryParameters: {
             "main-category": params[PostQueryKey.mainCategory]
           });
@@ -74,7 +85,7 @@ class PostRepository {
   Future<List<Post>> getOwnPostsBySubCategory(
       Map<PostQueryKey, dynamic> params) async {
     try {
-      final response = await _dio.get("${Env.baseUrl}/me/posts",
+      final response = await _dio.get("${Env.baseUrl}/posts/me",
           queryParameters: {"sub-category": params[PostQueryKey.subCategory]});
       if (response.statusCode == 200) {
         List<Post> posts =
@@ -93,7 +104,7 @@ class PostRepository {
 
   Future<List<Post>> getTimelinePosts() async {
     try {
-      final response = await _dio.get("${Env.baseUrl}/me/timeline");
+      final response = await _dio.get("${Env.baseUrl}/posts/timeline");
       if (response.statusCode == 200) {
         List<Post> posts =
             (response.data as List).map((post) => Post.fromJson(post)).toList();
