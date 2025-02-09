@@ -71,6 +71,12 @@ class L10nEn extends L10n {
   String get postFailed => 'Post Failed';
 
   @override
+  String get updateSuccess => 'Successfully Updated!';
+
+  @override
+  String get updateFailed => 'Failed to Update';
+
+  @override
   String get editProfile => 'Edit Profile';
 
   @override

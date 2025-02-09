@@ -21,12 +21,14 @@ class PostCard extends ConsumerWidget {
   final Post post;
   final PostQuery query;
   final bool canTap;
+  final bool canEdit;
   final formatter = DateFormat('yyyy-MM-dd HH:mm');
   PostCard(
       {super.key,
       required this.post,
       required this.query,
-      required this.canTap});
+      required this.canTap,
+      required this.canEdit});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -178,7 +180,15 @@ class PostCard extends ConsumerWidget {
                     onFailure: () {},
                   );
                 },
-              )
+              ),
+              if (canEdit) const SizedBox(width: 10.0),
+              if (canEdit)
+                GestureDetector(
+                  child: const Icon(Icons.edit, color: MyColors.grey),
+                  onTap: () {
+                    GoRouter.of(context).push('/post/edit', extra: post);
+                  },
+                ),
             ],
           ),
         ),

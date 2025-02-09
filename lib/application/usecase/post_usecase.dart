@@ -5,6 +5,7 @@ import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/loading_provider.dart';
 import 'package:nijimas/application/usecase/image_usecase.dart';
 import 'package:nijimas/core/request/create_post_request.dart';
+import 'package:nijimas/core/request/update_post_request.dart';
 import 'package:nijimas/repository/post_repository.dart';
 import 'package:uuid/uuid.dart';
 
@@ -66,24 +67,48 @@ class PostUsecase {
     }
   }
 
-  // @override
-  // Future<List<Post>> getPostsByQuery(PostQuery query) async {
-  //   try {
-  //     final params = query.params;
-  //     switch (query.type) {
-  //       case PostQueryType.uid:
-  //         return await _postRepository.getPostsByUid(
-  //             uid: params[PostQueryKey.uid]);
-  //       case PostQueryType.mainCategory:
-  //         return await _postRepository.getPostsByMainCategory(
-  //             mainCategory: params[PostQueryKey.mainCategory]);
-  //       default:
-  //         throw Exception('Query type not found');
-  //     }
-  //   } catch (e) {
-  //     rethrow;
-  //   }
-  // }
+  Future<void> updatePost({
+    required String postId,
+    required int version,
+    required PostFormData formData,
+    required void Function() onSuccess,
+    required void Function() onFailure,
+  }) async {
+    try {
+      _ref.read(loadingProvider.notifier).setTrue();
+      final uid = _ref.read(authStateProvider).valueOrNull!.uid;
+
+      (String?, String?) subCategories =
+          _parseSubCategories(formData.subCategories);
+
+      // 画像を変更する処理
+
+      final photoUrl =
+          await _imageUsecase.uploadPostImages(formData.images, '$uid/$postId');
+
+      final expense = _parseExpense(formData.expense);
+
+      final request = UpdatePostRequest(
+          uid: uid,
+          mainCategory: formData.mainCategory,
+          subCategory1: subCategories.$1,
+          subCategory2: subCategories.$2,
+          postText: formData.postText,
+          photoUrl: photoUrl,
+          expense: expense,
+          location: null,
+          publicTypeNo: formData.publicTypeNo,
+          version: version);
+
+      await _postRepository.updatePost(postId, request);
+      onSuccess();
+    } catch (e) {
+      _logger.e('Failed to update post: $e');
+      onFailure();
+    } finally {
+      _ref.read(loadingProvider.notifier).setFalse();
+    }
+  }
 }
 
 (String?, String?) _parseSubCategories(List<String> subCategories) {

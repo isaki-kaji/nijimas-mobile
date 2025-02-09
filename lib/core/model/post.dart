@@ -9,6 +9,7 @@ class Post {
   final String username;
   final String? profileImageUrl;
   final String mainCategory;
+  final String publicTypeNo;
   final String? subCategory1;
   final String? subCategory2;
   final String? postText;
@@ -17,6 +18,7 @@ class Post {
   final String? location;
   final bool isFavorite;
   final DateTime createdAt;
+  final int version;
 
   const Post({
     required this.postId,
@@ -24,6 +26,7 @@ class Post {
     required this.username,
     this.profileImageUrl,
     required this.mainCategory,
+    required this.publicTypeNo,
     this.subCategory1,
     this.subCategory2,
     this.postText,
@@ -32,6 +35,7 @@ class Post {
     this.location,
     required this.isFavorite,
     required this.createdAt,
+    this.version = 1,
   });
 
   factory Post.fromJson(Map<String, dynamic> json) {
@@ -41,14 +45,16 @@ class Post {
       username: json['username'] as String,
       profileImageUrl: json['profileImageUrl'] as String?,
       mainCategory: json['mainCategory'] as String,
+      publicTypeNo: json['publicTypeNo'] as String,
       subCategory1: json['subCategory1'] as String?,
       subCategory2: json['subCategory2'] as String?,
       postText: json['postText'] as String?,
-      photoUrl: List<String>.from(json['photoUrlList'] ?? []), // 空配列を保証
+      photoUrl: List<String>.from(json['photoUrlList'] ?? []),
       expense: json['expense'] as String,
       location: json['location'] as String?,
       isFavorite: json['isFavorite'] as bool,
-      createdAt: DateTime.parse(json['createdAt']), // DateTimeに変換
+      createdAt: DateTime.parse(json['createdAt']),
+      version: json['version'] ?? 1, // ✅ nullなら1
     );
   }
 
@@ -76,6 +82,7 @@ class Post {
       username: username ?? this.username,
       profileImageUrl: profileImageUrl ?? this.profileImageUrl,
       mainCategory: mainCategory ?? this.mainCategory,
+      publicTypeNo: publicTypeNo ?? this.publicTypeNo,
       subCategory1: subCategory1 ?? this.subCategory1,
       subCategory2: subCategory2 ?? this.subCategory2,
       postText: postText ?? this.postText,

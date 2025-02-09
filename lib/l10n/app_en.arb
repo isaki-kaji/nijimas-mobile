@@ -21,6 +21,8 @@
     "pleaseEnterPostInfo": "Please enter an expense, a memo, or at least one image",
     "postSuccess": "Posted!!",
     "postFailed": "Post Failed",
+    "updateSuccess": "Successfully Updated!",
+    "updateFailed": "Failed to Update",
     "editProfile": "Edit Profile",
     "enterName": "Please enter your name",
     "enterSelfIntro": "Pleas enter your self-introduction",

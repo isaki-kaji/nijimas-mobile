@@ -225,6 +225,18 @@ abstract class L10n {
   /// **'投稿に失敗しました'**
   String get postFailed;
 
+  /// No description provided for @updateSuccess.
+  ///
+  /// In ja, this message translates to:
+  /// **'修正しました'**
+  String get updateSuccess;
+
+  /// No description provided for @updateFailed.
+  ///
+  /// In ja, this message translates to:
+  /// **'修正に失敗しました'**
+  String get updateFailed;
+
   /// No description provided for @editProfile.
   ///
   /// In ja, this message translates to:

@@ -71,6 +71,12 @@ class L10nJa extends L10n {
   String get postFailed => '投稿に失敗しました';
 
   @override
+  String get updateSuccess => '修正しました';
+
+  @override
+  String get updateFailed => '修正に失敗しました';
+
+  @override
   String get editProfile => 'プロフィールの編集';
 
   @override

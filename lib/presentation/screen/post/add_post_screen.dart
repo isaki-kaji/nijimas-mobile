@@ -10,6 +10,7 @@ import 'package:nijimas/application/state/loading_provider.dart';
 import 'package:nijimas/application/state/monthly_summary_provider.dart';
 import 'package:nijimas/application/state/posts_provider.dart';
 import 'package:nijimas/core/enum/main_category.dart';
+import 'package:nijimas/core/model/post.dart';
 import 'package:nijimas/core/provider/usecase/post_usecase_provider.dart';
 import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/core/util/resize_image.dart';
@@ -25,22 +26,43 @@ import 'package:nijimas/presentation/widget/post/memo_input_field.dart';
 import 'package:nijimas/presentation/widget/post/public_type_switch.dart';
 
 class AddPostScreen extends HookConsumerWidget {
-  AddPostScreen({super.key});
+  AddPostScreen({super.key, this.editingPost});
 
+  final Post? editingPost;
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = L10n.of(context);
+    final isEditing = editingPost != null;
     bool isKeyboardShown = 0 < MediaQuery.of(context).viewInsets.bottom;
     final isLoading = ref.watch(loadingProvider);
-    final useMainCategory = useState<MainCategory>(MainCategory.food);
-    final useSubCategories = useState<List<String>>([]);
+
+    final useMainCategory = useState<MainCategory>(isEditing
+        ? MainCategory.fromName(editingPost!.mainCategory)
+        : MainCategory.food);
+
+    final List<String> currentSubCategories = isEditing
+        ? [editingPost!.subCategory1, editingPost!.subCategory2]
+            .where((e) => e != null)
+            .cast<String>()
+            .toList()
+        : [];
+    final useSubCategories = useState<List<String>>(currentSubCategories);
     final useIsVisibleTextFieldChip = useState<bool>(false);
-    final usePublicTypeNo = useState<int>(0);
-    final subCategoryTextController = useTextEditingController();
-    final useTextController = useTextEditingController();
-    final useExpenseController = useTextEditingController();
+
+    final usePublicTypeNo =
+        useState<int>(isEditing ? int.parse(editingPost!.publicTypeNo) : 0);
+
+    final subCategoryTextController =
+        useTextEditingController(text: isEditing ? '' : '');
+    final useTextController =
+        useTextEditingController(text: isEditing ? editingPost!.postText : '');
+    final useExpenseController = useTextEditingController(
+        text: isEditing
+            ? double.parse(editingPost!.expense).toInt().toString()
+            : '');
+
     final picker = ImagePicker();
     final useImageBitmap = useState<List<Uint8List?>>([]);
     final useIsSelectingImage = useState<bool>(false);
@@ -131,20 +153,42 @@ class AddPostScreen extends HookConsumerWidget {
                   publicTypeNo: (usePublicTypeNo.value).toString(),
                 );
                 final postUsecase = ref.read(postUsecaseProvider);
-                await postUsecase.createPost(
-                  formData: formData,
-                  onSuccess: () {
-                    showSuccessSnackBar(context, l10n.postSuccess);
-                    ref.invalidate(postsNotifierProvider);
-                    ref.invalidate(monthlySummaryPresentationProvider(
-                        DateTime.now().year.toString(),
-                        DateTime.now().month.toString()));
-                    GoRouter.of(context).pop();
-                  },
-                  onFailure: () {
-                    showErrorSnackBar(context, l10n.postFailed);
-                  },
-                );
+                if (!isEditing) {
+                  await postUsecase.createPost(
+                    formData: formData,
+                    onSuccess: () {
+                      showSuccessSnackBar(context, l10n.postSuccess);
+                      ref.invalidate(postsNotifierProvider);
+                      ref.invalidate(monthlySummaryPresentationProvider(
+                          DateTime.now().year.toString(),
+                          DateTime.now().month.toString()));
+                      GoRouter.of(context).pop();
+                    },
+                    onFailure: () {
+                      showErrorSnackBar(context, l10n.postFailed);
+                    },
+                  );
+                } else {
+                  await postUsecase.updatePost(
+                    postId: editingPost!.postId,
+                    version: editingPost!.version,
+                    formData: formData,
+                    onSuccess: () {
+                      showSuccessSnackBar(
+                        context,
+                        l10n.updateSuccess,
+                      );
+                      ref.invalidate(postsNotifierProvider);
+                      ref.invalidate(monthlySummaryPresentationProvider(
+                          DateTime.now().year.toString(),
+                          DateTime.now().month.toString()));
+                      GoRouter.of(context).pop();
+                    },
+                    onFailure: () {
+                      showErrorSnackBar(context, l10n.updateFailed);
+                    },
+                  );
+                }
               },
               backgroundColor: MyColors.pink,
               child: const Icon(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/user_status_provider.dart';
+import 'package:nijimas/core/model/post.dart';
 import 'package:nijimas/presentation/screen/auth/auth_screen.dart';
 import 'package:nijimas/presentation/screen/home/home_screen.dart';
 import 'package:nijimas/presentation/screen/post/add_post_screen.dart';
@@ -35,6 +36,15 @@ GoRouter router(RouterRef ref) {
           path: '/post/add',
           pageBuilder: (context, state) {
             return MaterialPage(child: AddPostScreen(), fullscreenDialog: true);
+          }),
+      GoRoute(
+          path: '/post/edit',
+          pageBuilder: (context, state) {
+            final post = state.extra as Post?;
+            return MaterialPage(
+              child: AddPostScreen(editingPost: post),
+              fullscreenDialog: true,
+            );
           }),
       GoRoute(
         path: '/signin',

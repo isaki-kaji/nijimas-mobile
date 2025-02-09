@@ -9,6 +9,6 @@ class FeedScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final query = ref.watch(postQueryNotifierProvider);
-    return PostsLine(query: query, canTap: true);
+    return PostsLine(query: query, canTap: true, canEdit: false);
   }
 }

@@ -16,8 +16,9 @@ class UserDetailScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = L10n.of(context);
     final myUid = ref.watch(authStateProvider).valueOrNull!.uid;
+    final isOwnScreen = myUid == uid;
 
-    final query = (uid == myUid)
+    final query = (isOwnScreen)
         ? PostQuery(type: PostQueryType.own, params: {})
         : PostQuery(type: PostQueryType.uid, params: {PostQueryKey.uid: uid});
 
@@ -26,7 +27,7 @@ class UserDetailScreen extends HookConsumerWidget {
     return Scaffold(
         appBar: AppBar(
           actions: [
-            if (myUid == uid)
+            if (isOwnScreen)
               PopupMenuButton(itemBuilder: (context) {
                 return [
                   PopupMenuItem(
@@ -49,6 +50,7 @@ class UserDetailScreen extends HookConsumerWidget {
           body: PostsLine(
             query: useQuery.value,
             canTap: false,
+            canEdit: isOwnScreen,
           ),
         ));
   }
