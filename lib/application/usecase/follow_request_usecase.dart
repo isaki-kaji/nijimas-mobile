@@ -29,7 +29,7 @@ class FollowRequestUsecase {
         _userDetailNotifier
             .setFollowingStatus(FollowingStatusConstant.requested);
       } else if (followingStatus == FollowingStatusConstant.requested) {
-        await _followRequestRepository.deleteFollowRequest(request);
+        await _followRequestRepository.cancelFollowRequest(followingUid);
         _userDetailNotifier
             .setFollowingStatus(FollowingStatusConstant.notFollowing);
       } else {

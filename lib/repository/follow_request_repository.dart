@@ -25,9 +25,10 @@ class FollowRequestRepository {
         "Failed to do follow request with status code: ${response.statusCode}");
   }
 
-  Future<void> deleteFollowRequest(ToggleFollowRequestRequest request) async {
-    final response = await _dio.delete("${Env.baseUrl}/follow-requests",
-        data: request.toJson());
+  Future<void> cancelFollowRequest(String targetUid) async {
+    final response = await _dio.delete(
+      "${Env.baseUrl}/follow-requests/$targetUid",
+    );
     if (response.statusCode == 200) {
       return;
     }
