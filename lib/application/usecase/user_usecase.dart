@@ -59,13 +59,13 @@ class UserUsecase {
 
   Future<void> updateUser(
       {required UserFormData formData,
+      required String? profileImageUrl,
       required int version,
       required void Function() onSuccess,
       required void Function() onFailure}) async {
     try {
       _ref.read(loadingProvider.notifier).setTrue();
       final uid = _ref.read(authStateProvider).valueOrNull!.uid;
-      String? profileImageUrl;
       if (formData.profileImage != null) {
         profileImageUrl =
             await _imageUsecase.uploadProfileImage(formData.profileImage!, uid);

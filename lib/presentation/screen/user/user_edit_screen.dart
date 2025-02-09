@@ -173,6 +173,7 @@ class UserEditScreen extends HookConsumerWidget {
                   final userUsecase = ref.read(userUsecaseProvider);
                   await userUsecase.updateUser(
                     formData: formData,
+                    profileImageUrl: user.valueOrNull!.profileImageUrl,
                     version: user.valueOrNull!.version,
                     onSuccess: () {
                       showSuccessSnackBar(context, l10n.updatedProfile);
