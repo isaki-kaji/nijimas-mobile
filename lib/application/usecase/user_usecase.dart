@@ -59,6 +59,7 @@ class UserUsecase {
 
   Future<void> updateUser(
       {required UserFormData formData,
+      required int version,
       required void Function() onSuccess,
       required void Function() onFailure}) async {
     try {
@@ -74,6 +75,7 @@ class UserUsecase {
         username: formData.username,
         selfIntro: formData.selfIntro,
         profileImageUrl: profileImageUrl,
+        version: version,
       );
       await _userRepository.updateUser(request);
       onSuccess();

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:logger/web.dart';
 import 'package:nijimas/core/constant/env_constant.dart';
+import 'package:nijimas/core/model/app_user.dart';
 import 'package:nijimas/repository/interceptor/auth_interceptor.dart';
 import 'package:nijimas/core/util/exception.dart';
 import 'package:nijimas/core/model/user_detail.dart';
@@ -28,6 +29,16 @@ class UserRepository {
     _logger.e(response.data);
     throw Exception(
         "Failed to create user with status code: ${response.statusCode}");
+  }
+
+  Future<dynamic> getOwnUser() async {
+    final response = await _dio.get("${Env.baseUrl}/users/me");
+    if (response.statusCode == 200) {
+      return AppUser.fromJson(response.data);
+    }
+    _logger.e(response.data);
+    throw Exception(
+        "Failed to get user with status code: ${response.statusCode}");
   }
 
   Future<dynamic> getUser(String uid) async {

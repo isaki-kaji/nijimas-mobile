@@ -1,25 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'update_user_request.dart';
+part of 'app_user.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-UpdateUserRequest _$UpdateUserRequestFromJson(Map<String, dynamic> json) =>
-    UpdateUserRequest(
+AppUser _$AppUserFromJson(Map<String, dynamic> json) => AppUser(
       uid: json['uid'] as String,
-      username: json['username'] as String?,
-      selfIntro: json['selfIntro'] as String?,
+      username: json['username'] as String,
       profileImageUrl: json['profileImageUrl'] as String?,
+      selfIntro: json['selfIntro'] as String?,
+      countryCode: json['countryCode'] as String?,
       version: json['version'] as int,
     );
 
-Map<String, dynamic> _$UpdateUserRequestToJson(UpdateUserRequest instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$AppUserToJson(AppUser instance) => <String, dynamic>{
       'uid': instance.uid,
       'username': instance.username,
-      'selfIntro': instance.selfIntro,
       'profileImageUrl': instance.profileImageUrl,
+      'selfIntro': instance.selfIntro,
+      'countryCode': instance.countryCode,
       'version': instance.version,
     };

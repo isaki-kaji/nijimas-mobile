@@ -8,12 +8,14 @@ class UpdateUserRequest {
   final String? username;
   final String? selfIntro;
   final String? profileImageUrl;
+  final int version;
 
   const UpdateUserRequest({
     required this.uid,
     this.username,
     this.selfIntro,
     this.profileImageUrl,
+    required this.version,
   });
   Map<String, Object?> toJson() => _$UpdateUserRequestToJson(this);
 }

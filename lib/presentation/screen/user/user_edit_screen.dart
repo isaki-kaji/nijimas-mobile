@@ -8,6 +8,7 @@ import 'package:nijimas/application/formdata/user_form_data.dart';
 import 'package:nijimas/application/state/loading_provider.dart';
 import 'package:nijimas/application/state/posts_provider.dart';
 import 'package:nijimas/application/state/user_detail_provider.dart';
+import 'package:nijimas/application/state/user_provider.dart';
 import 'package:nijimas/core/model/user_top_subcategory.dart';
 import 'package:nijimas/core/provider/usecase/user_usecase_provider.dart';
 import 'package:nijimas/core/theme/color.dart';
@@ -28,14 +29,20 @@ class UserEditScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = L10n.of(context);
     final isLoading = ref.watch(loadingProvider);
-    final user = ref.watch(userDetailNotifierProvider(uid));
-    final useNameController =
-        useTextEditingController(text: user.valueOrNull!.username);
-    final useSelfIntroController =
-        useTextEditingController(text: user.valueOrNull!.selfIntro);
+    final user = ref.watch(appUserProvider);
+    final useNameController = useTextEditingController();
+    final useSelfIntroController = useTextEditingController();
     final useIsSelectingImage = useState(false);
     final picker = ImagePicker();
     final useImageBitmap = useState<List<Uint8List>>([]);
+
+    useEffect(() {
+      if (user.valueOrNull != null) {
+        useNameController.text = user.valueOrNull!.username;
+        useSelfIntroController.text = user.valueOrNull!.selfIntro ?? '';
+      }
+      return null;
+    }, [user.valueOrNull]);
 
     Future<void> selectProfileImage() async {
       useIsSelectingImage.value = true;
@@ -136,7 +143,8 @@ class UserEditScreen extends HookConsumerWidget {
                   ),
                 );
               },
-              error: (error, _) {
+              error: (error, s) {
+                print(s);
                 return Center(child: Text(error.toString()));
               },
               loading: () {
@@ -160,55 +168,56 @@ class UserEditScreen extends HookConsumerWidget {
                     profileImage: useImageBitmap.value.isNotEmpty
                         ? useImageBitmap.value[0]
                         : null,
-                    userTopSubcategories:
-                        user.valueOrNull!.userFavoriteSubcategories,
                   );
+
                   final userUsecase = ref.read(userUsecaseProvider);
                   await userUsecase.updateUser(
-                      formData: formData,
-                      onSuccess: () {
-                        showSuccessSnackBar(context, l10n.updatedProfile);
-                        ref.invalidate(userDetailNotifierProvider(uid));
-                        ref.invalidate(postsNotifierProvider);
-                        GoRouter.of(context).pop();
-                      },
-                      onFailure: () =>
-                          showErrorSnackBar(context, l10n.failedUpdateProfile));
+                    formData: formData,
+                    version: user.valueOrNull!.version,
+                    onSuccess: () {
+                      showSuccessSnackBar(context, l10n.updatedProfile);
+                      ref.invalidate(userDetailNotifierProvider(uid));
+                      ref.invalidate(postsNotifierProvider);
+                      GoRouter.of(context).pop();
+                    },
+                    onFailure: () =>
+                        showErrorSnackBar(context, l10n.failedUpdateProfile),
+                  );
                 }
               },
             ),
     );
   }
+}
 
-  Future<dynamic> showSelectTopSubcategoriesModal(
-      BuildContext context, List<UserTopSubCategory> categories) {
-    return showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
-        ),
+Future<dynamic> showSelectTopSubcategoriesModal(
+    BuildContext context, List<UserTopSubCategory> categories) {
+  return showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(20),
+        topRight: Radius.circular(20),
       ),
-      builder: (BuildContext context) {
-        return Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(16),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
-            ),
+    ),
+    builder: (BuildContext context) {
+      return Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(16),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
           ),
-          child: AddUsedSubcategoryBottomSheet(
-            topSubCategories: categories,
-          ),
-        );
-      },
-    );
-  }
+        ),
+        child: AddUsedSubcategoryBottomSheet(
+          topSubCategories: categories,
+        ),
+      );
+    },
+  );
 }
 
 class ScrollableSubCategoryChip extends StatelessWidget {
