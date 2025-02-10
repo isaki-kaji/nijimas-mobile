@@ -13,9 +13,13 @@ class ListDataView extends StatelessWidget {
     const double itemHeight = 48.0; // 各アイテムの推定高さ (例: 48ピクセル)
     const double maxHeight = 200.0; // 最大の高さ
 
+    final filteredSummary =
+        summary.where((element) => element.amount > 0).toList();
+
     // リストの高さを計算
-    double calculatedHeight =
-        summary.length >= 4 ? maxHeight : summary.length * itemHeight;
+    double calculatedHeight = filteredSummary.length >= 4
+        ? maxHeight
+        : filteredSummary.length * itemHeight;
 
     return Column(
       children: [
@@ -23,13 +27,14 @@ class ListDataView extends StatelessWidget {
           height: calculatedHeight,
           child: ListView.separated(
             shrinkWrap: true,
-            physics: summary.length >= 4
+            physics: filteredSummary.length >= 4
                 ? const AlwaysScrollableScrollPhysics()
                 : const NeverScrollableScrollPhysics(), // 要素数が4つ以上の場合にのみスクロール可能
-            itemCount: summary.length,
+            itemCount: filteredSummary.length,
             separatorBuilder: (context, index) => const Divider(),
             itemBuilder: (context, index) {
-              final entry = MainCategory.fromName(summary[index].categoryName);
+              final entry =
+                  MainCategory.fromName(filteredSummary[index].categoryName);
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
@@ -50,7 +55,7 @@ class ListDataView extends StatelessWidget {
                         Text(entry.getDisplayName(context)),
                       ],
                     ),
-                    Text('${summary[index].amount.toInt()} 円'),
+                    Text('${filteredSummary[index].amount.toInt()} 円'),
                   ],
                 ),
               );
