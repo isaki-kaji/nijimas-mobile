@@ -41,7 +41,7 @@ class PostUsecase {
       //postTextからlocationを取得する処理を追加
 
       final photoUrl =
-          await _imageUsecase.uploadPostImages(formData.images, '$uid/$postId');
+          await _imageUsecase.uploadPostImages(formData.images, uid, postId);
 
       final expense = _parseExpense(formData.expense);
 
@@ -84,7 +84,7 @@ class PostUsecase {
       // 画像を変更する処理
 
       final photoUrl =
-          await _imageUsecase.uploadPostImages(formData.images, '$uid/$postId');
+          await _imageUsecase.uploadPostImages(formData.images, uid, postId);
 
       final expense = _parseExpense(formData.expense);
 

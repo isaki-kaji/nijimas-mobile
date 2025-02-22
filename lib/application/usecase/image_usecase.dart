@@ -10,15 +10,15 @@ class ImageUsecase {
       : _imageRepository = imageRepository;
 
   Future<String> uploadPostImages(
-      List<Uint8List?> imagesData, String path) async {
+      List<Uint8List?> imagesData, String uid, String postId) async {
     final List<String> downloadUrls = [];
     try {
       for (var imageData in imagesData) {
         const uuid = Uuid();
         final imageId = uuid.v4();
-        String fullPath = 'posts/$path/$imageId';
+        String path = 'posts/$uid/$postId/$imageId';
         final downloadUrl =
-            await _imageRepository.uploadImage(imageData!, fullPath);
+            await _imageRepository.uploadImage(imageData!, path);
         downloadUrls.add(downloadUrl);
       }
       return downloadUrls.join(',');
@@ -27,16 +27,23 @@ class ImageUsecase {
     }
   }
 
-  Future<String> uploadProfileImage(Uint8List imageData, String path) async {
+  Future<String> uploadProfileImage(Uint8List imageData, String uid) async {
     try {
       const uuid = Uuid();
       final imageId = uuid.v4();
-      String fullPath = 'users/$path/profile-image/$imageId';
-      final downloadUrl =
-          await _imageRepository.uploadImage(imageData, fullPath);
+      String path = 'users/$uid/profile-image/$imageId';
+      final downloadUrl = await _imageRepository.uploadImage(imageData, path);
       return downloadUrl;
     } catch (e) {
       throw Exception('Failed to upload image: $e');
+    }
+  }
+
+  Future<void> deleteProfileImage(String downloadUrl) async {
+    try {
+      await _imageRepository.deleteImageFromDownloadUrl(downloadUrl);
+    } catch (e) {
+      throw Exception('Failed to delete image: $e');
     }
   }
 }

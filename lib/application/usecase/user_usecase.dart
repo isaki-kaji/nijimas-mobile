@@ -67,6 +67,7 @@ class UserUsecase {
       _ref.read(loadingProvider.notifier).setTrue();
       final uid = _ref.read(authStateProvider).valueOrNull!.uid;
       if (formData.profileImage != null) {
+        await _imageUsecase.deleteProfileImage(profileImageUrl!);
         profileImageUrl =
             await _imageUsecase.uploadProfileImage(formData.profileImage!, uid);
       }
@@ -80,6 +81,7 @@ class UserUsecase {
       await _userRepository.updateUser(request);
       onSuccess();
     } catch (e) {
+      print(e);
       onFailure();
     } finally {
       _ref.read(loadingProvider.notifier).setFalse();
