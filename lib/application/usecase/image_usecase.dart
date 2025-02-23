@@ -30,12 +30,8 @@ class ImageUsecase {
   }
 
   Future<void> deletePostImages(List<String> urls) async {
-    try {
-      for (var url in urls) {
-        await _imageRepository.deleteImageFromDownloadUrl(url);
-      }
-    } catch (e) {
-      throw Exception('Failed to delete image: $e');
+    for (var url in urls) {
+      await _imageRepository.deleteImageFromDownloadUrl(url);
     }
   }
 
@@ -52,10 +48,6 @@ class ImageUsecase {
   }
 
   Future<void> deleteProfileImage(String downloadUrl) async {
-    try {
-      await _imageRepository.deleteImageFromDownloadUrl(downloadUrl);
-    } catch (e) {
-      throw Exception('Failed to delete image: $e');
-    }
+    await _imageRepository.deleteImageFromDownloadUrl(downloadUrl);
   }
 }

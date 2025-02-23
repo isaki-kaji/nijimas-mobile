@@ -17,7 +17,6 @@ class ImageRepository {
     try {
       await ref.putData(imageData);
       final downloadURL = await ref.getDownloadURL();
-      print(downloadURL);
       return downloadURL;
     } catch (e) {
       _logger.e('Failed to upload image: $e');
@@ -26,9 +25,14 @@ class ImageRepository {
   }
 
   Future<void> deleteImageFromDownloadUrl(String downloadUrl) async {
-    final gsUrl = convertDownloadUrlToGsUrl(downloadUrl);
-    final ref = _firebaseStorage.refFromURL(gsUrl);
-    await ref.delete();
+    try {
+      final gsUrl = convertDownloadUrlToGsUrl(downloadUrl);
+      final ref = _firebaseStorage.refFromURL(gsUrl);
+      await ref.delete();
+    } catch (e) {
+      _logger.e('Failed to delete image: $e');
+      _logger.e('downloadUrl: $downloadUrl');
+    }
   }
 
   /// `downloadUrl` を `gs://` の形式に変換
