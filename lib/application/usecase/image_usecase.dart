@@ -10,33 +10,44 @@ class ImageUsecase {
       : _imageRepository = imageRepository;
 
   Future<String> uploadPostImages(
-      List<Uint8List?> imagesData, String path) async {
-    final List<String> downloadUrls = [];
+      List<Uint8List?> imagesData, String uid, String postId) async {
     try {
-      for (var imageData in imagesData) {
-        const uuid = Uuid();
+      const uuid = Uuid();
+
+      List<Future<String>> uploadTasks = imagesData.map((imageData) {
         final imageId = uuid.v4();
-        String fullPath = 'posts/$path/$imageId';
-        final downloadUrl =
-            await _imageRepository.uploadImage(imageData!, fullPath);
-        downloadUrls.add(downloadUrl);
-      }
+        String path = 'posts/$uid/$postId/$imageId';
+
+        return _imageRepository.uploadImage(imageData!, path);
+      }).toList();
+
+      List<String> downloadUrls = await Future.wait(uploadTasks);
+
       return downloadUrls.join(',');
+    } catch (e) {
+      throw Exception('Failed to upload images: $e');
+    }
+  }
+
+  Future<void> deletePostImages(List<String> urls) async {
+    for (var url in urls) {
+      await _imageRepository.deleteImageFromDownloadUrl(url);
+    }
+  }
+
+  Future<String> uploadProfileImage(Uint8List imageData, String uid) async {
+    try {
+      const uuid = Uuid();
+      final imageId = uuid.v4();
+      String path = 'users/$uid/profile-image/$imageId';
+      final downloadUrl = await _imageRepository.uploadImage(imageData, path);
+      return downloadUrl;
     } catch (e) {
       throw Exception('Failed to upload image: $e');
     }
   }
 
-  Future<String> uploadProfileImage(Uint8List imageData, String path) async {
-    try {
-      const uuid = Uuid();
-      final imageId = uuid.v4();
-      String fullPath = 'users/$path/profile-image/$imageId';
-      final downloadUrl =
-          await _imageRepository.uploadImage(imageData, fullPath);
-      return downloadUrl;
-    } catch (e) {
-      throw Exception('Failed to upload image: $e');
-    }
+  Future<void> deleteProfileImage(String downloadUrl) async {
+    await _imageRepository.deleteImageFromDownloadUrl(downloadUrl);
   }
 }
