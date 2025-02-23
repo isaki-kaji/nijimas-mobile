@@ -173,6 +173,7 @@ class AddPostScreen extends HookConsumerWidget {
                     postId: editingPost!.postId,
                     version: editingPost!.version,
                     formData: formData,
+                    currentPostUrls: editingPost!.photoUrl,
                     onSuccess: () {
                       showSuccessSnackBar(
                         context,

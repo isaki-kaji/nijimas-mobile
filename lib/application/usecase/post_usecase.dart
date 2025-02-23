@@ -71,6 +71,7 @@ class PostUsecase {
     required String postId,
     required int version,
     required PostFormData formData,
+    required List<String> currentPostUrls,
     required void Function() onSuccess,
     required void Function() onFailure,
   }) async {
@@ -81,7 +82,7 @@ class PostUsecase {
       (String?, String?) subCategories =
           _parseSubCategories(formData.subCategories);
 
-      // 画像を変更する処理
+      _imageUsecase.deletePostImages(currentPostUrls);
 
       final photoUrl =
           await _imageUsecase.uploadPostImages(formData.images, uid, postId);

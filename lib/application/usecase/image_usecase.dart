@@ -11,19 +11,31 @@ class ImageUsecase {
 
   Future<String> uploadPostImages(
       List<Uint8List?> imagesData, String uid, String postId) async {
-    final List<String> downloadUrls = [];
     try {
-      for (var imageData in imagesData) {
-        const uuid = Uuid();
+      const uuid = Uuid();
+
+      List<Future<String>> uploadTasks = imagesData.map((imageData) {
         final imageId = uuid.v4();
         String path = 'posts/$uid/$postId/$imageId';
-        final downloadUrl =
-            await _imageRepository.uploadImage(imageData!, path);
-        downloadUrls.add(downloadUrl);
-      }
+
+        return _imageRepository.uploadImage(imageData!, path);
+      }).toList();
+
+      List<String> downloadUrls = await Future.wait(uploadTasks);
+
       return downloadUrls.join(',');
     } catch (e) {
-      throw Exception('Failed to upload image: $e');
+      throw Exception('Failed to upload images: $e');
+    }
+  }
+
+  Future<void> deletePostImages(List<String> urls) async {
+    try {
+      for (var url in urls) {
+        await _imageRepository.deleteImageFromDownloadUrl(url);
+      }
+    } catch (e) {
+      throw Exception('Failed to delete image: $e');
     }
   }
 
