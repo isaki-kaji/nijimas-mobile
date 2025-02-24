@@ -9,7 +9,7 @@ class ImageUsecase {
   ImageUsecase({required ImageRepository imageRepository})
       : _imageRepository = imageRepository;
 
-  Future<String> uploadPostImages(
+  Future<List<String>> uploadPostImages(
       List<Uint8List?> imagesData, String uid, String postId) async {
     try {
       const uuid = Uuid();
@@ -23,7 +23,7 @@ class ImageUsecase {
 
       List<String> downloadUrls = await Future.wait(uploadTasks);
 
-      return downloadUrls.join(',');
+      return downloadUrls;
     } catch (e) {
       throw Exception('Failed to upload images: $e');
     }
