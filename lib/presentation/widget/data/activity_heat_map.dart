@@ -19,6 +19,7 @@ class ActivityHeatMap extends StatelessWidget {
   Widget build(BuildContext context) {
     final String firstDay = '$year-${month.toString().padLeft(2, '0')}-01';
     final firstDayOfWeek = DateTime.parse(firstDay).weekday;
+    final now = DateTime.now();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
@@ -41,13 +42,12 @@ class ActivityHeatMap extends StatelessWidget {
                 childAspectRatio: 1.0,
               ),
               itemBuilder: (context, index) {
+                final day = index - firstDayOfWeek + 2;
+                final date = DateTime(int.parse(year), int.parse(month), day);
                 return (index < firstDayOfWeek - 1)
                     ? Container()
                     : GestureDetector(
                         onTap: () {
-                          final day = index - firstDayOfWeek + 2;
-                          final date =
-                              DateTime(int.parse(year), int.parse(month), day);
                           _showDetailDialog(
                               context,
                               date,
@@ -63,7 +63,7 @@ class ActivityHeatMap extends StatelessWidget {
                                     activities[index - firstDayOfWeek + 1]),
                             border: Border.all(
                               color: Colors.black,
-                              width: 0.5,
+                              width: isToday(date) ? 1.5 : 0.5,
                             ),
                             borderRadius: BorderRadius.circular(5.0),
                           ),
@@ -93,5 +93,10 @@ class ActivityHeatMap extends StatelessWidget {
         );
       },
     );
+  }
+
+  bool isToday(DateTime d) {
+    final now = DateTime.now();
+    return d.year == now.year && d.month == now.month && d.day == now.day;
   }
 }
