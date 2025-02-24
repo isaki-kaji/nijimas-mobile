@@ -14,12 +14,13 @@ class PostUsecase {
   final ImageUsecase _imageUsecase;
   final Logger _logger;
   final Ref _ref;
-  PostUsecase(
-      {required PostRepository postRepository,
-      required ImageUsecase imageUsecase,
-      required Logger logger,
-      required Ref ref})
-      : _postRepository = postRepository,
+
+  PostUsecase({
+    required PostRepository postRepository,
+    required ImageUsecase imageUsecase,
+    required Logger logger,
+    required Ref ref,
+  })  : _postRepository = postRepository,
         _imageUsecase = imageUsecase,
         _logger = logger,
         _ref = ref;
@@ -29,6 +30,8 @@ class PostUsecase {
     required void Function() onSuccess,
     required void Function() onFailure,
   }) async {
+    List<String> photoUrls = [];
+
     try {
       _ref.read(loadingProvider.notifier).setTrue();
       const uuid = Uuid();
@@ -38,29 +41,32 @@ class PostUsecase {
       (String?, String?) subCategories =
           _parseSubCategories(formData.subCategories);
 
-      //postTextからlocationを取得する処理を追加
+      // postTextからlocationを取得する処理を追加
 
-      final photoUrl =
+      // **ここでエラーが発生すると、外側の catch に流れる**
+      photoUrls =
           await _imageUsecase.uploadPostImages(formData.images, uid, postId);
 
       final expense = _parseExpense(formData.expense);
 
       final request = CreatePostRequest(
-          postId: postId,
-          uid: uid,
-          mainCategory: formData.mainCategory,
-          subCategory1: subCategories.$1,
-          subCategory2: subCategories.$2,
-          postText: formData.postText,
-          photoUrl: photoUrl,
-          expense: expense,
-          location: null,
-          publicTypeNo: formData.publicTypeNo);
+        postId: postId,
+        uid: uid,
+        mainCategory: formData.mainCategory,
+        subCategory1: subCategories.$1,
+        subCategory2: subCategories.$2,
+        postText: formData.postText,
+        photoUrl: photoUrls.join(","),
+        expense: expense,
+        location: null,
+        publicTypeNo: formData.publicTypeNo,
+      );
 
       await _postRepository.createPost(request);
       onSuccess();
     } catch (e) {
       _logger.e('Failed to create post: $e');
+      _deleteImagesOnError(photoUrls);
       onFailure();
     } finally {
       _ref.read(loadingProvider.notifier).setFalse();
@@ -75,6 +81,8 @@ class PostUsecase {
     required void Function() onSuccess,
     required void Function() onFailure,
   }) async {
+    List<String> photoUrls = [];
+
     try {
       _ref.read(loadingProvider.notifier).setTrue();
       final uid = _ref.read(authStateProvider).valueOrNull!.uid;
@@ -82,32 +90,41 @@ class PostUsecase {
       (String?, String?) subCategories =
           _parseSubCategories(formData.subCategories);
 
-      _imageUsecase.deletePostImages(currentPostUrls);
-
-      final photoUrl =
+      photoUrls =
           await _imageUsecase.uploadPostImages(formData.images, uid, postId);
 
       final expense = _parseExpense(formData.expense);
 
       final request = UpdatePostRequest(
-          uid: uid,
-          mainCategory: formData.mainCategory,
-          subCategory1: subCategories.$1,
-          subCategory2: subCategories.$2,
-          postText: formData.postText,
-          photoUrl: photoUrl,
-          expense: expense,
-          location: null,
-          publicTypeNo: formData.publicTypeNo,
-          version: version);
+        uid: uid,
+        mainCategory: formData.mainCategory,
+        subCategory1: subCategories.$1,
+        subCategory2: subCategories.$2,
+        postText: formData.postText,
+        photoUrl: photoUrls.join(","),
+        expense: expense,
+        location: null,
+        publicTypeNo: formData.publicTypeNo,
+        version: version,
+      );
 
       await _postRepository.updatePost(postId, request);
+
+      // 更新成功したら、古い画像を削除
+      _imageUsecase.deletePostImages(currentPostUrls);
       onSuccess();
     } catch (e) {
       _logger.e('Failed to update post: $e');
+      _deleteImagesOnError(photoUrls);
       onFailure();
     } finally {
       _ref.read(loadingProvider.notifier).setFalse();
+    }
+  }
+
+  void _deleteImagesOnError(List<String> photoUrls) {
+    if (photoUrls.isNotEmpty) {
+      _imageUsecase.deletePostImages(photoUrls);
     }
   }
 }
@@ -127,18 +144,16 @@ class PostUsecase {
 }
 
 String _parseExpense(String? expense) {
-  if (expense != null && expense.isNotEmpty && expense != "") {
+  if (expense != null && expense.isNotEmpty) {
     if (_isNumeric(expense)) {
       return expense;
     } else {
       throw const FormatException('Invalid number format');
     }
-  } else {
-    return "0";
   }
+  return "0";
 }
 
 bool _isNumeric(String str) {
-  final number = num.tryParse(str);
-  return number != null;
+  return num.tryParse(str) != null;
 }
