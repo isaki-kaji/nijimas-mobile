@@ -278,6 +278,18 @@ abstract class L10n {
   /// In ja, this message translates to:
   /// **'プロフィールの変更に失敗しました'**
   String get failedUpdateProfile;
+
+  /// No description provided for @noPosts.
+  ///
+  /// In ja, this message translates to:
+  /// **'投稿はありません'**
+  String get noPosts;
+
+  /// No description provided for @noNotification.
+  ///
+  /// In ja, this message translates to:
+  /// **'通知はありません'**
+  String get noNotification;
 }
 
 class _L10nDelegate extends LocalizationsDelegate<L10n> {

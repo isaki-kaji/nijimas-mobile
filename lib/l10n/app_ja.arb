@@ -29,5 +29,7 @@
     "enterName": "名前を入力してください",
     "enterSelfIntro": "自己紹介を入力してください",
     "updatedProfile": "プロフィールを変更しました",
-    "failedUpdateProfile": "プロフィールの変更に失敗しました"
+    "failedUpdateProfile": "プロフィールの変更に失敗しました",
+    "noPosts": "投稿はありません",
+    "noNotification": "通知はありません"
 }

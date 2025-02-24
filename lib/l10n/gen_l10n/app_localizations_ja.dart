@@ -96,4 +96,10 @@ class L10nJa extends L10n {
 
   @override
   String get failedUpdateProfile => 'プロフィールの変更に失敗しました';
+
+  @override
+  String get noPosts => '投稿はありません';
+
+  @override
+  String get noNotification => '通知はありません';
 }

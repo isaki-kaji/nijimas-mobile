@@ -29,5 +29,7 @@
     "enterName": "Please enter your name",
     "enterSelfIntro": "Pleas enter your self-introduction",
     "updatedProfile": "Profile updated!!",
-    "failedUpdateProfile": "Profile update failed"
+    "failedUpdateProfile": "Profile update failed",
+    "noPosts": "No Posts yet",
+    "noNotification": "No Notification"
 }

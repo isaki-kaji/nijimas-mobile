@@ -96,4 +96,10 @@ class L10nEn extends L10n {
 
   @override
   String get failedUpdateProfile => 'Profile update failed';
+
+  @override
+  String get noPosts => 'No Posts yet';
+
+  @override
+  String get noNotification => 'No Notification';
 }
