@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:logger/web.dart';
 import 'package:nijimas/core/constant/env_constant.dart';
@@ -19,7 +21,7 @@ class SummaryRepository {
       {required String year, required String month}) async {
     try {
       final response = await _dio.get("${Env.baseUrl}/summaries/$year/$month");
-      if (response.statusCode == 200) {
+      if (response.statusCode == HttpStatus.ok) {
         _logger.d("📩 Response data: ${response.data}");
         return MonthlySummaryPresentation.fromJson(response.data);
       } else {

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:logger/web.dart';
 import 'package:nijimas/core/constant/env_constant.dart';
@@ -17,7 +19,7 @@ class FollowRequestRepository {
   Future<void> doFollowRequest(ToggleFollowRequestRequest request) async {
     final response = await _dio.post("${Env.baseUrl}/follow-requests",
         data: request.toJson());
-    if (response.statusCode == 201) {
+    if (response.statusCode == HttpStatus.created) {
       return;
     }
     _logger.e(response.data);
@@ -29,7 +31,7 @@ class FollowRequestRepository {
     final response = await _dio.delete(
       "${Env.baseUrl}/follow-requests/$targetUid",
     );
-    if (response.statusCode == 200) {
+    if (response.statusCode == HttpStatus.ok) {
       return;
     }
     _logger.e(response.data);
@@ -46,7 +48,7 @@ class FollowRequestRepository {
       queryParameters: {"action": status},
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == HttpStatus.ok) {
       return;
     }
 
@@ -57,7 +59,7 @@ class FollowRequestRepository {
 
   Future<List<FollowRequest>> getFollowRequests() async {
     final response = await _dio.get("${Env.baseUrl}/follow-requests");
-    if (response.statusCode == 200) {
+    if (response.statusCode == HttpStatus.ok) {
       return (response.data as List)
           .map((e) => FollowRequest.fromJson(e))
           .toList();

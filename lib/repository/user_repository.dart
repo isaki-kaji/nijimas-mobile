@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:logger/web.dart';
 import 'package:nijimas/core/constant/env_constant.dart';
@@ -20,10 +22,10 @@ class UserRepository {
   Future<dynamic> createUser(CreateUserRequest request) async {
     final response =
         await _dio.post("${Env.baseUrl}/users", data: request.toJson());
-    if (response.statusCode == 201) {
+    if (response.statusCode == HttpStatus.created) {
       return response.data;
     }
-    if (response.statusCode == 409) {
+    if (response.statusCode == HttpStatus.conflict) {
       throw UserAlreadyExistsException();
     }
     _logger.e(response.data);
@@ -33,7 +35,7 @@ class UserRepository {
 
   Future<dynamic> getOwnUser() async {
     final response = await _dio.get("${Env.baseUrl}/users/me");
-    if (response.statusCode == 200) {
+    if (response.statusCode == HttpStatus.ok) {
       return AppUser.fromJson(response.data);
     }
     _logger.e(response.data);
@@ -43,7 +45,7 @@ class UserRepository {
 
   Future<dynamic> getUser(String uid) async {
     final response = await _dio.get("${Env.baseUrl}/users/$uid");
-    if (response.statusCode == 200) {
+    if (response.statusCode == HttpStatus.ok) {
       return UserDetail.fromJson(response.data);
     }
     _logger.e(response.data);
@@ -54,7 +56,7 @@ class UserRepository {
   Future<void> updateUser(UpdateUserRequest request) async {
     final response =
         await _dio.put("${Env.baseUrl}/users", data: request.toJson());
-    if (response.statusCode == 200) {
+    if (response.statusCode == HttpStatus.ok) {
       return;
     }
     _logger.e(response.data);

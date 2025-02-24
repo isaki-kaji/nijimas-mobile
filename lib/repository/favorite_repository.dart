@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 import 'package:nijimas/core/constant/env_constant.dart';
@@ -17,10 +19,10 @@ class FavoriteRepository {
     final response =
         await _dio.post("${Env.baseUrl}/favorites", data: request.toJson());
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == HttpStatus.created) {
       return true;
     }
-    if (response.statusCode == 204) {
+    if (response.statusCode == HttpStatus.noContent) {
       return false;
     }
 

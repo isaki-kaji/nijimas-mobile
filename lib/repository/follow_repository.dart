@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:logger/web.dart';
 import 'package:nijimas/core/constant/env_constant.dart';
@@ -16,7 +18,7 @@ class FollowRepository {
   Future<void> cancelFollow(ToggleFollowRequestRequest request) async {
     final response =
         await _dio.delete("${Env.baseUrl}/follows", data: request.toJson());
-    if (response.statusCode == 200) {
+    if (response.statusCode == HttpStatus.ok) {
       return;
     }
     _logger.e(response.data);

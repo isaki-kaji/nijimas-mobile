@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:logger/web.dart';
 import 'package:nijimas/core/constant/env_constant.dart';
@@ -15,7 +17,7 @@ class SubCategoryRepository {
 
   Future<List<SubCategory>> getUserUsedSubCategories() async {
     final response = await _dio.get("${Env.baseUrl}/me/sub-categories");
-    if (response.statusCode == 200) {
+    if (response.statusCode == HttpStatus.ok) {
       return (response.data as List)
           .map((e) => SubCategory.fromJson(e))
           .toList();

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:logger/web.dart';
 import 'package:nijimas/core/constant/env_constant.dart';
@@ -18,7 +20,7 @@ class PostSearchRepository {
     try {
       final response = await _dio.get("${Env.baseUrl}/posts",
           queryParameters: {"uid": params[PostQueryKey.uid]});
-      if (response.statusCode == 200) {
+      if (response.statusCode == HttpStatus.ok) {
         List<Post> posts =
             (response.data as List).map((post) => Post.fromJson(post)).toList();
         return posts;
@@ -39,7 +41,7 @@ class PostSearchRepository {
       final response = await _dio.get("${Env.baseUrl}/posts", queryParameters: {
         "main-category": params[PostQueryKey.mainCategory]
       });
-      if (response.statusCode == 200) {
+      if (response.statusCode == HttpStatus.ok) {
         List<Post> posts =
             (response.data as List).map((post) => Post.fromJson(post)).toList();
         return posts;
@@ -59,7 +61,7 @@ class PostSearchRepository {
     try {
       final response = await _dio.get("${Env.baseUrl}/posts",
           queryParameters: {"sub-category": params[PostQueryKey.subCategory]});
-      if (response.statusCode == 200) {
+      if (response.statusCode == HttpStatus.ok) {
         List<Post> posts =
             (response.data as List).map((post) => Post.fromJson(post)).toList();
         return posts;
@@ -81,7 +83,7 @@ class PostSearchRepository {
         "main-category": params[PostQueryKey.mainCategory],
         "sub-category": params[PostQueryKey.subCategory]
       });
-      if (response.statusCode == 200) {
+      if (response.statusCode == HttpStatus.ok) {
         List<Post> posts =
             (response.data as List).map((post) => Post.fromJson(post)).toList();
         return posts;

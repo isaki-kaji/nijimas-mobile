@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:logger/web.dart';
 import 'package:nijimas/core/constant/env_constant.dart';
@@ -23,7 +25,7 @@ class PostRepository {
   Future<dynamic> createPost(CreatePostRequest request) async {
     final response =
         await _dio.post("${Env.baseUrl}/posts", data: request.toJson());
-    if (response.statusCode == 201) {
+    if (response.statusCode == HttpStatus.created) {
       return response.data;
     }
     _logger.e(response.data);
@@ -34,7 +36,7 @@ class PostRepository {
   Future<dynamic> updatePost(String postId, UpdatePostRequest request) async {
     final response =
         await _dio.put("${Env.baseUrl}/posts/$postId", data: request.toJson());
-    if (response.statusCode == 200) {
+    if (response.statusCode == HttpStatus.ok) {
       return response.data;
     }
     _logger.e(response.data);
@@ -45,7 +47,7 @@ class PostRepository {
   Future<List<Post>> getOwnPosts() async {
     try {
       final response = await _dio.get("${Env.baseUrl}/posts/me");
-      if (response.statusCode == 200) {
+      if (response.statusCode == HttpStatus.ok) {
         List<Post> posts =
             (response.data as List).map((post) => Post.fromJson(post)).toList();
         return posts;
@@ -67,7 +69,7 @@ class PostRepository {
           queryParameters: {
             "main-category": params[PostQueryKey.mainCategory]
           });
-      if (response.statusCode == 200) {
+      if (response.statusCode == HttpStatus.ok) {
         List<Post> posts =
             (response.data as List).map((post) => Post.fromJson(post)).toList();
         return posts;
@@ -87,7 +89,7 @@ class PostRepository {
     try {
       final response = await _dio.get("${Env.baseUrl}/posts/me",
           queryParameters: {"sub-category": params[PostQueryKey.subCategory]});
-      if (response.statusCode == 200) {
+      if (response.statusCode == HttpStatus.ok) {
         List<Post> posts =
             (response.data as List).map((post) => Post.fromJson(post)).toList();
         return posts;
@@ -105,7 +107,7 @@ class PostRepository {
   Future<List<Post>> getTimelinePosts() async {
     try {
       final response = await _dio.get("${Env.baseUrl}/posts/timeline");
-      if (response.statusCode == 200) {
+      if (response.statusCode == HttpStatus.ok) {
         List<Post> posts =
             (response.data as List).map((post) => Post.fromJson(post)).toList();
         return posts;
