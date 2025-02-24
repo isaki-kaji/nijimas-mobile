@@ -6,8 +6,7 @@ part 'update_post_request.g.dart';
 class UpdatePostRequest {
   final String uid;
   final String mainCategory;
-  final String? subCategory1;
-  final String? subCategory2;
+  final List<String> subCategories;
   final String? postText;
   final String? photoUrl;
   final String? expense;
@@ -17,8 +16,7 @@ class UpdatePostRequest {
   const UpdatePostRequest(
       {required this.uid,
       required this.mainCategory,
-      this.subCategory1,
-      this.subCategory2,
+      required this.subCategories,
       this.postText,
       this.photoUrl,
       this.expense,

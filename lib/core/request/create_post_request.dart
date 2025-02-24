@@ -7,8 +7,7 @@ class CreatePostRequest {
   final String postId;
   final String uid;
   final String mainCategory;
-  final String? subCategory1;
-  final String? subCategory2;
+  final List<String>? subCategories;
   final String? postText;
   final String? photoUrl;
   final String? expense;
@@ -18,8 +17,7 @@ class CreatePostRequest {
       {required this.postId,
       required this.uid,
       required this.mainCategory,
-      this.subCategory1,
-      this.subCategory2,
+      this.subCategories,
       this.postText,
       this.photoUrl,
       this.expense,

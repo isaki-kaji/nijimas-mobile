@@ -38,9 +38,6 @@ class PostUsecase {
       final postId = uuid.v7();
       final uid = _ref.read(authStateProvider).valueOrNull!.uid;
 
-      (String?, String?) subCategories =
-          _parseSubCategories(formData.subCategories);
-
       // postTextからlocationを取得する処理を追加
 
       // **ここでエラーが発生すると、外側の catch に流れる**
@@ -53,8 +50,7 @@ class PostUsecase {
         postId: postId,
         uid: uid,
         mainCategory: formData.mainCategory,
-        subCategory1: subCategories.$1,
-        subCategory2: subCategories.$2,
+        subCategories: formData.subCategories,
         postText: formData.postText,
         photoUrl: photoUrls.join(","),
         expense: expense,
@@ -87,9 +83,6 @@ class PostUsecase {
       _ref.read(loadingProvider.notifier).setTrue();
       final uid = _ref.read(authStateProvider).valueOrNull!.uid;
 
-      (String?, String?) subCategories =
-          _parseSubCategories(formData.subCategories);
-
       photoUrls =
           await _imageUsecase.uploadPostImages(formData.images, uid, postId);
 
@@ -98,8 +91,7 @@ class PostUsecase {
       final request = UpdatePostRequest(
         uid: uid,
         mainCategory: formData.mainCategory,
-        subCategory1: subCategories.$1,
-        subCategory2: subCategories.$2,
+        subCategories: formData.subCategories,
         postText: formData.postText,
         photoUrl: photoUrls.join(","),
         expense: expense,
@@ -127,20 +119,6 @@ class PostUsecase {
       _imageUsecase.deletePostImages(photoUrls);
     }
   }
-}
-
-(String?, String?) _parseSubCategories(List<String> subCategories) {
-  String? subCategory1;
-  String? subCategory2;
-
-  if (subCategories.isNotEmpty) {
-    subCategory1 = subCategories[0];
-  }
-  if (subCategories.length > 1) {
-    subCategory2 = subCategories[1];
-  }
-
-  return (subCategory1, subCategory2);
 }
 
 String _parseExpense(String? expense) {
