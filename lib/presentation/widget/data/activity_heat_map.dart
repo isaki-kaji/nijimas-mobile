@@ -19,7 +19,6 @@ class ActivityHeatMap extends StatelessWidget {
   Widget build(BuildContext context) {
     final String firstDay = '$year-${month.toString().padLeft(2, '0')}-01';
     final firstDayOfWeek = DateTime.parse(firstDay).weekday;
-    final now = DateTime.now();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
