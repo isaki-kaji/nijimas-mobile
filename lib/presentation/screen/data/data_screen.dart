@@ -86,8 +86,6 @@ class DataScreen extends HookConsumerWidget {
           },
           loading: () => const Center(child: Loader()),
           error: (error, s) {
-            print(error);
-            print(s);
             return Center(child: Text('Error: $error'));
           },
         );
