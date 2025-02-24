@@ -68,6 +68,9 @@ class L10nEn extends L10n {
   String get postSuccess => 'Posted!!';
 
   @override
+  String get deleteSuccess => 'Deleted!!';
+
+  @override
   String get postFailed => 'Post Failed';
 
   @override
@@ -75,6 +78,9 @@ class L10nEn extends L10n {
 
   @override
   String get updateFailed => 'Failed to Update';
+
+  @override
+  String get deleteFailed => 'Failed to Delete';
 
   @override
   String get editProfile => 'Edit Profile';

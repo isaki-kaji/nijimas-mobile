@@ -44,6 +44,16 @@ class PostRepository {
         "Failed to update post with status code: ${response.statusCode}");
   }
 
+  Future<void> deletePost(String postId) async {
+    final response = await _dio.delete("${Env.baseUrl}/posts/$postId");
+    if (response.statusCode == HttpStatus.ok) {
+      return;
+    }
+    _logger.e(response.data);
+    throw Exception(
+        "Failed to delete post with status code: ${response.statusCode}");
+  }
+
   Future<List<Post>> getOwnPosts() async {
     try {
       final response = await _dio.get("${Env.baseUrl}/posts/me");

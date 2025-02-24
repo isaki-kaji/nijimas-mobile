@@ -219,6 +219,12 @@ abstract class L10n {
   /// **'投稿しました'**
   String get postSuccess;
 
+  /// No description provided for @deleteSuccess.
+  ///
+  /// In ja, this message translates to:
+  /// **'削除しました'**
+  String get deleteSuccess;
+
   /// No description provided for @postFailed.
   ///
   /// In ja, this message translates to:
@@ -236,6 +242,12 @@ abstract class L10n {
   /// In ja, this message translates to:
   /// **'修正に失敗しました'**
   String get updateFailed;
+
+  /// No description provided for @deleteFailed.
+  ///
+  /// In ja, this message translates to:
+  /// **'削除に失敗しました'**
+  String get deleteFailed;
 
   /// No description provided for @editProfile.
   ///

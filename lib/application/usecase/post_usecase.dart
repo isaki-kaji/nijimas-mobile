@@ -114,6 +114,25 @@ class PostUsecase {
     }
   }
 
+  Future<void> deletePost({
+    required String postId,
+    required List<String> photoUrls,
+    required void Function() onSuccess,
+    required void Function() onFailure,
+  }) async {
+    try {
+      _ref.read(loadingProvider.notifier).setTrue();
+      await _postRepository.deletePost(postId);
+      _imageUsecase.deletePostImages(photoUrls);
+      onSuccess();
+    } catch (e) {
+      _logger.e('Failed to delete post: $e');
+      onFailure();
+    } finally {
+      _ref.read(loadingProvider.notifier).setFalse();
+    }
+  }
+
   void _deleteImagesOnError(List<String> photoUrls) {
     if (photoUrls.isNotEmpty) {
       _imageUsecase.deletePostImages(photoUrls);

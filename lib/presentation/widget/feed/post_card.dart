@@ -4,15 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:nijimas/application/state/monthly_summary_provider.dart';
 import 'package:nijimas/application/state/post_query_provider.dart';
+import 'package:nijimas/application/state/posts_provider.dart';
 import 'package:nijimas/core/enum/main_category.dart';
 import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/core/provider/usecase/favorite_usecase_provider.dart';
+import 'package:nijimas/core/provider/usecase/post_usecase_provider.dart';
 import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/core/theme/text_style.dart';
+import 'package:nijimas/core/util/show_snack_bar.dart';
 import 'package:nijimas/core/util/sizing.dart';
 import 'package:nijimas/core/util/timezone.dart';
 import 'package:nijimas/core/model/post.dart';
+import 'package:nijimas/l10n/gen_l10n/app_localizations.dart';
 import 'package:nijimas/presentation/widget/user/switch_circle_avatar.dart';
 import 'package:nijimas/presentation/widget/post/main_category_chip.dart';
 import 'package:nijimas/presentation/widget/post/sub_category_chip.dart';
@@ -32,6 +37,7 @@ class PostCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = L10n.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -168,7 +174,7 @@ class PostCard extends ConsumerWidget {
             children: [
               Text(formatter.format(changeTZ(post.createdAt, "Asia/Tokyo")),
                   style: MyTextStyles.caption.copyWith(color: Colors.grey)),
-              const SizedBox(width: 8.0),
+              const SizedBox(width: 15.0),
               GestureDetector(
                 child: post.isFavorite
                     ? const Icon(Icons.favorite, color: MyColors.pink)
@@ -181,12 +187,34 @@ class PostCard extends ConsumerWidget {
                   );
                 },
               ),
-              if (canEdit) const SizedBox(width: 10.0),
+              if (canEdit) const SizedBox(width: 15.0),
               if (canEdit)
                 GestureDetector(
                   child: const Icon(Icons.edit, color: MyColors.grey),
                   onTap: () {
                     GoRouter.of(context).push('/post/edit', extra: post);
+                  },
+                ),
+              if (canEdit) const SizedBox(width: 15.0),
+              if (canEdit)
+                GestureDetector(
+                  child: const Icon(Icons.delete, color: MyColors.grey),
+                  onTap: () {
+                    final postUsecase = ref.read(postUsecaseProvider);
+                    postUsecase.deletePost(
+                      postId: post.postId,
+                      photoUrls: post.photoUrl,
+                      onSuccess: () {
+                        ref.invalidate(postsNotifierProvider(query));
+                        ref.invalidate(monthlySummaryPresentationProvider(
+                            DateTime.now().year.toString(),
+                            DateTime.now().month.toString()));
+                        showSuccessSnackBar(context, l10n.deleteSuccess);
+                      },
+                      onFailure: () {
+                        showErrorSnackBar(context, l10n.deleteFailed);
+                      },
+                    );
                   },
                 ),
             ],
