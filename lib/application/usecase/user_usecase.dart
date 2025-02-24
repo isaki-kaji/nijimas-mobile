@@ -57,30 +57,46 @@ class UserUsecase {
     }
   }
 
-  Future<void> updateUser(
-      {required UserFormData formData,
-      required String? profileImageUrl,
-      required int version,
-      required void Function() onSuccess,
-      required void Function() onFailure}) async {
+  Future<void> updateUser({
+    required UserFormData formData,
+    required String? profileImageUrl,
+    required int version,
+    required void Function() onSuccess,
+    required void Function() onFailure,
+  }) async {
+    bool isProfileImageChanged = false;
+    String? newProfileImageUrl;
+
     try {
       _ref.read(loadingProvider.notifier).setTrue();
+
       final uid = _ref.read(authStateProvider).valueOrNull!.uid;
       if (formData.profileImage != null) {
-        _imageUsecase.deleteProfileImage(profileImageUrl!);
-        profileImageUrl =
+        newProfileImageUrl =
             await _imageUsecase.uploadProfileImage(formData.profileImage!, uid);
+        isProfileImageChanged = true;
       }
+
       final request = UpdateUserRequest(
         uid: uid,
         username: formData.username,
         selfIntro: formData.selfIntro,
-        profileImageUrl: profileImageUrl,
+        profileImageUrl: newProfileImageUrl ?? profileImageUrl,
         version: version,
       );
+
       await _userRepository.updateUser(request);
+
+      if (isProfileImageChanged && profileImageUrl != null) {
+        _imageUsecase.deleteProfileImage(profileImageUrl);
+      }
+
       onSuccess();
     } catch (e) {
+      // エラー時、新しくアップロードした画像を削除
+      if (isProfileImageChanged && newProfileImageUrl != null) {
+        _imageUsecase.deleteProfileImage(newProfileImageUrl);
+      }
       onFailure();
     } finally {
       _ref.read(loadingProvider.notifier).setFalse();

@@ -14,12 +14,14 @@ class ImageRepository {
 
   Future<String> uploadImage(Uint8List imageData, String path) async {
     Reference ref = _firebaseStorage.ref().child(path);
+    String downloadURL = "";
     try {
       await ref.putData(imageData);
-      final downloadURL = await ref.getDownloadURL();
+      downloadURL = await ref.getDownloadURL();
       return downloadURL;
     } catch (e) {
       _logger.e('Failed to upload image: $e');
+      _logger.e('downloadUrl: $downloadURL');
       throw Exception('Failed to upload image: $e');
     }
   }
