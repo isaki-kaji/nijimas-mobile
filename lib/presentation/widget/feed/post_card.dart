@@ -205,7 +205,7 @@ class PostCard extends ConsumerWidget {
                       postId: post.postId,
                       photoUrls: post.photoUrl,
                       onSuccess: () {
-                        ref.invalidate(postsNotifierProvider(query));
+                        ref.invalidate(postsNotifierProvider);
                         ref.invalidate(monthlySummaryPresentationProvider(
                             DateTime.now().year.toString(),
                             DateTime.now().month.toString()));
