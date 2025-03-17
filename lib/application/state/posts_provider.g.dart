@@ -6,7 +6,7 @@ part of 'posts_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$postsNotifierHash() => r'70b5dcc902bc7437f8abf472fee95dd7813a847d';
+String _$postsNotifierHash() => r'83573798f05ca06fa777bf0090cb9c86c53f9ba8';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -30,10 +30,10 @@ class _SystemHash {
 }
 
 abstract class _$PostsNotifier
-    extends BuildlessAutoDisposeAsyncNotifier<List<Post>> {
+    extends BuildlessAutoDisposeNotifier<PagingState<String, Post>> {
   late final PostQuery query;
 
-  FutureOr<List<Post>> build(
+  PagingState<String, Post> build(
     PostQuery query,
   );
 }
@@ -43,7 +43,7 @@ abstract class _$PostsNotifier
 const postsNotifierProvider = PostsNotifierFamily();
 
 /// See also [PostsNotifier].
-class PostsNotifierFamily extends Family<AsyncValue<List<Post>>> {
+class PostsNotifierFamily extends Family<PagingState<String, Post>> {
   /// See also [PostsNotifier].
   const PostsNotifierFamily();
 
@@ -81,8 +81,8 @@ class PostsNotifierFamily extends Family<AsyncValue<List<Post>>> {
 }
 
 /// See also [PostsNotifier].
-class PostsNotifierProvider
-    extends AutoDisposeAsyncNotifierProviderImpl<PostsNotifier, List<Post>> {
+class PostsNotifierProvider extends AutoDisposeNotifierProviderImpl<
+    PostsNotifier, PagingState<String, Post>> {
   /// See also [PostsNotifier].
   PostsNotifierProvider(
     PostQuery query,
@@ -113,7 +113,7 @@ class PostsNotifierProvider
   final PostQuery query;
 
   @override
-  FutureOr<List<Post>> runNotifierBuild(
+  PagingState<String, Post> runNotifierBuild(
     covariant PostsNotifier notifier,
   ) {
     return notifier.build(
@@ -138,7 +138,7 @@ class PostsNotifierProvider
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<PostsNotifier, List<Post>>
+  AutoDisposeNotifierProviderElement<PostsNotifier, PagingState<String, Post>>
       createElement() {
     return _PostsNotifierProviderElement(this);
   }
@@ -157,14 +157,14 @@ class PostsNotifierProvider
   }
 }
 
-mixin PostsNotifierRef on AutoDisposeAsyncNotifierProviderRef<List<Post>> {
+mixin PostsNotifierRef
+    on AutoDisposeNotifierProviderRef<PagingState<String, Post>> {
   /// The parameter `query` of this provider.
   PostQuery get query;
 }
 
-class _PostsNotifierProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<PostsNotifier, List<Post>>
-    with PostsNotifierRef {
+class _PostsNotifierProviderElement extends AutoDisposeNotifierProviderElement<
+    PostsNotifier, PagingState<String, Post>> with PostsNotifierRef {
   _PostsNotifierProviderElement(super.provider);
 
   @override
