@@ -114,9 +114,10 @@ class PostRepository {
     }
   }
 
-  Future<List<Post>> getTimelinePosts() async {
+  Future<List<Post>> getTimelinePosts(String? referenceId) async {
     try {
-      final response = await _dio.get("${Env.baseUrl}/posts/timeline");
+      final response = await _dio.get("${Env.baseUrl}/posts/timeline",
+          queryParameters: {"reference": referenceId});
       if (response.statusCode == HttpStatus.ok) {
         List<Post> posts =
             (response.data as List).map((post) => Post.fromJson(post)).toList();

@@ -9,32 +9,41 @@ part 'posts_provider.g.dart';
 @riverpod
 class PostsNotifier extends _$PostsNotifier {
   @override
-  Future<List<Post>> build(PostQuery query) async {
+  Future<List<Post>> build(PostQuery query) {
+    return Future.value([]);
+  }
+
+  Future<List<Post>> fetchPosts(String? referenceId) async {
     try {
       final postRepository = ref.read(postRepositoryProvider);
       final postSearchRepository = ref.read(postSearchRepositoryProvider);
+      List<Post> posts;
       switch (query.type) {
-        case PostQueryType.own:
-          return await postRepository.getOwnPosts();
+        // case PostQueryType.own:
+        //   results = await postRepository.getOwnPosts();
         case PostQueryType.timeline:
-          return await postRepository.getTimelinePosts();
-        case PostQueryType.uid:
-          return await postSearchRepository.getPostsByUid(query.params);
-        case PostQueryType.mainCategory:
-          return await postSearchRepository
-              .getPostsByMainCategory(query.params);
-        case PostQueryType.subCategory:
-          return await postSearchRepository.getPostsBySubCategory(query.params);
-        case PostQueryType.mainCategoryAndSubCategory:
-          return await postSearchRepository
-              .getPostsByMainCategoryAndSubCategory(query.params);
-        case PostQueryType.ownAndMainCategory:
-          return await postRepository.getOwnPostsByMainCategory(query.params);
-        case PostQueryType.ownAndSubCategory:
-          return await postRepository.getOwnPostsBySubCategory(query.params);
+          posts = await postRepository.getTimelinePosts(referenceId);
+        // case PostQueryType.uid:
+        //   results = await postSearchRepository.getPostsByUid(query.params);
+        // case PostQueryType.mainCategory:
+        //   results =
+        //       await postSearchRepository.getPostsByMainCategory(query.params);
+        // case PostQueryType.subCategory:
+        //   results =
+        //       await postSearchRepository.getPostsBySubCategory(query.params);
+        // case PostQueryType.mainCategoryAndSubCategory:
+        //   results = await postSearchRepository
+        //       .getPostsByMainCategoryAndSubCategory(query.params);
+        // case PostQueryType.ownAndMainCategory:
+        //   results =
+        //       await postRepository.getOwnPostsByMainCategory(query.params);
+        // case PostQueryType.ownAndSubCategory:
+        //   results = await postRepository.getOwnPostsBySubCategory(query.params);
         default:
-          return await postRepository.getOwnPosts();
+          posts = await postRepository.getOwnPosts();
       }
+
+      return posts;
     } catch (e) {
       rethrow;
     }
