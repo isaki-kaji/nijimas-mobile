@@ -1,7 +1,8 @@
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/core/provider/repository/post_repository_provider.dart';
-import 'package:nijimas/core/provider/repository/post_search_repository_provider.dart';
 import 'package:nijimas/core/model/post.dart';
+import 'package:nijimas/core/provider/repository/post_search_repository_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'posts_provider.g.dart';
@@ -9,56 +10,63 @@ part 'posts_provider.g.dart';
 @riverpod
 class PostsNotifier extends _$PostsNotifier {
   @override
-  Future<List<Post>> build(PostQuery query) {
-    return Future.value([]);
+  PagingState<String, Post> build(PostQuery query) {
+    return PagingState<String, Post>();
   }
 
-  Future<List<Post>> fetchPosts(String? referenceId) async {
+  Future<void> fetchNextPage() async {
+    if (state.isLoading) return;
+
+    state = state.copyWith(isLoading: true, error: null);
+
     try {
       final postRepository = ref.read(postRepositoryProvider);
       final postSearchRepository = ref.read(postSearchRepositoryProvider);
-      List<Post> posts;
+      final newKey = state.keys?.last;
+      List<Post> newPosts;
       switch (query.type) {
-        // case PostQueryType.own:
-        //   results = await postRepository.getOwnPosts();
+        case PostQueryType.own:
+          newPosts = await postRepository.getOwnPosts(newKey);
         case PostQueryType.timeline:
-          posts = await postRepository.getTimelinePosts(referenceId);
-        // case PostQueryType.uid:
-        //   results = await postSearchRepository.getPostsByUid(query.params);
-        // case PostQueryType.mainCategory:
-        //   results =
-        //       await postSearchRepository.getPostsByMainCategory(query.params);
-        // case PostQueryType.subCategory:
-        //   results =
-        //       await postSearchRepository.getPostsBySubCategory(query.params);
-        // case PostQueryType.mainCategoryAndSubCategory:
-        //   results = await postSearchRepository
-        //       .getPostsByMainCategoryAndSubCategory(query.params);
-        // case PostQueryType.ownAndMainCategory:
-        //   results =
-        //       await postRepository.getOwnPostsByMainCategory(query.params);
-        // case PostQueryType.ownAndSubCategory:
-        //   results = await postRepository.getOwnPostsBySubCategory(query.params);
+          newPosts = await postRepository.getTimelinePosts(newKey);
+        case PostQueryType.uid:
+          newPosts =
+              await postSearchRepository.getPostsByUid(query.params, newKey);
+        case PostQueryType.subCategory:
+          newPosts = await postSearchRepository.getPostsBySubCategory(
+              query.params, newKey);
         default:
-          posts = await postRepository.getOwnPosts();
+          newPosts = await postRepository.getOwnPosts(newKey);
       }
 
-      return posts;
+      final isLastPage = newPosts.isEmpty;
+
+      state = state.copyWith(
+        pages: [...?state.pages, if (!isLastPage) newPosts],
+        keys: [
+          ...?state.keys,
+          if (!isLastPage) newPosts.last.postId,
+        ],
+        hasNextPage: !isLastPage,
+        isLoading: false,
+      );
     } catch (e) {
-      rethrow;
+      state = state.copyWith(
+        error: e,
+        isLoading: false,
+      );
     }
   }
 
   void toggleFavorite(String postId, bool isFavorite) {
-    final currentState = state.valueOrNull;
-    if (currentState == null) return;
+    final updatedPages = state.pages
+        ?.map((page) => page
+            .map((post) => post.postId == postId
+                ? post.copyWith(isFavorite: isFavorite)
+                : post)
+            .toList())
+        .toList();
 
-    final updatedPosts = currentState.map((post) {
-      if (post.postId == postId) {
-        return post.copyWith(isFavorite: isFavorite);
-      }
-      return post;
-    }).toList();
-    state = AsyncValue.data(updatedPosts);
+    state = state.copyWith(pages: updatedPages);
   }
 }

@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:logger/web.dart';
 import 'package:nijimas/core/constant/env_constant.dart';
-import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/core/request/update_post_request.dart';
 import 'package:nijimas/repository/interceptor/auth_interceptor.dart';
 import 'package:nijimas/core/model/post.dart';
@@ -54,9 +53,10 @@ class PostRepository {
         "Failed to delete post with status code: ${response.statusCode}");
   }
 
-  Future<List<Post>> getOwnPosts() async {
+  Future<List<Post>> getOwnPosts(String? referenceId) async {
     try {
-      final response = await _dio.get("${Env.baseUrl}/posts/me");
+      final response = await _dio.get("${Env.baseUrl}/posts/me",
+          queryParameters: {"reference": referenceId});
       if (response.statusCode == HttpStatus.ok) {
         List<Post> posts =
             (response.data as List).map((post) => Post.fromJson(post)).toList();
@@ -69,48 +69,6 @@ class PostRepository {
     } catch (e) {
       _logger.e("Exception: $e");
       throw Exception("Failed to get posts by uid: $e");
-    }
-  }
-
-  Future<List<Post>> getOwnPostsByMainCategory(
-      Map<PostQueryKey, dynamic> params) async {
-    try {
-      final response = await _dio.get("${Env.baseUrl}//posts/me",
-          queryParameters: {
-            "main-category": params[PostQueryKey.mainCategory]
-          });
-      if (response.statusCode == HttpStatus.ok) {
-        List<Post> posts =
-            (response.data as List).map((post) => Post.fromJson(post)).toList();
-        return posts;
-      } else {
-        _logger.e("Error response: ${response.data}");
-        throw Exception(
-            "Failed to get posts by main category with status code: ${response.statusCode}");
-      }
-    } catch (e) {
-      _logger.e("Exception: $e");
-      throw Exception("Failed to get posts by main category: $e");
-    }
-  }
-
-  Future<List<Post>> getOwnPostsBySubCategory(
-      Map<PostQueryKey, dynamic> params) async {
-    try {
-      final response = await _dio.get("${Env.baseUrl}/posts/me",
-          queryParameters: {"sub-category": params[PostQueryKey.subCategory]});
-      if (response.statusCode == HttpStatus.ok) {
-        List<Post> posts =
-            (response.data as List).map((post) => Post.fromJson(post)).toList();
-        return posts;
-      } else {
-        _logger.e("Error response: ${response.data}");
-        throw Exception(
-            "Failed to get posts by sub category with status code: ${response.statusCode}");
-      }
-    } catch (e) {
-      _logger.e("Exception: $e");
-      throw Exception("Failed to get posts by sub category: $e");
     }
   }
 
