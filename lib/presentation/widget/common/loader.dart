@@ -11,3 +11,14 @@ class Loader extends StatelessWidget {
             color: Theme.of(context).colorScheme.primary, size: 50));
   }
 }
+
+class NewtonLoader extends StatelessWidget {
+  const NewtonLoader({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+        child: LoadingAnimationWidget.newtonCradle(
+            color: Theme.of(context).colorScheme.primary, size: 80));
+  }
+}

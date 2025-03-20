@@ -19,6 +19,7 @@ import 'package:nijimas/l10n/gen_l10n/app_localizations.dart';
 import 'package:nijimas/presentation/widget/common/loader.dart';
 import 'package:nijimas/presentation/widget/common/trailing_icon_button.dart';
 import 'package:nijimas/presentation/widget/post/category_input_field.dart';
+import 'package:nijimas/presentation/widget/post/custom_dotted_border.dart';
 import 'package:nijimas/presentation/widget/post/expense_input_field.dart';
 import 'package:nijimas/presentation/widget/post/image_carousel_slider.dart';
 import 'package:nijimas/presentation/widget/post/image_selector_detector.dart';
@@ -37,6 +38,7 @@ class AddPostScreen extends HookConsumerWidget {
     final isEditing = editingPost != null;
     bool isKeyboardShown = 0 < MediaQuery.of(context).viewInsets.bottom;
     final isLoading = ref.watch(loadingProvider);
+    final useComputeLoading = useState<bool>(false);
 
     final useMainCategory = useState<MainCategory>(isEditing
         ? MainCategory.fromName(editingPost!.mainCategory)
@@ -74,8 +76,10 @@ class AddPostScreen extends HookConsumerWidget {
         useIsSelectingImage.value = false;
         return;
       }
+      useComputeLoading.value = true;
       final result = await compute(resizeImages, imageFiles);
       useImageBitmap.value = result;
+      useComputeLoading.value = false;
       useIsSelectingImage.value = false;
     }
 
@@ -109,16 +113,17 @@ class AddPostScreen extends HookConsumerWidget {
                           useSubCategories: useSubCategories,
                           useIsVisibleTextFieldChip: useIsVisibleTextFieldChip,
                           subCategoryTextController: subCategoryTextController),
-                      if (useImageBitmap.value.isNotEmpty)
-                        ImageCarouselSlider(
-                          isKeyboardShown: isKeyboardShown,
-                          useImageBitmap: useImageBitmap,
-                          selectImages: selectImages,
-                        )
-                      else
-                        ImageSelectDetector(
-                            isKeyboardShown: isKeyboardShown,
-                            selectImages: selectImages),
+                      useComputeLoading.value
+                          ? const CustomDottedBorder(item: NewtonLoader())
+                          : (useImageBitmap.value.isNotEmpty)
+                              ? ImageCarouselSlider(
+                                  isKeyboardShown: isKeyboardShown,
+                                  useImageBitmap: useImageBitmap,
+                                  selectImages: selectImages,
+                                )
+                              : ImageSelectDetector(
+                                  isKeyboardShown: isKeyboardShown,
+                                  selectImages: selectImages),
                       MemoInputField(useTextController: useTextController),
                       PublicTypeSwitch(usePublicTypeNo: usePublicTypeNo),
                       const SizedBox(height: 150),
