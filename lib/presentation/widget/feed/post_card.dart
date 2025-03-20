@@ -21,6 +21,8 @@ import 'package:nijimas/l10n/gen_l10n/app_localizations.dart';
 import 'package:nijimas/presentation/widget/user/switch_circle_avatar.dart';
 import 'package:nijimas/presentation/widget/post/main_category_chip.dart';
 import 'package:nijimas/presentation/widget/post/sub_category_chip.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 
 class PostCard extends ConsumerWidget {
   final Post post;
@@ -105,21 +107,25 @@ class PostCard extends ConsumerWidget {
                 viewportFraction: 0.92,
                 enableInfiniteScroll: false,
               ),
-              items: post.photoUrl.map((photo) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return Container(
-                      width: MediaQuery.of(context).size.width,
-                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                      decoration: const BoxDecoration(
-                        color: Colors.grey,
-                      ),
-                      child: CachedNetworkImage(
-                        imageUrl: photo,
-                        fit: BoxFit.cover,
-                      ),
-                    );
+              items: post.photoUrl.asMap().entries.map((entry) {
+                int index = entry.key;
+                String photo = entry.value;
+
+                return GestureDetector(
+                  onTap: () {
+                    _showFullScreenGallery(context, index);
                   },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                    decoration: const BoxDecoration(
+                      color: Colors.grey,
+                    ),
+                    child: CachedNetworkImage(
+                      imageUrl: photo,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 );
               }).toList(),
             ),
@@ -223,6 +229,31 @@ class PostCard extends ConsumerWidget {
         const SizedBox(height: 6.0),
         const Divider(),
       ],
+    );
+  }
+
+  void _showFullScreenGallery(BuildContext context, int initialIndex) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        backgroundColor: Colors.black,
+        insetPadding: const EdgeInsets.all(0),
+        child: GestureDetector(
+          onTap: () => Navigator.of(context).pop(),
+          child: PhotoViewGallery.builder(
+            scrollPhysics: const BouncingScrollPhysics(),
+            itemCount: post.photoUrl.length,
+            pageController: PageController(initialPage: initialIndex),
+            builder: (context, index) {
+              return PhotoViewGalleryPageOptions(
+                imageProvider: CachedNetworkImageProvider(post.photoUrl[index]),
+                minScale: PhotoViewComputedScale.contained * 0.8,
+                maxScale: PhotoViewComputedScale.covered * 2,
+              );
+            },
+          ),
+        ),
+      ),
     );
   }
 }
