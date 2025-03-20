@@ -31,5 +31,6 @@
     "updatedProfile": "プロフィールを変更しました",
     "failedUpdateProfile": "プロフィールの変更に失敗しました",
     "noPosts": "投稿はありません",
-    "noNotification": "通知はありません"
+    "noNotification": "通知はありません",
+    "errorOccurred": "エラーが発生しました\\n時間をおいて再度お試しください"
 }

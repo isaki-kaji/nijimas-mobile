@@ -102,4 +102,7 @@ class L10nJa extends L10n {
 
   @override
   String get noNotification => '通知はありません';
+
+  @override
+  String get errorOccurred => 'エラーが発生しました\\n時間をおいて再度お試しください';
 }

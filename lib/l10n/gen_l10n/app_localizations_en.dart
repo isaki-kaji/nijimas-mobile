@@ -102,4 +102,7 @@ class L10nEn extends L10n {
 
   @override
   String get noNotification => 'No Notification';
+
+  @override
+  String get errorOccurred => 'An error occurred.\\nPlease try again later.';
 }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/monthly_summary_provider.dart';
 import 'package:nijimas/core/theme/text_style.dart';
+import 'package:nijimas/core/util/show_snack_bar.dart';
+import 'package:nijimas/l10n/gen_l10n/app_localizations.dart';
 import 'package:nijimas/presentation/widget/common/loader.dart';
 import 'package:nijimas/presentation/widget/data/activity_heat_map.dart';
 import 'package:nijimas/presentation/widget/data/percentage_pie_chart.dart';
@@ -15,6 +17,7 @@ class DataScreen extends HookConsumerWidget {
   const DataScreen({super.key, required this.year, required this.month});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = L10n.of(context);
     return ref.watch(monthlySummaryPresentationProvider(year, month)).when(
           data: (data) {
             final calculatedExpenseSummary = data.mainCategorySummary;
@@ -62,9 +65,9 @@ class DataScreen extends HookConsumerWidget {
                     summary: calculatedExpenseSummary,
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 40),
                 SubCategoryCards(summary: calculatedSubCategorySummary),
-                const SizedBox(height: 20),
+                const SizedBox(height: 40),
                 DataCard(
                   title: '日ごとの投稿数',
                   chart: ActivityHeatMap(
@@ -85,8 +88,9 @@ class DataScreen extends HookConsumerWidget {
             );
           },
           loading: () => const Center(child: Loader()),
-          error: (error, s) {
-            return Center(child: Text('Error: $error'));
+          error: (e, _) {
+            showErrorSnackBar(context, l10n.errorOccurred);
+            return const SizedBox();
           },
         );
   }

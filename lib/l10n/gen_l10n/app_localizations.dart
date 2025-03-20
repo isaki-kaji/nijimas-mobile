@@ -290,6 +290,12 @@ abstract class L10n {
   /// In ja, this message translates to:
   /// **'通知はありません'**
   String get noNotification;
+
+  /// No description provided for @errorOccurred.
+  ///
+  /// In ja, this message translates to:
+  /// **'エラーが発生しました\\n時間をおいて再度お試しください'**
+  String get errorOccurred;
 }
 
 class _L10nDelegate extends LocalizationsDelegate<L10n> {
