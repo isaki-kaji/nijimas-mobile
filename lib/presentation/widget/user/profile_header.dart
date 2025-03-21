@@ -99,12 +99,10 @@ class ProfileHeader extends ConsumerWidget {
         );
       },
       loading: () {
-        return const Center(child: Loader());
+        return const SizedBox.shrink();
       },
       error: (error, stack) {
-        print(error);
-        print(stack);
-        return Center(child: Text(error.toString()));
+        return const SizedBox.shrink();
       },
     );
   }

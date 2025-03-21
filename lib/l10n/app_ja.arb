@@ -30,7 +30,7 @@
     "enterSelfIntro": "自己紹介を入力してください",
     "updatedProfile": "プロフィールを変更しました",
     "failedUpdateProfile": "プロフィールの変更に失敗しました",
-    "noPosts": "投稿はありません",
+    "noPosts": "投稿が見つかりませんでした",
     "noNotification": "通知はありません",
-    "errorOccurred": "エラーが発生しました\\n時間をおいて再度お試しください"
+    "errorOccurred": "エラーが発生しました\n時間をおいて再度お試しください"
 }

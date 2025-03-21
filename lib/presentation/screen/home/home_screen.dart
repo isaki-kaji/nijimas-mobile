@@ -7,9 +7,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/monthly_summary_provider.dart';
 import 'package:nijimas/application/state/post_query_provider.dart';
+import 'package:nijimas/application/state/posts_provider.dart';
 import 'package:nijimas/core/constant/animation_constant.dart';
 import 'package:nijimas/core/constant/page_constant.dart';
-import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/core/model/year_month.dart';
 import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/presentation/widget/common/custom_wave.dart';
@@ -40,12 +40,9 @@ class HomeScreen extends HookConsumerWidget {
     final usePage = useState(0);
 
     void onPageChanged(int index) {
-      //FeedScreenでHomeを押した場合、usePostQueryを初期化する
       if (usePage.value == 0 && index == 0) {
-        final query = ref.read(postQueryNotifierProvider);
-        if (query.type != PostQueryType.own) {
-          ref.read(postQueryNotifierProvider.notifier).reset();
-        }
+        ref.read(postQueryNotifierProvider.notifier).reset();
+        ref.invalidate(postsNotifierProvider);
       }
 
       if (usePage.value == 1) {

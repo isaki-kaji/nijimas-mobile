@@ -16,6 +16,7 @@ import 'package:nijimas/core/util/resize_image.dart';
 import 'package:nijimas/core/util/show_snack_bar.dart';
 import 'package:nijimas/core/util/sizing.dart';
 import 'package:nijimas/l10n/gen_l10n/app_localizations.dart';
+import 'package:nijimas/presentation/widget/common/error_message.dart';
 import 'package:nijimas/presentation/widget/common/loader.dart';
 import 'package:nijimas/presentation/widget/user/add_used_subcategory_bottom_sheet.dart';
 import 'package:nijimas/presentation/widget/user/switch_circle_avatar.dart';
@@ -144,8 +145,7 @@ class UserEditScreen extends HookConsumerWidget {
                 );
               },
               error: (error, s) {
-                print(s);
-                return Center(child: Text(error.toString()));
+                return ErrorMessage(message: l10n.errorOccurred);
               },
               loading: () {
                 return const Center(child: Loader());

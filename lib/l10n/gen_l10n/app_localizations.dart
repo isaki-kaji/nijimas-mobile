@@ -282,7 +282,7 @@ abstract class L10n {
   /// No description provided for @noPosts.
   ///
   /// In ja, this message translates to:
-  /// **'投稿はありません'**
+  /// **'投稿が見つかりませんでした'**
   String get noPosts;
 
   /// No description provided for @noNotification.
@@ -294,7 +294,7 @@ abstract class L10n {
   /// No description provided for @errorOccurred.
   ///
   /// In ja, this message translates to:
-  /// **'エラーが発生しました\\n時間をおいて再度お試しください'**
+  /// **'エラーが発生しました\n時間をおいて再度お試しください'**
   String get errorOccurred;
 }
 

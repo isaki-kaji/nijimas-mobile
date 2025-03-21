@@ -11,7 +11,7 @@ class L10nEn extends L10n {
   String get enterYourName => 'Please enter your name';
 
   @override
-  String get nameCanBeChanged => '*Names can be changed later.';
+  String get nameCanBeChanged => '*Names can be changed later';
 
   @override
   String get enterNameCaption => 'Please enter 3 to 15 characters';
@@ -98,11 +98,11 @@ class L10nEn extends L10n {
   String get failedUpdateProfile => 'Profile update failed';
 
   @override
-  String get noPosts => 'No Posts yet';
+  String get noPosts => 'No posts found';
 
   @override
   String get noNotification => 'No Notification';
 
   @override
-  String get errorOccurred => 'An error occurred.\\nPlease try again later.';
+  String get errorOccurred => 'An error occurred.\nPlease try again later';
 }

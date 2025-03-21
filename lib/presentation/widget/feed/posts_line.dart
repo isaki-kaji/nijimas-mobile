@@ -4,7 +4,11 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:nijimas/application/state/posts_provider.dart';
 import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/core/model/post.dart';
+import 'package:nijimas/core/theme/color.dart';
+import 'package:nijimas/presentation/widget/common/error_message.dart';
+import 'package:nijimas/presentation/widget/common/not_found_message.dart';
 import 'package:nijimas/presentation/widget/feed/post_card.dart';
+import 'package:nijimas/l10n/gen_l10n/app_localizations.dart';
 
 class PostsLine extends HookConsumerWidget {
   const PostsLine({
@@ -20,6 +24,7 @@ class PostsLine extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = L10n.of(context);
     final state = ref.watch(postsNotifierProvider(query));
 
     return PagedListView<String, Post>(
@@ -32,6 +37,13 @@ class PostsLine extends HookConsumerWidget {
           post: item,
           canTap: canTap,
           canEdit: canEdit,
+        ),
+        noItemsFoundIndicatorBuilder: (context) => NotFoundMessage(
+          message: l10n.noPosts,
+          icon: Icons.search_off,
+        ),
+        firstPageErrorIndicatorBuilder: (context) => ErrorMessage(
+          message: l10n.errorOccurred,
         ),
       ),
     );

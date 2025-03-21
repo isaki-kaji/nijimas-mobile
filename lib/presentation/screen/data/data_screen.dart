@@ -4,6 +4,7 @@ import 'package:nijimas/application/state/monthly_summary_provider.dart';
 import 'package:nijimas/core/theme/text_style.dart';
 import 'package:nijimas/core/util/show_snack_bar.dart';
 import 'package:nijimas/l10n/gen_l10n/app_localizations.dart';
+import 'package:nijimas/presentation/widget/common/error_message.dart';
 import 'package:nijimas/presentation/widget/common/loader.dart';
 import 'package:nijimas/presentation/widget/data/activity_heat_map.dart';
 import 'package:nijimas/presentation/widget/data/percentage_pie_chart.dart';
@@ -89,8 +90,7 @@ class DataScreen extends HookConsumerWidget {
           },
           loading: () => const Center(child: Loader()),
           error: (e, _) {
-            showErrorSnackBar(context, l10n.errorOccurred);
-            return const SizedBox();
+            return ErrorMessage(message: l10n.errorOccurred);
           },
         );
   }
