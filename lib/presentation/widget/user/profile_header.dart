@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/user_detail_provider.dart';
 import 'package:nijimas/core/theme/text_style.dart';
-import 'package:nijimas/presentation/widget/common/loader.dart';
+import 'package:nijimas/l10n/gen_l10n/app_localizations.dart';
+import 'package:nijimas/presentation/widget/common/error_message.dart';
 import 'package:nijimas/presentation/widget/user/follow_button.dart';
 import 'package:nijimas/presentation/widget/user/switch_circle_avatar.dart';
 
@@ -16,6 +17,7 @@ class ProfileHeader extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = L10n.of(context);
     final user = ref.watch(userDetailNotifierProvider(uid));
 
     return user.when(
@@ -102,7 +104,17 @@ class ProfileHeader extends ConsumerWidget {
         return const SizedBox.shrink();
       },
       error: (error, stack) {
-        return const SizedBox.shrink();
+        print(error);
+        print(stack);
+        return Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ErrorMessage(message: l10n.errorOccurred),
+            ),
+            const Divider(),
+          ],
+        );
       },
     );
   }

@@ -15,10 +15,6 @@ UserDetail _$UserDetailFromJson(Map<String, dynamic> json) => UserDetail(
       followingCount: json['followingCount'] as String,
       followersCount: json['followersCount'] as String,
       postCount: json['postCount'] as String,
-      userFavoriteSubcategories: (json['userFavoriteSubcategories']
-              as List<dynamic>)
-          .map((e) => UserTopSubCategory.fromJson(e as Map<String, dynamic>))
-          .toList(),
     );
 
 Map<String, dynamic> _$UserDetailToJson(UserDetail instance) =>
@@ -31,5 +27,4 @@ Map<String, dynamic> _$UserDetailToJson(UserDetail instance) =>
       'followingCount': instance.followingCount,
       'followersCount': instance.followersCount,
       'postCount': instance.postCount,
-      'userFavoriteSubcategories': instance.userFavoriteSubcategories,
     };

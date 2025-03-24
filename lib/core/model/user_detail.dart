@@ -13,18 +13,19 @@ class UserDetail {
   final String followingCount;
   final String followersCount;
   final String postCount;
-  final List<UserTopSubCategory> userFavoriteSubcategories;
+  // final List<UserTopSubCategory> userFavoriteSubcategories;
 
-  const UserDetail(
-      {required this.uid,
-      required this.username,
-      this.selfIntro,
-      this.profileImageUrl,
-      required this.followingStatus,
-      required this.followingCount,
-      required this.followersCount,
-      required this.postCount,
-      required this.userFavoriteSubcategories});
+  const UserDetail({
+    required this.uid,
+    required this.username,
+    this.selfIntro,
+    this.profileImageUrl,
+    required this.followingStatus,
+    required this.followingCount,
+    required this.followersCount,
+    required this.postCount,
+    // required this.userFavoriteSubcategories
+  });
 
   factory UserDetail.fromJson(Map<String, dynamic> json) =>
       _$UserDetailFromJson(json);
@@ -52,8 +53,8 @@ class UserDetail {
       followingCount: followingCount ?? this.followingCount,
       followersCount: followersCount ?? this.followersCount,
       postCount: postCount ?? this.postCount,
-      userFavoriteSubcategories:
-          userFavoriteSubcategories ?? this.userFavoriteSubcategories,
+      // userFavoriteSubcategories:
+      //     userFavoriteSubcategories ?? this.userFavoriteSubcategories,
     );
   }
 }
