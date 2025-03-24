@@ -42,7 +42,7 @@ class UserDetail {
     String? followingCount,
     String? followersCount,
     String? postCount,
-    List<UserTopSubCategory>? userFavoriteSubcategories,
+    // List<UserTopSubCategory>? userFavoriteSubcategories,
   }) {
     return UserDetail(
       uid: uid ?? this.uid,

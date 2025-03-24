@@ -28,26 +28,26 @@ class UserDetailNotifier extends _$UserDetailNotifier {
     state = AsyncValue.data(updatedUserDetail);
   }
 
-  void setUserTopSubCategories(List<SubCategory> topSubCategories) {
-    final currentState = state.valueOrNull;
-    if (currentState == null) return;
+  // void setUserTopSubCategories(List<SubCategory> topSubCategories) {
+  //   final currentState = state.valueOrNull;
+  //   if (currentState == null) return;
 
-    final updatedTopSubcategories =
-        topSubCategories.asMap().entries.map((entry) {
-      final index = entry.key;
-      final subCategory = entry.value;
+  //   final updatedTopSubcategories =
+  //       topSubCategories.asMap().entries.map((entry) {
+  //     final index = entry.key;
+  //     final subCategory = entry.value;
 
-      return UserTopSubCategory(
-        categoryName: subCategory.categoryName,
-        categoryId: subCategory.categoryId,
-        categoryNo: (index + 1).toString(),
-      );
-    }).toList();
+  //     return UserTopSubCategory(
+  //       categoryName: subCategory.categoryName,
+  //       categoryId: subCategory.categoryId,
+  //       categoryNo: (index + 1).toString(),
+  //     );
+  //   }).toList();
 
-    final updatedUserDetail = currentState.copyWith(
-      userFavoriteSubcategories: updatedTopSubcategories,
-    );
+  //   final updatedUserDetail = currentState.copyWith(
+  //     userFavoriteSubcategories: updatedTopSubcategories,
+  //   );
 
-    state = AsyncValue.data(updatedUserDetail);
-  }
+  //   state = AsyncValue.data(updatedUserDetail);
+  // }
 }

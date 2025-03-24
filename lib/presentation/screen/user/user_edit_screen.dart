@@ -191,35 +191,35 @@ class UserEditScreen extends HookConsumerWidget {
   }
 }
 
-Future<dynamic> showSelectTopSubcategoriesModal(
-    BuildContext context, List<UserTopSubCategory> categories) {
-  return showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(20),
-        topRight: Radius.circular(20),
-      ),
-    ),
-    builder: (BuildContext context) {
-      return Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(16),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-          ),
-        ),
-        child: AddUsedSubcategoryBottomSheet(
-          topSubCategories: categories,
-        ),
-      );
-    },
-  );
-}
+// Future<dynamic> showSelectTopSubcategoriesModal(
+//     BuildContext context, List<UserTopSubCategory> categories) {
+//   return showModalBottomSheet(
+//     context: context,
+//     isScrollControlled: true,
+//     shape: const RoundedRectangleBorder(
+//       borderRadius: BorderRadius.only(
+//         topLeft: Radius.circular(20),
+//         topRight: Radius.circular(20),
+//       ),
+//     ),
+//     builder: (BuildContext context) {
+//       return Container(
+//         width: double.infinity,
+//         padding: const EdgeInsets.all(16),
+//         decoration: const BoxDecoration(
+//           color: Colors.white,
+//           borderRadius: BorderRadius.only(
+//             topLeft: Radius.circular(20),
+//             topRight: Radius.circular(20),
+//           ),
+//         ),
+//         child: AddUsedSubcategoryBottomSheet(
+//           topSubCategories: categories,
+//         ),
+//       );
+//     },
+//   );
+// }
 
 class ScrollableSubCategoryChip extends StatelessWidget {
   const ScrollableSubCategoryChip({
