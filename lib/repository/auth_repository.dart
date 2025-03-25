@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/web.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 final class AuthRepository {
   final FirebaseAuth _firebaseAuth;
@@ -43,13 +44,48 @@ final class AuthRepository {
     return userCredential.user;
   }
 
+  Future<User?> signInWithApple() async {
+    try {
+      final appleCredential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
+      );
+
+      if (appleCredential.identityToken == null) {
+        _logger.w("Failed to sign in with Apple: token missing");
+        return null;
+      }
+
+      final oauthCredential = OAuthProvider("apple.com").credential(
+        idToken: appleCredential.identityToken,
+        accessToken: appleCredential.authorizationCode,
+      );
+
+      final userCredential =
+          await _firebaseAuth.signInWithCredential(oauthCredential);
+
+      return userCredential.user;
+    } catch (e) {
+      _logger.e("Failed to sign in with Apple");
+      return null;
+    }
+  }
+
   Future<User?> signInAsGuest() async {
     final userCredential = await _firebaseAuth.signInAnonymously();
     return userCredential.user;
   }
 
   Future<void> signOut() async {
-    await _googleSignIn.signOut();
+    final user = _firebaseAuth.currentUser;
+    if (user?.isAnonymous ?? true) {
+      await user?.delete();
+    }
+    if (_googleSignIn.currentUser != null) {
+      await _googleSignIn.signOut();
+    }
     await _firebaseAuth.signOut();
   }
 }
