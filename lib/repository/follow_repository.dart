@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:logger/web.dart';
-import 'package:nijimas/core/constant/env_constant.dart';
+import 'package:nijimas/core/constant/env_constants.dart';
 import 'package:nijimas/core/request/toggle_follow_request_request.dart';
 import 'package:nijimas/repository/interceptor/auth_interceptor.dart';
 

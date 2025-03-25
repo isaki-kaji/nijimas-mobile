@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:logger/web.dart';
-import 'package:nijimas/core/constant/firebase_constant.dart';
+import 'package:nijimas/core/constant/firebase_constants.dart';
 import 'package:nijimas/core/model/user_status.dart';
 
 class UserStatusRepository {
