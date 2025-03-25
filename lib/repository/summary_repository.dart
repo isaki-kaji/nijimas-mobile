@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:logger/web.dart';
-import 'package:nijimas/core/constant/env_constant.dart';
+import 'package:nijimas/core/constant/env_constants.dart';
 import 'package:nijimas/core/model/monthly_summary_presentation.dart';
 import 'package:nijimas/repository/interceptor/auth_interceptor.dart';
 import 'package:nijimas/repository/interceptor/timezone_interecptor.dart';
@@ -22,7 +22,6 @@ class SummaryRepository {
     try {
       final response = await _dio.get("${Env.baseUrl}/summaries/$year/$month");
       if (response.statusCode == HttpStatus.ok) {
-        _logger.d("📩 Response data: ${response.data}");
         return MonthlySummaryPresentation.fromJson(response.data);
       } else {
         _logger.e("Error response: ${response.data}");

@@ -8,7 +8,7 @@ import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/monthly_summary_provider.dart';
 import 'package:nijimas/application/state/post_query_provider.dart';
 import 'package:nijimas/application/state/posts_provider.dart';
-import 'package:nijimas/core/constant/animation_constant.dart';
+import 'package:nijimas/core/constant/animation_constants.dart';
 import 'package:nijimas/core/constant/page_constant.dart';
 import 'package:nijimas/core/model/year_month.dart';
 import 'package:nijimas/core/theme/color.dart';
@@ -153,7 +153,7 @@ class HomeScreen extends HookConsumerWidget {
               ],
             ),
       endDrawer: const MenuDrawer(),
-      body: PageConstant.getTabPage(usePage.value, useYearMonth.value),
+      body: PageConstants.getTabPage(usePage.value, useYearMonth.value),
       bottomSheet: useIsVisible.value
           ? AnimatedBuilder(
               animation: animationController,

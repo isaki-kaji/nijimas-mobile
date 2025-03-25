@@ -1,5 +1,5 @@
 import 'package:nijimas/application/state/user_detail_provider.dart';
-import 'package:nijimas/core/constant/following_status_constant.dart';
+import 'package:nijimas/core/constant/following_status_constants.dart';
 import 'package:nijimas/core/request/toggle_follow_request_request.dart';
 import 'package:nijimas/repository/follow_repository.dart';
 import 'package:nijimas/repository/follow_request_repository.dart';
@@ -24,18 +24,18 @@ class FollowRequestUsecase {
     final request = ToggleFollowRequestRequest(targetUid: followingUid);
 
     try {
-      if (followingStatus == FollowingStatusConstant.notFollowing) {
+      if (followingStatus == FollowingStatusConstants.notFollowing) {
         await _followRequestRepository.doFollowRequest(request);
         _userDetailNotifier
-            .setFollowingStatus(FollowingStatusConstant.requested);
-      } else if (followingStatus == FollowingStatusConstant.requested) {
+            .setFollowingStatus(FollowingStatusConstants.requested);
+      } else if (followingStatus == FollowingStatusConstants.requested) {
         await _followRequestRepository.cancelFollowRequest(followingUid);
         _userDetailNotifier
-            .setFollowingStatus(FollowingStatusConstant.notFollowing);
+            .setFollowingStatus(FollowingStatusConstants.notFollowing);
       } else {
         await _followRepository.cancelFollow(request);
         _userDetailNotifier
-            .setFollowingStatus(FollowingStatusConstant.notFollowing);
+            .setFollowingStatus(FollowingStatusConstants.notFollowing);
       }
     } catch (e) {
       onFailure();

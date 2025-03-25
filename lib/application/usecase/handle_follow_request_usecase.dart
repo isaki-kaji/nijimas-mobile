@@ -16,7 +16,7 @@ class HandleFollowRequestUsecase {
       {required String requestId, required void Function() onFailure}) async {
     try {
       await _followRequestRepository.handleFollowRequest(
-          requestId, HandleFollowRequestConstant.accept);
+          requestId, HandleFollowRequestConstants.accept);
     } catch (e) {
       onFailure();
     }
@@ -27,7 +27,7 @@ class HandleFollowRequestUsecase {
       {required String requestId, required void Function() onFailure}) async {
     try {
       await _followRequestRepository.handleFollowRequest(
-          requestId, HandleFollowRequestConstant.reject);
+          requestId, HandleFollowRequestConstants.reject);
     } catch (e) {
       onFailure();
     }
