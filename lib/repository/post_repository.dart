@@ -90,4 +90,23 @@ class PostRepository {
       throw Exception("Failed to get posts by uid: $e");
     }
   }
+
+  Future<List<Post>> getFavoritePosts(String? referenceId) async {
+    try {
+      final response = await _dio.get("${Env.baseUrl}/posts/favorites",
+          queryParameters: {"reference": referenceId});
+      if (response.statusCode == HttpStatus.ok) {
+        List<Post> posts =
+            (response.data as List).map((post) => Post.fromJson(post)).toList();
+        return posts;
+      } else {
+        _logger.e("Error response: ${response.data}");
+        throw Exception(
+            "Failed to get posts by uid with status code: ${response.statusCode}");
+      }
+    } catch (e) {
+      _logger.e("Exception: $e");
+      throw Exception("Failed to get posts by uid: $e");
+    }
+  }
 }

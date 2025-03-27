@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:nijimas/core/model/user_top_subcategory.dart';
 
 part 'user_detail.g.dart';
 

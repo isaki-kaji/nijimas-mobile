@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
@@ -18,40 +17,118 @@ class UserDetailScreen extends HookConsumerWidget {
     final myUid = ref.watch(authStateProvider).valueOrNull!.uid;
     final isOwnScreen = myUid == uid;
 
-    final query = (isOwnScreen)
-        ? PostQuery(type: PostQueryType.own, params: {})
-        : PostQuery(type: PostQueryType.uid, params: {PostQueryKey.uid: uid});
-
-    final useQuery = useState(query);
-
-    return Scaffold(
+    return DefaultTabController(
+      length: isOwnScreen ? 2 : 1,
+      child: Scaffold(
         appBar: AppBar(
           actions: [
             if (isOwnScreen)
-              PopupMenuButton(itemBuilder: (context) {
-                return [
+              PopupMenuButton(
+                itemBuilder: (context) => [
                   PopupMenuItem(
                     child: Text(l10n.editProfile),
                     onTap: () =>
                         GoRouter.of(context).push("/profile/$myUid/edit"),
                   ),
-                ];
-              })
+                ],
+              ),
           ],
         ),
         body: NestedScrollView(
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return [
-              SliverToBoxAdapter(
-                child: ProfileHeader(uid: uid),
+          headerSliverBuilder: (context, innerBoxIsScrolled) => [
+            SliverToBoxAdapter(child: ProfileHeader(uid: uid)),
+            if (isOwnScreen)
+              SliverPersistentHeader(
+                pinned: true,
+                delegate: _TabBarDelegate(
+                  TabBar(
+                    labelColor: Theme.of(context).colorScheme.primary,
+                    unselectedLabelColor: Colors.grey,
+                    indicatorColor: Theme.of(context).colorScheme.primary,
+                    indicatorWeight: 3,
+                    labelStyle: const TextStyle(
+                        fontSize: 12, fontWeight: FontWeight.bold),
+                    tabs: const [
+                      CustomTab(label: "投稿", icon: Icons.article_outlined),
+                      CustomTab(label: "お気に入り", icon: Icons.favorite_border),
+                    ],
+                  ),
+                ),
               ),
-            ];
-          },
-          body: PostsLine(
-            query: useQuery.value,
-            canTap: false,
-            canEdit: isOwnScreen,
-          ),
-        ));
+          ],
+          body: isOwnScreen
+              ? TabBarView(
+                  children: [
+                    PostsLine(
+                      query: PostQuery(type: PostQueryType.own, params: {}),
+                      canTap: false,
+                      canEdit: isOwnScreen,
+                    ),
+                    PostsLine(
+                      query:
+                          PostQuery(type: PostQueryType.favorite, params: {}),
+                      canTap: true,
+                      canEdit: false,
+                    ),
+                  ],
+                )
+              : PostsLine(
+                  query: PostQuery(type: PostQueryType.uid, params: {
+                    PostQueryKey.uid: uid,
+                  }),
+                  canTap: false,
+                  canEdit: false,
+                ),
+        ),
+      ),
+    );
   }
+}
+
+class CustomTab extends StatelessWidget {
+  const CustomTab({
+    super.key,
+    required this.label,
+    required this.icon,
+  });
+  final String label;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Tab(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 20),
+          const SizedBox(width: 5),
+          Text(label),
+        ],
+      ),
+    );
+  }
+}
+
+class _TabBarDelegate extends SliverPersistentHeaderDelegate {
+  final TabBar _tabBar;
+
+  _TabBarDelegate(this._tabBar);
+
+  @override
+  double get minExtent => _tabBar.preferredSize.height;
+
+  @override
+  double get maxExtent => _tabBar.preferredSize.height;
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Container(
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: _tabBar,
+    );
+  }
+
+  @override
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => false;
 }
