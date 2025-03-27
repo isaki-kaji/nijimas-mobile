@@ -152,7 +152,9 @@ class HomeScreen extends HookConsumerWidget {
                     : const SizedBox.shrink(),
               ],
             ),
-      endDrawer: const MenuDrawer(),
+      endDrawer: const MenuDrawer(
+        isGuestUser: false,
+      ),
       body: PageConstants.getTabPage(usePage.value, useYearMonth.value),
       bottomSheet: useIsVisible.value
           ? AnimatedBuilder(

@@ -104,8 +104,6 @@ class ProfileHeader extends ConsumerWidget {
         return const SizedBox.shrink();
       },
       error: (error, stack) {
-        print(error);
-        print(stack);
         return Column(
           children: [
             Padding(

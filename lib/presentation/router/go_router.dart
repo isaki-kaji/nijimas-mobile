@@ -4,6 +4,7 @@ import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/user_status_provider.dart';
 import 'package:nijimas/core/model/post.dart';
 import 'package:nijimas/presentation/screen/auth/auth_screen.dart';
+import 'package:nijimas/presentation/screen/guest/guest_screen.dart';
 import 'package:nijimas/presentation/screen/home/home_screen.dart';
 import 'package:nijimas/presentation/screen/post/add_post_screen.dart';
 import 'package:nijimas/presentation/screen/user/register_user_screen.dart';
@@ -66,7 +67,8 @@ GoRouter router(RouterRef ref) {
           final uid = state.pathParameters['uid'];
           return UserEditScreen(uid: uid!);
         },
-      )
+      ),
+      GoRoute(path: "/guest", builder: (context, state) => const GuestScreen()),
     ],
     redirect: (context, state) async {
       final signedInUser = ref.read(authStateProvider).valueOrNull;
@@ -75,7 +77,7 @@ GoRouter router(RouterRef ref) {
       }
       final isAnonymous = signedInUser.isAnonymous;
       if (isAnonymous) {
-        return '/';
+        return '/guest';
       }
       final userStatus = await ref.read(currentUserStatusProvider.future);
       if (userStatus == null) {

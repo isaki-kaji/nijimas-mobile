@@ -6,7 +6,8 @@ import 'package:nijimas/core/provider/usecase/auth_usecase_provider.dart';
 import 'package:nijimas/presentation/widget/home/drawer_list_tile.dart';
 
 class MenuDrawer extends ConsumerWidget {
-  const MenuDrawer({super.key});
+  final bool isGuestUser;
+  const MenuDrawer({super.key, required this.isGuestUser});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -24,14 +25,17 @@ class MenuDrawer extends ConsumerWidget {
             //ListViewがアイテム数に合わせて高さを変える
             shrinkWrap: true,
             children: [
+              isGuestUser
+                  ? const SizedBox.shrink()
+                  : DrawerListTile(
+                      title: "ユーザー情報",
+                      onTap: () {
+                        final uid =
+                            ref.read(authStateProvider).valueOrNull!.uid;
+                        GoRouter.of(context).push("/profile/$uid");
+                      }),
               DrawerListTile(
-                  title: "ユーザー情報",
-                  onTap: () {
-                    final uid = ref.read(authStateProvider).valueOrNull!.uid;
-                    GoRouter.of(context).push("/profile/$uid");
-                  }),
-              DrawerListTile(
-                title: "ログアウト",
+                title: isGuestUser ? "ユーザー登録" : "ログアウト",
                 onTap: () => ref.read(authUsecaseProvider).signOut(),
               )
             ],
