@@ -4,6 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 enum PostQueryType {
   own,
   timeline,
+  favorite,
   uid,
   mainCategory,
   subCategory,

@@ -29,6 +29,8 @@ class PostsNotifier extends _$PostsNotifier {
           newPosts = await postRepository.getOwnPosts(newKey);
         case PostQueryType.timeline:
           newPosts = await postRepository.getTimelinePosts(newKey);
+        case PostQueryType.favorite:
+          newPosts = await postRepository.getFavoritePosts(newKey);
         case PostQueryType.uid:
           newPosts =
               await postSearchRepository.getPostsByUid(query.params, newKey);
