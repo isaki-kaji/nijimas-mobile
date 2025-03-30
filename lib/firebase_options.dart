@@ -70,6 +70,9 @@ class DefaultFirebaseOptions {
     messagingSenderId: '347460974318',
     projectId: 'nijimas-2832c',
     storageBucket: 'nijimas-2832c.appspot.com',
+    androidClientId: '347460974318-8f5j9ghe3k517b1epi2hom9mcrgmhl39.apps.googleusercontent.com',
+    iosClientId: '347460974318-eh96e0k65fkicknnn2iqqpsmo6jvpenp.apps.googleusercontent.com',
     iosBundleId: 'com.example.nijimas',
   );
+
 }

@@ -25,10 +25,14 @@ class AuthUsecase {
     try {
       _ref.read(loadingProvider.notifier).setTrue();
       final user = await _authRepository.signInWithGoogle();
-      if (user != null) {
-        await _setUserStatus(user);
+      if (user == null) {
+        onFailure();
+        return;
       }
-    } catch (e) {
+      await _setUserStatus(user);
+    } catch (e, s) {
+      print(e);
+      print(s);
       onFailure();
     } finally {
       _ref.read(loadingProvider.notifier).setFalse();
@@ -39,9 +43,11 @@ class AuthUsecase {
     try {
       _ref.read(loadingProvider.notifier).setTrue();
       final user = await _authRepository.signInWithApple();
-      if (user != null) {
-        await _setUserStatus(user);
+      if (user == null) {
+        onFailure();
+        return;
       }
+      await _setUserStatus(user);
     } catch (e) {
       onFailure();
     } finally {

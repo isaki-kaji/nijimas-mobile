@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "347460974318-8f5j9ghe3k517b1epi2hom9mcrgmhl39.apps.googleusercontent.com",
+          "client_id": "347460974318-d0ct8qk0bmd1b9v9s33l3anckeg1b2l9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.nijimas",
-            "certificate_hash": "8f5208d55a5655f4aadfb8efd6ae20318b88938c"
+            "certificate_hash": "f95e502c2a5193a9da25bf7fba45377821762104"
           }
         },
         {

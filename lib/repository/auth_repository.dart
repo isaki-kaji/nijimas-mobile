@@ -25,14 +25,12 @@ final class AuthRepository {
   Future<User?> signInWithGoogle() async {
     final googleUser = await _googleSignIn.signIn();
     if (googleUser == null) {
-      _logger.w("Failed to sign in with Google");
-      return null;
+      throw Exception("Failed to sign in with Google");
     }
 
     final googleAuth = await googleUser.authentication;
     if (googleAuth.accessToken == null || googleAuth.idToken == null) {
-      _logger.w("Failed to sign in with Google");
-      return null;
+      throw Exception("Failed to sign in with Google: token missing");
     }
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
@@ -55,7 +53,7 @@ final class AuthRepository {
 
       if (appleCredential.identityToken == null) {
         _logger.w("Failed to sign in with Apple: token missing");
-        return null;
+        throw Exception("Failed to sign in with Apple: token missing");
       }
 
       final oauthCredential = OAuthProvider("apple.com").credential(
@@ -69,7 +67,7 @@ final class AuthRepository {
       return userCredential.user;
     } catch (e) {
       _logger.e("Failed to sign in with Apple");
-      return null;
+      throw Exception("Failed to sign in with Apple: $e");
     }
   }
 
