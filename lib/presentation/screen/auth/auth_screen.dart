@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/loading_provider.dart';
@@ -47,17 +49,18 @@ class AuthScreen extends HookConsumerWidget {
                     onFailure: () =>
                         showErrorSnackBar(context, l10n.googleAuthFailed),
                   ),
-                  SignInButton(
-                    labelText: l10n.continueWithApple,
-                    type: AuthProviderConstants.apple,
-                    logo: const Icon(
-                      Icons.apple,
-                      color: Colors.black,
-                      size: 35,
+                  if (Platform.isIOS)
+                    SignInButton(
+                      labelText: l10n.continueWithApple,
+                      type: AuthProviderConstants.apple,
+                      logo: const Icon(
+                        Icons.apple,
+                        color: Colors.black,
+                        size: 35,
+                      ),
+                      onFailure: () =>
+                          showErrorSnackBar(context, l10n.appleAuthFailed),
                     ),
-                    onFailure: () =>
-                        showErrorSnackBar(context, l10n.appleAuthFailed),
-                  ),
                   SizedBox(height: Sizing.heightByMQ(context, 0.05)),
                 ],
               ),
