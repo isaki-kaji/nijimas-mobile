@@ -6,6 +6,8 @@ import 'package:nijimas/core/model/post.dart';
 import 'package:nijimas/presentation/screen/auth/auth_screen.dart';
 import 'package:nijimas/presentation/screen/guest/guest_screen.dart';
 import 'package:nijimas/presentation/screen/home/home_screen.dart';
+import 'package:nijimas/presentation/screen/other/privacy_policy_screen.dart';
+import 'package:nijimas/presentation/screen/other/terms_of_service_screen.dart';
 import 'package:nijimas/presentation/screen/post/add_post_screen.dart';
 import 'package:nijimas/presentation/screen/user/register_user_screen.dart';
 import 'package:nijimas/presentation/screen/user/user_detail_screen.dart';
@@ -68,6 +70,12 @@ GoRouter router(RouterRef ref) {
           return UserEditScreen(uid: uid!);
         },
       ),
+      GoRoute(
+          path: '/terms',
+          builder: (context, state) => const TermsOfServiceScreen()),
+      GoRoute(
+          path: '/privacy',
+          builder: (context, state) => const PrivacyPolicyScreen()),
       GoRoute(path: "/guest", builder: (context, state) => const GuestScreen()),
     ],
     redirect: (context, state) async {

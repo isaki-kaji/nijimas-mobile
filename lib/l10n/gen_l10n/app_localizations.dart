@@ -321,11 +321,11 @@ abstract class L10n {
   /// **'サポート'**
   String get support;
 
-  /// No description provided for @help.
+  /// No description provided for @contact.
   ///
   /// In ja, this message translates to:
-  /// **'ヘルプ'**
-  String get help;
+  /// **'お問い合わせ'**
+  String get contact;
 
   /// No description provided for @account.
   ///
@@ -338,6 +338,216 @@ abstract class L10n {
   /// In ja, this message translates to:
   /// **'ログアウト'**
   String get logout;
+
+  /// No description provided for @termsSection1Title.
+  ///
+  /// In ja, this message translates to:
+  /// **'第1条（適用）'**
+  String get termsSection1Title;
+
+  /// No description provided for @termsSection1Body.
+  ///
+  /// In ja, this message translates to:
+  /// **'本利用規約（以下、「本規約」といいます）は、nijimas運営チーム（以下、「当チーム」といいます）が提供するアプリ「nijimas」（以下、「本アプリ」といいます）の利用に関する条件を定めるものです。本アプリをご利用いただいた場合、本規約に同意したものとみなします。'**
+  String get termsSection1Body;
+
+  /// No description provided for @termsSection2Title.
+  ///
+  /// In ja, this message translates to:
+  /// **'第2条（利用者）'**
+  String get termsSection2Title;
+
+  /// No description provided for @termsSection2Body.
+  ///
+  /// In ja, this message translates to:
+  /// **'本アプリは、年齢・居住地域を問わず、どなたでもご利用いただけます。\n利用者は、自己の責任において本アプリを利用するものとします。'**
+  String get termsSection2Body;
+
+  /// No description provided for @termsSection3Title.
+  ///
+  /// In ja, this message translates to:
+  /// **'第3条（登録・ログイン）'**
+  String get termsSection3Title;
+
+  /// No description provided for @termsSection3Body.
+  ///
+  /// In ja, this message translates to:
+  /// **'利用者は、Googleアカウント、もしくはAppleアカウントを用いた認証により本アプリを利用できます。'**
+  String get termsSection3Body;
+
+  /// No description provided for @termsSection4Title.
+  ///
+  /// In ja, this message translates to:
+  /// **'第4条（投稿コンテンツ）'**
+  String get termsSection4Title;
+
+  /// No description provided for @termsSection4Body.
+  ///
+  /// In ja, this message translates to:
+  /// **'利用者は、写真、テキスト、金額などを含む投稿を行うことができます。\n投稿されたコンテンツの著作権は、当該コンテンツを投稿した利用者に帰属します。\nただし当チームは、サービスの改善・不具合対応・プロモーションの目的で、投稿内容を閲覧・分析・非公開の範囲で利用することができるものとします。'**
+  String get termsSection4Body;
+
+  /// No description provided for @termsSection5Title.
+  ///
+  /// In ja, this message translates to:
+  /// **'第5条（禁止事項）'**
+  String get termsSection5Title;
+
+  /// No description provided for @termsSection5Body.
+  ///
+  /// In ja, this message translates to:
+  /// **'本アプリの利用にあたり、以下の行為を禁止します：\n- 法令または公序良俗に反する行為\n- 他人の権利を侵害する行為（他人の画像の無断使用など）\n- わいせつ・暴力的・差別的な内容の投稿\n- スパムや広告行為\n- その他、当チームが不適切と判断する行為'**
+  String get termsSection5Body;
+
+  /// No description provided for @termsSection6Title.
+  ///
+  /// In ja, this message translates to:
+  /// **'第6条（データの保存と削除）'**
+  String get termsSection6Title;
+
+  /// No description provided for @termsSection6Body.
+  ///
+  /// In ja, this message translates to:
+  /// **'利用者の投稿データは、Cloud Storage for FirebaseおよびNeon上に保存されます。\n利用者は、自身の投稿を削除することが可能です（現在は論理削除によって対応）。\nアカウント削除機能は今後追加される予定ですが、現時点では実装されておりません。'**
+  String get termsSection6Body;
+
+  /// No description provided for @termsSection7Title.
+  ///
+  /// In ja, this message translates to:
+  /// **'第7条（免責事項）'**
+  String get termsSection7Title;
+
+  /// No description provided for @termsSection7Body.
+  ///
+  /// In ja, this message translates to:
+  /// **'本アプリの利用により発生したいかなる損害についても、当チームは一切の責任を負いません。\n本アプリの提供は、事前の予告なく変更・中断・終了することがあります。'**
+  String get termsSection7Body;
+
+  /// No description provided for @termsSection8Title.
+  ///
+  /// In ja, this message translates to:
+  /// **'第8条（規約の変更）'**
+  String get termsSection8Title;
+
+  /// No description provided for @termsSection8Body.
+  ///
+  /// In ja, this message translates to:
+  /// **'当チームは、必要と判断した場合には、利用者に通知することなく本規約を変更することがあります。変更後に本アプリを利用した場合、変更内容に同意したものとみなします。'**
+  String get termsSection8Body;
+
+  /// No description provided for @termsSection9Title.
+  ///
+  /// In ja, this message translates to:
+  /// **'第9条（準拠法・管轄）'**
+  String get termsSection9Title;
+
+  /// No description provided for @termsSection9Body.
+  ///
+  /// In ja, this message translates to:
+  /// **'本規約は日本法に準拠し、本アプリに関するすべての紛争については、日本の裁判所を第一審の専属的合意管轄裁判所とします。'**
+  String get termsSection9Body;
+
+  /// No description provided for @termsContact.
+  ///
+  /// In ja, this message translates to:
+  /// **'ご質問・ご要望がある場合は、アプリ内の「お問い合わせ」からご連絡ください。'**
+  String get termsContact;
+
+  /// No description provided for @privacySection1Title.
+  ///
+  /// In ja, this message translates to:
+  /// **'第1条（取得する情報）'**
+  String get privacySection1Title;
+
+  /// No description provided for @privacySection1Body.
+  ///
+  /// In ja, this message translates to:
+  /// **'本アプリでは、以下の情報を取得します。\n- Firebase Authentication により取得される認証情報（Google、Apple のアカウント情報）\n- 投稿内容（画像、テキスト、金額など）\n- アプリの利用履歴・操作情報（※今後、匿名の統計データとして利用する可能性があります）'**
+  String get privacySection1Body;
+
+  /// No description provided for @privacySection2Title.
+  ///
+  /// In ja, this message translates to:
+  /// **'第2条（情報の利用目的）'**
+  String get privacySection2Title;
+
+  /// No description provided for @privacySection2Body.
+  ///
+  /// In ja, this message translates to:
+  /// **'取得した情報は、以下の目的に使用します。\n- 投稿の表示・管理・編集機能の提供\n- ユーザー認証およびセキュリティの維持\n- アプリの改善、不具合対応、機能開発の参考\n- 必要に応じたサポート対応'**
+  String get privacySection2Body;
+
+  /// No description provided for @privacySection3Title.
+  ///
+  /// In ja, this message translates to:
+  /// **'第3条（情報の保管・管理）'**
+  String get privacySection3Title;
+
+  /// No description provided for @privacySection3Body.
+  ///
+  /// In ja, this message translates to:
+  /// **'画像データは Firebase Cloud Storage に、テキストデータは Neon に保存されます。\n不正アクセス・漏洩を防ぐため、適切なセキュリティ対策を講じます。'**
+  String get privacySection3Body;
+
+  /// No description provided for @privacySection4Title.
+  ///
+  /// In ja, this message translates to:
+  /// **'第4条（第三者提供）'**
+  String get privacySection4Title;
+
+  /// No description provided for @privacySection4Body.
+  ///
+  /// In ja, this message translates to:
+  /// **'当チームは、ユーザーの同意がない限り、法令に基づく場合を除いて第三者に個人情報を提供しません。'**
+  String get privacySection4Body;
+
+  /// No description provided for @privacySection5Title.
+  ///
+  /// In ja, this message translates to:
+  /// **'第5条（外部サービス）'**
+  String get privacySection5Title;
+
+  /// No description provided for @privacySection5Body.
+  ///
+  /// In ja, this message translates to:
+  /// **'本アプリは以下の外部サービスを利用しています。各サービスのプライバシーポリシーは、それぞれの提供会社のサイトをご確認ください。\n- Firebase（Google LLC）\n- Google Sign-In / Apple Sign-In'**
+  String get privacySection5Body;
+
+  /// No description provided for @privacySection6Title.
+  ///
+  /// In ja, this message translates to:
+  /// **'第6条（ユーザーの選択）'**
+  String get privacySection6Title;
+
+  /// No description provided for @privacySection6Body.
+  ///
+  /// In ja, this message translates to:
+  /// **'ユーザーは自身の投稿を削除することができます（現在は論理削除）。\nアカウント削除機能は今後追加予定です。'**
+  String get privacySection6Body;
+
+  /// No description provided for @privacySection7Title.
+  ///
+  /// In ja, this message translates to:
+  /// **'第7条（ポリシーの変更）'**
+  String get privacySection7Title;
+
+  /// No description provided for @privacySection7Body.
+  ///
+  /// In ja, this message translates to:
+  /// **'本ポリシーは、必要に応じて内容を改訂することがあります。改訂後もアプリを継続して利用した場合は、変更に同意したものとみなされます。'**
+  String get privacySection7Body;
+
+  /// No description provided for @privacySection8Title.
+  ///
+  /// In ja, this message translates to:
+  /// **'第8条（お問い合わせ）'**
+  String get privacySection8Title;
+
+  /// No description provided for @privacySection8Body.
+  ///
+  /// In ja, this message translates to:
+  /// **'プライバシーポリシーに関するご質問は、アプリ内の「お問い合わせ」からご連絡ください。'**
+  String get privacySection8Body;
 }
 
 class _L10nDelegate extends LocalizationsDelegate<L10n> {
