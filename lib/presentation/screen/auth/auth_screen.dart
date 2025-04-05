@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/loading_provider.dart';
 import 'package:nijimas/core/constant/auth_provider_constants.dart';
-import 'package:nijimas/core/provider/usecase/auth_usecase_provider.dart';
 import 'package:nijimas/core/util/show_snack_bar.dart';
 import 'package:nijimas/gen/assets.gen.dart';
 import 'package:nijimas/l10n/gen_l10n/app_localizations.dart';
@@ -23,11 +22,6 @@ class AuthScreen extends HookConsumerWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        actions: [
-          // TextButton(
-          //     onPressed: () => ref.read(authUsecaseProvider).signInAsGuest(),
-          //     child: const Text("skip"))
-        ],
       ),
       body: isLoading
           ? const Loader()

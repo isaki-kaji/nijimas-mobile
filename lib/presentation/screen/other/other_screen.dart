@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/core/provider/usecase/auth_usecase_provider.dart';
 import 'package:nijimas/l10n/gen_l10n/app_localizations.dart';
@@ -17,16 +18,18 @@ class OtherScreen extends ConsumerWidget {
           ListTile(
             leading: const Icon(Icons.description),
             title: Text(l10n.termsOfService),
+            onTap: () => GoRouter.of(context).push("/terms"),
           ),
           ListTile(
             leading: const Icon(Icons.privacy_tip),
             title: Text(l10n.privacyPolicy),
+            onTap: () => GoRouter.of(context).push("/privacy"),
           ),
           const Divider(),
           _SectionTitle(title: l10n.support),
           ListTile(
             leading: const Icon(Icons.help_outline),
-            title: Text(l10n.help),
+            title: Text(l10n.contact),
           ),
           const Divider(),
           _SectionTitle(title: l10n.account),
