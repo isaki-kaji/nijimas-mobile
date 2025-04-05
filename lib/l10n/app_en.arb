@@ -1,5 +1,5 @@
 {
-  "welcome": "welcome!!",
+  "welcome": "Welcome!!",
   "enterYourName": "Please enter your name",
   "nameCanBeChanged": "*Names can be changed later",
   "enterNameCaption": "Please enter 3 to 15 characters",
@@ -27,17 +27,46 @@
   "deleteFailed": "Failed to Delete",
   "editProfile": "Edit Profile",
   "enterName": "Please enter your name",
-  "enterSelfIntro": "Pleas enter your self-introduction",
+  "enterSelfIntro": "Please enter your self-introduction",
   "updatedProfile": "Profile updated!!",
   "failedUpdateProfile": "Profile update failed",
   "noPosts": "No posts found",
   "noNotification": "No Notification",
   "errorOccurred": "An error occurred.\nPlease try again later",
-  "aboutApp": "About this App",
+  "aboutApp": "About this app",
   "termsOfService": "Terms of Service",
   "privacyPolicy": "Privacy Policy",
   "support": "Support",
-  "help": "Help",
+  "contact": "Contact",
   "account": "Account",
-  "logout": "Logout"
+  "logout": "Logout",
+
+  "termsSection1Title": "Article 1 (Application)",
+  "termsSection1Body": "These Terms of Service (hereinafter referred to as the “Terms”) set forth the conditions for use of the app “nijimas” (hereinafter referred to as the “App”) provided by the nijimas Management Team (hereinafter referred to as the “Team”). By using the App, you are deemed to have agreed to these Terms.",
+
+  "termsSection2Title": "Article 2 (Users)",
+  "termsSection2Body": "The App is available to anyone, regardless of age or region.\nUsers shall use the App at their own responsibility.",
+
+  "termsSection3Title": "Article 3 (Registration and Login)",
+  "termsSection3Body": "Users can access the App using Google or Apple account authentication.",
+
+  "termsSection4Title": "Article 4 (Posted Content)",
+  "termsSection4Body": "Users can post content including photos, text, and expenses.\nThe copyright of the posted content belongs to the user who posted it.\nHowever, the Team may view and analyze the content for the purpose of service improvement, bug fixing, or internal promotion, as long as it remains non-public.",
+
+  "termsSection5Title": "Article 5 (Prohibited Acts)",
+  "termsSection5Body": "The following acts are prohibited when using the App:\n- Acts that violate laws or public order and morals\n- Infringement of the rights of others (e.g. using others’ images without permission)\n- Posting obscene, violent, or discriminatory content\n- Spam or advertising\n- Other acts deemed inappropriate by the Team",
+
+  "termsSection6Title": "Article 6 (Data Storage and Deletion)",
+  "termsSection6Body": "User data is stored on Cloud Storage for Firebase and Neon.\nUsers can delete their own posts (currently handled via logical deletion).\nAccount deletion is not yet implemented, but is planned for the future.",
+
+  "termsSection7Title": "Article 7 (Disclaimer)",
+  "termsSection7Body": "The Team assumes no responsibility for any damages resulting from the use of the App.\nThe App may be modified, suspended, or discontinued without prior notice.",
+
+  "termsSection8Title": "Article 8 (Changes to Terms)",
+  "termsSection8Body": "The Team may change these Terms at its discretion without notifying users. Continued use of the App after changes shall constitute acceptance of the updated Terms.",
+
+  "termsSection9Title": "Article 9 (Governing Law and Jurisdiction)",
+  "termsSection9Body": "These Terms shall be governed by the laws of Japan, and any disputes related to the App shall be subject to the exclusive jurisdiction of the Japanese courts as the court of first instance.",
+
+  "termsContact": "For inquiries or requests, please contact us via the in-app “Contact” page."
 }
