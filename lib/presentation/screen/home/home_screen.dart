@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
@@ -136,15 +134,11 @@ class HomeScreen extends HookConsumerWidget {
                         builder: (context) {
                           return TrailingIconButton(
                               onPressed: () async {
-                                showEndDrawer(context);
-                                final user = ref.read(authStateProvider).value!;
-                                final token = await user.getIdToken();
-                                final uuid = user.uid;
-                                if (token == null) {
-                                  return;
-                                }
-                                log(token);
-                                log(uuid);
+                                final uid = ref
+                                    .read(authStateProvider)
+                                    .valueOrNull!
+                                    .uid;
+                                GoRouter.of(context).push("/profile/$uid");
                               },
                               icon: Icons.account_circle);
                         },
@@ -197,6 +191,9 @@ class HomeScreen extends HookConsumerWidget {
                 BottomBarItem(
                     icon: const Icon(Icons.notifications),
                     title: const Text("Notification")),
+                BottomBarItem(
+                    icon: const Icon(Icons.settings),
+                    title: const Text("Other")),
               ],
             ),
     );

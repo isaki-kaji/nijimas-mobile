@@ -14,7 +14,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(ProviderScope(observers: [MyProviderObserver()], child: MyApp()));
+  runApp(
+      ProviderScope(observers: [MyProviderObserver()], child: const MyApp()));
 }
 
 class MyApp extends HookConsumerWidget {
@@ -50,6 +51,6 @@ class MyProviderObserver extends ProviderObserver {
   @override
   void didUpdateProvider(ProviderBase provider, Object? previousValue,
       Object? newValue, ProviderContainer container) {
-    print('Provider updated: $provider');
+    debugPrint('Provider updated: $provider');
   }
 }

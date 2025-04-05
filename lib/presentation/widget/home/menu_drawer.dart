@@ -28,12 +28,24 @@ class MenuDrawer extends ConsumerWidget {
               isGuestUser
                   ? const SizedBox.shrink()
                   : DrawerListTile(
-                      title: "ユーザー情報",
+                      title: "マイページ",
                       onTap: () {
                         final uid =
                             ref.read(authStateProvider).valueOrNull!.uid;
                         GoRouter.of(context).push("/profile/$uid");
                       }),
+              DrawerListTile(
+                title: "利用規約",
+                onTap: () {},
+              ),
+              DrawerListTile(
+                title: "プライバシーポリシー",
+                onTap: () {},
+              ),
+              DrawerListTile(
+                title: "ヘルプ",
+                onTap: () {},
+              ),
               DrawerListTile(
                 title: isGuestUser ? "ユーザー登録" : "ログアウト",
                 onTap: () => ref.read(authUsecaseProvider).signOut(),

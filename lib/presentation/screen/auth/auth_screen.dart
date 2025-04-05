@@ -24,9 +24,9 @@ class AuthScreen extends HookConsumerWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
-          TextButton(
-              onPressed: () => ref.read(authUsecaseProvider).signInAsGuest(),
-              child: const Text("skip"))
+          // TextButton(
+          //     onPressed: () => ref.read(authUsecaseProvider).signInAsGuest(),
+          //     child: const Text("skip"))
         ],
       ),
       body: isLoading
