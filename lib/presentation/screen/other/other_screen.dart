@@ -1,38 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/core/provider/usecase/auth_usecase_provider.dart';
+import 'package:nijimas/l10n/gen_l10n/app_localizations.dart';
 
 class OtherScreen extends ConsumerWidget {
   const OtherScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = L10n.of(context);
     return Scaffold(
       body: ListView(
         children: [
           const SizedBox(height: 16),
-          const _SectionTitle(title: 'このアプリについて'),
-          const ListTile(
-            leading: Icon(Icons.description),
-            title: Text("利用規約"),
+          _SectionTitle(title: l10n.aboutApp),
+          ListTile(
+            leading: const Icon(Icons.description),
+            title: Text(l10n.termsOfService),
           ),
-          const ListTile(
-            leading: Icon(Icons.privacy_tip),
-            title: Text("プライバシーポリシー"),
-          ),
-          const Divider(),
-          const _SectionTitle(title: 'サポート'),
-          const ListTile(
-            leading: Icon(Icons.help_outline),
-            title: Text("ヘルプ"),
+          ListTile(
+            leading: const Icon(Icons.privacy_tip),
+            title: Text(l10n.privacyPolicy),
           ),
           const Divider(),
-          const _SectionTitle(title: 'アカウント'),
+          _SectionTitle(title: l10n.support),
+          ListTile(
+            leading: const Icon(Icons.help_outline),
+            title: Text(l10n.help),
+          ),
+          const Divider(),
+          _SectionTitle(title: l10n.account),
           ListTile(
             leading: const Icon(Icons.logout, color: Colors.red),
-            title: const Text(
-              "ログアウト",
-              style: TextStyle(color: Colors.red),
+            title: Text(
+              l10n.logout,
+              style: const TextStyle(color: Colors.red),
             ),
             onTap: () => ref.read(authUsecaseProvider).signOut(),
           ),

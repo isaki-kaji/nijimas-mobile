@@ -296,6 +296,48 @@ abstract class L10n {
   /// In ja, this message translates to:
   /// **'エラーが発生しました\n時間をおいて再度お試しください'**
   String get errorOccurred;
+
+  /// No description provided for @aboutApp.
+  ///
+  /// In ja, this message translates to:
+  /// **'このアプリについて'**
+  String get aboutApp;
+
+  /// No description provided for @termsOfService.
+  ///
+  /// In ja, this message translates to:
+  /// **'利用規約'**
+  String get termsOfService;
+
+  /// No description provided for @privacyPolicy.
+  ///
+  /// In ja, this message translates to:
+  /// **'プライバシーポリシー'**
+  String get privacyPolicy;
+
+  /// No description provided for @support.
+  ///
+  /// In ja, this message translates to:
+  /// **'サポート'**
+  String get support;
+
+  /// No description provided for @help.
+  ///
+  /// In ja, this message translates to:
+  /// **'ヘルプ'**
+  String get help;
+
+  /// No description provided for @account.
+  ///
+  /// In ja, this message translates to:
+  /// **'アカウント'**
+  String get account;
+
+  /// No description provided for @logout.
+  ///
+  /// In ja, this message translates to:
+  /// **'ログアウト'**
+  String get logout;
 }
 
 class _L10nDelegate extends LocalizationsDelegate<L10n> {

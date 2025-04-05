@@ -105,4 +105,25 @@ class L10nJa extends L10n {
 
   @override
   String get errorOccurred => 'エラーが発生しました\n時間をおいて再度お試しください';
+
+  @override
+  String get aboutApp => 'このアプリについて';
+
+  @override
+  String get termsOfService => '利用規約';
+
+  @override
+  String get privacyPolicy => 'プライバシーポリシー';
+
+  @override
+  String get support => 'サポート';
+
+  @override
+  String get help => 'ヘルプ';
+
+  @override
+  String get account => 'アカウント';
+
+  @override
+  String get logout => 'ログアウト';
 }

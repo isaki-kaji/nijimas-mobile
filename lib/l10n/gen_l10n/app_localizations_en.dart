@@ -41,10 +41,10 @@ class L10nEn extends L10n {
   String get travel => 'Travel';
 
   @override
-  String get entertainment => 'Entertainment Expenses';
+  String get entertainment => 'Entertainment';
 
   @override
-  String get transport => 'Transportation Expenses';
+  String get transport => 'Transportation';
 
   @override
   String get other => 'Others';
@@ -105,4 +105,25 @@ class L10nEn extends L10n {
 
   @override
   String get errorOccurred => 'An error occurred.\nPlease try again later';
+
+  @override
+  String get aboutApp => 'About this App';
+
+  @override
+  String get termsOfService => 'Terms of Service';
+
+  @override
+  String get privacyPolicy => 'Privacy Policy';
+
+  @override
+  String get support => 'Support';
+
+  @override
+  String get help => 'Help';
+
+  @override
+  String get account => 'Account';
+
+  @override
+  String get logout => 'Logout';
 }
