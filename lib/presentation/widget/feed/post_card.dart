@@ -193,6 +193,7 @@ class PostCard extends ConsumerWidget {
                   final usecase = ref.read(favoriteUsecaseProvider(query));
                   usecase.toggleFavorite(
                     postId: post.postId,
+                    isFavorite: post.isFavorite,
                     onFailure: () {},
                   );
                 },

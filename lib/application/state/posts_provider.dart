@@ -60,11 +60,11 @@ class PostsNotifier extends _$PostsNotifier {
     }
   }
 
-  void toggleFavorite(String postId, bool isFavorite) {
+  void toggleFavorite(String postId) {
     final updatedPages = state.pages
         ?.map((page) => page
             .map((post) => post.postId == postId
-                ? post.copyWith(isFavorite: isFavorite)
+                ? post.copyWith(isFavorite: !post.isFavorite)
                 : post)
             .toList())
         .toList();

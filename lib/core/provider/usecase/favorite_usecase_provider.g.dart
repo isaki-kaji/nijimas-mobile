@@ -6,7 +6,7 @@ part of 'favorite_usecase_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$favoriteUsecaseHash() => r'57854b4c905267d117e5e178144ef7dea92afa67';
+String _$favoriteUsecaseHash() => r'5729aff586a81c08581382f48fcfc2fa87412d24';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -72,7 +72,7 @@ class FavoriteUsecaseFamily extends Family<FavoriteUsecase> {
 }
 
 /// See also [favoriteUsecase].
-class FavoriteUsecaseProvider extends AutoDisposeProvider<FavoriteUsecase> {
+class FavoriteUsecaseProvider extends Provider<FavoriteUsecase> {
   /// See also [favoriteUsecase].
   FavoriteUsecaseProvider(
     PostQuery query,
@@ -124,7 +124,7 @@ class FavoriteUsecaseProvider extends AutoDisposeProvider<FavoriteUsecase> {
   }
 
   @override
-  AutoDisposeProviderElement<FavoriteUsecase> createElement() {
+  ProviderElement<FavoriteUsecase> createElement() {
     return _FavoriteUsecaseProviderElement(this);
   }
 
@@ -142,13 +142,12 @@ class FavoriteUsecaseProvider extends AutoDisposeProvider<FavoriteUsecase> {
   }
 }
 
-mixin FavoriteUsecaseRef on AutoDisposeProviderRef<FavoriteUsecase> {
+mixin FavoriteUsecaseRef on ProviderRef<FavoriteUsecase> {
   /// The parameter `query` of this provider.
   PostQuery get query;
 }
 
-class _FavoriteUsecaseProviderElement
-    extends AutoDisposeProviderElement<FavoriteUsecase>
+class _FavoriteUsecaseProviderElement extends ProviderElement<FavoriteUsecase>
     with FavoriteUsecaseRef {
   _FavoriteUsecaseProviderElement(super.provider);
 

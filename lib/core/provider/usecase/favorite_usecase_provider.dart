@@ -6,10 +6,15 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'favorite_usecase_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 FavoriteUsecase favoriteUsecase(FavoriteUsecaseRef ref, PostQuery query) {
-  return FavoriteUsecase(
-    favoriteRepository: ref.read(favoriteRepositoryProvider),
-    postsNotifier: ref.read(postsNotifierProvider(query).notifier),
+  final usecase = FavoriteUsecase(
+    ref.read(favoriteRepositoryProvider),
+    ref.read(postsNotifierProvider(query).notifier),
   );
+
+  // アプリ終了・invalidate 時に Timer をクリア
+  ref.onDispose(() => usecase.dispose());
+
+  return usecase;
 }

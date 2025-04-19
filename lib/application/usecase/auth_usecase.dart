@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/monthly_summary_provider.dart';
 import 'package:nijimas/application/state/user_status_provider.dart';
 import 'package:nijimas/application/state/loading_provider.dart';
+import 'package:nijimas/core/provider/usecase/favorite_usecase_provider.dart';
 import 'package:nijimas/repository/auth_repository.dart';
 import 'package:nijimas/repository/user_status_repository.dart';
 
@@ -63,6 +64,7 @@ class AuthUsecase {
 
   Future<void> signOut() async {
     _ref.invalidate(monthlySummaryPresentationProvider);
+    _ref.invalidate(favoriteUsecaseProvider);
     return await _authRepository.signOut();
   }
 
