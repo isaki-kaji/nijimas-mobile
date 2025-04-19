@@ -219,6 +219,18 @@ abstract class L10n {
   /// **'投稿しました'**
   String get postSuccess;
 
+  /// No description provided for @deleteConfirm.
+  ///
+  /// In ja, this message translates to:
+  /// **'投稿を削除しますか?'**
+  String get deleteConfirm;
+
+  /// No description provided for @delete.
+  ///
+  /// In ja, this message translates to:
+  /// **'削除'**
+  String get delete;
+
   /// No description provided for @deleteSuccess.
   ///
   /// In ja, this message translates to:
@@ -338,6 +350,12 @@ abstract class L10n {
   /// In ja, this message translates to:
   /// **'ログアウト'**
   String get logout;
+
+  /// No description provided for @cancel.
+  ///
+  /// In ja, this message translates to:
+  /// **'キャンセル'**
+  String get cancel;
 
   /// No description provided for @termsSection1Title.
   ///

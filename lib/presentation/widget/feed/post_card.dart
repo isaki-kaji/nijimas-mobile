@@ -19,6 +19,7 @@ import 'package:nijimas/core/util/sizing.dart';
 import 'package:nijimas/core/util/timezone.dart';
 import 'package:nijimas/core/model/post.dart';
 import 'package:nijimas/l10n/gen_l10n/app_localizations.dart';
+import 'package:nijimas/presentation/widget/feed/post_delete_confirm_dialog.dart';
 import 'package:nijimas/presentation/widget/user/switch_circle_avatar.dart';
 import 'package:nijimas/presentation/widget/post/main_category_chip.dart';
 import 'package:nijimas/presentation/widget/post/sub_category_chip.dart';
@@ -209,25 +210,33 @@ class PostCard extends ConsumerWidget {
               if (canEdit) const SizedBox(width: 15.0),
               if (canEdit)
                 GestureDetector(
-                  child: const Icon(Icons.delete, color: MyColors.grey),
-                  onTap: () {
-                    final postUsecase = ref.read(postUsecaseProvider);
-                    postUsecase.deletePost(
-                      postId: post.postId,
-                      photoUrls: post.photoUrl,
-                      onSuccess: () {
-                        ref.invalidate(postsNotifierProvider);
-                        ref.invalidate(monthlySummaryPresentationProvider(
-                            DateTime.now().year.toString(),
-                            DateTime.now().month.toString()));
-                        showSuccessSnackBar(context, l10n.deleteSuccess);
-                      },
-                      onFailure: () {
-                        showErrorSnackBar(context, l10n.deleteFailed);
-                      },
-                    );
-                  },
-                ),
+                    child: const Icon(Icons.delete, color: MyColors.grey),
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (_) => PostDeleteConfirmDialog(
+                          onConfirm: () {
+                            final postUsecase = ref.read(postUsecaseProvider);
+                            postUsecase.deletePost(
+                              postId: post.postId,
+                              photoUrls: post.photoUrl,
+                              onSuccess: () {
+                                ref.invalidate(postsNotifierProvider);
+                                ref.invalidate(
+                                    monthlySummaryPresentationProvider(
+                                        DateTime.now().year.toString(),
+                                        DateTime.now().month.toString()));
+                                showSuccessSnackBar(
+                                    context, l10n.deleteSuccess);
+                              },
+                              onFailure: () {
+                                showErrorSnackBar(context, l10n.deleteFailed);
+                              },
+                            );
+                          },
+                        ),
+                      );
+                    }),
             ],
           ),
         ),

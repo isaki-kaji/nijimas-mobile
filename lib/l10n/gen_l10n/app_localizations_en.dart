@@ -68,6 +68,12 @@ class L10nEn extends L10n {
   String get postSuccess => 'Posted successfully';
 
   @override
+  String get deleteConfirm => 'Are you sure you want to delete this?';
+
+  @override
+  String get delete => 'delete';
+
+  @override
   String get deleteSuccess => 'Deleted successfully';
 
   @override
@@ -126,6 +132,9 @@ class L10nEn extends L10n {
 
   @override
   String get logout => 'Logout';
+
+  @override
+  String get cancel => 'cancel';
 
   @override
   String get termsSection1Title => 'Article 1 (Application)';

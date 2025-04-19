@@ -68,6 +68,12 @@ class L10nJa extends L10n {
   String get postSuccess => '投稿しました';
 
   @override
+  String get deleteConfirm => '投稿を削除しますか?';
+
+  @override
+  String get delete => '削除';
+
+  @override
   String get deleteSuccess => '削除しました';
 
   @override
@@ -126,6 +132,9 @@ class L10nJa extends L10n {
 
   @override
   String get logout => 'ログアウト';
+
+  @override
+  String get cancel => 'キャンセル';
 
   @override
   String get termsSection1Title => '第1条（適用）';

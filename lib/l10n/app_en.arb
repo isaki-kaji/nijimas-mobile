@@ -20,6 +20,8 @@
   "appleAuthFailed": "Apple authentication failed",
   "pleaseEnterPostInfo": "Please enter an amount, memo, or image",
   "postSuccess": "Posted successfully",
+  "deleteConfirm": "Are you sure you want to delete this?",
+  "delete": "delete",
   "deleteSuccess": "Deleted successfully",
   "postFailed": "Failed to post",
   "updateSuccess": "Updated successfully",
@@ -40,6 +42,7 @@
   "contact": "Contact",
   "account": "Account",
   "logout": "Logout",
+  "cancel": "cancel",
 
   "termsSection1Title": "Article 1 (Application)",
   "termsSection1Body": "These Terms of Service (hereinafter referred to as the \"Terms\") set forth the conditions for using the app \"nijimas\" (hereinafter referred to as the \"App\") provided by the nijimas operations team (hereinafter referred to as the \"Team\"). By using this App, you agree to these Terms.",

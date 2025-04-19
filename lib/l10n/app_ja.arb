@@ -20,6 +20,8 @@
   "appleAuthFailed": "Apple認証に失敗しました",
   "pleaseEnterPostInfo": "金額、メモ、画像のいずれかを入力してください",
   "postSuccess": "投稿しました",
+  "deleteConfirm": "投稿を削除しますか?",
+  "delete": "削除",
   "deleteSuccess": "削除しました",
   "postFailed": "投稿に失敗しました",
   "updateSuccess": "修正しました",
@@ -40,6 +42,7 @@
   "contact": "お問い合わせ",
   "account": "アカウント",
   "logout": "ログアウト",
+  "cancel": "キャンセル",
 
   "termsSection1Title": "第1条（適用）",
   "termsSection1Body": "本利用規約（以下、「本規約」といいます）は、nijimas運営チーム（以下、「当チーム」といいます）が提供するアプリ「nijimas」（以下、「本アプリ」といいます）の利用に関する条件を定めるものです。本アプリをご利用いただいた場合、本規約に同意したものとみなします。",
