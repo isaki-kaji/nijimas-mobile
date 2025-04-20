@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/user_status_provider.dart';
+import 'package:nijimas/application/state/users_info_provider.dart';
 import 'package:nijimas/core/model/post.dart';
 import 'package:nijimas/presentation/screen/auth/auth_screen.dart';
 import 'package:nijimas/presentation/screen/guest/guest_screen.dart';
@@ -13,6 +14,7 @@ import 'package:nijimas/presentation/screen/user/register_user_screen.dart';
 import 'package:nijimas/presentation/screen/user/user_detail_screen.dart';
 import 'package:nijimas/core/util/build_transition_page.dart';
 import 'package:nijimas/presentation/screen/user/user_edit_screen.dart';
+import 'package:nijimas/presentation/screen/user/users_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'go_router.g.dart';
@@ -68,6 +70,20 @@ GoRouter router(RouterRef ref) {
         builder: (context, state) {
           final uid = state.pathParameters['uid'];
           return UserEditScreen(uid: uid!);
+        },
+      ),
+      GoRoute(
+        path: '/users/:uid/followers',
+        builder: (context, state) {
+          final uid = state.pathParameters['uid'];
+          return UsersScreen(uid: uid!, type: UserRelationType.followers);
+        },
+      ),
+      GoRoute(
+        path: '/users/:uid/followings',
+        builder: (context, state) {
+          final uid = state.pathParameters['uid'];
+          return UsersScreen(uid: uid!, type: UserRelationType.followings);
         },
       ),
       GoRoute(

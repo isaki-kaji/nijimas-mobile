@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/user_detail_provider.dart';
 import 'package:nijimas/core/theme/text_style.dart';
@@ -44,20 +45,30 @@ class ProfileHeader extends ConsumerWidget {
                           ],
                         ),
                         const Spacer(),
-                        Column(
-                          children: [
-                            Text(user.followersCount.toString(),
-                                style: MyTextStyles.body16),
-                            const Text("フォロワー", style: MyTextStyles.body16),
-                          ],
+                        GestureDetector(
+                          child: Column(
+                            children: [
+                              Text(user.followersCount.toString(),
+                                  style: MyTextStyles.body16),
+                              const Text("フォロワー", style: MyTextStyles.body16),
+                            ],
+                          ),
+                          onTap: () {
+                            GoRouter.of(context).push("/users/$uid/followers");
+                          },
                         ),
                         const Spacer(),
-                        Column(
-                          children: [
-                            Text(user.followingCount.toString(),
-                                style: MyTextStyles.body16),
-                            const Text("フォロー", style: MyTextStyles.body16),
-                          ],
+                        GestureDetector(
+                          child: Column(
+                            children: [
+                              Text(user.followingCount.toString(),
+                                  style: MyTextStyles.body16),
+                              const Text("フォロー", style: MyTextStyles.body16),
+                            ],
+                          ),
+                          onTap: () {
+                            GoRouter.of(context).push("/users/$uid/followings");
+                          },
                         ),
                       ],
                     ),

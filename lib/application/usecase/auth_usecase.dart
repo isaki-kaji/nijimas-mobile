@@ -31,9 +31,7 @@ class AuthUsecase {
         return;
       }
       await _setUserStatus(user);
-    } catch (e, s) {
-      print(e);
-      print(s);
+    } catch (e) {
       onFailure();
     } finally {
       _ref.read(loadingProvider.notifier).setFalse();

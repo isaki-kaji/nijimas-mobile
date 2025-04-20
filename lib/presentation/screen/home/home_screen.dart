@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
@@ -138,6 +140,16 @@ class HomeScreen extends HookConsumerWidget {
                                     .read(authStateProvider)
                                     .valueOrNull!
                                     .uid;
+
+                                final user = ref.read(authStateProvider).value!;
+                                final token = await user.getIdToken();
+                                final uuid = user.uid;
+                                if (token == null) {
+                                  return;
+                                }
+                                log(token);
+                                log(uuid);
+
                                 GoRouter.of(context).push("/profile/$uid");
                               },
                               icon: Icons.account_circle);

@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:logger/web.dart';
 import 'package:nijimas/core/constant/env_constants.dart';
 import 'package:nijimas/core/model/app_user.dart';
+import 'package:nijimas/core/model/user_info.dart';
 import 'package:nijimas/repository/interceptor/auth_interceptor.dart';
 import 'package:nijimas/core/util/exception.dart';
 import 'package:nijimas/core/model/user_detail.dart';
@@ -62,5 +63,31 @@ class UserRepository {
     _logger.e(response.data);
     throw Exception(
         "Failed to update user with status code: ${response.statusCode}");
+  }
+
+  Future<dynamic> getFollowings(String uid) async {
+    final response = await _dio.get("${Env.baseUrl}/users/$uid/followings");
+    if (response.statusCode == HttpStatus.ok) {
+      List<UserInfo> followings = (response.data as List)
+          .map((user) => UserInfo.fromJson(user))
+          .toList();
+      return followings;
+    }
+    _logger.e(response.data);
+    throw Exception(
+        "Failed to get user with status code: ${response.statusCode}");
+  }
+
+  Future<dynamic> getFollowers(String uid) async {
+    final response = await _dio.get("${Env.baseUrl}/users/$uid/followers");
+    if (response.statusCode == HttpStatus.ok) {
+      List<UserInfo> followers = (response.data as List)
+          .map((user) => UserInfo.fromJson(user))
+          .toList();
+      return followers;
+    }
+    _logger.e(response.data);
+    throw Exception(
+        "Failed to get user with status code: ${response.statusCode}");
   }
 }
