@@ -7,11 +7,11 @@ import 'package:intl/intl.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/monthly_summary_provider.dart';
 import 'package:nijimas/application/state/post_query_provider.dart';
-import 'package:nijimas/application/state/posts_provider.dart';
+import 'package:nijimas/application/state/posts_map_provider.dart';
 import 'package:nijimas/core/enum/main_category.dart';
 import 'package:nijimas/core/enum/post_query.dart';
-import 'package:nijimas/core/provider/usecase/favorite_usecase_provider.dart';
 import 'package:nijimas/core/provider/usecase/post_usecase_provider.dart';
+import 'package:nijimas/core/provider/usecase/favorite_usecase_provider.dart';
 import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/core/theme/text_style.dart';
 import 'package:nijimas/core/util/show_snack_bar.dart';
@@ -191,8 +191,9 @@ class PostCard extends ConsumerWidget {
                     ? const Icon(Icons.favorite, color: MyColors.pink)
                     : const Icon(Icons.favorite_border),
                 onTap: () {
-                  final usecase = ref.read(favoriteUsecaseProvider(query));
-                  usecase.toggleFavorite(
+                  final favoriteUsecase = ref.read(favoriteUsecaseProvider);
+                  favoriteUsecase.toggleFavorite(
+                    query: query,
                     postId: post.postId,
                     isFavorite: post.isFavorite,
                     onFailure: () {},
@@ -221,7 +222,7 @@ class PostCard extends ConsumerWidget {
                               postId: post.postId,
                               photoUrls: post.photoUrl,
                               onSuccess: () {
-                                ref.invalidate(postsNotifierProvider);
+                                ref.invalidate(postsMapNotifierProvider);
                                 ref.invalidate(
                                     monthlySummaryPresentationProvider(
                                         DateTime.now().year.toString(),

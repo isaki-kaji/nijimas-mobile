@@ -1,5 +1,4 @@
-import 'package:flutter/foundation.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:collection/collection.dart';
 
 enum PostQueryType {
   own,
@@ -23,6 +22,8 @@ class PostQuery {
   final PostQueryType type;
   final Map<PostQueryKey, String> params;
 
+  static const _equality = MapEquality<PostQueryKey, String>();
+
   PostQuery({
     required this.type,
     required this.params,
@@ -34,12 +35,11 @@ class PostQuery {
 
     return other is PostQuery &&
         other.type == type &&
-        mapEquals(other.params, params);
+        _equality.equals(other.params, params);
   }
 
   @override
-  int get hashCode =>
-      type.hashCode ^ const DeepCollectionEquality().hash(params);
+  int get hashCode => type.hashCode ^ _equality.hash(params);
 
   PostQuery copyWith({
     PostQueryType? type,

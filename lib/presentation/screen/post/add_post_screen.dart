@@ -8,7 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:nijimas/application/formdata/post_form_data.dart';
 import 'package:nijimas/application/state/loading_provider.dart';
 import 'package:nijimas/application/state/monthly_summary_provider.dart';
-import 'package:nijimas/application/state/posts_provider.dart';
+import 'package:nijimas/application/state/posts_map_provider.dart';
 import 'package:nijimas/core/enum/main_category.dart';
 import 'package:nijimas/core/model/post.dart';
 import 'package:nijimas/core/provider/usecase/post_usecase_provider.dart';
@@ -163,7 +163,7 @@ class AddPostScreen extends HookConsumerWidget {
                     formData: formData,
                     onSuccess: () {
                       showSuccessSnackBar(context, l10n.postSuccess);
-                      ref.invalidate(postsNotifierProvider);
+                      ref.invalidate(postsMapNotifierProvider);
                       ref.invalidate(monthlySummaryPresentationProvider(
                           DateTime.now().year.toString(),
                           DateTime.now().month.toString()));
@@ -184,7 +184,7 @@ class AddPostScreen extends HookConsumerWidget {
                         context,
                         l10n.updateSuccess,
                       );
-                      ref.invalidate(postsNotifierProvider);
+                      ref.invalidate(postsMapNotifierProvider);
                       ref.invalidate(monthlySummaryPresentationProvider(
                           DateTime.now().year.toString(),
                           DateTime.now().month.toString()));

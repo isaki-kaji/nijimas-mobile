@@ -6,10 +6,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nijimas/application/formdata/user_form_data.dart';
 import 'package:nijimas/application/state/loading_provider.dart';
-import 'package:nijimas/application/state/posts_provider.dart';
+import 'package:nijimas/application/state/posts_map_provider.dart';
 import 'package:nijimas/application/state/user_detail_provider.dart';
 import 'package:nijimas/application/state/user_provider.dart';
-import 'package:nijimas/core/model/user_top_subcategory.dart';
 import 'package:nijimas/core/provider/usecase/user_usecase_provider.dart';
 import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/core/util/resize_image.dart';
@@ -18,7 +17,6 @@ import 'package:nijimas/core/util/sizing.dart';
 import 'package:nijimas/l10n/gen_l10n/app_localizations.dart';
 import 'package:nijimas/presentation/widget/common/error_message.dart';
 import 'package:nijimas/presentation/widget/common/loader.dart';
-import 'package:nijimas/presentation/widget/user/add_used_subcategory_bottom_sheet.dart';
 import 'package:nijimas/presentation/widget/user/switch_circle_avatar.dart';
 
 class UserEditScreen extends HookConsumerWidget {
@@ -178,7 +176,7 @@ class UserEditScreen extends HookConsumerWidget {
                     onSuccess: () {
                       showSuccessSnackBar(context, l10n.updatedProfile);
                       ref.invalidate(userDetailNotifierProvider(uid));
-                      ref.invalidate(postsNotifierProvider);
+                      ref.invalidate(postsMapNotifierProvider);
                       GoRouter.of(context).pop();
                     },
                     onFailure: () =>

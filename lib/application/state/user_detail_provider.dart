@@ -1,6 +1,4 @@
-import 'package:nijimas/core/model/sub_category.dart';
 import 'package:nijimas/core/model/user_detail.dart';
-import 'package:nijimas/core/model/user_top_subcategory.dart';
 import 'package:nijimas/core/provider/repository/user_repository_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

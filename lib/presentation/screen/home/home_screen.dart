@@ -7,7 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/monthly_summary_provider.dart';
 import 'package:nijimas/application/state/post_query_provider.dart';
-import 'package:nijimas/application/state/posts_provider.dart';
+import 'package:nijimas/application/state/posts_map_provider.dart';
 import 'package:nijimas/core/constant/animation_constants.dart';
 import 'package:nijimas/core/constant/page_constant.dart';
 import 'package:nijimas/core/model/year_month.dart';
@@ -42,7 +42,7 @@ class HomeScreen extends HookConsumerWidget {
     void onPageChanged(int index) {
       if (usePage.value == 0 && index == 0) {
         ref.read(postQueryNotifierProvider.notifier).reset();
-        ref.invalidate(postsNotifierProvider);
+        ref.invalidate(postsMapNotifierProvider);
       }
 
       if (usePage.value == 1) {

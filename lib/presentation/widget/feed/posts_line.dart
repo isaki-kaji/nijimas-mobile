@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:nijimas/application/state/posts_provider.dart';
+import 'package:nijimas/application/state/posts_map_provider.dart';
 import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/core/model/post.dart';
 import 'package:nijimas/presentation/widget/common/error_message.dart';
@@ -25,27 +26,44 @@ class PostsLine extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = L10n.of(context);
-    final state = ref.watch(postsNotifierProvider(query));
+
+    final state =
+        ref.watch(postsMapNotifierProvider.select((map) => map[query]));
+
+    useEffect(() {
+      // データが存在しない場合に再取得
+      if (state == null) {
+        Future.delayed(Duration.zero, () {
+          ref.read(postsMapNotifierProvider.notifier).fetchNextPage(query);
+        });
+      }
+    }, [state]); // stateが変更されたときに再実行
+
+    if (state == null) {
+      print("State is null");
+      return const Loader();
+    }
 
     return PagedListView<String, Post>(
       state: state,
       fetchNextPage: () =>
-          ref.read(postsNotifierProvider(query).notifier).fetchNextPage(),
+          ref.read(postsMapNotifierProvider.notifier).fetchNextPage(query),
       builderDelegate: PagedChildBuilderDelegate(
-          itemBuilder: (context, item, index) => PostCard(
-                query: query,
-                post: item,
-                canTap: canTap,
-                canEdit: canEdit,
-              ),
-          noItemsFoundIndicatorBuilder: (context) => NotFoundMessage(
-                message: l10n.noPosts,
-                icon: Icons.search_off,
-              ),
-          firstPageErrorIndicatorBuilder: (context) => ErrorMessage(
-                message: l10n.errorOccurred,
-              ),
-          firstPageProgressIndicatorBuilder: (context) => const Loader()),
+        itemBuilder: (context, item, index) => PostCard(
+          query: query,
+          post: item,
+          canTap: canTap,
+          canEdit: canEdit,
+        ),
+        noItemsFoundIndicatorBuilder: (context) => NotFoundMessage(
+          message: l10n.noPosts,
+          icon: Icons.search_off,
+        ),
+        firstPageErrorIndicatorBuilder: (context) => ErrorMessage(
+          message: l10n.errorOccurred,
+        ),
+        firstPageProgressIndicatorBuilder: (context) => const Loader(),
+      ),
     );
   }
 }
