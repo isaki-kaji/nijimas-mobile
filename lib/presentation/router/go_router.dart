@@ -29,13 +29,9 @@ GoRouter router(RouterRef ref) {
           pageBuilder: (context, state) {
             final isShowAnimation = state.extra ?? false;
             if (isShowAnimation as bool) {
-              return buildTransitionPage(
-                  child: HomeScreen(
-                isShowAnimation: isShowAnimation,
-              ));
+              return buildTransitionPage(child: HomeScreen());
             }
-            return const MaterialPage(
-                child: HomeScreen(isShowAnimation: false));
+            return MaterialPage(child: HomeScreen());
           }),
       GoRoute(
           path: '/post/add',

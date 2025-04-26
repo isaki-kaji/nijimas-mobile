@@ -55,7 +55,12 @@ class PostCard extends ConsumerWidget {
                   if (canTap) {
                     final myUid = ref.watch(authStateProvider).valueOrNull!.uid;
                     if (myUid != post.uid) {
-                      GoRouter.of(context).push("/profile/${post.uid}");
+                      ref.read(postQueryNotifierProvider.notifier).set(
+                            PostQuery(
+                              type: PostQueryType.uid,
+                              params: {PostQueryKey.uid: post.uid},
+                            ),
+                          );
                     }
                   }
                 },
