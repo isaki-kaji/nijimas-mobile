@@ -23,6 +23,12 @@ class L10nJa extends L10n {
   String get userAlreadyExists => 'ユーザーはすでに存在します';
 
   @override
+  String get post => '投稿';
+
+  @override
+  String get favorite => 'お気に入り';
+
+  @override
   String get food => '食事';
 
   @override

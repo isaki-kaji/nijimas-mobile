@@ -22,6 +22,8 @@ class PostsMapNotifier extends _$PostsMapNotifier {
       query: current.copyWith(isLoading: true, error: null),
     };
 
+    print(state.keys);
+
     try {
       final newKey = current.keys?.last;
       final repo = _getRepository(query);

@@ -23,6 +23,12 @@ class L10nEn extends L10n {
   String get userAlreadyExists => 'User already exists';
 
   @override
+  String get post => 'posts';
+
+  @override
+  String get favorite => 'favorites';
+
+  @override
   String get food => 'Food';
 
   @override

@@ -18,8 +18,8 @@ class FeedScreen extends HookConsumerWidget {
     final query = ref.watch(postQueryNotifierProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
+      appBar: AppBar(actions: [
+        IconButton(
           icon: const Icon(Icons.search),
           onPressed: () {
             showDialog(
@@ -30,34 +30,20 @@ class FeedScreen extends HookConsumerWidget {
             );
           },
         ),
-        actions: [
-          Builder(
-            builder: (context) {
-              return TrailingIconButton(
-                onPressed: () {
-                  final uid = ref.read(authStateProvider).valueOrNull!.uid;
+        TrailingIconButton(
+          onPressed: () {
+            final uid = ref.read(authStateProvider).valueOrNull!.uid;
 
-                  // postQuery を更新してプロフィール画面を表示
-                  ref.read(postQueryNotifierProvider.notifier).set(
-                        PostQuery(
-                          type: PostQueryType.uid,
-                          params: {PostQueryKey.uid: uid},
-                        ),
-                      );
-
-                  // タブを切り替える
-                  PersistentNavBarNavigator.pushNewScreen(
-                    context,
-                    screen: UserDetailScreen(uid: uid), // プロフィール画面
-                    withNavBar: true, // ボトムバーを表示したままにする
-                  );
-                },
-                icon: Icons.account_circle,
-              );
-            },
-          )
-        ],
-      ),
+            // タブを切り替える
+            PersistentNavBarNavigator.pushNewScreen(
+              context,
+              screen: UserDetailScreen(uid: uid), // プロフィール画面
+              withNavBar: true, // ボトムバーを表示したままにする
+            );
+          },
+          icon: Icons.account_circle,
+        )
+      ]),
       body: PostsLine(query: query, canTap: true, canEdit: false),
       floatingActionButton: const AddPostButton(),
     );

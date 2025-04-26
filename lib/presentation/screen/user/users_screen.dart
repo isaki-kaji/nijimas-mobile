@@ -20,7 +20,6 @@ class UsersScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = L10n.of(context);
-
     return Scaffold(
       appBar: AppBar(),
       body: ref.watch(usersInfoProvider((uid: uid, type: type))).when(

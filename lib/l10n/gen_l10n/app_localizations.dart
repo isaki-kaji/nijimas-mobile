@@ -129,6 +129,18 @@ abstract class L10n {
   /// **'ユーザーはすでに存在します'**
   String get userAlreadyExists;
 
+  /// No description provided for @post.
+  ///
+  /// In ja, this message translates to:
+  /// **'投稿'**
+  String get post;
+
+  /// No description provided for @favorite.
+  ///
+  /// In ja, this message translates to:
+  /// **'お気に入り'**
+  String get favorite;
+
   /// No description provided for @food.
   ///
   /// In ja, this message translates to:

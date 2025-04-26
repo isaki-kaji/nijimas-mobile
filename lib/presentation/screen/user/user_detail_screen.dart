@@ -57,9 +57,10 @@ class UserDetailScreen extends HookConsumerWidget {
                     indicatorWeight: 3,
                     labelStyle: const TextStyle(
                         fontSize: 12, fontWeight: FontWeight.bold),
-                    tabs: const [
-                      CustomTab(label: "投稿", icon: Icons.article_outlined),
-                      CustomTab(label: "お気に入り", icon: Icons.favorite_border),
+                    tabs: [
+                      CustomTab(label: l10n.post, icon: Icons.article_outlined),
+                      CustomTab(
+                          label: l10n.favorite, icon: Icons.favorite_border),
                     ],
                   ),
                 ),
@@ -79,6 +80,7 @@ class UserDetailScreen extends HookConsumerWidget {
                           PostQuery(type: PostQueryType.favorite, params: {}),
                       canTap: true,
                       canEdit: false,
+                      shouldNavigate: true,
                     ),
                   ],
                 )
