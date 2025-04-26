@@ -11,6 +11,7 @@ class OtherScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = L10n.of(context);
     return Scaffold(
+      appBar: AppBar(),
       body: ListView(
         children: [
           const SizedBox(height: 16),

@@ -12,25 +12,28 @@ class NotificationScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = L10n.of(context);
-    return ref.watch(followRequestsNotifierProvider).when(
-      data: (data) {
-        return data.isEmpty
-            ? NotFoundMessage(
-                message: l10n.noNotification, icon: Icons.notifications_off)
-            : ListView.builder(
-                itemCount: data.length,
-                itemBuilder: (context, index) {
-                  final followRequest = data[index];
-                  return NotificationTile(followRequest: followRequest);
-                },
-              );
-      },
-      error: (error, _) {
-        return ErrorMessage(message: l10n.errorOccurred);
-      },
-      loading: () {
-        return const Loader();
-      },
+    return Scaffold(
+      appBar: AppBar(),
+      body: ref.watch(followRequestsNotifierProvider).when(
+        data: (data) {
+          return data.isEmpty
+              ? NotFoundMessage(
+                  message: l10n.noNotification, icon: Icons.notifications_off)
+              : ListView.builder(
+                  itemCount: data.length,
+                  itemBuilder: (context, index) {
+                    final followRequest = data[index];
+                    return NotificationTile(followRequest: followRequest);
+                  },
+                );
+        },
+        error: (error, _) {
+          return ErrorMessage(message: l10n.errorOccurred);
+        },
+        loading: () {
+          return const Loader();
+        },
+      ),
     );
   }
 }

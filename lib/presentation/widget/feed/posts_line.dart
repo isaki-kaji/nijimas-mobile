@@ -17,11 +17,13 @@ class PostsLine extends HookConsumerWidget {
     required this.query,
     required this.canTap,
     required this.canEdit,
+    this.shouldNavigate = false,
   });
 
   final PostQuery query;
   final bool canTap;
   final bool canEdit;
+  final bool shouldNavigate;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -40,7 +42,6 @@ class PostsLine extends HookConsumerWidget {
     }, [state]); // stateが変更されたときに再実行
 
     if (state == null) {
-      print("State is null");
       return const Loader();
     }
 
@@ -52,8 +53,8 @@ class PostsLine extends HookConsumerWidget {
         itemBuilder: (context, item, index) => PostCard(
           query: query,
           post: item,
-          canTap: canTap,
           canEdit: canEdit,
+          shouldNavigate: shouldNavigate,
         ),
         noItemsFoundIndicatorBuilder: (context) => NotFoundMessage(
           message: l10n.noPosts,

@@ -8,7 +8,11 @@ import 'package:nijimas/presentation/widget/feed/posts_line.dart';
 import 'package:nijimas/presentation/widget/user/profile_header.dart';
 
 class UserDetailScreen extends HookConsumerWidget {
-  const UserDetailScreen({super.key, required this.uid});
+  const UserDetailScreen({
+    super.key,
+    required this.uid,
+  });
+
   final String uid;
 
   @override
@@ -16,6 +20,11 @@ class UserDetailScreen extends HookConsumerWidget {
     final l10n = L10n.of(context);
     final myUid = ref.watch(authStateProvider).valueOrNull!.uid;
     final isOwnScreen = myUid == uid;
+
+    final query = PostQuery(
+      type: PostQueryType.uid,
+      params: {PostQueryKey.uid: uid},
+    );
 
     return DefaultTabController(
       length: isOwnScreen ? 2 : 1,
@@ -63,6 +72,7 @@ class UserDetailScreen extends HookConsumerWidget {
                       query: PostQuery(type: PostQueryType.own, params: {}),
                       canTap: false,
                       canEdit: isOwnScreen,
+                      shouldNavigate: true,
                     ),
                     PostsLine(
                       query:
@@ -73,9 +83,7 @@ class UserDetailScreen extends HookConsumerWidget {
                   ],
                 )
               : PostsLine(
-                  query: PostQuery(type: PostQueryType.uid, params: {
-                    PostQueryKey.uid: uid,
-                  }),
+                  query: query,
                   canTap: false,
                   canEdit: false,
                 ),

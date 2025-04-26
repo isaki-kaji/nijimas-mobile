@@ -1,47 +1,43 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:nijimas/application/state/auth_state_provider.dart';
-import 'package:nijimas/application/state/monthly_summary_provider.dart';
 import 'package:nijimas/application/state/post_query_provider.dart';
-import 'package:nijimas/application/state/posts_map_provider.dart';
 import 'package:nijimas/core/enum/main_category.dart';
 import 'package:nijimas/core/enum/post_query.dart';
-import 'package:nijimas/core/provider/usecase/post_usecase_provider.dart';
 import 'package:nijimas/core/provider/usecase/favorite_usecase_provider.dart';
 import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/core/theme/text_style.dart';
-import 'package:nijimas/core/util/show_snack_bar.dart';
 import 'package:nijimas/core/util/sizing.dart';
 import 'package:nijimas/core/util/timezone.dart';
 import 'package:nijimas/core/model/post.dart';
-import 'package:nijimas/l10n/gen_l10n/app_localizations.dart';
-import 'package:nijimas/presentation/widget/feed/post_delete_confirm_dialog.dart';
+import 'package:nijimas/presentation/screen/feed/feed_screen.dart';
+import 'package:nijimas/presentation/screen/user/user_detail_screen.dart';
 import 'package:nijimas/presentation/widget/user/switch_circle_avatar.dart';
 import 'package:nijimas/presentation/widget/post/main_category_chip.dart';
 import 'package:nijimas/presentation/widget/post/sub_category_chip.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
 class PostCard extends ConsumerWidget {
   final Post post;
   final PostQuery query;
-  final bool canTap;
   final bool canEdit;
+  final bool shouldNavigate;
   final formatter = DateFormat('yyyy-MM-dd HH:mm');
-  PostCard(
-      {super.key,
-      required this.post,
-      required this.query,
-      required this.canTap,
-      required this.canEdit});
+
+  PostCard({
+    super.key,
+    required this.post,
+    required this.query,
+    required this.canEdit,
+    this.shouldNavigate = false,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = L10n.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -52,17 +48,11 @@ class PostCard extends ConsumerWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  if (canTap) {
-                    final myUid = ref.watch(authStateProvider).valueOrNull!.uid;
-                    if (myUid != post.uid) {
-                      ref.read(postQueryNotifierProvider.notifier).set(
-                            PostQuery(
-                              type: PostQueryType.uid,
-                              params: {PostQueryKey.uid: post.uid},
-                            ),
-                          );
-                    }
-                  }
+                  PersistentNavBarNavigator.pushNewScreen(
+                    context,
+                    screen: UserDetailScreen(uid: post.uid),
+                    withNavBar: true,
+                  );
                 },
                 child: Row(
                   children: [
@@ -151,28 +141,41 @@ class PostCard extends ConsumerWidget {
                   ? SubCategoryChip(
                       categoryName: post.subCategory1!,
                       tapEvent: (_) {
-                        if (canTap) {
-                          ref.read(postQueryNotifierProvider.notifier).set(
-                                  PostQuery(
-                                      type: PostQueryType.subCategory,
-                                      params: {
-                                    PostQueryKey.subCategory: post.subCategory1!
-                                  }));
+                        ref.read(postQueryNotifierProvider.notifier).set(
+                              PostQuery(
+                                type: PostQueryType.subCategory,
+                                params: {
+                                  PostQueryKey.subCategory: post.subCategory1!
+                                },
+                              ),
+                            );
+                        if (shouldNavigate) {
+                          PersistentNavBarNavigator.pushNewScreen(
+                            context,
+                            screen: const FeedScreen(),
+                            withNavBar: true,
+                          );
                         }
-                      },
-                    )
+                      })
                   : const SizedBox(),
               post.subCategory2 != null
                   ? SubCategoryChip(
                       categoryName: post.subCategory2!,
                       tapEvent: (_) {
-                        if (canTap) {
-                          ref.read(postQueryNotifierProvider.notifier).set(
-                                  PostQuery(
-                                      type: PostQueryType.subCategory,
-                                      params: {
-                                    PostQueryKey.subCategory: post.subCategory2!
-                                  }));
+                        ref.read(postQueryNotifierProvider.notifier).set(
+                              PostQuery(
+                                type: PostQueryType.subCategory,
+                                params: {
+                                  PostQueryKey.subCategory: post.subCategory2!
+                                },
+                              ),
+                            );
+                        if (shouldNavigate) {
+                          PersistentNavBarNavigator.pushNewScreen(
+                            context,
+                            screen: const FeedScreen(),
+                            withNavBar: true,
+                          );
                         }
                       })
                   : const SizedBox()
@@ -205,44 +208,6 @@ class PostCard extends ConsumerWidget {
                   );
                 },
               ),
-              if (canEdit) const SizedBox(width: 15.0),
-              if (canEdit)
-                GestureDetector(
-                  child: const Icon(Icons.edit, color: MyColors.grey),
-                  onTap: () {
-                    GoRouter.of(context).push('/post/edit', extra: post);
-                  },
-                ),
-              if (canEdit) const SizedBox(width: 15.0),
-              if (canEdit)
-                GestureDetector(
-                    child: const Icon(Icons.delete, color: MyColors.grey),
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (_) => PostDeleteConfirmDialog(
-                          onConfirm: () {
-                            final postUsecase = ref.read(postUsecaseProvider);
-                            postUsecase.deletePost(
-                              postId: post.postId,
-                              photoUrls: post.photoUrl,
-                              onSuccess: () {
-                                ref.invalidate(postsMapNotifierProvider);
-                                ref.invalidate(
-                                    monthlySummaryPresentationProvider(
-                                        DateTime.now().year.toString(),
-                                        DateTime.now().month.toString()));
-                                showSuccessSnackBar(
-                                    context, l10n.deleteSuccess);
-                              },
-                              onFailure: () {
-                                showErrorSnackBar(context, l10n.deleteFailed);
-                              },
-                            );
-                          },
-                        ),
-                      );
-                    }),
             ],
           ),
         ),
