@@ -1,70 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nijimas/application/state/post_query_provider.dart';
 import 'package:nijimas/core/enum/main_category.dart';
 import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/core/util/sizing.dart';
 
 class PostSearchDialog extends HookWidget {
-  const PostSearchDialog({
-    super.key,
-  });
+  const PostSearchDialog({super.key, required this.onQuerySelected});
+
+  final void Function(PostQuery) onQuerySelected;
 
   @override
   Widget build(BuildContext context) {
-    final searchedMainCategory = useState<MainCategory?>(null);
+    // useState を使用してサブカテゴリの状態を管理
     final searchedSubCategory = useState<String?>(null);
 
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Container(
-        height: Sizing.heightByMQ(context, 0.3),
-        padding: const EdgeInsets.all(16),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(
-            Radius.circular(20),
-          ),
-        ),
-        child: Stack(
+    return AlertDialog(
+      content: Padding(
+        padding: const EdgeInsets.only(top: 30),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Align(
-              alignment: const Alignment(0.9, 0.9),
-              child: CustomRoundButton(
-                searchedMainCategory: searchedMainCategory.value,
-                searchedSubCategory: searchedSubCategory.value,
-              ),
-            ),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 50),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    // SelectMainCategoryDropdown(
-                    //   searchedMainCategory: searchedMainCategory.value,
-                    //   onCategorySelected: (MainCategory? category) {
-                    //     searchedMainCategory.value = category;
-                    //   },
-                    // ),
-                    //const SizedBox(height: 15),
-                    SelectSubCategoryField(
-                      searchedSubCategory: searchedMainCategory.value,
-                      onCategorySelected: (String? category) {
-                        searchedSubCategory.value = category;
-                      },
-                    ),
-                  ],
-                ),
-              ),
+            SelectSubCategoryField(
+              onCategorySelected: (value) {
+                searchedSubCategory.value = value;
+              },
             ),
           ],
         ),
       ),
+      actions: [
+        CustomRoundButton(
+          searchedSubCategory: searchedSubCategory.value,
+          onQuerySelected: onQuerySelected,
+        ),
+      ],
     );
   }
 }
@@ -126,11 +96,9 @@ class SelectMainCategoryDropdown extends HookWidget {
 class SelectSubCategoryField extends HookWidget {
   const SelectSubCategoryField({
     super.key,
-    required this.searchedSubCategory,
     required this.onCategorySelected,
   });
 
-  final MainCategory? searchedSubCategory;
   final Function(String?) onCategorySelected;
 
   @override
@@ -162,58 +130,32 @@ class SelectSubCategoryField extends HookWidget {
   }
 }
 
-class CustomRoundButton extends HookConsumerWidget {
+class CustomRoundButton extends StatelessWidget {
   const CustomRoundButton({
     super.key,
-    required this.searchedMainCategory,
     required this.searchedSubCategory,
+    required this.onQuerySelected,
   });
 
-  final MainCategory? searchedMainCategory;
   final String? searchedSubCategory;
+  final void Function(PostQuery) onQuerySelected;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if ((searchedMainCategory == null) &&
-            (searchedSubCategory == null || searchedSubCategory!.isEmpty)) {
-          return;
-        }
-
         if (searchedSubCategory == null || searchedSubCategory!.isEmpty) {
-          final query = PostQuery(
-            type: PostQueryType.mainCategory,
-            params: {
-              PostQueryKey.mainCategory: searchedMainCategory.toString(),
-            },
-          );
-          ref.read(postQueryNotifierProvider.notifier).set(query);
           Navigator.of(context).pop();
           return;
         }
 
-        if (searchedMainCategory == null) {
-          final query = PostQuery(
-            type: PostQueryType.subCategory,
-            params: {
-              PostQueryKey.subCategory: searchedSubCategory!,
-            },
-          );
-          ref.read(postQueryNotifierProvider.notifier).set(query);
-          Navigator.of(context).pop();
-          return;
-        }
-
-        final query = PostQuery(
-          type: PostQueryType.mainCategoryAndSubCategory,
-          params: {
-            PostQueryKey.mainCategory: searchedMainCategory.toString(),
-            PostQueryKey.subCategory: searchedSubCategory!,
-          },
+        final newQuery = PostQuery(
+          type: PostQueryType.subCategory,
+          params: {PostQueryKey.subCategory: searchedSubCategory!},
         );
-        ref.read(postQueryNotifierProvider.notifier).set(query);
-        Navigator.of(context).pop();
+
+        onQuerySelected(newQuery); // クエリを渡す
+        Navigator.of(context).pop(); // ダイアログを閉じる
       },
       child: const SubButton(icon: Icons.search),
     );

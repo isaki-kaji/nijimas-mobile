@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
-import 'package:nijimas/application/state/post_query_provider.dart';
 import 'package:nijimas/application/state/posts_map_provider.dart';
+import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/presentation/screen/data/data_screen.dart';
 import 'package:nijimas/presentation/screen/feed/feed_screen.dart';
@@ -23,16 +23,19 @@ class HomeScreen extends ConsumerWidget {
       return const SizedBox();
     }
 
-    int previousIndex = _controller.index; // 前回のタブインデックスを追跡
-
     return PersistentTabView(
       context,
       controller: _controller,
-      screens: const [
-        FeedScreen(),
-        DataScreen(),
-        NotificationScreen(),
-        OtherScreen(),
+      screens: [
+        FeedScreen(
+          initialQuery: PostQuery(
+            type: PostQueryType.timeline,
+            params: {},
+          ),
+        ),
+        const DataScreen(),
+        const NotificationScreen(),
+        const OtherScreen(),
       ],
       items: [
         PersistentBottomNavBarItem(
@@ -56,13 +59,13 @@ class HomeScreen extends ConsumerWidget {
           inactiveColorPrimary: MyColors.grey,
         ),
       ],
+      popBehaviorOnSelectedNavBarItemPress: PopBehavior.all,
       navBarStyle: NavBarStyle.style1,
       onItemSelected: (index) {
-        if (index == 0 && previousIndex == 0) {
-          ref.read(postQueryNotifierProvider.notifier).reset();
+        _controller.index = index;
+        if (_controller.index == index) {
           ref.invalidate(postsMapNotifierProvider);
         }
-        previousIndex = index;
       },
     );
   }

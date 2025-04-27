@@ -20,12 +20,12 @@ class GuestScreen extends ConsumerWidget {
         leading: IconButton(
           icon: const Icon(Icons.search),
           onPressed: () {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return const PostSearchDialog();
-              },
-            );
+            // showDialog(
+            //   context: context,
+            //   builder: (BuildContext context) {
+            //     return const PostSearchDialog();
+            //   },
+            // );
           },
         ),
         actions: [

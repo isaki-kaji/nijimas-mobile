@@ -16,13 +16,11 @@ class PostsLine extends HookConsumerWidget {
     super.key,
     required this.query,
     required this.canEdit,
-    this.shouldNavigate = false,
     this.isUserDetail = false,
   });
 
   final PostQuery query;
   final bool canEdit;
-  final bool shouldNavigate;
   final bool isUserDetail;
 
   @override
@@ -54,7 +52,6 @@ class PostsLine extends HookConsumerWidget {
           query: query,
           post: item,
           canEdit: canEdit,
-          shouldNavigate: shouldNavigate,
           isUserDetail: isUserDetail,
         ),
         noItemsFoundIndicatorBuilder: (context) => NotFoundMessage(

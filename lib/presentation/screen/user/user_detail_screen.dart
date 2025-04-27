@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
+import 'package:nijimas/application/state/posts_map_provider.dart';
 import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/l10n/gen_l10n/app_localizations.dart';
 import 'package:nijimas/presentation/widget/feed/posts_line.dart';
@@ -28,65 +29,72 @@ class UserDetailScreen extends HookConsumerWidget {
 
     return DefaultTabController(
       length: isOwnScreen ? 2 : 1,
-      child: Scaffold(
-        appBar: AppBar(
-          actions: [
-            if (isOwnScreen)
-              PopupMenuButton(
-                itemBuilder: (context) => [
-                  PopupMenuItem(
-                    child: Text(l10n.editProfile),
-                    onTap: () =>
-                        GoRouter.of(context).push("/profile/$myUid/edit"),
-                  ),
-                ],
-              ),
-          ],
-        ),
-        body: NestedScrollView(
-          headerSliverBuilder: (context, innerBoxIsScrolled) => [
-            SliverToBoxAdapter(child: ProfileHeader(uid: uid)),
-            if (isOwnScreen)
-              SliverPersistentHeader(
-                pinned: true,
-                delegate: _TabBarDelegate(
-                  TabBar(
-                    labelColor: Theme.of(context).colorScheme.primary,
-                    unselectedLabelColor: Colors.grey,
-                    indicatorColor: Theme.of(context).colorScheme.primary,
-                    indicatorWeight: 3,
-                    labelStyle: const TextStyle(
-                        fontSize: 12, fontWeight: FontWeight.bold),
-                    tabs: [
-                      CustomTab(label: l10n.post, icon: Icons.article_outlined),
-                      CustomTab(
-                          label: l10n.favorite, icon: Icons.favorite_border),
-                    ],
-                  ),
-                ),
-              ),
-          ],
-          body: isOwnScreen
-              ? TabBarView(
-                  children: [
-                    PostsLine(
-                      query: PostQuery(type: PostQueryType.own, params: {}),
-                      canEdit: true,
-                      shouldNavigate: true,
-                      isUserDetail: true,
-                    ),
-                    PostsLine(
-                      query:
-                          PostQuery(type: PostQueryType.favorite, params: {}),
-                      canEdit: false,
-                      shouldNavigate: true,
+      child: PopScope(
+        onPopInvoked: (didPop) {
+          if (didPop) {
+            // 画面がポップされた場合にクエリの投稿を削除
+            ref.read(postsMapNotifierProvider.notifier).removeQuery(query);
+          }
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            actions: [
+              if (isOwnScreen)
+                PopupMenuButton(
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                      child: Text(l10n.editProfile),
+                      onTap: () =>
+                          GoRouter.of(context).push("/profile/$myUid/edit"),
                     ),
                   ],
-                )
-              : PostsLine(
-                  query: query,
-                  canEdit: false,
                 ),
+            ],
+          ),
+          body: NestedScrollView(
+            headerSliverBuilder: (context, innerBoxIsScrolled) => [
+              SliverToBoxAdapter(child: ProfileHeader(uid: uid)),
+              if (isOwnScreen)
+                SliverPersistentHeader(
+                  pinned: true,
+                  delegate: _TabBarDelegate(
+                    TabBar(
+                      labelColor: Theme.of(context).colorScheme.primary,
+                      unselectedLabelColor: Colors.grey,
+                      indicatorColor: Theme.of(context).colorScheme.primary,
+                      indicatorWeight: 3,
+                      labelStyle: const TextStyle(
+                          fontSize: 12, fontWeight: FontWeight.bold),
+                      tabs: [
+                        CustomTab(
+                            label: l10n.post, icon: Icons.article_outlined),
+                        CustomTab(
+                            label: l10n.favorite, icon: Icons.favorite_border),
+                      ],
+                    ),
+                  ),
+                ),
+            ],
+            body: isOwnScreen
+                ? TabBarView(
+                    children: [
+                      PostsLine(
+                        query: PostQuery(type: PostQueryType.own, params: {}),
+                        canEdit: true,
+                        isUserDetail: true,
+                      ),
+                      PostsLine(
+                        query:
+                            PostQuery(type: PostQueryType.favorite, params: {}),
+                        canEdit: false,
+                      ),
+                    ],
+                  )
+                : PostsLine(
+                    query: query,
+                    canEdit: false,
+                  ),
+          ),
         ),
       ),
     );

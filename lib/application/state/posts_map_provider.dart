@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/core/provider/repository/post_repository_provider.dart';
@@ -22,7 +24,7 @@ class PostsMapNotifier extends _$PostsMapNotifier {
       query: current.copyWith(isLoading: true, error: null),
     };
 
-    print(state.keys);
+    log("--------" + state.keys.toString());
 
     try {
       final newKey = current.keys?.last;
@@ -87,12 +89,10 @@ class PostsMapNotifier extends _$PostsMapNotifier {
     state = newState;
   }
 
-  void resetAndFetch(PostQuery query) {
-    // キャッシュをリセット
-    state = {};
-
-    // 指定されたPostQueryに基づいて再取得
-    fetchNextPage(query);
+  void removeQuery(PostQuery query) {
+    final newState = {...state}..remove(query);
+    state = newState;
+    log("--------" + state.keys.toString());
   }
 
   Future<List<Post>> Function(Map<PostQueryKey, String>, String?)

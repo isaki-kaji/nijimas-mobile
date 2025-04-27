@@ -3,7 +3,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:nijimas/application/state/post_query_provider.dart';
 import 'package:nijimas/core/enum/main_category.dart';
 import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/core/provider/usecase/favorite_usecase_provider.dart';
@@ -25,7 +24,6 @@ class PostCard extends ConsumerWidget {
   final Post post;
   final PostQuery query;
   final bool canEdit;
-  final bool shouldNavigate;
   final bool isUserDetail;
   final formatter = DateFormat('yyyy-MM-dd HH:mm');
 
@@ -35,7 +33,6 @@ class PostCard extends ConsumerWidget {
     required this.query,
     required this.canEdit,
     this.isUserDetail = false,
-    this.shouldNavigate = false,
   });
 
   @override
@@ -145,42 +142,36 @@ class PostCard extends ConsumerWidget {
                   ? SubCategoryChip(
                       categoryName: post.subCategory1!,
                       tapEvent: (_) {
-                        ref.read(postQueryNotifierProvider.notifier).set(
-                              PostQuery(
-                                type: PostQueryType.subCategory,
-                                params: {
-                                  PostQueryKey.subCategory: post.subCategory1!
-                                },
-                              ),
-                            );
-                        if (shouldNavigate) {
-                          PersistentNavBarNavigator.pushNewScreen(
-                            context,
-                            screen: const FeedScreen(),
-                            withNavBar: true,
-                          );
-                        }
+                        PersistentNavBarNavigator.pushNewScreen(
+                          context,
+                          screen: FeedScreen(
+                            initialQuery: PostQuery(
+                              type: PostQueryType.subCategory,
+                              params: {
+                                PostQueryKey.subCategory: post.subCategory1!
+                              },
+                            ),
+                          ),
+                          withNavBar: true,
+                        );
                       })
                   : const SizedBox(),
               post.subCategory2 != null
                   ? SubCategoryChip(
                       categoryName: post.subCategory2!,
                       tapEvent: (_) {
-                        ref.read(postQueryNotifierProvider.notifier).set(
-                              PostQuery(
-                                type: PostQueryType.subCategory,
-                                params: {
-                                  PostQueryKey.subCategory: post.subCategory2!
-                                },
-                              ),
-                            );
-                        if (shouldNavigate) {
-                          PersistentNavBarNavigator.pushNewScreen(
-                            context,
-                            screen: const FeedScreen(),
-                            withNavBar: true,
-                          );
-                        }
+                        PersistentNavBarNavigator.pushNewScreen(
+                          context,
+                          screen: FeedScreen(
+                            initialQuery: PostQuery(
+                              type: PostQueryType.subCategory,
+                              params: {
+                                PostQueryKey.subCategory: post.subCategory2!
+                              },
+                            ),
+                          ),
+                          withNavBar: true,
+                        );
                       })
                   : const SizedBox()
             ]),
