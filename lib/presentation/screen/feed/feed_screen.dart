@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/post_query_provider.dart';
-import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/presentation/screen/user/user_detail_screen.dart';
 import 'package:nijimas/presentation/widget/common/add_post_button.dart';
 import 'package:nijimas/presentation/widget/common/trailing_icon_button.dart';
@@ -44,7 +43,7 @@ class FeedScreen extends HookConsumerWidget {
           icon: Icons.account_circle,
         )
       ]),
-      body: PostsLine(query: query, canTap: true, canEdit: false),
+      body: PostsLine(query: query, canEdit: false),
       floatingActionButton: const AddPostButton(),
     );
   }

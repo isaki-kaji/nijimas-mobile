@@ -71,14 +71,13 @@ class UserDetailScreen extends HookConsumerWidget {
                   children: [
                     PostsLine(
                       query: PostQuery(type: PostQueryType.own, params: {}),
-                      canTap: false,
-                      canEdit: isOwnScreen,
+                      canEdit: true,
                       shouldNavigate: true,
+                      isUserDetail: true,
                     ),
                     PostsLine(
                       query:
                           PostQuery(type: PostQueryType.favorite, params: {}),
-                      canTap: true,
                       canEdit: false,
                       shouldNavigate: true,
                     ),
@@ -86,7 +85,6 @@ class UserDetailScreen extends HookConsumerWidget {
                 )
               : PostsLine(
                   query: query,
-                  canTap: false,
                   canEdit: false,
                 ),
         ),

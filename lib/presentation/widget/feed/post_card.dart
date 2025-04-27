@@ -26,6 +26,7 @@ class PostCard extends ConsumerWidget {
   final PostQuery query;
   final bool canEdit;
   final bool shouldNavigate;
+  final bool isUserDetail;
   final formatter = DateFormat('yyyy-MM-dd HH:mm');
 
   PostCard({
@@ -33,6 +34,7 @@ class PostCard extends ConsumerWidget {
     required this.post,
     required this.query,
     required this.canEdit,
+    this.isUserDetail = false,
     this.shouldNavigate = false,
   });
 
@@ -48,11 +50,13 @@ class PostCard extends ConsumerWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  PersistentNavBarNavigator.pushNewScreen(
-                    context,
-                    screen: UserDetailScreen(uid: post.uid),
-                    withNavBar: true,
-                  );
+                  if (!isUserDetail) {
+                    PersistentNavBarNavigator.pushNewScreen(
+                      context,
+                      screen: UserDetailScreen(uid: post.uid),
+                      withNavBar: true,
+                    );
+                  }
                 },
                 child: Row(
                   children: [

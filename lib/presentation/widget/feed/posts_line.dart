@@ -15,15 +15,15 @@ class PostsLine extends HookConsumerWidget {
   const PostsLine({
     super.key,
     required this.query,
-    required this.canTap,
     required this.canEdit,
     this.shouldNavigate = false,
+    this.isUserDetail = false,
   });
 
   final PostQuery query;
-  final bool canTap;
   final bool canEdit;
   final bool shouldNavigate;
+  final bool isUserDetail;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -55,6 +55,7 @@ class PostsLine extends HookConsumerWidget {
           post: item,
           canEdit: canEdit,
           shouldNavigate: shouldNavigate,
+          isUserDetail: isUserDetail,
         ),
         noItemsFoundIndicatorBuilder: (context) => NotFoundMessage(
           message: l10n.noPosts,
