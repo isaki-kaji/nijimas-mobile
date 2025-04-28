@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/user_detail_provider.dart';
+import 'package:nijimas/application/state/users_info_provider.dart';
 import 'package:nijimas/core/theme/text_style.dart';
 import 'package:nijimas/l10n/gen_l10n/app_localizations.dart';
+import 'package:nijimas/presentation/screen/user/users_screen.dart';
 import 'package:nijimas/presentation/widget/common/error_message.dart';
 import 'package:nijimas/presentation/widget/user/follow_button.dart';
 import 'package:nijimas/presentation/widget/user/switch_circle_avatar.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
 class ProfileHeader extends ConsumerWidget {
   const ProfileHeader({
@@ -54,7 +56,12 @@ class ProfileHeader extends ConsumerWidget {
                             ],
                           ),
                           onTap: () {
-                            GoRouter.of(context).push("/users/$uid/followers");
+                            PersistentNavBarNavigator.pushNewScreen(
+                              context,
+                              screen: UsersScreen(
+                                  uid: uid, type: UserRelationType.followers),
+                              withNavBar: true,
+                            );
                           },
                         ),
                         const Spacer(),
@@ -67,7 +74,12 @@ class ProfileHeader extends ConsumerWidget {
                             ],
                           ),
                           onTap: () {
-                            GoRouter.of(context).push("/users/$uid/followings");
+                            PersistentNavBarNavigator.pushNewScreen(
+                              context,
+                              screen: UsersScreen(
+                                  uid: uid, type: UserRelationType.followings),
+                              withNavBar: true,
+                            );
                           },
                         ),
                       ],
