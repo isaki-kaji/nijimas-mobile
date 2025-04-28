@@ -5,6 +5,7 @@ import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/posts_map_provider.dart';
 import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/core/theme/color.dart';
+import 'package:nijimas/core/util/sizing.dart';
 import 'package:nijimas/presentation/screen/data/data_screen.dart';
 import 'package:nijimas/presentation/screen/feed/feed_screen.dart';
 import 'package:nijimas/presentation/screen/notification/notification_screen.dart';
@@ -26,6 +27,7 @@ class HomeScreen extends ConsumerWidget {
     return PersistentTabView(
       context,
       controller: _controller,
+      navBarHeight: Sizing.heightByMQ(context, 0.1),
       screens: [
         FeedScreen(
           initialQuery: PostQuery(

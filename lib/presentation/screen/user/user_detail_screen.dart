@@ -5,6 +5,7 @@ import 'package:nijimas/application/state/auth_state_provider.dart';
 import 'package:nijimas/application/state/posts_map_provider.dart';
 import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/l10n/gen_l10n/app_localizations.dart';
+import 'package:nijimas/presentation/widget/common/add_post_button.dart';
 import 'package:nijimas/presentation/widget/feed/posts_line.dart';
 import 'package:nijimas/presentation/widget/user/profile_header.dart';
 

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/core/provider/usecase/auth_usecase_provider.dart';
 import 'package:nijimas/l10n/gen_l10n/app_localizations.dart';
+import 'package:nijimas/presentation/widget/common/add_post_button.dart';
 
 class OtherScreen extends ConsumerWidget {
   const OtherScreen({super.key});
@@ -45,6 +46,7 @@ class OtherScreen extends ConsumerWidget {
           const SizedBox(height: 16),
         ],
       ),
+      floatingActionButton: const AddPostButton(heroTag: "other"),
     );
   }
 }

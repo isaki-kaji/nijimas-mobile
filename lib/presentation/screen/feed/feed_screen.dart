@@ -16,7 +16,6 @@ class FeedScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // クエリを useState で管理
     final query = useState(initialQuery);
 
     return Scaffold(
@@ -51,7 +50,7 @@ class FeedScreen extends HookConsumerWidget {
         )
       ]),
       body: PostsLine(query: query.value, canEdit: false), // 現在のクエリを使用
-      floatingActionButton: const AddPostButton(),
+      floatingActionButton: const AddPostButton(heroTag: "feed"),
     );
   }
 }
