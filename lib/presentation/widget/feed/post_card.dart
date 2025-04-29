@@ -16,7 +16,7 @@ import 'package:nijimas/presentation/screen/user/user_detail_screen.dart';
 import 'package:nijimas/presentation/widget/user/switch_circle_avatar.dart';
 import 'package:nijimas/presentation/widget/post/main_category_chip.dart';
 import 'package:nijimas/presentation/widget/post/sub_category_chip.dart';
-import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
@@ -48,10 +48,11 @@ class PostCard extends ConsumerWidget {
               GestureDetector(
                 onTap: () {
                   if (!isUserDetail) {
-                    PersistentNavBarNavigator.pushNewScreen(
+                    pushWithNavBar(
                       context,
-                      screen: UserDetailScreen(uid: post.uid),
-                      withNavBar: true,
+                      MaterialPageRoute(
+                        builder: (context) => UserDetailScreen(uid: post.uid),
+                      ),
                     );
                   }
                 },
@@ -153,17 +154,18 @@ class PostCard extends ConsumerWidget {
                               return;
                             }
 
-                            PersistentNavBarNavigator.pushNewScreen(
+                            pushWithNavBar(
                               context,
-                              screen: FeedScreen(
-                                query: PostQuery(
-                                  type: PostQueryType.subCategory,
-                                  params: {
-                                    PostQueryKey.subCategory: subCategory
-                                  },
+                              MaterialPageRoute(
+                                builder: (context) => FeedScreen(
+                                  query: PostQuery(
+                                    type: PostQueryType.subCategory,
+                                    params: {
+                                      PostQueryKey.subCategory: subCategory
+                                    },
+                                  ),
                                 ),
                               ),
-                              withNavBar: true,
                             );
                           },
                         ))

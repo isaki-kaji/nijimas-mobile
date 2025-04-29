@@ -8,7 +8,7 @@ import 'package:nijimas/presentation/screen/user/users_screen.dart';
 import 'package:nijimas/presentation/widget/common/error_message.dart';
 import 'package:nijimas/presentation/widget/user/follow_button.dart';
 import 'package:nijimas/presentation/widget/user/switch_circle_avatar.dart';
-import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
 class ProfileHeader extends ConsumerWidget {
   const ProfileHeader({
@@ -56,11 +56,14 @@ class ProfileHeader extends ConsumerWidget {
                             ],
                           ),
                           onTap: () {
-                            PersistentNavBarNavigator.pushNewScreen(
+                            pushWithNavBar(
                               context,
-                              screen: UsersScreen(
-                                  uid: uid, type: UserRelationType.followers),
-                              withNavBar: true,
+                              MaterialPageRoute(
+                                builder: (context) => UsersScreen(
+                                  uid: uid,
+                                  type: UserRelationType.followers,
+                                ),
+                              ),
                             );
                           },
                         ),
@@ -74,11 +77,15 @@ class ProfileHeader extends ConsumerWidget {
                             ],
                           ),
                           onTap: () {
-                            PersistentNavBarNavigator.pushNewScreen(
+                            // タブを保ったまま UsersScreen に遷移
+                            pushWithNavBar(
                               context,
-                              screen: UsersScreen(
-                                  uid: uid, type: UserRelationType.followings),
-                              withNavBar: true,
+                              MaterialPageRoute(
+                                builder: (context) => UsersScreen(
+                                  uid: uid,
+                                  type: UserRelationType.followings,
+                                ),
+                              ),
                             );
                           },
                         ),

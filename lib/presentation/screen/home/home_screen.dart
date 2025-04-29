@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
-import 'package:nijimas/application/state/posts_map_provider.dart';
 import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/core/util/sizing.dart';
@@ -10,11 +9,43 @@ import 'package:nijimas/presentation/screen/data/data_screen.dart';
 import 'package:nijimas/presentation/screen/feed/feed_screen.dart';
 import 'package:nijimas/presentation/screen/notification/notification_screen.dart';
 import 'package:nijimas/presentation/screen/other/other_screen.dart';
-import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
 class HomeScreen extends ConsumerWidget {
   HomeScreen({super.key});
   final PersistentTabController _controller = PersistentTabController();
+
+  List<PersistentTabConfig> _tabs() => [
+        PersistentTabConfig(
+          screen: FeedScreen(
+            query: PostQuery(
+              type: PostQueryType.timeline,
+              params: {},
+            ),
+          ),
+          item: ItemConfig(
+              icon: const Icon(Icons.home),
+              activeForegroundColor: MyColors.pink),
+        ),
+        PersistentTabConfig(
+          screen: const DataScreen(),
+          item: ItemConfig(
+              icon: const Icon(Icons.bar_chart),
+              activeForegroundColor: MyColors.pink),
+        ),
+        PersistentTabConfig(
+          screen: const NotificationScreen(),
+          item: ItemConfig(
+              icon: const Icon(Icons.notifications),
+              activeForegroundColor: MyColors.pink),
+        ),
+        PersistentTabConfig(
+          screen: const OtherScreen(),
+          item: ItemConfig(
+              icon: const Icon(Icons.settings),
+              activeForegroundColor: MyColors.pink),
+        ),
+      ];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,50 +56,14 @@ class HomeScreen extends ConsumerWidget {
     }
 
     return PersistentTabView(
-      context,
+      tabs: _tabs(),
       controller: _controller,
       navBarHeight: Sizing.heightByMQ(context, 0.08),
-      screens: [
-        FeedScreen(
-          query: PostQuery(
-            type: PostQueryType.timeline,
-            params: {},
-          ),
-        ),
-        const DataScreen(),
-        const NotificationScreen(),
-        const OtherScreen(),
-      ],
-      items: [
-        PersistentBottomNavBarItem(
-          icon: const Icon(Icons.home),
-          activeColorPrimary: MyColors.pink,
-          inactiveColorPrimary: MyColors.grey,
-        ),
-        PersistentBottomNavBarItem(
-          icon: const Icon(Icons.bar_chart),
-          activeColorPrimary: MyColors.pink,
-          inactiveColorPrimary: MyColors.grey,
-        ),
-        PersistentBottomNavBarItem(
-          icon: const Icon(Icons.notifications),
-          activeColorPrimary: MyColors.pink,
-          inactiveColorPrimary: MyColors.grey,
-        ),
-        PersistentBottomNavBarItem(
-          icon: const Icon(Icons.settings),
-          activeColorPrimary: MyColors.pink,
-          inactiveColorPrimary: MyColors.grey,
-        ),
-      ],
-      popBehaviorOnSelectedNavBarItemPress: PopBehavior.all,
-      navBarStyle: NavBarStyle.style1,
-      onItemSelected: (index) {
-        _controller.index = index;
-        if (_controller.index == index) {
-          ref.invalidate(postsMapNotifierProvider);
-        }
-      },
+      popActionScreens: PopActionScreensType.all,
+      navBarBuilder: (navBarConfig) => Style2BottomNavBar(
+        navBarConfig: navBarConfig,
+      ),
+      navBarOverlap: const NavBarOverlap.full(),
     );
   }
 }

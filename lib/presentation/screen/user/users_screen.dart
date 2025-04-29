@@ -6,7 +6,7 @@ import 'package:nijimas/presentation/screen/user/user_detail_screen.dart';
 import 'package:nijimas/presentation/widget/common/error_message.dart';
 import 'package:nijimas/presentation/widget/common/loader.dart';
 import 'package:nijimas/presentation/widget/user/switch_circle_avatar.dart';
-import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
 class UsersScreen extends ConsumerWidget {
   final String uid;
@@ -46,10 +46,11 @@ class UsersScreen extends ConsumerWidget {
                         ),
                       ),
                       onTap: () {
-                        PersistentNavBarNavigator.pushNewScreen(
+                        pushWithNavBar(
                           context,
-                          screen: UserDetailScreen(uid: user.uid),
-                          withNavBar: true,
+                          MaterialPageRoute(
+                            builder: (context) => UserDetailScreen(uid: uid),
+                          ),
                         );
                       },
                     ),

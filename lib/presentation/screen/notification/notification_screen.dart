@@ -14,7 +14,6 @@ class NotificationScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = L10n.of(context);
     return Scaffold(
-      appBar: AppBar(),
       body: ref.watch(followRequestsNotifierProvider).when(
         data: (data) {
           return data.isEmpty
