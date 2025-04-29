@@ -156,7 +156,7 @@ class PostCard extends ConsumerWidget {
                             PersistentNavBarNavigator.pushNewScreen(
                               context,
                               screen: FeedScreen(
-                                initialQuery: PostQuery(
+                                query: PostQuery(
                                   type: PostQueryType.subCategory,
                                   params: {
                                     PostQueryKey.subCategory: subCategory

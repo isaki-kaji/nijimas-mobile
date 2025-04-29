@@ -27,10 +27,10 @@ class HomeScreen extends ConsumerWidget {
     return PersistentTabView(
       context,
       controller: _controller,
-      navBarHeight: Sizing.heightByMQ(context, 0.1),
+      navBarHeight: Sizing.heightByMQ(context, 0.08),
       screens: [
         FeedScreen(
-          initialQuery: PostQuery(
+          query: PostQuery(
             type: PostQueryType.timeline,
             params: {},
           ),

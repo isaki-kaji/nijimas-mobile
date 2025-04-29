@@ -7,49 +7,73 @@ import 'package:nijimas/presentation/screen/user/user_detail_screen.dart';
 import 'package:nijimas/presentation/widget/common/add_post_button.dart';
 import 'package:nijimas/presentation/widget/common/trailing_icon_button.dart';
 import 'package:nijimas/presentation/widget/feed/posts_line.dart';
-import 'package:nijimas/presentation/widget/home/post_search_dialog.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
 class FeedScreen extends HookConsumerWidget {
-  const FeedScreen({super.key, required this.initialQuery});
-  final PostQuery initialQuery;
+  const FeedScreen({super.key, required this.query});
+  final PostQuery query;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final query = useState(initialQuery);
+    final isSearching = useState(false);
+    final searchController = useTextEditingController();
 
     return Scaffold(
-      appBar: AppBar(actions: [
-        IconButton(
-          icon: const Icon(Icons.search),
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return PostSearchDialog(
-                  onQuerySelected: (newQuery) {
-                    query.value = newQuery;
-                  },
-                );
+      appBar: AppBar(
+        title: isSearching.value
+            ? TextField(
+                controller: searchController,
+                autofocus: true,
+                decoration: const InputDecoration(
+                  hintText: "サブカテゴリで検索...",
+                  border: InputBorder.none,
+                ),
+                onSubmitted: (value) {
+                  PersistentNavBarNavigator.pushNewScreen(
+                    context,
+                    screen: FeedScreen(
+                      query: PostQuery(
+                        type: PostQueryType.subCategory,
+                        params: {PostQueryKey.subCategory: value},
+                      ),
+                    ),
+                    withNavBar: true,
+                  );
+                  isSearching.value = false;
+                },
+              )
+            : const SizedBox.shrink(),
+        actions: [
+          if (!isSearching.value)
+            IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: () {
+                isSearching.value = true;
               },
-            );
-          },
-        ),
-        TrailingIconButton(
-          onPressed: () {
-            final uid = ref.read(authStateProvider).valueOrNull!.uid;
+            ),
+          if (isSearching.value)
+            IconButton(
+              icon: const Icon(Icons.close),
+              onPressed: () {
+                isSearching.value = false;
+                searchController.clear();
+              },
+            ),
+          TrailingIconButton(
+            onPressed: () {
+              final uid = ref.read(authStateProvider).valueOrNull!.uid;
 
-            // プロフィール画面に遷移
-            PersistentNavBarNavigator.pushNewScreen(
-              context,
-              screen: UserDetailScreen(uid: uid),
-              withNavBar: true,
-            );
-          },
-          icon: Icons.account_circle,
-        )
-      ]),
-      body: PostsLine(query: query.value, canEdit: false), // 現在のクエリを使用
+              PersistentNavBarNavigator.pushNewScreen(
+                context,
+                screen: UserDetailScreen(uid: uid),
+                withNavBar: true,
+              );
+            },
+            icon: Icons.account_circle,
+          ),
+        ],
+      ),
+      body: PostsLine(query: query, canEdit: false),
       floatingActionButton: const AddPostButton(heroTag: "feed"),
     );
   }

@@ -21,7 +21,6 @@ class FavoriteUsecase {
     required void Function() onFailure,
   }) {
     _notifier.toggleFavorite(postId, query);
-    print("toggleFavorite: $postId, isFavorite: $isFavorite");
     _lastStates[postId] = isFavorite;
 
     _timers[postId]?.cancel();
