@@ -50,6 +50,17 @@ class PostsMapNotifier extends _$PostsMapNotifier {
     }
   }
 
+  void showCurrentStates() {
+    state.forEach((key, pagingState) {
+      log("Key: $key");
+      log("Pages: ${pagingState.pages}");
+      log("Keys: ${pagingState.keys}");
+      log("HasNextPage: ${pagingState.hasNextPage}");
+      log("IsLoading: ${pagingState.isLoading}");
+      log("Error: ${pagingState.error}");
+    });
+  }
+
   void toggleFavorite(String postId, PostQuery query) {
     // 全てのPostQueryを対象にする
     final updatedState = state.map((key, pagingState) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/follow_requests_provider.dart';
 import 'package:nijimas/l10n/gen_l10n/app_localizations.dart';
+import 'package:nijimas/presentation/widget/common/add_post_button.dart';
 import 'package:nijimas/presentation/widget/common/error_message.dart';
 import 'package:nijimas/presentation/widget/common/loader.dart';
 import 'package:nijimas/presentation/widget/common/not_found_message.dart';
@@ -13,7 +14,6 @@ class NotificationScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = L10n.of(context);
     return Scaffold(
-      appBar: AppBar(),
       body: ref.watch(followRequestsNotifierProvider).when(
         data: (data) {
           return data.isEmpty
@@ -34,6 +34,7 @@ class NotificationScreen extends HookConsumerWidget {
           return const Loader();
         },
       ),
+      floatingActionButton: const AddPostButton(heroTag: "notification"),
     );
   }
 }

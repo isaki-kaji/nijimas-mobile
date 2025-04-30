@@ -16,7 +16,7 @@ import 'package:nijimas/presentation/screen/user/user_detail_screen.dart';
 import 'package:nijimas/presentation/widget/user/switch_circle_avatar.dart';
 import 'package:nijimas/presentation/widget/post/main_category_chip.dart';
 import 'package:nijimas/presentation/widget/post/sub_category_chip.dart';
-import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
@@ -48,10 +48,11 @@ class PostCard extends ConsumerWidget {
               GestureDetector(
                 onTap: () {
                   if (!isUserDetail) {
-                    PersistentNavBarNavigator.pushNewScreen(
+                    pushWithNavBar(
                       context,
-                      screen: UserDetailScreen(uid: post.uid),
-                      withNavBar: true,
+                      MaterialPageRoute(
+                        builder: (context) => UserDetailScreen(uid: post.uid),
+                      ),
                     );
                   }
                 },
@@ -135,46 +136,41 @@ class PostCard extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-              MainCategoryChip(
-                  category: MainCategory.fromName(post.mainCategory)),
-              post.subCategory1 != null
-                  ? SubCategoryChip(
-                      categoryName: post.subCategory1!,
-                      tapEvent: (_) {
-                        PersistentNavBarNavigator.pushNewScreen(
-                          context,
-                          screen: FeedScreen(
-                            initialQuery: PostQuery(
-                              type: PostQueryType.subCategory,
-                              params: {
-                                PostQueryKey.subCategory: post.subCategory1!
-                              },
-                            ),
-                          ),
-                          withNavBar: true,
-                        );
-                      })
-                  : const SizedBox(),
-              post.subCategory2 != null
-                  ? SubCategoryChip(
-                      categoryName: post.subCategory2!,
-                      tapEvent: (_) {
-                        PersistentNavBarNavigator.pushNewScreen(
-                          context,
-                          screen: FeedScreen(
-                            initialQuery: PostQuery(
-                              type: PostQueryType.subCategory,
-                              params: {
-                                PostQueryKey.subCategory: post.subCategory2!
-                              },
-                            ),
-                          ),
-                          withNavBar: true,
-                        );
-                      })
-                  : const SizedBox()
-            ]),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                MainCategoryChip(
+                  category: MainCategory.fromName(post.mainCategory),
+                ),
+                ...[post.subCategory1, post.subCategory2]
+                    .where((subCategory) => subCategory != null)
+                    .map((subCategory) => SubCategoryChip(
+                          categoryName: subCategory!,
+                          fontWeight: _checkIsCurrentSubCategory(subCategory)
+                              ? FontWeight.bold
+                              : FontWeight.normal,
+                          tapEvent: (_) {
+                            if (_checkIsCurrentSubCategory(subCategory)) {
+                              return;
+                            }
+
+                            pushWithNavBar(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FeedScreen(
+                                  query: PostQuery(
+                                    type: PostQueryType.subCategory,
+                                    params: {
+                                      PostQueryKey.subCategory: subCategory
+                                    },
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ))
+              ],
+            ),
           ),
         ),
         Padding(
@@ -210,6 +206,11 @@ class PostCard extends ConsumerWidget {
         const Divider(),
       ],
     );
+  }
+
+  bool _checkIsCurrentSubCategory(String subCategory) {
+    return (query.type == PostQueryType.subCategory &&
+        query.params[PostQueryKey.subCategory] == subCategory);
   }
 
   void _showFullScreenGallery(BuildContext context, int initialIndex) {

@@ -76,7 +76,7 @@ class UserDetailScreen extends HookConsumerWidget {
                 ),
             ],
             body: isOwnScreen
-                ? TabBarView(
+                ? const TabBarView(
                     children: [
                       PostsLine(
                         query: PostQuery(type: PostQueryType.own, params: {}),
