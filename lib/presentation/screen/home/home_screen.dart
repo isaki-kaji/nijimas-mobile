@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
+import 'package:nijimas/application/state/posts_map_provider.dart';
 import 'package:nijimas/core/enum/post_query.dart';
+import 'package:nijimas/core/observer/home_tab_navigator_observer.dart';
 import 'package:nijimas/core/theme/color.dart';
 import 'package:nijimas/core/util/sizing.dart';
 import 'package:nijimas/presentation/screen/data/data_screen.dart';
@@ -15,18 +17,30 @@ class HomeScreen extends ConsumerWidget {
   HomeScreen({super.key});
   final PersistentTabController _controller = PersistentTabController();
 
-  List<PersistentTabConfig> _tabs() => [
+  List<PersistentTabConfig> _tabs(WidgetRef ref) => [
         PersistentTabConfig(
-          screen: FeedScreen(
-            query: PostQuery(
-              type: PostQueryType.timeline,
-              params: {},
+            screen: const FeedScreen(
+              query: PostQuery(
+                type: PostQueryType.timeline,
+                params: {},
+              ),
             ),
-          ),
-          item: ItemConfig(
-              icon: const Icon(Icons.home),
-              activeForegroundColor: MyColors.pink),
-        ),
+            navigatorConfig: NavigatorConfig(navigatorObservers: [
+              HomeTabNavigatorObserver(
+                onAllScreensPopped: () {
+                  ref.invalidate(postsMapNotifierProvider);
+                  ref
+                      .read(postsMapNotifierProvider.notifier)
+                      .showCurrentStates();
+                },
+              ),
+            ]),
+            item: ItemConfig(
+                icon: const Icon(Icons.home),
+                activeForegroundColor: MyColors.pink),
+            onSelectedTabPressWhenNoScreensPushed: () {
+              ref.invalidate(postsMapNotifierProvider);
+            }),
         PersistentTabConfig(
           screen: const DataScreen(),
           item: ItemConfig(
@@ -56,7 +70,7 @@ class HomeScreen extends ConsumerWidget {
     }
 
     return PersistentTabView(
-      tabs: _tabs(),
+      tabs: _tabs(ref),
       controller: _controller,
       navBarHeight: Sizing.heightByMQ(context, 0.08),
       popActionScreens: PopActionScreensType.all,
@@ -64,6 +78,7 @@ class HomeScreen extends ConsumerWidget {
         navBarConfig: navBarConfig,
       ),
       navBarOverlap: const NavBarOverlap.full(),
+      popAllScreensOnTapOfSelectedTab: true,
     );
   }
 }

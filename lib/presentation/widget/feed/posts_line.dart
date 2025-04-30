@@ -29,15 +29,20 @@ class PostsLine extends HookConsumerWidget {
 
     final state =
         ref.watch(postsMapNotifierProvider.select((map) => map[query]));
-
+    final hasFetched = useState(false);
     useEffect(() {
-      // データが存在しない場合に再取得
-      if (state == null) {
-        Future.delayed(Duration.zero, () {
+      final isTimeline = query.type == PostQueryType.timeline;
+
+      if (state == null && (!hasFetched.value || isTimeline)) {
+        Future.microtask(() {
           ref.read(postsMapNotifierProvider.notifier).fetchNextPage(query);
+          if (!isTimeline) {
+            hasFetched.value = true;
+          }
         });
       }
-    }, [state]); // stateが変更されたときに再実行
+      return null;
+    }, [state]);
 
     if (state == null) {
       return const Loader();

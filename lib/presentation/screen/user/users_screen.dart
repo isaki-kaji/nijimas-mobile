@@ -49,7 +49,8 @@ class UsersScreen extends ConsumerWidget {
                         pushWithNavBar(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => UserDetailScreen(uid: uid),
+                            builder: (context) =>
+                                UserDetailScreen(uid: user.uid),
                           ),
                         );
                       },

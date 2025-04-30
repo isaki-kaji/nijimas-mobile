@@ -24,7 +24,7 @@ class PostQuery {
 
   static const _equality = MapEquality<PostQueryKey, String>();
 
-  PostQuery({
+  const PostQuery({
     required this.type,
     required this.params,
   });
@@ -32,10 +32,8 @@ class PostQuery {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-
-    return other is PostQuery &&
-        other.type == type &&
-        _equality.equals(other.params, params);
+    if (other is! PostQuery) return false;
+    return type == other.type && _equality.equals(params, other.params);
   }
 
   @override
@@ -47,10 +45,14 @@ class PostQuery {
   }) {
     return PostQuery(
       type: type ?? this.type,
-      params: params ?? this.params,
+      params: params ?? Map.of(this.params),
     );
   }
 
   @override
-  String toString() => 'PostQuery(type: $type, params: $params)';
+  String toString() {
+    final paramStr =
+        params.entries.map((e) => '${e.key.name}:${e.value}').join(', ');
+    return 'PostQuery(type: ${type.name}, params: {$paramStr})';
+  }
 }
