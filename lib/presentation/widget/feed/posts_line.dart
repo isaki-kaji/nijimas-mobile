@@ -30,8 +30,13 @@ class PostsLine extends HookConsumerWidget {
     final state =
         ref.watch(postsMapNotifierProvider.select((map) => map[query]));
     final hasFetched = useState(false);
+
     useEffect(() {
       final isTimeline = query.type == PostQueryType.timeline;
+
+      if (state != null) {
+        hasFetched.value = true;
+      }
 
       if (state == null && (!hasFetched.value || isTimeline)) {
         Future.microtask(() {
