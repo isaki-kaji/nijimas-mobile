@@ -21,6 +21,7 @@ Post _$PostFromJson(Map<String, dynamic> json) => Post(
       expense: json['expense'] as String,
       location: json['location'] as String?,
       isFavorite: json['isFavorite'] as bool,
+      favoriteCount: json['favoriteCount'] as int,
       createdAt: DateTime.parse(json['createdAt'] as String),
       version: json['version'] as int? ?? 1,
     );
@@ -39,6 +40,7 @@ Map<String, dynamic> _$PostToJson(Post instance) => <String, dynamic>{
       'expense': instance.expense,
       'location': instance.location,
       'isFavorite': instance.isFavorite,
+      'favoriteCount': instance.favoriteCount,
       'createdAt': instance.createdAt.toIso8601String(),
       'version': instance.version,
     };

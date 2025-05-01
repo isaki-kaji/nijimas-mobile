@@ -17,6 +17,7 @@ class Post {
   final String expense;
   final String? location;
   final bool isFavorite;
+  final int favoriteCount;
   final DateTime createdAt;
   final int version;
 
@@ -34,6 +35,7 @@ class Post {
     required this.expense,
     this.location,
     required this.isFavorite,
+    required this.favoriteCount,
     required this.createdAt,
     this.version = 1,
   });
@@ -53,6 +55,7 @@ class Post {
       expense: json['expense'] as String,
       location: json['location'] as String?,
       isFavorite: json['isFavorite'] as bool,
+      favoriteCount: json['favoriteCount'] as int,
       createdAt: DateTime.parse(json['createdAt']),
       version: json['version'] ?? 1, // ✅ nullなら1
     );
@@ -74,6 +77,7 @@ class Post {
     String? location,
     String? publicTypeNo,
     bool? isFavorite,
+    int? favoriteCount,
     DateTime? createdAt,
   }) {
     return Post(
@@ -90,6 +94,7 @@ class Post {
       expense: expense ?? this.expense,
       location: location ?? this.location,
       isFavorite: isFavorite ?? this.isFavorite,
+      favoriteCount: favoriteCount ?? this.favoriteCount,
       createdAt: createdAt ?? this.createdAt,
     );
   }

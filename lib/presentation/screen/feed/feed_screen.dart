@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -65,8 +67,16 @@ class FeedScreen extends HookConsumerWidget {
               ),
             IconButton(
               icon: const Icon(Icons.account_circle),
-              onPressed: () {
+              onPressed: () async {
                 final myUid = ref.watch(authStateProvider).valueOrNull?.uid;
+
+                final user = ref.read(authStateProvider).valueOrNull;
+                if (user != null) {
+                  // Firebase User のトークンを取得してログ出力
+                  final idToken = await user.getIdToken();
+                  log("User UID: ${user.uid}");
+                  log("ID Token: $idToken");
+                }
                 if (myUid != null) {
                   pushWithNavBar(
                     context,

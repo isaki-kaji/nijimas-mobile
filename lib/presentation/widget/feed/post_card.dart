@@ -199,6 +199,13 @@ class PostCard extends ConsumerWidget {
                   );
                 },
               ),
+              const SizedBox(width: 5.0),
+              Text(
+                post.favoriteCount.toString(),
+                style: MyTextStyles.body14.copyWith(
+                  color: MyColors.grey,
+                ),
+              ),
             ],
           ),
         ),

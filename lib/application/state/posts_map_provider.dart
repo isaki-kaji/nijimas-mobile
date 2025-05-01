@@ -24,8 +24,6 @@ class PostsMapNotifier extends _$PostsMapNotifier {
       query: current.copyWith(isLoading: true, error: null),
     };
 
-    log("--------" + state.keys.toString());
-
     try {
       final newKey = current.keys?.last;
       final repo = _getRepository(query);
@@ -64,11 +62,13 @@ class PostsMapNotifier extends _$PostsMapNotifier {
   void toggleFavorite(String postId, PostQuery query) {
     // 全てのPostQueryを対象にする
     final updatedState = state.map((key, pagingState) {
-      // 該当する投稿を更新
       final updatedPages = pagingState.pages
           ?.map((page) => page
               .map((post) => post.postId == postId
-                  ? post.copyWith(isFavorite: !post.isFavorite)
+                  ? post.copyWith(
+                      isFavorite: !post.isFavorite,
+                      favoriteCount:
+                          post.favoriteCount + (post.isFavorite ? -1 : 1))
                   : post)
               .toList())
           .toList();
@@ -76,7 +76,6 @@ class PostsMapNotifier extends _$PostsMapNotifier {
       return MapEntry(key, pagingState.copyWith(pages: updatedPages));
     });
 
-    // 状態を更新
     state = updatedState;
 
     // 現在のPostQueryがfavoriteの場合は再取得を行わない
@@ -87,14 +86,12 @@ class PostsMapNotifier extends _$PostsMapNotifier {
     invalidateFavoriteQuery();
   }
 
-  /// キャッシュ削除
   void invalidateQuery(PostQuery query) {
     final newState = {...state}..remove(query);
     state = newState;
   }
 
   void invalidateFavoriteQuery() {
-    // favoriteのPostQueryをキーごと削除
     final newState = {...state};
     newState.removeWhere((key, _) => key.type == PostQueryType.favorite);
     state = newState;
@@ -103,7 +100,6 @@ class PostsMapNotifier extends _$PostsMapNotifier {
   void removeQuery(PostQuery query) {
     final newState = {...state}..remove(query);
     state = newState;
-    log("--------" + state.keys.toString());
   }
 
   Future<List<Post>> Function(Map<PostQueryKey, String>, String?)
