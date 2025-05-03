@@ -28,7 +28,10 @@ class HomeScreen extends ConsumerWidget {
             navigatorConfig: NavigatorConfig(navigatorObservers: [
               HomeTabNavigatorObserver(
                 onAllScreensPopped: () {
-                  ref.invalidate(postsMapNotifierProvider);
+                  ref
+                      .read(postsMapNotifierProvider.notifier)
+                      .invalidateNonTimelineQueries();
+
                   ref
                       .read(postsMapNotifierProvider.notifier)
                       .showCurrentStates();

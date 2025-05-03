@@ -40,6 +40,8 @@ class PostsMapNotifier extends _$PostsMapNotifier {
           isLoading: false,
         ),
       };
+
+      showCurrentStates();
     } catch (e) {
       state = {
         ...state,
@@ -51,11 +53,6 @@ class PostsMapNotifier extends _$PostsMapNotifier {
   void showCurrentStates() {
     state.forEach((key, pagingState) {
       log("Key: $key");
-      log("Pages: ${pagingState.pages}");
-      log("Keys: ${pagingState.keys}");
-      log("HasNextPage: ${pagingState.hasNextPage}");
-      log("IsLoading: ${pagingState.isLoading}");
-      log("Error: ${pagingState.error}");
     });
   }
 
@@ -86,8 +83,9 @@ class PostsMapNotifier extends _$PostsMapNotifier {
     invalidateFavoriteQuery();
   }
 
-  void invalidateQuery(PostQuery query) {
-    final newState = {...state}..remove(query);
+  void invalidateNonTimelineQueries() {
+    final newState = {...state};
+    newState.removeWhere((key, _) => key.type != PostQueryType.timeline);
     state = newState;
   }
 
