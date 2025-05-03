@@ -9,12 +9,14 @@ import 'package:nijimas/presentation/widget/user/switch_circle_avatar.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
 class UsersScreen extends ConsumerWidget {
-  final String uid;
+  final String? uid;
+  final String? postId;
   final UserRelationType type;
 
   const UsersScreen({
     super.key,
-    required this.uid,
+    this.uid,
+    this.postId,
     required this.type,
   });
 
@@ -23,7 +25,9 @@ class UsersScreen extends ConsumerWidget {
     final l10n = L10n.of(context);
     return Scaffold(
       appBar: AppBar(),
-      body: ref.watch(usersInfoProvider((uid: uid, type: type))).when(
+      body: ref
+          .watch(usersInfoProvider((uid: uid, postId: postId, type: type)))
+          .when(
             data: (users) {
               return ListView.separated(
                 itemCount: users.length,

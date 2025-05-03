@@ -90,4 +90,17 @@ class UserRepository {
     throw Exception(
         "Failed to get user with status code: ${response.statusCode}");
   }
+
+  Future<dynamic> getFavorites(String postId) async {
+    final response = await _dio.get("${Env.baseUrl}/posts/$postId/favorites");
+    if (response.statusCode == HttpStatus.ok) {
+      List<UserInfo> favorites = (response.data as List)
+          .map((user) => UserInfo.fromJson(user))
+          .toList();
+      return favorites;
+    }
+    _logger.e(response.data);
+    throw Exception(
+        "Failed to get user with status code: ${response.statusCode}");
+  }
 }
