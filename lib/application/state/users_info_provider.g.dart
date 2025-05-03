@@ -6,7 +6,7 @@ part of 'users_info_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$usersInfoHash() => r'c280a09257b31fe3331b1556b060753557e18d0a';
+String _$usersInfoHash() => r'074d14a8f08fd4fa613af79f2c5525796f605b43';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -40,7 +40,7 @@ class UsersInfoFamily extends Family<AsyncValue<List<UserInfo>>> {
 
   /// See also [usersInfo].
   UsersInfoProvider call(
-    ({UserRelationType type, String uid}) args,
+    ({String? postId, UserRelationType type, String? uid}) args,
   ) {
     return UsersInfoProvider(
       args,
@@ -75,7 +75,7 @@ class UsersInfoFamily extends Family<AsyncValue<List<UserInfo>>> {
 class UsersInfoProvider extends AutoDisposeFutureProvider<List<UserInfo>> {
   /// See also [usersInfo].
   UsersInfoProvider(
-    ({UserRelationType type, String uid}) args,
+    ({String? postId, UserRelationType type, String? uid}) args,
   ) : this._internal(
           (ref) => usersInfo(
             ref as UsersInfoRef,
@@ -102,7 +102,7 @@ class UsersInfoProvider extends AutoDisposeFutureProvider<List<UserInfo>> {
     required this.args,
   }) : super.internal();
 
-  final ({UserRelationType type, String uid}) args;
+  final ({String? postId, UserRelationType type, String? uid}) args;
 
   @override
   Override overrideWith(
@@ -143,7 +143,7 @@ class UsersInfoProvider extends AutoDisposeFutureProvider<List<UserInfo>> {
 
 mixin UsersInfoRef on AutoDisposeFutureProviderRef<List<UserInfo>> {
   /// The parameter `args` of this provider.
-  ({UserRelationType type, String uid}) get args;
+  ({String? postId, UserRelationType type, String? uid}) get args;
 }
 
 class _UsersInfoProviderElement
@@ -151,7 +151,7 @@ class _UsersInfoProviderElement
   _UsersInfoProviderElement(super.provider);
 
   @override
-  ({UserRelationType type, String uid}) get args =>
+  ({String? postId, UserRelationType type, String? uid}) get args =>
       (origin as UsersInfoProvider).args;
 }
 // ignore_for_file: type=lint

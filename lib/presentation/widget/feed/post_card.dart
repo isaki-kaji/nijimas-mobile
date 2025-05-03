@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:nijimas/application/state/users_info_provider.dart';
 import 'package:nijimas/core/enum/main_category.dart';
 import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/core/provider/usecase/favorite_usecase_provider.dart';
@@ -13,6 +14,7 @@ import 'package:nijimas/core/util/timezone.dart';
 import 'package:nijimas/core/model/post.dart';
 import 'package:nijimas/presentation/screen/feed/feed_screen.dart';
 import 'package:nijimas/presentation/screen/user/user_detail_screen.dart';
+import 'package:nijimas/presentation/screen/user/users_screen.dart';
 import 'package:nijimas/presentation/widget/user/switch_circle_avatar.dart';
 import 'package:nijimas/presentation/widget/post/main_category_chip.dart';
 import 'package:nijimas/presentation/widget/post/sub_category_chip.dart';
@@ -196,6 +198,32 @@ class PostCard extends ConsumerWidget {
                     postId: post.postId,
                     isFavorite: post.isFavorite,
                     onFailure: () {},
+                  );
+                },
+              ),
+              const SizedBox(width: 5.0),
+              GestureDetector(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 5.0, right: 10.0),
+                  child: Text(
+                    post.favoriteCount.toString(),
+                    style: MyTextStyles.body14.copyWith(
+                      color: MyColors.grey,
+                    ),
+                  ),
+                ),
+                onTap: () {
+                  if (post.favoriteCount == 0) {
+                    return;
+                  }
+                  pushWithNavBar(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UsersScreen(
+                        postId: post.postId,
+                        type: UserRelationType.favorites,
+                      ),
+                    ),
                   );
                 },
               ),
