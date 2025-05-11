@@ -34,18 +34,26 @@ class PostsLine extends HookConsumerWidget {
     useEffect(() {
       final isTimeline = query.type == PostQueryType.timeline;
 
+      // stateがnullでまだデータを取得していない場合にのみ取得を行う
+      if (state == null && !hasFetched.value) {
+        Future.microtask(() {
+          ref.read(postsMapNotifierProvider.notifier).fetchNextPage(query);
+          hasFetched.value = true;
+        });
+      }
+
+      // stateがnullでかつisTimelineの場合は再取得を許可
+      if (state == null && isTimeline) {
+        Future.microtask(() {
+          ref.read(postsMapNotifierProvider.notifier).fetchNextPage(query);
+        });
+      }
+
+      // stateが存在する場合はhasFetchedをtrue に設定
       if (state != null) {
         hasFetched.value = true;
       }
 
-      if (state == null && (!hasFetched.value || isTimeline)) {
-        Future.microtask(() {
-          ref.read(postsMapNotifierProvider.notifier).fetchNextPage(query);
-          if (!isTimeline) {
-            hasFetched.value = true;
-          }
-        });
-      }
       return null;
     }, [state]);
 

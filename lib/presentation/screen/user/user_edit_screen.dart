@@ -109,7 +109,7 @@ class UserEditScreen extends HookConsumerWidget {
                                   if (name!.isEmpty) {
                                     return l10n.enterName;
                                   }
-                                  if (name.length < 2 || name.length > 15) {
+                                  if (name.length < 2 || name.length > 10) {
                                     return l10n.enterNameCaption;
                                   }
                                   return null;
@@ -172,6 +172,7 @@ class UserEditScreen extends HookConsumerWidget {
                   await userUsecase.updateUser(
                     formData: formData,
                     profileImageUrl: user.valueOrNull!.profileImageUrl,
+                    userCode: user.valueOrNull!.userCode,
                     version: user.valueOrNull!.version,
                     onSuccess: () {
                       showSuccessSnackBar(context, l10n.updatedProfile);

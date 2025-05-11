@@ -114,7 +114,7 @@ abstract class L10n {
   /// No description provided for @enterNameCaption.
   ///
   /// In ja, this message translates to:
-  /// **'3〜15文字で入力してください'**
+  /// **'2〜10文字で入力してください'**
   String get enterNameCaption;
 
   /// No description provided for @failedToCreateUser.
@@ -368,6 +368,12 @@ abstract class L10n {
   /// In ja, this message translates to:
   /// **'キャンセル'**
   String get cancel;
+
+  /// No description provided for @copied.
+  ///
+  /// In ja, this message translates to:
+  /// **'コピーしました'**
+  String get copied;
 
   /// No description provided for @termsSection1Title.
   ///

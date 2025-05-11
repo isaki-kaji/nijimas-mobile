@@ -6,6 +6,7 @@ part 'user_detail.g.dart';
 class UserDetail {
   final String uid;
   final String username;
+  final String userCode;
   final String? selfIntro;
   final String? profileImageUrl;
   final String followingStatus;
@@ -17,6 +18,7 @@ class UserDetail {
   const UserDetail({
     required this.uid,
     required this.username,
+    required this.userCode,
     this.selfIntro,
     this.profileImageUrl,
     required this.followingStatus,
@@ -34,26 +36,24 @@ class UserDetail {
   UserDetail copyWith({
     String? uid,
     String? username,
+    String? userCode,
     String? selfIntro,
     String? profileImageUrl,
-    int? version,
     String? followingStatus,
     String? followingCount,
     String? followersCount,
     String? postCount,
-    // List<UserTopSubCategory>? userFavoriteSubcategories,
   }) {
     return UserDetail(
       uid: uid ?? this.uid,
       username: username ?? this.username,
+      userCode: userCode ?? this.userCode,
       selfIntro: selfIntro ?? this.selfIntro,
       profileImageUrl: profileImageUrl ?? this.profileImageUrl,
       followingStatus: followingStatus ?? this.followingStatus,
       followingCount: followingCount ?? this.followingCount,
       followersCount: followersCount ?? this.followersCount,
       postCount: postCount ?? this.postCount,
-      // userFavoriteSubcategories:
-      //     userFavoriteSubcategories ?? this.userFavoriteSubcategories,
     );
   }
 }

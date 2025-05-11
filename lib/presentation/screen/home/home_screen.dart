@@ -57,7 +57,7 @@ class HomeScreen extends ConsumerWidget {
               activeForegroundColor: MyColors.pink),
         ),
         PersistentTabConfig(
-          screen: const OtherScreen(),
+          screen: OtherScreen(),
           item: ItemConfig(
               icon: const Icon(Icons.settings),
               activeForegroundColor: MyColors.pink),

@@ -6,6 +6,7 @@ part 'update_user_request.g.dart';
 class UpdateUserRequest {
   final String uid;
   final String? username;
+  final String userCode;
   final String? selfIntro;
   final String? profileImageUrl;
   final int version;
@@ -13,6 +14,7 @@ class UpdateUserRequest {
   const UpdateUserRequest({
     required this.uid,
     this.username,
+    required this.userCode,
     this.selfIntro,
     this.profileImageUrl,
     required this.version,

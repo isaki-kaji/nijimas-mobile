@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/application/state/auth_state_provider.dart';
-import 'package:nijimas/application/state/posts_map_provider.dart';
 import 'package:nijimas/core/enum/post_query.dart';
 import 'package:nijimas/l10n/gen_l10n/app_localizations.dart';
 import 'package:nijimas/presentation/widget/feed/posts_line.dart';
@@ -30,12 +29,6 @@ class UserDetailScreen extends HookConsumerWidget {
     return DefaultTabController(
       length: isOwnScreen ? 2 : 1,
       child: PopScope(
-        onPopInvoked: (didPop) {
-          if (didPop) {
-            // 画面がポップされた場合にクエリの投稿を削除
-            ref.read(postsMapNotifierProvider.notifier).removeQuery(query);
-          }
-        },
         child: Scaffold(
           appBar: AppBar(
             actions: [

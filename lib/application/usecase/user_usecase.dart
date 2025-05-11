@@ -60,6 +60,7 @@ class UserUsecase {
   Future<void> updateUser({
     required UserFormData formData,
     required String? profileImageUrl,
+    required String userCode,
     required int version,
     required void Function() onSuccess,
     required void Function() onFailure,
@@ -80,6 +81,7 @@ class UserUsecase {
       final request = UpdateUserRequest(
         uid: uid,
         username: formData.username,
+        userCode: userCode,
         selfIntro: formData.selfIntro,
         profileImageUrl: newProfileImageUrl ?? profileImageUrl,
         version: version,
