@@ -86,7 +86,7 @@ class ActivityHeatMap extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(isNumber ? "投稿数 : $value 回" : "支出額 : $value 円"),
+              Text(isNumber ? "出費回数 : $value 回" : "出費額 : $value 円"),
             ],
           ),
         );
