@@ -109,7 +109,7 @@ class UserEditScreen extends HookConsumerWidget {
                                   if (name!.isEmpty) {
                                     return l10n.enterName;
                                   }
-                                  if (name.length < 2 || name.length > 15) {
+                                  if (name.length < 2 || name.length > 10) {
                                     return l10n.enterNameCaption;
                                   }
                                   return null;
@@ -172,12 +172,15 @@ class UserEditScreen extends HookConsumerWidget {
                   await userUsecase.updateUser(
                     formData: formData,
                     profileImageUrl: user.valueOrNull!.profileImageUrl,
+                    userCode: user.valueOrNull!.userCode,
                     version: user.valueOrNull!.version,
                     onSuccess: () {
                       showSuccessSnackBar(context, l10n.updatedProfile);
+
                       ref.invalidate(userDetailNotifierProvider(uid));
                       ref.invalidate(postsMapNotifierProvider);
-                      GoRouter.of(context).pop();
+
+                      GoRouter.of(context).pushReplacement('/');
                     },
                     onFailure: () =>
                         showErrorSnackBar(context, l10n.failedUpdateProfile),
@@ -188,36 +191,6 @@ class UserEditScreen extends HookConsumerWidget {
     );
   }
 }
-
-// Future<dynamic> showSelectTopSubcategoriesModal(
-//     BuildContext context, List<UserTopSubCategory> categories) {
-//   return showModalBottomSheet(
-//     context: context,
-//     isScrollControlled: true,
-//     shape: const RoundedRectangleBorder(
-//       borderRadius: BorderRadius.only(
-//         topLeft: Radius.circular(20),
-//         topRight: Radius.circular(20),
-//       ),
-//     ),
-//     builder: (BuildContext context) {
-//       return Container(
-//         width: double.infinity,
-//         padding: const EdgeInsets.all(16),
-//         decoration: const BoxDecoration(
-//           color: Colors.white,
-//           borderRadius: BorderRadius.only(
-//             topLeft: Radius.circular(20),
-//             topRight: Radius.circular(20),
-//           ),
-//         ),
-//         child: AddUsedSubcategoryBottomSheet(
-//           topSubCategories: categories,
-//         ),
-//       );
-//     },
-//   );
-// }
 
 class ScrollableSubCategoryChip extends StatelessWidget {
   const ScrollableSubCategoryChip({

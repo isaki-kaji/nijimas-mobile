@@ -73,11 +73,11 @@ class SubCategoryCards extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("支出額 : ${item.amount.toInt()} 円"),
+              Text("出費額 : ${item.amount.toInt()} 円"),
               const SizedBox(height: 20),
-              Text("支出割合 : ${item.percentage.toStringAsFixed(1)} %"),
+              Text("出費割合 : ${item.percentage.toStringAsFixed(1)} %"),
               const SizedBox(height: 20),
-              Text("投稿数 : ${item.count} 回"),
+              Text("出費回数 : ${item.count} 回"),
             ],
           ),
         );

@@ -14,7 +14,7 @@ class L10nJa extends L10n {
   String get nameCanBeChanged => '※名前は後から変更できます。';
 
   @override
-  String get enterNameCaption => '3〜15文字で入力してください';
+  String get enterNameCaption => '2〜10文字で入力してください';
 
   @override
   String get failedToCreateUser => 'ユーザー登録に失敗しました';
@@ -141,6 +141,9 @@ class L10nJa extends L10n {
 
   @override
   String get cancel => 'キャンセル';
+
+  @override
+  String get copied => 'コピーしました';
 
   @override
   String get termsSection1Title => '第1条（適用）';

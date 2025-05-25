@@ -1,3 +1,4 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'app_user.g.dart';
@@ -6,6 +7,7 @@ part 'app_user.g.dart';
 class AppUser {
   final String uid;
   final String username;
+  final String userCode;
   final String? profileImageUrl;
   final String? selfIntro;
   final String? countryCode;
@@ -14,6 +16,7 @@ class AppUser {
   const AppUser({
     required this.uid,
     required this.username,
+    required this.userCode,
     this.profileImageUrl,
     this.selfIntro,
     this.countryCode,

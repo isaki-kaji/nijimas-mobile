@@ -2,7 +2,7 @@
   "welcome": "ようこそ！",
   "enterYourName": "あなたの名前を入力してください",
   "nameCanBeChanged": "※名前は後から変更できます。",
-  "enterNameCaption": "3〜15文字で入力してください",
+  "enterNameCaption": "2〜10文字で入力してください",
   "failedToCreateUser": "ユーザー登録に失敗しました",
   "userAlreadyExists": "ユーザーはすでに存在します",
   "post": "投稿",
@@ -45,6 +45,7 @@
   "account": "アカウント",
   "logout": "ログアウト",
   "cancel": "キャンセル",
+  "copied" : "コピーしました",
 
   "termsSection1Title": "第1条（適用）",
   "termsSection1Body": "本利用規約（以下、「本規約」といいます）は、nijimas運営チーム（以下、「当チーム」といいます）が提供するアプリ「nijimas」（以下、「本アプリ」といいます）の利用に関する条件を定めるものです。本アプリをご利用いただいた場合、本規約に同意したものとみなします。",

@@ -40,8 +40,6 @@ class PostsMapNotifier extends _$PostsMapNotifier {
           isLoading: false,
         ),
       };
-
-      showCurrentStates();
     } catch (e) {
       state = {
         ...state,

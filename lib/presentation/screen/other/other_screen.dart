@@ -4,9 +4,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nijimas/core/provider/usecase/auth_usecase_provider.dart';
 import 'package:nijimas/l10n/gen_l10n/app_localizations.dart';
 import 'package:nijimas/presentation/widget/common/add_post_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class OtherScreen extends ConsumerWidget {
-  const OtherScreen({super.key});
+  OtherScreen({super.key});
+
+  final Uri _url = Uri.parse("https://forms.gle/yXSZ1brtMDBam6kg9");
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,6 +35,9 @@ class OtherScreen extends ConsumerWidget {
           ListTile(
             leading: const Icon(Icons.help_outline),
             title: Text(l10n.contact),
+            onTap: () async {
+              if (!await launchUrl(_url)) {}
+            },
           ),
           const Divider(),
           _SectionTitle(title: l10n.account),

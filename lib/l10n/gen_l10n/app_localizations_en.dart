@@ -14,7 +14,7 @@ class L10nEn extends L10n {
   String get nameCanBeChanged => '*You can change your name later.';
 
   @override
-  String get enterNameCaption => 'Please enter 3 to 15 characters';
+  String get enterNameCaption => 'Please enter 2 to 10 characters';
 
   @override
   String get failedToCreateUser => 'Failed to register user';
@@ -141,6 +141,9 @@ class L10nEn extends L10n {
 
   @override
   String get cancel => 'cancel';
+
+  @override
+  String get copied => 'copied';
 
   @override
   String get termsSection1Title => 'Article 1 (Application)';

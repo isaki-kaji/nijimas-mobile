@@ -2,7 +2,7 @@
   "welcome": "Welcome!",
   "enterYourName": "Please enter your name",
   "nameCanBeChanged": "*You can change your name later.",
-  "enterNameCaption": "Please enter 3 to 15 characters",
+  "enterNameCaption": "Please enter 2 to 10 characters",
   "failedToCreateUser": "Failed to register user",
   "userAlreadyExists": "User already exists",
   "post": "posts",
@@ -45,6 +45,7 @@
   "account": "Account",
   "logout": "Logout",
   "cancel": "cancel",
+  "copied": "copied",
 
   "termsSection1Title": "Article 1 (Application)",
   "termsSection1Body": "These Terms of Service (hereinafter referred to as the \"Terms\") set forth the conditions for using the app \"nijimas\" (hereinafter referred to as the \"App\") provided by the nijimas operations team (hereinafter referred to as the \"Team\"). By using this App, you agree to these Terms.",
