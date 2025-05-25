@@ -179,7 +179,7 @@ class L10nEn extends L10n {
   String get termsSection6Title => 'Article 6 (Data Storage and Deletion)';
 
   @override
-  String get termsSection6Body => 'User posts are stored in Cloud Storage for Firebase and Neon.\nUsers can delete their own posts (currently handled by logical deletion).\nAn account deletion feature will be added in the future, but it is not yet implemented.';
+  String get termsSection6Body => 'User post data is stored in Cloud Storage for Firebase and Neon. Users can delete their own posts (currently handled via logical deletion). An account deletion feature is planned to be added in the future, but it is not currently implemented. Upon individual request via inquiry, we will delete user data as requested.';
 
   @override
   String get termsSection7Title => 'Article 7 (Disclaimer)';
@@ -236,7 +236,7 @@ class L10nEn extends L10n {
   String get privacySection6Title => 'Article 6 (User Choices)';
 
   @override
-  String get privacySection6Body => 'Users can delete their own posts (currently handled by logical deletion).\nAn account deletion feature is planned for the future.';
+  String get privacySection6Body => 'Users can delete their own posts (currently handled via logical deletion). An account deletion feature is planned to be added in the future. Upon individual request via inquiry, we will delete user data as requested.';
 
   @override
   String get privacySection7Title => 'Article 7 (Changes to Policy)';

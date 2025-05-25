@@ -444,7 +444,7 @@ abstract class L10n {
   /// No description provided for @termsSection6Body.
   ///
   /// In ja, this message translates to:
-  /// **'利用者の投稿データは、Cloud Storage for FirebaseおよびNeon上に保存されます。\n利用者は、自身の投稿を削除することが可能です（現在は論理削除によって対応）。\nアカウント削除機能は今後追加される予定ですが、現時点では実装されておりません。'**
+  /// **'利用者の投稿データは、Cloud Storage for FirebaseおよびNeon上に保存されます。\n利用者は、自身の投稿を削除することが可能です（現在は論理削除によって対応）。\nアカウント削除機能は今後追加される予定ですが、現時点では実装されておりません。\n個別のお問い合わせによりユーザーからの要請があった場合にはデータの削除に応じます。'**
   String get termsSection6Body;
 
   /// No description provided for @termsSection7Title.
@@ -558,7 +558,7 @@ abstract class L10n {
   /// No description provided for @privacySection6Body.
   ///
   /// In ja, this message translates to:
-  /// **'ユーザーは自身の投稿を削除することができます（現在は論理削除）。\nアカウント削除機能は今後追加予定です。'**
+  /// **'ユーザーは自身の投稿を削除することができます（現在は論理削除）。\nアカウント削除機能は今後追加予定です。\n個別のお問い合わせによりユーザーからの要請があった場合にはデータの削除に応じます。'**
   String get privacySection6Body;
 
   /// No description provided for @privacySection7Title.

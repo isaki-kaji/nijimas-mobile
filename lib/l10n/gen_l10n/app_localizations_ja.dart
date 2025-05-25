@@ -179,7 +179,7 @@ class L10nJa extends L10n {
   String get termsSection6Title => '第6条（データの保存と削除）';
 
   @override
-  String get termsSection6Body => '利用者の投稿データは、Cloud Storage for FirebaseおよびNeon上に保存されます。\n利用者は、自身の投稿を削除することが可能です（現在は論理削除によって対応）。\nアカウント削除機能は今後追加される予定ですが、現時点では実装されておりません。';
+  String get termsSection6Body => '利用者の投稿データは、Cloud Storage for FirebaseおよびNeon上に保存されます。\n利用者は、自身の投稿を削除することが可能です（現在は論理削除によって対応）。\nアカウント削除機能は今後追加される予定ですが、現時点では実装されておりません。\n個別のお問い合わせによりユーザーからの要請があった場合にはデータの削除に応じます。';
 
   @override
   String get termsSection7Title => '第7条（免責事項）';
@@ -236,7 +236,7 @@ class L10nJa extends L10n {
   String get privacySection6Title => '第6条（ユーザーの選択）';
 
   @override
-  String get privacySection6Body => 'ユーザーは自身の投稿を削除することができます（現在は論理削除）。\nアカウント削除機能は今後追加予定です。';
+  String get privacySection6Body => 'ユーザーは自身の投稿を削除することができます（現在は論理削除）。\nアカウント削除機能は今後追加予定です。\n個別のお問い合わせによりユーザーからの要請があった場合にはデータの削除に応じます。';
 
   @override
   String get privacySection7Title => '第7条（ポリシーの変更）';
