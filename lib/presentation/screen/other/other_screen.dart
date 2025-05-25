@@ -9,7 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 class OtherScreen extends ConsumerWidget {
   OtherScreen({super.key});
 
-  final Uri _url = Uri.parse("https://nijimas.com");
+  final Uri _url = Uri.parse("https://forms.gle/yXSZ1brtMDBam6kg9");
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
